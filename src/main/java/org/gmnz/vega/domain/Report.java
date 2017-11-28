@@ -1,4 +1,4 @@
-package org.gmnz.a2.domain;
+package org.gmnz.vega.domain;
 
 import java.util.Date;
 import java.util.List;

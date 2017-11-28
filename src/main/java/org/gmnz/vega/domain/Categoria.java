@@ -1,6 +1,5 @@
-package org.gmnz.a2.domain;
+package org.gmnz.vega.domain;
 
-import java.util.Collections;
 import java.util.List;
 
 public class Categoria extends AbstractListManagedPropertyHolder<Allergene> {
