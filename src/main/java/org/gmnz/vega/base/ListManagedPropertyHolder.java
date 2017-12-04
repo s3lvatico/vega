@@ -1,4 +1,4 @@
-package org.gmnz.vega.domain;
+package org.gmnz.vega.base;
 
 interface ListManagedPropertyHolder<T> {
 

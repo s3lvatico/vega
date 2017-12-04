@@ -1,14 +1,20 @@
-package org.gmnz.vega.domain;
+package org.gmnz.vega.base;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-abstract class AbstractListManagedPropertyHolder<T> implements ListManagedPropertyHolder<T> {
+public abstract class AbstractListManagedPropertyHolder<T> extends NamedEntity implements ListManagedPropertyHolder<T> {
 
 	protected List<T> listProperty;
 
-	AbstractListManagedPropertyHolder() {
+	public AbstractListManagedPropertyHolder() {
+		super(null);
+		listProperty = new ArrayList<>();
+	}
+
+	public AbstractListManagedPropertyHolder(String nome) {
+		super(nome);
 		listProperty = new ArrayList<>();
 	}
 

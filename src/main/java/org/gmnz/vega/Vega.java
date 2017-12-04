@@ -9,15 +9,23 @@ import java.util.List;
 
 public interface Vega {
 
+	List<Allergene> elencaAllergeni();
 
 	void creaAllergene(String nome);
 
-	void aggiungiAllergene(String nomeAllergene, String nomeCategoria);
+	Allergene selezionaAllergene(String nome);
 
-	List<Allergene> elencaAllergeni();
+	void rinominaAllergene(String vecchioNome, String nuovoNome);
+
+	void eliminaAllergene(String nome);
 
 	List<Categoria> elencaCategorie();
 
 	void creaCategoria(String nome);
+
+	Categoria selezionaCategoria(String nome);
+
+	void categorizzaAllergene(String nomeAllergene, String nomeCategoria);
+
 
 }

@@ -1,16 +1,14 @@
 package org.gmnz.vega.domain;
 
-public class Allergene {
+import org.gmnz.vega.base.NamedEntity;
 
-	private String nome;
+public class Allergene extends NamedEntity {
+
 
 	public Allergene(String nome) {
-		this.nome = nome;
+		super(nome);
 	}
 
-	public String getNome() {
-		return nome;
-	}
 
 	@Override
 	public boolean equals(Object o) {
@@ -19,18 +17,18 @@ public class Allergene {
 
 		Allergene allergene = (Allergene) o;
 
-		return nome.equals(allergene.nome);
+		return getNome().equals(allergene.getNome());
 	}
 
 	@Override
 	public int hashCode() {
-		return nome.hashCode();
+		return getNome().hashCode();
 	}
 
 	@Override
 	public String toString() {
 		return "Allergene{" +
-				"nome='" + nome + '\'' +
+				"nome='" + getNome() + '\'' +
 				'}';
 	}
 }

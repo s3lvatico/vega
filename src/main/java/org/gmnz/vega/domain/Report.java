@@ -1,5 +1,7 @@
 package org.gmnz.vega.domain;
 
+import org.gmnz.vega.base.AbstractListManagedPropertyHolder;
+
 import java.util.Date;
 import java.util.List;
 
@@ -19,5 +21,8 @@ public class Report extends AbstractListManagedPropertyHolder<Valutazione> {
 		return getListProperty();
 	}
 
+	public int aggiungiValutazione(Valutazione valutazione) {
+		return add(valutazione);
+	}
 
 }
