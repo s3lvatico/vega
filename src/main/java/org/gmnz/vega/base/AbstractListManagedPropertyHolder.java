@@ -42,4 +42,9 @@ public abstract class AbstractListManagedPropertyHolder<T> extends NamedEntity i
 	public void clear() {
 		listProperty.clear();
 	}
+
+	@Override
+	public int getListSize() {
+		return listProperty.size();
+	}
 }

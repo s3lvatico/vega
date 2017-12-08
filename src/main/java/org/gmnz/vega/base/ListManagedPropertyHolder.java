@@ -9,4 +9,6 @@ interface ListManagedPropertyHolder<T> {
 	boolean remove(T t);
 
 	void clear();
+
+	int getListSize();
 }
