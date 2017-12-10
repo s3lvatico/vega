@@ -1,6 +1,8 @@
 package org.gmnz.vega.domain;
 
+
 import org.gmnz.vega.base.NamedEntity;
+
 
 public class Allergene extends NamedEntity {
 
@@ -8,6 +10,7 @@ public class Allergene extends NamedEntity {
 	public Allergene(String nome) {
 		super(nome);
 	}
+
 
 
 	@Override
@@ -20,10 +23,14 @@ public class Allergene extends NamedEntity {
 		return getNome().equals(allergene.getNome());
 	}
 
+
+
 	@Override
 	public int hashCode() {
 		return getNome().hashCode();
 	}
+
+
 
 	@Override
 	public String toString() {

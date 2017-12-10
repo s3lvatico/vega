@@ -1,5 +1,6 @@
 package org.gmnz.vega.base;
 
+
 interface ListManagedPropertyHolder<T> {
 
 	int add(T t);

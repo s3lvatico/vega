@@ -1,8 +1,10 @@
 package org.gmnz.vega.repository;
 
+
 import org.gmnz.vega.domain.Allergene;
 
 import java.util.List;
+
 
 public interface AllergeneDao {
 
@@ -12,7 +14,10 @@ public interface AllergeneDao {
 
 	List<Allergene> findByPattern(String pattern);
 
-	void create(Object o); // TODO cambia
+	void create(Allergene allergene);
+
+
+	void delete(String nome);
 
 	// TODO completare
 }
