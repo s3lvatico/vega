@@ -1,11 +1,9 @@
 package org.gmnz.vega.repository;
 
 
-import org.gmnz.vega.base.HibernateUtil;
 import org.gmnz.vega.domain.Allergene;
 import org.gmnz.vega.integration.AllergeneEnt;
 import org.hibernate.Session;
-import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.hibernate.query.Query;
 
@@ -15,21 +13,12 @@ import java.util.List;
 import java.util.UUID;
 
 
-public class AllergeneHbnDao implements AllergeneDao {
-
-	private SessionFactory sessionFactory;
-
-
-
-	public AllergeneHbnDao() {
-		this.sessionFactory = HibernateUtil.getSessionFactory();
-	}
-
+public class AllergeneHbnDao extends BaseHibernateDao implements AllergeneDao {
 
 
 	@Override
 	public List<Allergene> findAll() {
-		Session s = sessionFactory.openSession();
+		Session s = openSession();
 		Query<AllergeneEnt> q = s.createQuery("from Allergene a", AllergeneEnt.class);
 		List<AllergeneEnt> queryResult = q.list();
 
@@ -38,7 +27,7 @@ public class AllergeneHbnDao implements AllergeneDao {
 			Allergene a = new Allergene(ae.getNome());
 			result.add(a);
 		}
-		s.close();
+		closeSession();
 		return result;
 	}
 
@@ -46,9 +35,12 @@ public class AllergeneHbnDao implements AllergeneDao {
 
 	@Override
 	public Allergene findByName(String name) {
-		Session s = sessionFactory.openSession();
+		Session s = openSession();
+
 		AllergeneEnt entity = getSingleEntityByName(s, name);
-		s.close();
+
+		closeSession();
+
 		if (entity != null) {
 			Allergene a = new Allergene(name);
 			return a;
@@ -59,15 +51,15 @@ public class AllergeneHbnDao implements AllergeneDao {
 
 	@Override
 	public List<Allergene> findByPattern(String pattern) {
-		Session sess = sessionFactory.openSession();
+		Session s = openSession();
 		Transaction tx = null;
 		List<Allergene> allergeneList = new ArrayList<>();
 		try {
-			tx = sess.beginTransaction();
+			tx = s.beginTransaction();
 
-			String query = "select allergene from Allergene allergene where allergene.nome like '%:pattern%'";
+			String query = "select allergene from Allergene allergene where allergene.nome like :pattern";
 
-			Query<AllergeneEnt> q = sess.createQuery(query, AllergeneEnt.class);
+			Query<AllergeneEnt> q = s.createQuery(query, AllergeneEnt.class);
 			q.setParameter("pattern", pattern);
 			List<AllergeneEnt> resultList = q.getResultList();
 
@@ -80,7 +72,7 @@ public class AllergeneHbnDao implements AllergeneDao {
 			if (tx != null) tx.rollback();
 			throw e;
 		} finally {
-			sess.close();
+			closeSession();
 		}
 		return allergeneList;
 	}
@@ -101,16 +93,16 @@ public class AllergeneHbnDao implements AllergeneDao {
 
 	@Override
 	public void create(Allergene allergene) {
-		Session sess = sessionFactory.openSession();
+		Session s = openSession();
 		Transaction tx = null;
 		try {
-			tx = sess.beginTransaction();
+			tx = s.beginTransaction();
 
-			if (getSingleEntityByName(sess, allergene.getNome()) == null) {
+			if (getSingleEntityByName(s, allergene.getNome()) == null) {
 				AllergeneEnt entity = new AllergeneEnt();
 				entity.setId(UUID.randomUUID().toString());
 				entity.setNome(allergene.getNome());
-				sess.save(entity);
+				s.save(entity);
 			}
 
 			tx.commit();
@@ -118,7 +110,7 @@ public class AllergeneHbnDao implements AllergeneDao {
 			if (tx != null) tx.rollback();
 			throw e;
 		} finally {
-			sess.close();
+			closeSession();
 		}
 	}
 
@@ -126,21 +118,21 @@ public class AllergeneHbnDao implements AllergeneDao {
 
 	@Override
 	public void delete(String nome) {
-		Session sess = sessionFactory.openSession();
+		Session s = openSession();
 		Transaction tx = null;
 		try {
-			tx = sess.beginTransaction();
-			AllergeneEnt entity = getSingleEntityByName(sess, nome);
+			tx = s.beginTransaction();
+			AllergeneEnt entity = getSingleEntityByName(s, nome);
 			if (entity != null) {
-				sess.remove(entity);
+				s.remove(entity);
 			}
 			tx.commit();
 		} catch (Exception e) {
 			if (tx != null) tx.rollback();
 			throw e;
 		} finally {
-			sess.close();
+			closeSession();
 		}
-
 	}
+
 }
