@@ -4,7 +4,6 @@ package org.gmnz.vega.repository;
 import org.gmnz.vega.domain.Allergene;
 import org.gmnz.vega.integration.AllergeneEnt;
 import org.hibernate.Session;
-import org.hibernate.Transaction;
 import org.hibernate.query.Query;
 
 import javax.persistence.NoResultException;
@@ -18,9 +17,14 @@ public class AllergeneHbnDao extends BaseHibernateDao implements AllergeneDao {
 
 	@Override
 	public List<Allergene> findAll() {
-		Session s = openSession();
-		Query<AllergeneEnt> q = s.createQuery("from Allergene a", AllergeneEnt.class);
-		List<AllergeneEnt> queryResult = q.list();
+
+		List<AllergeneEnt> queryResult = wrapInTransaction(new TxManagedExecutor<List<AllergeneEnt>>() {
+			@Override
+			protected List<AllergeneEnt> execute() {
+				Query<AllergeneEnt> q = session.createQuery("from Allergene a", AllergeneEnt.class);
+				return q.list();
+			}
+		});
 
 		List<Allergene> result = new ArrayList<>();
 		for (AllergeneEnt ae : queryResult) {
@@ -51,30 +55,22 @@ public class AllergeneHbnDao extends BaseHibernateDao implements AllergeneDao {
 
 	@Override
 	public List<Allergene> findByPattern(String pattern) {
-		Session s = openSession();
-		Transaction tx = null;
-		List<Allergene> allergeneList = new ArrayList<>();
-		try {
-			tx = s.beginTransaction();
-
-			String query = "select allergene from Allergene allergene where allergene.nome like :pattern";
-
-			Query<AllergeneEnt> q = s.createQuery(query, AllergeneEnt.class);
-			q.setParameter("pattern", pattern);
-			List<AllergeneEnt> resultList = q.getResultList();
-
-			for (AllergeneEnt entity : resultList) {
-				allergeneList.add(new Allergene(entity.getNome()));
+		List<AllergeneEnt> queryResult = wrapInTransaction(new TxManagedExecutor<List<AllergeneEnt>>() {
+			@Override
+			protected List<AllergeneEnt> execute() {
+				String query = "select allergene from Allergene allergene where allergene.nome like :pattern";
+				Query<AllergeneEnt> q = session.createQuery(query, AllergeneEnt.class);
+				q.setParameter("pattern", pattern);
+				return q.getResultList();
 			}
+		});
 
-			tx.commit();
-		} catch (Exception e) {
-			if (tx != null) tx.rollback();
-			throw e;
-		} finally {
-			closeSession();
+		List<Allergene> result = new ArrayList<>();
+		for (AllergeneEnt ae : queryResult) {
+			Allergene a = new Allergene(ae.getNome());
+			result.add(a);
 		}
-		return allergeneList;
+		return result;
 	}
 
 
@@ -93,46 +89,34 @@ public class AllergeneHbnDao extends BaseHibernateDao implements AllergeneDao {
 
 	@Override
 	public void create(Allergene allergene) {
-		Session s = openSession();
-		Transaction tx = null;
-		try {
-			tx = s.beginTransaction();
-
-			if (getSingleEntityByName(s, allergene.getNome()) == null) {
-				AllergeneEnt entity = new AllergeneEnt();
-				entity.setId(UUID.randomUUID().toString());
-				entity.setNome(allergene.getNome());
-				s.save(entity);
+		wrapInTransaction(new TxManagedExecutor<Void>() {
+			@Override
+			protected Void execute() {
+				if (getSingleEntityByName(session, allergene.getNome()) == null) {
+					AllergeneEnt entity = new AllergeneEnt();
+					entity.setId(UUID.randomUUID().toString());
+					entity.setNome(allergene.getNome());
+					session.save(entity);
+				}
+				return null;
 			}
-
-			tx.commit();
-		} catch (Exception e) {
-			if (tx != null) tx.rollback();
-			throw e;
-		} finally {
-			closeSession();
-		}
+		});
 	}
 
 
 
 	@Override
 	public void delete(String nome) {
-		Session s = openSession();
-		Transaction tx = null;
-		try {
-			tx = s.beginTransaction();
-			AllergeneEnt entity = getSingleEntityByName(s, nome);
-			if (entity != null) {
-				s.remove(entity);
+		wrapInTransaction(new TxManagedExecutor<Void>() {
+			@Override
+			protected Void execute() {
+				AllergeneEnt entity = getSingleEntityByName(session, nome);
+				if (entity != null) {
+					session.remove(entity);
+				}
+				return null;
 			}
-			tx.commit();
-		} catch (Exception e) {
-			if (tx != null) tx.rollback();
-			throw e;
-		} finally {
-			closeSession();
-		}
+		});
 	}
 
 }

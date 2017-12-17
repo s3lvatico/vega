@@ -34,4 +34,29 @@ class BaseHibernateDao {
 		}
 	}
 
+
+
+	protected <R> R wrapInTransaction(TxManagedExecutor<R> tme) {
+		session = sessionFactory.openSession();
+		tme.session = session;
+
+		Transaction tx = null;
+		try {
+			tx = session.beginTransaction();
+
+			R result = tme.execute();
+
+			tx.commit();
+
+			return result;
+		} catch (Exception e) {
+			if (tx != null) tx.rollback();
+			throw e;
+		} finally {
+			if (session != null) {
+				session.close();
+			}
+		}
+	}
+
 }
