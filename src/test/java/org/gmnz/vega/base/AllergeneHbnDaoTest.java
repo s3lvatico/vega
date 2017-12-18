@@ -9,12 +9,13 @@ import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+import java.util.Arrays;
 import java.util.List;
 
 
 public class AllergeneHbnDaoTest {
 
-	public static final String AVENA = "AvenaTEST";
+	public static final String AVENA = "AvenaTest";
 	public static final String FARINA = "FarinaTest";
 	public static final String ORZO = "OrzoTest";
 	public static final String PATATE = "PatateTest";
@@ -94,6 +95,27 @@ public class AllergeneHbnDaoTest {
 		Assert.assertNotNull(dao.findByName(ORZO_MODIFICATO));
 
 		dao.delete(ORZO_MODIFICATO);
+	}
+
+
+
+	@Test
+	public void bulkCreateTest() {
+		Allergene farina = new Allergene(FARINA);
+		Allergene orzo = new Allergene(ORZO);
+		Allergene patate = new Allergene(PATATE);
+
+		AllergeneDao dao = new AllergeneHbnDao();
+
+		dao.create(Arrays.asList(farina, orzo, patate));
+
+		final List<Allergene> result = dao.findByPattern("%Test");
+		Assert.assertEquals(3, result.size());
+
+		for (Allergene a : result) {
+			dao.delete(a.getNome());
+		}
+
 	}
 
 }

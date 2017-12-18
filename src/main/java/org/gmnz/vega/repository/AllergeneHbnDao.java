@@ -8,6 +8,7 @@ import org.hibernate.query.Query;
 
 import javax.persistence.NoResultException;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.UUID;
 
@@ -31,7 +32,6 @@ public class AllergeneHbnDao extends BaseHibernateDao implements AllergeneDao {
 			Allergene a = new Allergene(ae.getNome());
 			result.add(a);
 		}
-		closeSession();
 		return result;
 	}
 
@@ -39,16 +39,13 @@ public class AllergeneHbnDao extends BaseHibernateDao implements AllergeneDao {
 
 	@Override
 	public Allergene findByName(String name) {
-		Session s = openSession();
-
-		AllergeneEnt entity = getSingleEntityByName(s, name);
-
-		closeSession();
-
-		if (entity != null) {
-			Allergene a = new Allergene(name);
-			return a;
-		} else return null;
+		AllergeneEnt entity = wrapInTransaction(new TxManagedExecutor<AllergeneEnt>() {
+			@Override
+			protected AllergeneEnt execute() {
+				return getSingleEntityByName(session, name);
+			}
+		});
+		return entity != null ? new Allergene(entity.getNome()) : null;
 	}
 
 
@@ -75,8 +72,8 @@ public class AllergeneHbnDao extends BaseHibernateDao implements AllergeneDao {
 
 
 
-	private AllergeneEnt getSingleEntityByName(Session s, String nome) {
-		Query<AllergeneEnt> q = s.createQuery("select a from Allergene a where a.nome = :nome", AllergeneEnt.class);
+	private AllergeneEnt getSingleEntityByName(Session session, String nome) {
+		Query<AllergeneEnt> q = session.createQuery("select a from Allergene a where a.nome = :nome", AllergeneEnt.class);
 		q.setParameter("nome", nome);
 		try {
 			return q.getSingleResult();
@@ -87,16 +84,37 @@ public class AllergeneHbnDao extends BaseHibernateDao implements AllergeneDao {
 
 
 
+	private void addSingleEntity(Session s, Allergene a) {
+		if (getSingleEntityByName(s, a.getNome()) == null) {
+			AllergeneEnt entity = new AllergeneEnt();
+			entity.setId(UUID.randomUUID().toString());
+			entity.setNome(a.getNome());
+			s.save(entity);
+		}
+	}
+
+
+
 	@Override
 	public void create(Allergene allergene) {
 		wrapInTransaction(new TxManagedExecutor<Void>() {
 			@Override
 			protected Void execute() {
-				if (getSingleEntityByName(session, allergene.getNome()) == null) {
-					AllergeneEnt entity = new AllergeneEnt();
-					entity.setId(UUID.randomUUID().toString());
-					entity.setNome(allergene.getNome());
-					session.save(entity);
+				addSingleEntity(session, allergene);
+				return null;
+			}
+		});
+	}
+
+
+
+	@Override
+	public void create(Collection<Allergene> allergeni) {
+		wrapInTransaction(new TxManagedExecutor<Void>() {
+			@Override
+			protected Void execute() {
+				for (Allergene a : allergeni) {
+					addSingleEntity(session, a);
 				}
 				return null;
 			}
