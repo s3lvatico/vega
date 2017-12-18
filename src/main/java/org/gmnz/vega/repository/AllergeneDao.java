@@ -16,8 +16,7 @@ public interface AllergeneDao {
 
 	void create(Allergene allergene);
 
-
 	void delete(String nome);
 
-	// TODO completare
+	void update(String nome, String newName);
 }

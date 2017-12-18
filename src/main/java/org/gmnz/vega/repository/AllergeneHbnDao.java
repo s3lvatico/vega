@@ -119,4 +119,21 @@ public class AllergeneHbnDao extends BaseHibernateDao implements AllergeneDao {
 		});
 	}
 
+
+
+	@Override
+	public void update(String nome, String newName) {
+		wrapInTransaction(new TxManagedExecutor<Void>() {
+			@Override
+			protected Void execute() {
+				AllergeneEnt entity = getSingleEntityByName(session, nome);
+				if (entity != null) {
+					entity.setNome(newName);
+					session.update(entity);
+				}
+				return null;
+			}
+		});
+	}
+
 }
