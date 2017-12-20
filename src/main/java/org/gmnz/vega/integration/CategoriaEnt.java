@@ -18,7 +18,7 @@ public class CategoriaEnt {
 
 	@OneToMany(cascade = CascadeType.REMOVE, orphanRemoval = true)
 	@JoinTable(name = "categoria_allergene",
-			joinColumns = {@JoinColumn(name = "id_allergene", nullable = true)},
+			joinColumns = {@JoinColumn(name = "id_allergene")},
 			inverseJoinColumns = {@JoinColumn(name = "id_categoria")})
 	private List<AllergeneEnt> allergeni;
 

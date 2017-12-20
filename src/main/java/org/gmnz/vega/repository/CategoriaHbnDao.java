@@ -1,6 +1,7 @@
 package org.gmnz.vega.repository;
 
 
+import org.gmnz.vega.domain.Allergene;
 import org.gmnz.vega.domain.Categoria;
 import org.gmnz.vega.integration.AllergeneEnt;
 import org.gmnz.vega.integration.CategoriaEnt;
@@ -85,9 +86,18 @@ public class CategoriaHbnDao extends BaseHibernateDao implements CategoriaDao {
 
 	private void addSingleEntity(Session s, Categoria c) {
 		if (getSingleEntityByName(s, c.getNome()) == null) {
+
 			CategoriaEnt entity = new CategoriaEnt();
 			entity.setId(UUID.randomUUID().toString());
 			entity.setNome(c.getNome());
+
+			Query<AllergeneEnt> query = s.createQuery("from Allergene aaa where aaa.nome = :nome", AllergeneEnt.class);
+			for (Allergene a : c.getAllergeni()) {
+				query.setParameter("nome", a.getNome());
+				AllergeneEnt allergeneEnt = query.getSingleResult();
+				entity.getAllergeni().add(allergeneEnt);
+			}
+
 			s.save(entity);
 		}
 	}

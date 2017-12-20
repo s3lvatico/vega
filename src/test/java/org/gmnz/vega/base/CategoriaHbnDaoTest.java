@@ -1,7 +1,10 @@
 package org.gmnz.vega.base;
 
 
+import org.gmnz.vega.domain.Allergene;
 import org.gmnz.vega.domain.Categoria;
+import org.gmnz.vega.repository.AllergeneDao;
+import org.gmnz.vega.repository.AllergeneHbnDao;
 import org.gmnz.vega.repository.CategoriaDao;
 import org.gmnz.vega.repository.CategoriaHbnDao;
 import org.junit.AfterClass;
@@ -9,6 +12,7 @@ import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+import java.util.Arrays;
 import java.util.List;
 
 
@@ -57,6 +61,21 @@ public class CategoriaHbnDaoTest {
 		dao.delete(CARNI_TEST);
 	}
 
+	@Test public void addAllergeneTest() {
+		Categoria carni = new Categoria(CARNI_TEST);
+		Allergene manzo = new Allergene("ManzoTest");
+		Allergene maiale = new Allergene("MaialeTest");
+
+		AllergeneDao allergeneDao = new AllergeneHbnDao();
+		CategoriaDao categoriaDao = new CategoriaHbnDao();
+
+		allergeneDao.create(Arrays.asList(manzo, maiale));
+
+		carni.add(manzo);
+		carni.add(maiale);
+
+		categoriaDao.create(carni);
+	}
 
 
 /*
