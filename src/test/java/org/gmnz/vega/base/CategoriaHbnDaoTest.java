@@ -61,7 +61,8 @@ public class CategoriaHbnDaoTest {
 		dao.delete(CARNI_TEST);
 	}
 
-	@Test public void addAllergeneTest() {
+	@Test
+	public void addAllergeneTest() {
 		Categoria carni = new Categoria(CARNI_TEST);
 		Allergene manzo = new Allergene("ManzoTest");
 		Allergene maiale = new Allergene("MaialeTest");
@@ -75,6 +76,48 @@ public class CategoriaHbnDaoTest {
 		carni.add(maiale);
 
 		categoriaDao.create(carni);
+
+		categoriaDao.delete(CARNI_TEST);
+		allergeneDao.delete("ManzoTest");
+		allergeneDao.delete("MaialeTest");
+	}
+
+
+	@Test public void changeAllergeneList() {
+		Categoria testCategoria = new Categoria("testCategoria");
+		Allergene a1 = new Allergene("a_uno");
+		Allergene a2 = new Allergene("a_due");
+		Allergene a3 = new Allergene("a_tre");
+		Allergene a4 = new Allergene("a_quattro");
+
+		testCategoria.add(a1);
+		testCategoria.add(a2);
+
+		AllergeneDao allergeneDao = new AllergeneHbnDao();
+		allergeneDao.create(Arrays.asList(a1, a2, a3, a4));
+
+		CategoriaDao categoriaDao = new CategoriaHbnDao();
+		categoriaDao.create(testCategoria);
+
+		testCategoria.remove(a1);
+		testCategoria.remove(a2);
+
+		testCategoria.add(a3);
+		testCategoria.add(a4);
+
+		categoriaDao.update(testCategoria);
+
+		Categoria actual = categoriaDao.findByName("testCategoria");
+		Assert.assertEquals(2, actual.getAllergeni().size());
+
+		Assert.assertTrue(actual.getAllergeni().contains(a3));
+		Assert.assertTrue(actual.getAllergeni().contains(a4));
+
+		categoriaDao.delete("testCategoria");
+		allergeneDao.delete("a_uno");
+		allergeneDao.delete("a_due");
+		allergeneDao.delete("a_tre");
+		allergeneDao.delete("a_quattro");
 	}
 
 

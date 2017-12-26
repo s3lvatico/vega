@@ -16,10 +16,10 @@ public class CategoriaEnt {
 	@Column(name = "nome", nullable = false)
 	private String nome;
 
-	@OneToMany(cascade = CascadeType.REMOVE, orphanRemoval = true)
+	@OneToMany
 	@JoinTable(name = "categoria_allergene",
-			joinColumns = {@JoinColumn(name = "id_allergene")},
-			inverseJoinColumns = {@JoinColumn(name = "id_categoria")})
+			joinColumns = {@JoinColumn(name = "id_categoria")},
+			inverseJoinColumns = {@JoinColumn(name = "id_allergene")})
 	private List<AllergeneEnt> allergeni;
 
 

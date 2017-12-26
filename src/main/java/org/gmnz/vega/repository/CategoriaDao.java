@@ -19,4 +19,6 @@ public interface CategoriaDao {
 	void delete(String nome);
 
 	void update(String nome, String newName);
+
+	void update(Categoria categoria);
 }
