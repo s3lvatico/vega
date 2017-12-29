@@ -6,11 +6,9 @@ import org.gmnz.vega.domain.Categoria;
 import org.gmnz.vega.integration.AllergeneEnt;
 import org.gmnz.vega.integration.CategoriaEnt;
 import org.hibernate.Session;
-import org.hibernate.Transaction;
 import org.hibernate.query.Query;
 
 import javax.persistence.NoResultException;
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -168,8 +166,9 @@ public class CategoriaHbnDao extends BaseHibernateDao implements CategoriaDao {
 				if (entity != null) {
 					entity.getAllergeni().clear();
 					AllergeneEnt allergeneEnt;
+					Query<AllergeneEnt> allergeneQuery = session.createQuery("select allergene from Allergene allergene where allergene.nome = :nome", AllergeneEnt.class);
 					for (Allergene a : categoria.getAllergeni()) {
-						allergeneEnt = session.createQuery("select allergene from Allergene allergene where allergene.nome = :nome", AllergeneEnt.class).setParameter("nome", a.getNome()).getSingleResult();
+						allergeneEnt = allergeneQuery.setParameter("nome", a.getNome()).getSingleResult();
 						entity.getAllergeni().add(allergeneEnt);
 					}
 					session.update(entity);
@@ -179,35 +178,5 @@ public class CategoriaHbnDao extends BaseHibernateDao implements CategoriaDao {
 		});
 	}
 
-
-
-	/*public void pathologic() {
-		Session s = openSession();
-
-
-		AllergeneEnt a = new AllergeneEnt();
-		a.setNome("sempliceNome");
-		a.setId(UUID.randomUUID().toString());
-
-		Transaction tx = s.beginTransaction();
-		Serializable id = s.save(a);
-		tx.commit();
-
-		tx = s.beginTransaction();
-
-		CategoriaEnt cat = new CategoriaEnt();
-		cat.setNome("sampleCategoria");
-		cat.setId(UUID.randomUUID().toString());
-		s.save(cat);
-
-		tx.commit();
-
-		tx = s.beginTransaction();
-		cat.getAllergeni().add(a);
-		s.merge(cat);
-		tx.commit();
-
-		s.close();
-	}*/
 
 }
