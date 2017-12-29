@@ -8,7 +8,7 @@ import java.util.Objects;
 
 
 @Entity(name = "Categoria")
-@Table(name = "categoria")
+@Table(name = "vg_categoria")
 public class CategoriaEnt {
 	@Id
 	private String id;
@@ -17,7 +17,7 @@ public class CategoriaEnt {
 	private String nome;
 
 	@OneToMany
-	@JoinTable(name = "categoria_allergene",
+	@JoinTable(name = "vg_categoria_allergene",
 			joinColumns = {@JoinColumn(name = "id_categoria")},
 			inverseJoinColumns = {@JoinColumn(name = "id_allergene")})
 	private List<AllergeneEnt> allergeni;

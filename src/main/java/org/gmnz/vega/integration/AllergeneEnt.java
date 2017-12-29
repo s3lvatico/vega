@@ -9,7 +9,7 @@ import java.util.Objects;
 
 
 @Entity(name = "Allergene")
-@Table(name = "allergene")
+@Table(name = "vg_allergene")
 public class AllergeneEnt {
 
 	@Id
