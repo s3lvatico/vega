@@ -1,11 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE hibernate-configuration>
 <hibernate-configuration>
    <session-factory>
       <property name="hibernate.connection.driver_class">com.mysql.jdbc.Driver</property>
       <property name="hibernate.connection.url">jdbc:mysql://localhost:3306/sandbox</property>
-      <property name="hibernate.connection.username">sb_user</property>
-      <property name="hibernate.connection.password">sb_password</property>
       <property name="hibernate.dialect">org.hibernate.dialect.MySQLDialect</property>
       <property name="hibernate.bytecode.use_reflection_optimizer">false</property>
       <property name="hibernate.show_sql">true</property>
@@ -14,6 +11,25 @@
 
       <mapping class="org.gmnz.vega.integration.AllergeneEnt"/>
       <mapping class="org.gmnz.vega.integration.CategoriaEnt"/>
+      <mapping class="org.gmnz.vega.integration.ReportEnt"/>
+      <mapping class="org.gmnz.vega.integration.ReportDataEnt"/>
+
+      <!-- seguono i refusi dell'autogenerazione -->
+
+      <!--
+      <mapping class="org.gmnz.vega.integration.VgAllergeneEntity"/>
+
+      <mapping resource="org/gmnz/vega/integration/VgAllergeneEntity.hbm.xml"/>
+      <mapping resource="org/gmnz/vega/integration/VgReportEntity.hbm.xml"/>
+      -->
+
+      <!--
+      <mapping class="org.gmnz.vega.integration.VgReportEntity"/>
+
+      <mapping resource="org/gmnz/vega/integration/VgReportDataEntity.hbm.xml"/>
+
+      <mapping class="org.gmnz.vega.integration.VgReportDataEntity"/>
+      -->
 
    </session-factory>
 </hibernate-configuration>
