@@ -7,7 +7,7 @@ import java.util.Date;
 
 @Entity(name = "Report")
 @Table(name = "vg_report")
-public class ReportEnt {
+public class ReportEntity {
 
 	@Id
 	private String id;

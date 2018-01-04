@@ -7,8 +7,8 @@ import java.util.Objects;
 
 @Entity(name = "ReportData")
 @Table(name = "vg_report_data")
-@IdClass(ReportDataEntPK.class)
-public class ReportDataEnt {
+@IdClass(ReportDataEntityPK.class)
+public class ReportDataEntity {
 
 
 	@Id
@@ -24,11 +24,11 @@ public class ReportDataEnt {
 
 	@ManyToOne
 	@JoinColumn(name = "id_report", referencedColumnName = "id", nullable = false)
-	private ReportEnt vgReportByIdReport;
+	private ReportEntity vgReportByIdReport;
 
 	@ManyToOne
 	@JoinColumn(name = "id_allergene", referencedColumnName = "id", nullable = false)
-	private AllergeneEnt vgAllergeneByIdAllergene;
+	private AllergeneEntity vgAllergeneByIdAllergene;
 
 
 
@@ -68,25 +68,25 @@ public class ReportDataEnt {
 
 
 
-	public ReportEnt getVgReportByIdReport() {
+	public ReportEntity getVgReportByIdReport() {
 		return vgReportByIdReport;
 	}
 
 
 
-	public void setVgReportByIdReport(ReportEnt vgReportByIdReport) {
+	public void setVgReportByIdReport(ReportEntity vgReportByIdReport) {
 		this.vgReportByIdReport = vgReportByIdReport;
 	}
 
 
 
-	public AllergeneEnt getVgAllergeneByIdAllergene() {
+	public AllergeneEntity getVgAllergeneByIdAllergene() {
 		return vgAllergeneByIdAllergene;
 	}
 
 
 
-	public void setVgAllergeneByIdAllergene(AllergeneEnt vgAllergeneByIdAllergene) {
+	public void setVgAllergeneByIdAllergene(AllergeneEntity vgAllergeneByIdAllergene) {
 		this.vgAllergeneByIdAllergene = vgAllergeneByIdAllergene;
 	}
 
@@ -96,7 +96,8 @@ public class ReportDataEnt {
 	public boolean equals(Object o) {
 		if (this == o) return true;
 		if (o == null || getClass() != o.getClass()) return false;
-		ReportDataEnt that = (ReportDataEnt) o;
+		ReportDataEntity
+				that = (ReportDataEntity) o;
 		return Objects.equals(idReport, that.idReport) &&
 				Objects.equals(idAllergene, that.idAllergene) &&
 				Objects.equals(tox, that.tox);

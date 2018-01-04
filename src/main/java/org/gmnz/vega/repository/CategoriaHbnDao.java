@@ -3,8 +3,8 @@ package org.gmnz.vega.repository;
 
 import org.gmnz.vega.domain.Allergene;
 import org.gmnz.vega.domain.Categoria;
-import org.gmnz.vega.integration.AllergeneEnt;
-import org.gmnz.vega.integration.CategoriaEnt;
+import org.gmnz.vega.integration.AllergeneEntity;
+import org.gmnz.vega.integration.CategoriaEntity;
 import org.hibernate.Session;
 import org.hibernate.query.Query;
 
@@ -19,16 +19,16 @@ public class CategoriaHbnDao extends BaseHibernateDao implements CategoriaDao {
 
 	@Override
 	public List<Categoria> findAll() {
-		List<CategoriaEnt> queryResult = wrapInTransaction(new TxManagedExecutor<List<CategoriaEnt>>() {
+		List<CategoriaEntity> queryResult = wrapInTransaction(new TxManagedExecutor<List<CategoriaEntity>>() {
 			@Override
-			protected List<CategoriaEnt> execute() {
-				Query<CategoriaEnt> q = session.createQuery("from Categoria c", CategoriaEnt.class);
+			protected List<CategoriaEntity> execute() {
+				Query<CategoriaEntity> q = session.createQuery("from Categoria c", CategoriaEntity.class);
 				return q.list();
 			}
 		});
 
 		List<Categoria> result = new ArrayList<>();
-		for (CategoriaEnt entity : queryResult) {
+		for (CategoriaEntity entity : queryResult) {
 			Categoria cat = new Categoria(entity.getNome());
 			result.add(cat);
 		}
@@ -37,8 +37,8 @@ public class CategoriaHbnDao extends BaseHibernateDao implements CategoriaDao {
 
 
 
-	private CategoriaEnt getSingleEntityByName(Session session, String nome) {
-		Query<CategoriaEnt> q = session.createQuery("select cat from Categoria cat left join fetch  cat.allergeni where cat.nome = :nome", CategoriaEnt.class);
+	private CategoriaEntity getSingleEntityByName(Session session, String nome) {
+		Query<CategoriaEntity> q = session.createQuery("select cat from Categoria cat left join fetch  cat.allergeni where cat.nome = :nome", CategoriaEntity.class);
 		q.setParameter("nome", nome);
 		try {
 			return q.getSingleResult();
@@ -51,17 +51,17 @@ public class CategoriaHbnDao extends BaseHibernateDao implements CategoriaDao {
 
 	@Override
 	public Categoria findByName(String name) {
-		CategoriaEnt entity = wrapInTransaction(new TxManagedExecutor<CategoriaEnt>() {
+		CategoriaEntity entity = wrapInTransaction(new TxManagedExecutor<CategoriaEntity>() {
 			@Override
-			protected CategoriaEnt execute() {
+			protected CategoriaEntity execute() {
 				return getSingleEntityByName(session, name);
 			}
 		});
 		Categoria categoria = null;
 		if (entity != null) {
 			categoria = new Categoria(entity.getNome());
-			for (AllergeneEnt allergeneEnt : entity.getAllergeni()) {
-				categoria.add(new Allergene(allergeneEnt.getNome()));
+			for (AllergeneEntity allergeneEntity : entity.getAllergeni()) {
+				categoria.add(new Allergene(allergeneEntity.getNome()));
 			}
 		}
 		return categoria;
@@ -71,18 +71,18 @@ public class CategoriaHbnDao extends BaseHibernateDao implements CategoriaDao {
 
 	@Override
 	public List<Categoria> findByPattern(String pattern) {
-		List<CategoriaEnt> queryResult = wrapInTransaction(new TxManagedExecutor<List<CategoriaEnt>>() {
+		List<CategoriaEntity> queryResult = wrapInTransaction(new TxManagedExecutor<List<CategoriaEntity>>() {
 			@Override
-			protected List<CategoriaEnt> execute() {
+			protected List<CategoriaEntity> execute() {
 				String query = "select categoria from Categoria categoria where categoria.nome like :pattern";
-				Query<CategoriaEnt> q = session.createQuery(query, CategoriaEnt.class);
+				Query<CategoriaEntity> q = session.createQuery(query, CategoriaEntity.class);
 				q.setParameter("pattern", pattern);
 				return q.getResultList();
 			}
 		});
 
 		List<Categoria> result = new ArrayList<>();
-		for (CategoriaEnt ae : queryResult) {
+		for (CategoriaEntity ae : queryResult) {
 			Categoria a = new Categoria(ae.getNome());
 			result.add(a);
 		}
@@ -94,15 +94,15 @@ public class CategoriaHbnDao extends BaseHibernateDao implements CategoriaDao {
 	private void addSingleEntity(Session s, Categoria c) {
 		if (getSingleEntityByName(s, c.getNome()) == null) {
 
-			CategoriaEnt entity = new CategoriaEnt();
+			CategoriaEntity entity = new CategoriaEntity();
 			entity.setId(UUID.randomUUID().toString());
 			entity.setNome(c.getNome());
 
-			Query<AllergeneEnt> query = s.createQuery("from Allergene aaa where aaa.nome = :nome", AllergeneEnt.class);
+			Query<AllergeneEntity> query = s.createQuery("from Allergene aaa where aaa.nome = :nome", AllergeneEntity.class);
 			for (Allergene a : c.getAllergeni()) {
 				query.setParameter("nome", a.getNome());
-				AllergeneEnt allergeneEnt = query.getSingleResult();
-				entity.getAllergeni().add(allergeneEnt);
+				AllergeneEntity allergeneEntity = query.getSingleResult();
+				entity.getAllergeni().add(allergeneEntity);
 			}
 
 			s.save(entity);
@@ -129,7 +129,7 @@ public class CategoriaHbnDao extends BaseHibernateDao implements CategoriaDao {
 		wrapInTransaction(new TxManagedExecutor<Void>() {
 			@Override
 			protected Void execute() {
-				CategoriaEnt entity = getSingleEntityByName(session, nome);
+				CategoriaEntity entity = getSingleEntityByName(session, nome);
 				if (entity != null) {
 					session.remove(entity);
 				}
@@ -145,7 +145,7 @@ public class CategoriaHbnDao extends BaseHibernateDao implements CategoriaDao {
 		wrapInTransaction(new TxManagedExecutor<Void>() {
 			@Override
 			protected Void execute() {
-				CategoriaEnt entity = getSingleEntityByName(session, nome);
+				CategoriaEntity entity = getSingleEntityByName(session, nome);
 				if (entity != null) {
 					entity.setNome(newName);
 					session.update(entity);
@@ -162,14 +162,14 @@ public class CategoriaHbnDao extends BaseHibernateDao implements CategoriaDao {
 		wrapInTransaction(new TxManagedExecutor<Void>() {
 			@Override
 			protected Void execute() {
-				CategoriaEnt entity = getSingleEntityByName(session, categoria.getNome());
+				CategoriaEntity entity = getSingleEntityByName(session, categoria.getNome());
 				if (entity != null) {
 					entity.getAllergeni().clear();
-					AllergeneEnt allergeneEnt;
-					Query<AllergeneEnt> allergeneQuery = session.createQuery("select allergene from Allergene allergene where allergene.nome = :nome", AllergeneEnt.class);
+					AllergeneEntity allergeneEntity;
+					Query<AllergeneEntity> allergeneQuery = session.createQuery("select allergene from Allergene allergene where allergene.nome = :nome", AllergeneEntity.class);
 					for (Allergene a : categoria.getAllergeni()) {
-						allergeneEnt = allergeneQuery.setParameter("nome", a.getNome()).getSingleResult();
-						entity.getAllergeni().add(allergeneEnt);
+						allergeneEntity = allergeneQuery.setParameter("nome", a.getNome()).getSingleResult();
+						entity.getAllergeni().add(allergeneEntity);
 					}
 					session.update(entity);
 				}

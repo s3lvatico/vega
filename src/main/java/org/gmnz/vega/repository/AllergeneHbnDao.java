@@ -2,7 +2,7 @@ package org.gmnz.vega.repository;
 
 
 import org.gmnz.vega.domain.Allergene;
-import org.gmnz.vega.integration.AllergeneEnt;
+import org.gmnz.vega.integration.AllergeneEntity;
 import org.hibernate.Session;
 import org.hibernate.query.Query;
 
@@ -19,16 +19,16 @@ public class AllergeneHbnDao extends BaseHibernateDao implements AllergeneDao {
 	@Override
 	public List<Allergene> findAll() {
 
-		List<AllergeneEnt> queryResult = wrapInTransaction(new TxManagedExecutor<List<AllergeneEnt>>() {
+		List<AllergeneEntity> queryResult = wrapInTransaction(new TxManagedExecutor<List<AllergeneEntity>>() {
 			@Override
-			protected List<AllergeneEnt> execute() {
-				Query<AllergeneEnt> q = session.createQuery("from Allergene a", AllergeneEnt.class);
+			protected List<AllergeneEntity> execute() {
+				Query<AllergeneEntity> q = session.createQuery("from Allergene a", AllergeneEntity.class);
 				return q.list();
 			}
 		});
 
 		List<Allergene> result = new ArrayList<>();
-		for (AllergeneEnt ae : queryResult) {
+		for (AllergeneEntity ae : queryResult) {
 			Allergene a = new Allergene(ae.getNome());
 			result.add(a);
 		}
@@ -39,9 +39,9 @@ public class AllergeneHbnDao extends BaseHibernateDao implements AllergeneDao {
 
 	@Override
 	public Allergene findByName(String name) {
-		AllergeneEnt entity = wrapInTransaction(new TxManagedExecutor<AllergeneEnt>() {
+		AllergeneEntity entity = wrapInTransaction(new TxManagedExecutor<AllergeneEntity>() {
 			@Override
-			protected AllergeneEnt execute() {
+			protected AllergeneEntity execute() {
 				return getSingleEntityByName(session, name);
 			}
 		});
@@ -52,18 +52,18 @@ public class AllergeneHbnDao extends BaseHibernateDao implements AllergeneDao {
 
 	@Override
 	public List<Allergene> findByPattern(String pattern) {
-		List<AllergeneEnt> queryResult = wrapInTransaction(new TxManagedExecutor<List<AllergeneEnt>>() {
+		List<AllergeneEntity> queryResult = wrapInTransaction(new TxManagedExecutor<List<AllergeneEntity>>() {
 			@Override
-			protected List<AllergeneEnt> execute() {
+			protected List<AllergeneEntity> execute() {
 				String query = "select allergene from Allergene allergene where allergene.nome like :pattern";
-				Query<AllergeneEnt> q = session.createQuery(query, AllergeneEnt.class);
+				Query<AllergeneEntity> q = session.createQuery(query, AllergeneEntity.class);
 				q.setParameter("pattern", pattern);
 				return q.getResultList();
 			}
 		});
 
 		List<Allergene> result = new ArrayList<>();
-		for (AllergeneEnt ae : queryResult) {
+		for (AllergeneEntity ae : queryResult) {
 			Allergene a = new Allergene(ae.getNome());
 			result.add(a);
 		}
@@ -72,8 +72,8 @@ public class AllergeneHbnDao extends BaseHibernateDao implements AllergeneDao {
 
 
 
-	private AllergeneEnt getSingleEntityByName(Session session, String nome) {
-		Query<AllergeneEnt> q = session.createQuery("select a from Allergene a where a.nome = :nome", AllergeneEnt.class);
+	private AllergeneEntity getSingleEntityByName(Session session, String nome) {
+		Query<AllergeneEntity> q = session.createQuery("select a from Allergene a where a.nome = :nome", AllergeneEntity.class);
 		q.setParameter("nome", nome);
 		try {
 			return q.getSingleResult();
@@ -86,7 +86,7 @@ public class AllergeneHbnDao extends BaseHibernateDao implements AllergeneDao {
 
 	private void addSingleEntity(Session s, Allergene a) {
 		if (getSingleEntityByName(s, a.getNome()) == null) {
-			AllergeneEnt entity = new AllergeneEnt();
+			AllergeneEntity entity = new AllergeneEntity();
 			entity.setId(UUID.randomUUID().toString());
 			entity.setNome(a.getNome());
 			s.save(entity);
@@ -128,7 +128,7 @@ public class AllergeneHbnDao extends BaseHibernateDao implements AllergeneDao {
 		wrapInTransaction(new TxManagedExecutor<Void>() {
 			@Override
 			protected Void execute() {
-				AllergeneEnt entity = getSingleEntityByName(session, nome);
+				AllergeneEntity entity = getSingleEntityByName(session, nome);
 				if (entity != null) {
 					session.remove(entity);
 				}
@@ -144,7 +144,7 @@ public class AllergeneHbnDao extends BaseHibernateDao implements AllergeneDao {
 		wrapInTransaction(new TxManagedExecutor<Void>() {
 			@Override
 			protected Void execute() {
-				AllergeneEnt entity = getSingleEntityByName(session, nome);
+				AllergeneEntity entity = getSingleEntityByName(session, nome);
 				if (entity != null) {
 					entity.setNome(newName);
 					session.update(entity);

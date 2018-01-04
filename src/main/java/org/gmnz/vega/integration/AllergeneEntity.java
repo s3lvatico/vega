@@ -10,7 +10,7 @@ import java.util.Objects;
 
 @Entity(name = "Allergene")
 @Table(name = "vg_allergene")
-public class AllergeneEnt {
+public class AllergeneEntity {
 
 	@Id
 	private String id;
@@ -48,7 +48,7 @@ public class AllergeneEnt {
 	public boolean equals(Object o) {
 		if (this == o) return true;
 		if (o == null || getClass() != o.getClass()) return false;
-		AllergeneEnt that = (AllergeneEnt) o;
+		AllergeneEntity that = (AllergeneEntity) o;
 		return Objects.equals(id, that.id);
 	}
 

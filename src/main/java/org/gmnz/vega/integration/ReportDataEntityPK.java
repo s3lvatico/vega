@@ -7,7 +7,7 @@ import java.io.Serializable;
 import java.util.Objects;
 
 
-public class ReportDataEntPK implements Serializable {
+public class ReportDataEntityPK implements Serializable {
 
 	@Column(name = "id_report", nullable = false, length = 36)
 	@Id
@@ -47,7 +47,7 @@ public class ReportDataEntPK implements Serializable {
 	public boolean equals(Object o) {
 		if (this == o) return true;
 		if (o == null || getClass() != o.getClass()) return false;
-		ReportDataEntPK that = (ReportDataEntPK) o;
+		ReportDataEntityPK that = (ReportDataEntityPK) o;
 		return Objects.equals(idReport, that.idReport) &&
 				Objects.equals(idAllergene, that.idAllergene);
 	}

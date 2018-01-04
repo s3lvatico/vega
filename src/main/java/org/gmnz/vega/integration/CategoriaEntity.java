@@ -9,7 +9,7 @@ import java.util.Objects;
 
 @Entity(name = "Categoria")
 @Table(name = "vg_categoria")
-public class CategoriaEnt {
+public class CategoriaEntity {
 	@Id
 	private String id;
 
@@ -20,11 +20,11 @@ public class CategoriaEnt {
 	@JoinTable(name = "vg_categoria_allergene",
 			joinColumns = {@JoinColumn(name = "id_categoria")},
 			inverseJoinColumns = {@JoinColumn(name = "id_allergene")})
-	private List<AllergeneEnt> allergeni;
+	private List<AllergeneEntity> allergeni;
 
 
 
-	public CategoriaEnt() {
+	public CategoriaEntity() {
 		this.allergeni = new ArrayList<>();
 	}
 
@@ -54,13 +54,13 @@ public class CategoriaEnt {
 
 
 
-	public List<AllergeneEnt> getAllergeni() {
+	public List<AllergeneEntity> getAllergeni() {
 		return allergeni;
 	}
 
 
 
-	public void setAllergeni(List<AllergeneEnt> allergeni) {
+	public void setAllergeni(List<AllergeneEntity> allergeni) {
 		this.allergeni = allergeni;
 	}
 
@@ -70,7 +70,7 @@ public class CategoriaEnt {
 	public boolean equals(Object o) {
 		if (this == o) return true;
 		if (o == null || getClass() != o.getClass()) return false;
-		CategoriaEnt that = (CategoriaEnt) o;
+		CategoriaEntity that = (CategoriaEntity) o;
 		return Objects.equals(id, that.id);
 	}
 
@@ -86,7 +86,7 @@ public class CategoriaEnt {
 
 	@Override
 	public String toString() {
-		return "CategoriaEnt{" +
+		return "CategoriaEntity{" +
 				"id='" + id + '\'' +
 				", nome='" + nome + '\'' +
 				", allergeni=" + allergeni +
