@@ -25,10 +25,7 @@ public class Allergene extends NamedEntity {
 
 
 
-	@Override
-	public int hashCode() {
-		return getNome().hashCode();
-	}
+
 
 
 

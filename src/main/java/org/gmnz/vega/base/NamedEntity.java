@@ -19,4 +19,11 @@ public class NamedEntity {
 	public String getNome() {
 		return nome;
 	}
+
+
+
+	@Override
+	public int hashCode() {
+		return getNome().hashCode();
+	}
 }

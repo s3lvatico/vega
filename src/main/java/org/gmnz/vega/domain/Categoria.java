@@ -22,13 +22,6 @@ public class Categoria extends AbstractListManagedPropertyHolder<Allergene> {
 
 
 	@Override
-	public int hashCode() {
-		return getNome().hashCode();
-	}
-
-
-
-	@Override
 	public boolean equals(Object obj) {
 		if (this == obj) return true;
 		if (obj == null || getClass() != obj.getClass()) return false;
