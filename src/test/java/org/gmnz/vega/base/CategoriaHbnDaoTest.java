@@ -61,6 +61,8 @@ public class CategoriaHbnDaoTest {
 		dao.delete(CARNI_TEST);
 	}
 
+
+
 	@Test
 	public void addAllergeneTest() {
 		Categoria carni = new Categoria(CARNI_TEST);
@@ -83,7 +85,9 @@ public class CategoriaHbnDaoTest {
 	}
 
 
-	@Test public void changeAllergeneList() {
+
+	@Test
+	public void changeAllergeneList() {
 		Categoria testCategoria = new Categoria("testCategoria");
 		Allergene a1 = new Allergene("a_uno");
 		Allergene a2 = new Allergene("a_due");

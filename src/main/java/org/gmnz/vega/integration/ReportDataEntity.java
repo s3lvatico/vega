@@ -23,11 +23,11 @@ public class ReportDataEntity {
 	private double tox;
 
 	@ManyToOne
-	@JoinColumn(name = "id_report", referencedColumnName = "id", nullable = false)
+	@JoinColumn(name = "id_report", referencedColumnName = "id", nullable = false, insertable = false, updatable = false)
 	private ReportEntity vgReportByIdReport;
 
 	@ManyToOne
-	@JoinColumn(name = "id_allergene", referencedColumnName = "id", nullable = false)
+	@JoinColumn(name = "id_allergene", referencedColumnName = "id", nullable = false, insertable = false, updatable = false)
 	private AllergeneEntity vgAllergeneByIdAllergene;
 
 
