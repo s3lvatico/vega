@@ -19,7 +19,9 @@ import java.util.List;
 public class CategoriaHbnDaoTest {
 
 	static final String CARNI_TEST = "CarniTest";
-	static final String CEREALI_TEST = "CerealiTest";
+	static final String CEREALI_TEST = "CategoriaCerealiTest";
+	private static final String TEST_CATEGORIA_NOME = "testCategoria";
+	private static final String TEST_CATEGORIA_NOME_UPD = "testCategoriaUPDATED";
 
 	private static HibernateUtil hibernateUtil;
 
@@ -42,11 +44,19 @@ public class CategoriaHbnDaoTest {
 
 	@Test
 	public void findAllTest() {
+		String categoriaTestName = "cat" + System.currentTimeMillis();
+		Categoria testCat = new Categoria(categoriaTestName);
+
 		CategoriaDao dao = new CategoriaHbnDao();
+
+		dao.create(testCat);
+
 		List<Categoria> categorie = dao.findAll();
-		for (Categoria categoria : categorie) {
-			System.out.println(categoria);
-		}
+
+		Assert.assertTrue(categorie.size() >= 1);
+
+		dao.delete(categoriaTestName);
+
 	}
 
 
@@ -125,38 +135,52 @@ public class CategoriaHbnDaoTest {
 	}
 
 
-/*
+
 	@Test
-	public void deletionTest() {
-		Categoria farina = new Categoria(CEREALI_TEST);
+	public void updateTest() {
+		Categoria testCategoria = new Categoria(TEST_CATEGORIA_NOME);
 		CategoriaDao dao = new CategoriaHbnDao();
-		dao.create(farina);
-		Assert.assertEquals(farina, dao.findByName(CEREALI_TEST));
+		dao.create(testCategoria);
+
+		dao.update(TEST_CATEGORIA_NOME, TEST_CATEGORIA_NOME_UPD);
+		Assert.assertNull(dao.findByName(TEST_CATEGORIA_NOME));
+		Assert.assertNotNull(dao.findByName(TEST_CATEGORIA_NOME_UPD));
+
+		dao.delete(TEST_CATEGORIA_NOME_UPD);
+	}
+
+
+
+	@Test
+	public void deletionSimpleTest() {
+		Categoria catCerealiTest = new Categoria(CEREALI_TEST);
+		CategoriaDao dao = new CategoriaHbnDao();
+		dao.create(catCerealiTest);
+		Assert.assertEquals(catCerealiTest, dao.findByName(CEREALI_TEST));
 		dao.delete(CEREALI_TEST);
 		Assert.assertNull(dao.findByName(CEREALI_TEST));
 	}
-*/
 
 
 
-/*	@Test
-	public void updateTest() {
-		final String ORZO_MODIFICATO = "orzoModificato";
-
-		Categoria orzo = new Categoria(ORZO);
+	@Test
+	public void deletionWithNonEmptyListTest() {
+		Categoria catCerealiTest = new Categoria(CEREALI_TEST);
 		CategoriaDao dao = new CategoriaHbnDao();
+		Allergene a1 = new Allergene("a_uno");
+		Allergene a2 = new Allergene("a_due");
 
-		// per consistenza nella gestione di eventuali errori precedenti
-		dao.delete(ORZO_MODIFICATO);
+		catCerealiTest.add(a1);
+		catCerealiTest.add(a2);
 
-		dao.create(orzo);
+		AllergeneDao allergeneDao = new AllergeneHbnDao();
 
-		dao.update(ORZO, ORZO_MODIFICATO);
-		Assert.assertNull(dao.findByName(ORZO));
-		Assert.assertNotNull(dao.findByName(ORZO_MODIFICATO));
+		allergeneDao.create(Arrays.asList(new Allergene[]{a1, a2}));
 
-		dao.delete(ORZO_MODIFICATO);
-	}*/
+		dao.create(catCerealiTest);
+
+		dao.delete(CEREALI_TEST);
+	}
 
 
 /*
