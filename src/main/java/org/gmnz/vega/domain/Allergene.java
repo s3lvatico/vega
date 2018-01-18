@@ -6,9 +6,23 @@ import org.gmnz.vega.base.NamedEntity;
 
 public class Allergene extends NamedEntity {
 
+	private Categoria categoria;
 
 	public Allergene(String nome) {
 		super(nome);
+		categoria = Categoria.DEFAULT_CATEGORIA;
+	}
+
+
+
+	public Categoria getCategoria() {
+		return categoria;
+	}
+
+
+
+	public void setCategoria(Categoria categoria) {
+		this.categoria = categoria;
 	}
 
 
@@ -32,7 +46,8 @@ public class Allergene extends NamedEntity {
 	@Override
 	public String toString() {
 		return "Allergene{" +
-				"nome='" + getNome() + '\'' +
+				"nome='" + getNome() + "\', " +
+				"categoria='" + getCategoria().getNome() + '\'' +
 				'}';
 	}
 }

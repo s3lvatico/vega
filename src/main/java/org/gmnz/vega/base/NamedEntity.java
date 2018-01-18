@@ -8,6 +8,7 @@ public class NamedEntity {
 
 	private String nome;
 
+	public static final String DEFAULT_CATEGORY_NAME = "DEFAULT_CATEGORY";
 
 
 	public NamedEntity(String nome) {

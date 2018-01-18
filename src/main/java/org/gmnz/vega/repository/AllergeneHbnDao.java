@@ -3,6 +3,7 @@ package org.gmnz.vega.repository;
 
 import org.gmnz.vega.domain.Allergene;
 import org.gmnz.vega.integration.AllergeneEntity;
+import org.gmnz.vega.integration.EntityFactory;
 import org.hibernate.Session;
 import org.hibernate.query.Query;
 
@@ -10,14 +11,13 @@ import javax.persistence.NoResultException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
-import java.util.UUID;
 
 
 public class AllergeneHbnDao extends BaseHibernateDao implements AllergeneDao {
 
 
 	@Override
-	public List<Allergene> findAll() {
+	public List<Allergene> findAll() throws DaoException {
 
 		List<AllergeneEntity> queryResult = wrapInTransaction(new TxManagedExecutor<List<AllergeneEntity>>() {
 			@Override
@@ -38,7 +38,7 @@ public class AllergeneHbnDao extends BaseHibernateDao implements AllergeneDao {
 
 
 	@Override
-	public Allergene findByName(String name) {
+	public Allergene findByName(String name) throws DaoException {
 		AllergeneEntity entity = wrapInTransaction(new TxManagedExecutor<AllergeneEntity>() {
 			@Override
 			protected AllergeneEntity execute() {
@@ -51,7 +51,7 @@ public class AllergeneHbnDao extends BaseHibernateDao implements AllergeneDao {
 
 
 	@Override
-	public List<Allergene> findByPattern(String pattern) {
+	public List<Allergene> findByPattern(String pattern) throws DaoException {
 		List<AllergeneEntity> queryResult = wrapInTransaction(new TxManagedExecutor<List<AllergeneEntity>>() {
 			@Override
 			protected List<AllergeneEntity> execute() {
@@ -72,23 +72,22 @@ public class AllergeneHbnDao extends BaseHibernateDao implements AllergeneDao {
 
 
 
-	private AllergeneEntity getSingleEntityByName(Session session, String nome) {
+	AllergeneEntity getSingleEntityByName(Session session, String nome) {
 		Query<AllergeneEntity> q = session.createQuery("select a from Allergene a where a.nome = :nome", AllergeneEntity.class);
 		q.setParameter("nome", nome);
 		try {
 			return q.getSingleResult();
 		} catch (NoResultException nre) {
+			// TODO warning
 			return null;
 		}
 	}
 
 
 
-	private void addSingleEntity(Session s, Allergene a) {
+	void addSingleEntity(Session s, Allergene a) {
 		if (getSingleEntityByName(s, a.getNome()) == null) {
-			AllergeneEntity entity = new AllergeneEntity();
-			entity.setId(UUID.randomUUID().toString());
-			entity.setNome(a.getNome());
+			AllergeneEntity entity = EntityFactory.getInstance().createAllergeneEntity(a.getNome());
 			s.save(entity);
 		}
 	}
@@ -96,7 +95,7 @@ public class AllergeneHbnDao extends BaseHibernateDao implements AllergeneDao {
 
 
 	@Override
-	public void create(Allergene allergene) {
+	public void create(Allergene allergene) throws DaoException {
 		wrapInTransaction(new TxManagedExecutor<Void>() {
 			@Override
 			protected Void execute() {
@@ -109,7 +108,7 @@ public class AllergeneHbnDao extends BaseHibernateDao implements AllergeneDao {
 
 
 	@Override
-	public void create(Collection<Allergene> allergeni) {
+	public void create(Collection<Allergene> allergeni) throws DaoException {
 		wrapInTransaction(new TxManagedExecutor<Void>() {
 			@Override
 			protected Void execute() {
@@ -124,7 +123,7 @@ public class AllergeneHbnDao extends BaseHibernateDao implements AllergeneDao {
 
 
 	@Override
-	public void delete(String nome) {
+	public void delete(String nome) throws DaoException {
 		wrapInTransaction(new TxManagedExecutor<Void>() {
 			@Override
 			protected Void execute() {
@@ -140,7 +139,7 @@ public class AllergeneHbnDao extends BaseHibernateDao implements AllergeneDao {
 
 
 	@Override
-	public void update(String nome, String newName) {
+	public void update(String nome, String newName) throws DaoException {
 		wrapInTransaction(new TxManagedExecutor<Void>() {
 			@Override
 			protected Void execute() {

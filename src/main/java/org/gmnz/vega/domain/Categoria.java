@@ -2,11 +2,14 @@ package org.gmnz.vega.domain;
 
 
 import org.gmnz.vega.base.AbstractListManagedPropertyHolder;
+import org.gmnz.vega.base.NamedEntity;
 
 import java.util.List;
 
 
 public class Categoria extends AbstractListManagedPropertyHolder<Allergene> {
+
+	public static final Categoria DEFAULT_CATEGORIA = new Categoria(NamedEntity.DEFAULT_CATEGORY_NAME);
 
 
 	public Categoria(String nome) {

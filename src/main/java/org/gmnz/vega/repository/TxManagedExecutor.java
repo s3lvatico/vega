@@ -11,7 +11,7 @@ abstract class TxManagedExecutor<R> {
 
 
 
-	protected abstract R execute();
+	protected abstract R execute() throws DaoException;
 
 
 }

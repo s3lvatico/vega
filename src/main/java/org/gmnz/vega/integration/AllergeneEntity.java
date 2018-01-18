@@ -1,10 +1,7 @@
 package org.gmnz.vega.integration;
 
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.util.Objects;
 
 
@@ -17,6 +14,23 @@ public class AllergeneEntity {
 
 	@Column(length = 45)
 	private String nome;
+
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "id_categoria", nullable = false)
+	private CategoriaEntity categoria;
+
+
+
+	public AllergeneEntity() {
+		this.categoria = CategoriaEntity.ENTITY_CATEGORIA_DEFAULT;
+	}
+
+
+
+	public AllergeneEntity(String nome) {
+		this();
+		this.nome = nome;
+	}
 
 
 
@@ -44,6 +58,18 @@ public class AllergeneEntity {
 
 
 
+	public CategoriaEntity getCategoria() {
+		return categoria;
+	}
+
+
+
+	public void setCategoria(CategoriaEntity categoria) {
+		this.categoria = categoria;
+	}
+
+
+
 	@Override
 	public boolean equals(Object o) {
 		if (this == o) return true;
@@ -58,4 +84,15 @@ public class AllergeneEntity {
 	public int hashCode() {
 		return Objects.hash(id);
 	}
+
+
+
+	@Override
+	public String toString() {
+		return "AllergeneEntity{" +
+				"id='" + id + '\'' +
+				", nome='" + nome + '\'' +
+				'}';
+	}
+
 }

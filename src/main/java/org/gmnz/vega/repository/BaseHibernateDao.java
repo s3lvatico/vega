@@ -36,7 +36,7 @@ class BaseHibernateDao {
 
 
 
-	protected <R> R wrapInTransaction(TxManagedExecutor<R> tme) {
+	protected <R> R wrapInTransaction(TxManagedExecutor<R> tme) throws DaoException {
 		session = sessionFactory.openSession();
 		tme.session = session;
 
@@ -51,7 +51,11 @@ class BaseHibernateDao {
 			return result;
 		} catch (Exception e) {
 			if (tx != null) tx.rollback();
-			throw e;
+			if (e instanceof DaoException) {
+				throw e;
+			} else {
+				throw new DaoException(e);
+			}
 		} finally {
 			if (session != null) {
 				session.close();

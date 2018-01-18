@@ -4,6 +4,7 @@ package org.gmnz.vega.base;
 import org.gmnz.vega.domain.Allergene;
 import org.gmnz.vega.repository.AllergeneDao;
 import org.gmnz.vega.repository.AllergeneHbnDao;
+import org.gmnz.vega.repository.DaoException;
 import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.BeforeClass;
@@ -40,7 +41,7 @@ public class AllergeneHbnDaoTest {
 
 
 	@Test
-	public void findAllTest() {
+	public void findAllTest() throws DaoException {
 		AllergeneDao dao = new AllergeneHbnDao();
 		List<Allergene> allergeni = dao.findAll();
 		for (Allergene a : allergeni) {
@@ -51,7 +52,7 @@ public class AllergeneHbnDaoTest {
 
 
 	@Test
-	public void createAndReadTest() {
+	public void createAndReadTest() throws DaoException {
 		Allergene avena = new Allergene(AVENA);
 
 		AllergeneDao dao = new AllergeneHbnDao();
@@ -67,7 +68,7 @@ public class AllergeneHbnDaoTest {
 
 
 	@Test
-	public void deletionTest() {
+	public void deletionTest() throws DaoException {
 		Allergene farina = new Allergene(FARINA);
 		AllergeneDao dao = new AllergeneHbnDao();
 		dao.create(farina);
@@ -79,7 +80,7 @@ public class AllergeneHbnDaoTest {
 
 
 	@Test
-	public void updateTest() {
+	public void updateTest() throws DaoException {
 		final String ORZO_MODIFICATO = "orzoModificato";
 
 		Allergene orzo = new Allergene(ORZO);
@@ -100,7 +101,7 @@ public class AllergeneHbnDaoTest {
 
 
 	@Test
-	public void bulkCreateTest() {
+	public void bulkCreateTest() throws DaoException {
 		Allergene farina = new Allergene(FARINA);
 		Allergene orzo = new Allergene(ORZO);
 		Allergene patate = new Allergene(PATATE);

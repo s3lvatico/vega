@@ -29,8 +29,8 @@ public class AllergeneTest {
 	@Test
 	public void testToString() {
 		Allergene x = new Allergene("x");
-		String strX = "Allergene{nome='x'}";
-		Assert.assertEquals(strX, x.toString());
+		String expected = "Allergene{nome='x', categoria='DEFAULT_CATEGORY'}";
+		Assert.assertEquals(expected, x.toString());
 	}
 
 	@Test

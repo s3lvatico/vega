@@ -3,23 +3,21 @@ package org.gmnz.vega.base;
 
 import org.gmnz.vega.domain.Allergene;
 import org.gmnz.vega.domain.Categoria;
-import org.gmnz.vega.repository.AllergeneDao;
-import org.gmnz.vega.repository.AllergeneHbnDao;
 import org.gmnz.vega.repository.CategoriaDao;
 import org.gmnz.vega.repository.CategoriaHbnDao;
+import org.gmnz.vega.repository.DaoException;
 import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import java.util.Arrays;
 import java.util.List;
 
 
 public class CategoriaHbnDaoTest {
 
-	static final String CARNI_TEST = "CarniTest";
-	static final String CEREALI_TEST = "CategoriaCerealiTest";
+	private static final String CARNI_TEST = "CarniTest";
+	private static final String CEREALI_TEST = "CategoriaCerealiTest";
 	private static final String TEST_CATEGORIA_NOME = "testCategoria";
 	private static final String TEST_CATEGORIA_NOME_UPD = "testCategoriaUPDATED";
 
@@ -43,33 +41,65 @@ public class CategoriaHbnDaoTest {
 
 
 	@Test
-	public void findAllTest() {
-		String categoriaTestName = "cat" + System.currentTimeMillis();
-		Categoria testCat = new Categoria(categoriaTestName);
-
+	public void findAllTest() throws DaoException {
 		CategoriaDao dao = new CategoriaHbnDao();
-
-		dao.create(testCat);
-
 		List<Categoria> categorie = dao.findAll();
-
-		Assert.assertTrue(categorie.size() >= 1);
-
-		dao.delete(categoriaTestName);
-
+		Assert.assertTrue(categorie.size() >= 0);
 	}
 
 
 
 	@Test
-	public void createAndReadTest() {
-		Categoria carni = new Categoria(CARNI_TEST);
+	public void findByName() throws DaoException {
+		final String categoryName = "DEFAULT_CATEGORY";
 		CategoriaDao dao = new CategoriaHbnDao();
-		dao.create(carni);
-		Categoria actual = dao.findByName(CARNI_TEST);
-		Assert.assertEquals(carni, actual);
-		dao.delete(CARNI_TEST);
+
+		Assert.assertNull(dao.findByName(null));
+		Assert.assertNull(dao.findByName(""));
+		Assert.assertNull(dao.findByName("non-existent-category"));
+
+		Assert.assertNotNull(dao.findByName(categoryName));
 	}
+
+
+
+	@Test
+	public void create() throws DaoException {
+		CategoriaDao dao = new CategoriaHbnDao();
+		{
+			Categoria c = new Categoria("DEFAULT_CATEGORY");
+			boolean expectedExceptionThrown = false;
+			try {
+				dao.create(c);
+			} catch (DaoException e) {
+				expectedExceptionThrown = true;
+			} finally {
+				Assert.assertTrue(expectedExceptionThrown);
+			}
+		}
+
+		Categoria c = new Categoria("categoriaTest");
+		dao.create(c);
+		Assert.assertNotNull(dao.findByName("categoriaTest"));
+		// TODO eliminare la categoria di test appena creata, per lasciare il db in uno stato consistente
+
+		Categoria c2 = new Categoria("c2");
+		Allergene c2_a1 = new Allergene("c2_a1");
+		Allergene c2_a2 = new Allergene("c2_a2");
+		c2.add(c2_a1);
+		c2.add(c2_a2);
+		c2_a1.setCategoria(c2);
+		c2_a2.setCategoria(c2);
+
+		dao.create(c2);
+
+		Categoria c2Actual = dao.findByName("c2");
+		Assert.assertNotNull(c2Actual);
+		Assert.assertEquals(2, c2Actual.getAllergeni().size());
+
+		// TODO pulizia
+	}
+/*
 
 
 
@@ -107,11 +137,15 @@ public class CategoriaHbnDaoTest {
 		testCategoria.add(a1);
 		testCategoria.add(a2);
 
-		AllergeneDao allergeneDao = new AllergeneHbnDao();
-		allergeneDao.create(Arrays.asList(a1, a2, a3, a4));
+		a1.setCategoria(testCategoria);
+		a2.setCategoria(testCategoria);
 
 		CategoriaDao categoriaDao = new CategoriaHbnDao();
 		categoriaDao.create(testCategoria);
+
+		AllergeneDao allergeneDao = new AllergeneHbnDao();
+		allergeneDao.create(Arrays.asList(a1, a2, a3, a4));
+
 
 		testCategoria.remove(a1);
 		testCategoria.remove(a2);
@@ -182,6 +216,7 @@ public class CategoriaHbnDaoTest {
 		dao.delete(CEREALI_TEST);
 	}
 
+*/
 
 /*
 

@@ -10,22 +10,35 @@ import java.util.Objects;
 @Entity(name = "Categoria")
 @Table(name = "vg_categoria")
 public class CategoriaEntity {
+
+	public static final CategoriaEntity ENTITY_CATEGORIA_DEFAULT;
+
+	static {
+		ENTITY_CATEGORIA_DEFAULT = new CategoriaEntity();
+		ENTITY_CATEGORIA_DEFAULT.id = "00000000-0000-0000-0000-000000000000";
+	}
+
+
 	@Id
 	private String id;
 
 	@Column(name = "nome", nullable = false)
 	private String nome;
 
-	@OneToMany
-	@JoinTable(name = "vg_categoria_allergene",
-			joinColumns = {@JoinColumn(name = "id_categoria")},
-			inverseJoinColumns = {@JoinColumn(name = "id_allergene")})
+	@OneToMany(mappedBy = "categoria", fetch = FetchType.EAGER)
 	private List<AllergeneEntity> allergeni;
 
 
 
 	public CategoriaEntity() {
 		this.allergeni = new ArrayList<>();
+	}
+
+
+
+	public CategoriaEntity(String nome) {
+		this();
+		this.nome = nome;
 	}
 
 
@@ -92,4 +105,5 @@ public class CategoriaEntity {
 				", allergeni=" + allergeni +
 				'}';
 	}
+
 }

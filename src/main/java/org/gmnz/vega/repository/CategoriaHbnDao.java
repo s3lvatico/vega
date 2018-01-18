@@ -5,20 +5,20 @@ import org.gmnz.vega.domain.Allergene;
 import org.gmnz.vega.domain.Categoria;
 import org.gmnz.vega.integration.AllergeneEntity;
 import org.gmnz.vega.integration.CategoriaEntity;
+import org.gmnz.vega.integration.EntityFactory;
 import org.hibernate.Session;
 import org.hibernate.query.Query;
 
 import javax.persistence.NoResultException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
 
 
 public class CategoriaHbnDao extends BaseHibernateDao implements CategoriaDao {
 
 
 	@Override
-	public List<Categoria> findAll() {
+	public List<Categoria> findAll() throws DaoException {
 		List<CategoriaEntity> queryResult = wrapInTransaction(new TxManagedExecutor<List<CategoriaEntity>>() {
 			@Override
 			protected List<CategoriaEntity> execute() {
@@ -30,6 +30,13 @@ public class CategoriaHbnDao extends BaseHibernateDao implements CategoriaDao {
 		List<Categoria> result = new ArrayList<>();
 		for (CategoriaEntity entity : queryResult) {
 			Categoria cat = new Categoria(entity.getNome());
+/*
+			for (AllergeneEntity allergeneEntity : entity.getAllergeni()) {
+				Allergene allergeneBO = new Allergene(allergeneEntity.getNome());
+				allergeneBO.setCategoria(cat);
+				cat.add(allergeneBO);
+			}
+*/
 			result.add(cat);
 		}
 		return result;
@@ -50,7 +57,10 @@ public class CategoriaHbnDao extends BaseHibernateDao implements CategoriaDao {
 
 
 	@Override
-	public Categoria findByName(String name) {
+	public Categoria findByName(String name) throws DaoException {
+		if (name == null || name.length() == 0) {
+			return null;
+		}
 		CategoriaEntity entity = wrapInTransaction(new TxManagedExecutor<CategoriaEntity>() {
 			@Override
 			protected CategoriaEntity execute() {
@@ -61,7 +71,9 @@ public class CategoriaHbnDao extends BaseHibernateDao implements CategoriaDao {
 		if (entity != null) {
 			categoria = new Categoria(entity.getNome());
 			for (AllergeneEntity allergeneEntity : entity.getAllergeni()) {
-				categoria.add(new Allergene(allergeneEntity.getNome()));
+				Allergene allergeneBO = new Allergene(allergeneEntity.getNome());
+				allergeneBO.setCategoria(categoria);
+				categoria.add(allergeneBO);
 			}
 		}
 		return categoria;
@@ -69,6 +81,7 @@ public class CategoriaHbnDao extends BaseHibernateDao implements CategoriaDao {
 
 
 
+/*
 	@Override
 	public List<Categoria> findByPattern(String pattern) {
 		List<CategoriaEntity> queryResult = wrapInTransaction(new TxManagedExecutor<List<CategoriaEntity>>() {
@@ -88,35 +101,63 @@ public class CategoriaHbnDao extends BaseHibernateDao implements CategoriaDao {
 		}
 		return result;
 	}
+*/
 
 
-
-	private void addSingleEntity(Session s, Categoria c) {
-		if (getSingleEntityByName(s, c.getNome()) == null) {
-
-			CategoriaEntity entity = new CategoriaEntity();
-			entity.setId(UUID.randomUUID().toString());
-			entity.setNome(c.getNome());
-
-			Query<AllergeneEntity> query = s.createQuery("from Allergene aaa where aaa.nome = :nome", AllergeneEntity.class);
-			for (Allergene a : c.getAllergeni()) {
-				query.setParameter("nome", a.getNome());
-				AllergeneEntity allergeneEntity = query.getSingleResult();
-				entity.getAllergeni().add(allergeneEntity);
-			}
-
-			s.save(entity);
-		}
-	}
+//	private void addSingleEntity(Session s, Categoria c) {
+//		if (getSingleEntityByName(s, c.getNome()) == null) {
+//
+//			CategoriaEntity entity = new CategoriaEntity();
+//			entity.setId(UUID.randomUUID().toString());
+//			entity.setNome(c.getNome());
+//
+//			Query<AllergeneEntity> query = s.createQuery("from Allergene aaa where aaa.nome = :nome", AllergeneEntity.class);
+//			for (Allergene a : c.getAllergeni()) {
+//				query.setParameter("nome", a.getNome());
+//				AllergeneEntity allergeneEntity = query.getSingleResult();
+//				entity.getAllergeni().add(allergeneEntity);
+//			}
+//
+//			s.save(entity);
+//		}
+//	}
 
 
 
 	@Override
-	public void create(Categoria categoria) {
+	public void create(Categoria categoria) throws DaoException {
 		wrapInTransaction(new TxManagedExecutor<Void>() {
 			@Override
-			protected Void execute() {
-				addSingleEntity(session, categoria);
+			protected Void execute() throws DaoException {
+				if (getSingleEntityByName(session, categoria.getNome()) == null) {
+
+					CategoriaEntity categoriaEntity = EntityFactory.getInstance().createCategoriaEntity(categoria.getNome());
+
+					// WARN: HHH000437: Attempting to save one or more entities that have a non-nullable association with
+					// an unsaved transient entity. The unsaved transient entity must be saved in an operation prior
+					// to saving these dependent entities
+
+					session.save(categoriaEntity);
+
+					AllergeneHbnDao allergeneDao = new AllergeneHbnDao();
+
+					AllergeneEntity allergeneEntity;
+					for (Allergene a : categoria.getAllergeni()) {
+						allergeneEntity = allergeneDao.getSingleEntityByName(session, a.getNome());
+						if (allergeneEntity != null) {
+							allergeneEntity.setCategoria(categoriaEntity);
+							session.merge(allergeneEntity);
+						} else {
+							allergeneEntity = EntityFactory.getInstance().createAllergeneEntity(a.getNome());
+							allergeneEntity.setCategoria(categoriaEntity);
+							session.save(allergeneEntity);
+						}
+						categoriaEntity.getAllergeni().add(allergeneEntity);
+					}
+					session.update(categoriaEntity);
+				} else {
+					throw new DaoException("specified category <" + categoria.getNome() + "> already exists");
+				}
 				return null;
 			}
 		});
@@ -125,7 +166,7 @@ public class CategoriaHbnDao extends BaseHibernateDao implements CategoriaDao {
 
 
 	@Override
-	public void delete(String nome) {
+	public void delete(String nome) throws DaoException {
 		wrapInTransaction(new TxManagedExecutor<Void>() {
 			@Override
 			protected Void execute() {
@@ -141,7 +182,7 @@ public class CategoriaHbnDao extends BaseHibernateDao implements CategoriaDao {
 
 
 	@Override
-	public void update(String nome, String newName) {
+	public void updateRename(String nome, String newName) throws DaoException {
 		wrapInTransaction(new TxManagedExecutor<Void>() {
 			@Override
 			protected Void execute() {
@@ -158,7 +199,7 @@ public class CategoriaHbnDao extends BaseHibernateDao implements CategoriaDao {
 
 
 	@Override
-	public void update(Categoria categoria) {
+	public void updateAllergeni(Categoria categoria) throws DaoException {
 		wrapInTransaction(new TxManagedExecutor<Void>() {
 			@Override
 			protected Void execute() {
