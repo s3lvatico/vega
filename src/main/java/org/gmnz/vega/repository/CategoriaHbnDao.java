@@ -44,6 +44,19 @@ public class CategoriaHbnDao extends BaseHibernateDao implements CategoriaDao {
 
 
 
+	boolean existsByName(Session session, String nome) {
+		Query<CategoriaEntity> q = session.createQuery("select cat from Categoria cat where cat.nome = :nome", CategoriaEntity.class);
+		q.setParameter("nome", nome);
+		try {
+			q.getSingleResult();
+			return true;
+		} catch (NoResultException e) {
+			return false;
+		}
+	}
+
+
+
 	private CategoriaEntity getSingleEntityByName(Session session, String nome) {
 		Query<CategoriaEntity> q = session.createQuery("select cat from Categoria cat left join fetch  cat.allergeni where cat.nome = :nome", CategoriaEntity.class);
 		q.setParameter("nome", nome);

@@ -1,6 +1,7 @@
 package org.gmnz.vega.repository;
 
 
+import org.gmnz.vega.base.VegaUtil;
 import org.gmnz.vega.domain.Allergene;
 import org.gmnz.vega.integration.AllergeneEntity;
 import org.gmnz.vega.integration.EntityFactory;
@@ -37,6 +38,49 @@ public class AllergeneHbnDao extends BaseHibernateDao implements AllergeneDao {
 
 
 
+	AllergeneEntity getSingleEntityByName(Session session, String nome) {
+		Query<AllergeneEntity> q = session.createQuery("select a from Allergene a where a.nome = :nome", AllergeneEntity.class);
+		q.setParameter("nome", nome);
+		try {
+			return q.getSingleResult();
+		} catch (NoResultException nre) {
+			return null;
+		}
+	}
+
+
+
+	void addSingleEntity(Session s, Allergene a) {
+		if (getSingleEntityByName(s, a.getNome()) != null) {
+			return;
+		}
+
+		CategoriaHbnDao categoriaDao = new CategoriaHbnDao();
+		if (categoriaDao.existsByName(s, a.getCategoria().getNome())) {
+			AllergeneEntity entity = EntityFactory.getInstance().createAllergeneEntity(a.getNome());
+			// TODO recupera la categoria e associala all'entità AllergeneEntity
+			s.save(entity);
+		}
+	}
+
+
+
+	@Override
+	public void create(Allergene allergene) throws DaoException {
+		if (allergene == null || VegaUtil.stringNullOrEmpty(allergene.getNome())) {
+			return;
+		}
+		wrapInTransaction(new TxManagedExecutor<Void>() {
+			@Override
+			protected Void execute() {
+				addSingleEntity(session, allergene);
+				return null;
+			}
+		});
+	}
+
+
+
 	@Override
 	public Allergene findByName(String name) throws DaoException {
 		AllergeneEntity entity = wrapInTransaction(new TxManagedExecutor<AllergeneEntity>() {
@@ -49,7 +93,7 @@ public class AllergeneHbnDao extends BaseHibernateDao implements AllergeneDao {
 	}
 
 
-
+/*
 	@Override
 	public List<Allergene> findByPattern(String pattern) throws DaoException {
 		List<AllergeneEntity> queryResult = wrapInTransaction(new TxManagedExecutor<List<AllergeneEntity>>() {
@@ -69,41 +113,7 @@ public class AllergeneHbnDao extends BaseHibernateDao implements AllergeneDao {
 		}
 		return result;
 	}
-
-
-
-	AllergeneEntity getSingleEntityByName(Session session, String nome) {
-		Query<AllergeneEntity> q = session.createQuery("select a from Allergene a where a.nome = :nome", AllergeneEntity.class);
-		q.setParameter("nome", nome);
-		try {
-			return q.getSingleResult();
-		} catch (NoResultException nre) {
-			// TODO warning
-			return null;
-		}
-	}
-
-
-
-	void addSingleEntity(Session s, Allergene a) {
-		if (getSingleEntityByName(s, a.getNome()) == null) {
-			AllergeneEntity entity = EntityFactory.getInstance().createAllergeneEntity(a.getNome());
-			s.save(entity);
-		}
-	}
-
-
-
-	@Override
-	public void create(Allergene allergene) throws DaoException {
-		wrapInTransaction(new TxManagedExecutor<Void>() {
-			@Override
-			protected Void execute() {
-				addSingleEntity(session, allergene);
-				return null;
-			}
-		});
-	}
+*/
 
 
 

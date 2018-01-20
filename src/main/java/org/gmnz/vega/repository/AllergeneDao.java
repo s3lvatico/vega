@@ -13,7 +13,7 @@ public interface AllergeneDao {
 
 	Allergene findByName(String name)throws DaoException;
 
-	List<Allergene> findByPattern(String pattern)throws DaoException;
+	//List<Allergene> findByPattern(String pattern)throws DaoException;
 
 	void create(Allergene allergene)throws DaoException;
 
