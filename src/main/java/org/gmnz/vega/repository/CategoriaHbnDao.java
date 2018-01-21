@@ -19,24 +19,17 @@ public class CategoriaHbnDao extends BaseHibernateDao implements CategoriaDao {
 
 	@Override
 	public List<Categoria> findAll() throws DaoException {
-		List<CategoriaEntity> queryResult = wrapInTransaction(new TxManagedExecutor<List<CategoriaEntity>>() {
+		List<String> queryResult = wrapInTransaction(new TxManagedExecutor<List<String>>() {
 			@Override
-			protected List<CategoriaEntity> execute() {
-				Query<CategoriaEntity> q = session.createQuery("from Categoria c", CategoriaEntity.class);
+			protected List<String> execute() {
+				Query<String> q = session.createQuery("select c.nome from Categoria c", String.class);
 				return q.list();
 			}
 		});
 
 		List<Categoria> result = new ArrayList<>();
-		for (CategoriaEntity entity : queryResult) {
-			Categoria cat = new Categoria(entity.getNome());
-/*
-			for (AllergeneEntity allergeneEntity : entity.getAllergeni()) {
-				Allergene allergeneBO = new Allergene(allergeneEntity.getNome());
-				allergeneBO.setCategoria(cat);
-				cat.add(allergeneBO);
-			}
-*/
+		for (String entity : queryResult) {
+			Categoria cat = new Categoria(entity);
 			result.add(cat);
 		}
 		return result;
@@ -57,7 +50,7 @@ public class CategoriaHbnDao extends BaseHibernateDao implements CategoriaDao {
 
 
 
-	private CategoriaEntity getSingleEntityByName(Session session, String nome) {
+	CategoriaEntity getSingleEntityByName(Session session, String nome) {
 		Query<CategoriaEntity> q = session.createQuery("select cat from Categoria cat left join fetch  cat.allergeni where cat.nome = :nome", CategoriaEntity.class);
 		q.setParameter("nome", nome);
 		try {

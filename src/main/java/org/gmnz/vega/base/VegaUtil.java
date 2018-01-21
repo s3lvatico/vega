@@ -11,4 +11,11 @@ public class VegaUtil {
 		return s.length() == 0;
 	}
 
+
+
+	public static String normalizeString(String s) {
+		if (s == null) return "";
+		else return s.trim();
+	}
+
 }

@@ -3,7 +3,9 @@ package org.gmnz.vega.repository;
 
 import org.gmnz.vega.base.VegaUtil;
 import org.gmnz.vega.domain.Allergene;
+import org.gmnz.vega.domain.Categoria;
 import org.gmnz.vega.integration.AllergeneEntity;
+import org.gmnz.vega.integration.CategoriaEntity;
 import org.gmnz.vega.integration.EntityFactory;
 import org.hibernate.Session;
 import org.hibernate.query.Query;
@@ -39,7 +41,8 @@ public class AllergeneHbnDao extends BaseHibernateDao implements AllergeneDao {
 
 
 	AllergeneEntity getSingleEntityByName(Session session, String nome) {
-		Query<AllergeneEntity> q = session.createQuery("select a from Allergene a where a.nome = :nome", AllergeneEntity.class);
+		nome = VegaUtil.normalizeString(nome);
+		Query<AllergeneEntity> q = session.createQuery("select a from Allergene a join fetch a.categoria where a.nome = :nome", AllergeneEntity.class);
 		q.setParameter("nome", nome);
 		try {
 			return q.getSingleResult();
@@ -56,10 +59,12 @@ public class AllergeneHbnDao extends BaseHibernateDao implements AllergeneDao {
 		}
 
 		CategoriaHbnDao categoriaDao = new CategoriaHbnDao();
-		if (categoriaDao.existsByName(s, a.getCategoria().getNome())) {
-			AllergeneEntity entity = EntityFactory.getInstance().createAllergeneEntity(a.getNome());
-			// TODO recupera la categoria e associala all'entità AllergeneEntity
-			s.save(entity);
+		String nomeCategoria = a.getCategoria().getNome();
+		if (categoriaDao.existsByName(s, nomeCategoria)) {
+			AllergeneEntity allergeneEntity = EntityFactory.getInstance().createAllergeneEntity(a.getNome());
+			CategoriaEntity categoriaEntity = categoriaDao.getSingleEntityByName(s, nomeCategoria);
+			allergeneEntity.setCategoria(categoriaEntity);
+			s.save(allergeneEntity);
 		}
 	}
 
@@ -89,7 +94,13 @@ public class AllergeneHbnDao extends BaseHibernateDao implements AllergeneDao {
 				return getSingleEntityByName(session, name);
 			}
 		});
-		return entity != null ? new Allergene(entity.getNome()) : null;
+		Allergene allergene = null;
+		if (entity != null) {
+			allergene = new Allergene(entity.getNome());
+			Categoria categoria = new Categoria(entity.getCategoria().getNome());
+			allergene.setCategoria(categoria);
+		}
+		return allergene;
 	}
 
 
@@ -133,6 +144,35 @@ public class AllergeneHbnDao extends BaseHibernateDao implements AllergeneDao {
 
 
 	@Override
+	public void update(String nome, String newName) throws DaoException {
+		if (VegaUtil.stringNullOrEmpty(nome) || VegaUtil.stringNullOrEmpty(newName)) {
+			String errorMessage = String.format("Can't perform update operation because either source entity name [%s] or target entity name [%s] are null or empty", nome, newName);
+			throw new DaoException(errorMessage);
+		}
+		wrapInTransaction(new TxManagedExecutor<Void>() {
+			@Override
+			protected Void execute() throws DaoException {
+				AllergeneEntity srcEntity = getSingleEntityByName(session, nome);
+				boolean srcEntityExists = srcEntity != null;
+				if (!srcEntityExists) {
+					throw new DaoException("Can't rename non existent entity <" + nome + ">.");
+				}
+				AllergeneEntity tgtEntity = getSingleEntityByName(session, newName);
+				if (tgtEntity == null) {
+					srcEntity.setNome(newName);
+					session.update(srcEntity);
+				} else {
+					String errorMessage = String.format("Can't rename <%s> to <%s>. Target entity already exists.", nome, newName);
+					throw new DaoException(errorMessage);
+				}
+				return null;
+			}
+		});
+	}
+
+
+
+	@Override
 	public void delete(String nome) throws DaoException {
 		wrapInTransaction(new TxManagedExecutor<Void>() {
 			@Override
@@ -146,21 +186,5 @@ public class AllergeneHbnDao extends BaseHibernateDao implements AllergeneDao {
 		});
 	}
 
-
-
-	@Override
-	public void update(String nome, String newName) throws DaoException {
-		wrapInTransaction(new TxManagedExecutor<Void>() {
-			@Override
-			protected Void execute() {
-				AllergeneEntity entity = getSingleEntityByName(session, nome);
-				if (entity != null) {
-					entity.setNome(newName);
-					session.update(entity);
-				}
-				return null;
-			}
-		});
-	}
 
 }
