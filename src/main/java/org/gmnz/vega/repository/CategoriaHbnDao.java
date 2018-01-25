@@ -1,6 +1,7 @@
 package org.gmnz.vega.repository;
 
 
+import org.gmnz.vega.base.VegaUtil;
 import org.gmnz.vega.domain.Allergene;
 import org.gmnz.vega.domain.Categoria;
 import org.gmnz.vega.integration.AllergeneEntity;
@@ -64,9 +65,10 @@ public class CategoriaHbnDao extends BaseHibernateDao implements CategoriaDao {
 
 	@Override
 	public Categoria findByName(String name) throws DaoException {
-		if (name == null || name.length() == 0) {
+		if (VegaUtil.stringNullOrEmpty(name)) {
 			return null;
 		}
+
 		CategoriaEntity entity = wrapInTransaction(new TxManagedExecutor<CategoriaEntity>() {
 			@Override
 			protected CategoriaEntity execute() {
