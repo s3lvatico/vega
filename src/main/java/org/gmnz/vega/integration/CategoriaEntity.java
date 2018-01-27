@@ -1,6 +1,8 @@
 package org.gmnz.vega.integration;
 
 
+import org.gmnz.vega.base.NamedEntity;
+
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -16,6 +18,7 @@ public class CategoriaEntity {
 	static {
 		ENTITY_CATEGORIA_DEFAULT = new CategoriaEntity();
 		ENTITY_CATEGORIA_DEFAULT.id = "00000000-0000-0000-0000-000000000000";
+		ENTITY_CATEGORIA_DEFAULT.nome = NamedEntity.DEFAULT_CATEGORY_NAME;
 	}
 
 

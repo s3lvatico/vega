@@ -53,19 +53,25 @@ public class AllergeneHbnDao extends BaseHibernateDao implements AllergeneDao {
 
 
 
-	void addSingleEntity(Session s, Allergene a) {
-		if (getSingleEntityByName(s, a.getNome()) != null) {
-			return;
+	void addSingleEntity(Session session, Allergene a) throws DaoException {
+		if (getSingleEntityByName(session, a.getNome()) != null) {
+			throw new DaoException("Specified Allergene is already present in the system.");
 		}
 
+		if (a.getCategoria() == null) {
+			a.setCategoria(Categoria.DEFAULT_CATEGORIA);
+		}
 		CategoriaHbnDao categoriaDao = new CategoriaHbnDao();
 		String nomeCategoria = a.getCategoria().getNome();
-		if (categoriaDao.existsByName(s, nomeCategoria)) {
-			AllergeneEntity allergeneEntity = EntityFactory.getInstance().createAllergeneEntity(a.getNome());
-			CategoriaEntity categoriaEntity = categoriaDao.getSingleEntityByName(s, nomeCategoria);
-			allergeneEntity.setCategoria(categoriaEntity);
-			s.save(allergeneEntity);
+		AllergeneEntity allergeneEntity = EntityFactory.getInstance().createAllergeneEntity(a.getNome());
+		CategoriaEntity categoriaEntity;
+		if (categoriaDao.existsByName(session, nomeCategoria)) {
+			categoriaEntity = categoriaDao.getSingleEntityByName(session, nomeCategoria);
+		} else {
+			categoriaEntity = CategoriaEntity.ENTITY_CATEGORIA_DEFAULT;
 		}
+		allergeneEntity.setCategoria(categoriaEntity);
+		session.save(allergeneEntity);
 	}
 
 
@@ -73,11 +79,11 @@ public class AllergeneHbnDao extends BaseHibernateDao implements AllergeneDao {
 	@Override
 	public void create(Allergene allergene) throws DaoException {
 		if (allergene == null || VegaUtil.stringNullOrEmpty(allergene.getNome())) {
-			return;
+			throw new DaoException("Specified Allergene was null or had an empty name");
 		}
 		wrapInTransaction(new TxManagedExecutor<Void>() {
 			@Override
-			protected Void execute() {
+			protected Void execute() throws DaoException {
 				addSingleEntity(session, allergene);
 				return null;
 			}
@@ -132,9 +138,11 @@ public class AllergeneHbnDao extends BaseHibernateDao implements AllergeneDao {
 	public void create(Collection<Allergene> allergeni) throws DaoException {
 		wrapInTransaction(new TxManagedExecutor<Void>() {
 			@Override
-			protected Void execute() {
+			protected Void execute() throws DaoException {
 				for (Allergene a : allergeni) {
-					addSingleEntity(session, a);
+					if (a != null) {
+						addSingleEntity(session, a);
+					}
 				}
 				return null;
 			}
@@ -174,6 +182,9 @@ public class AllergeneHbnDao extends BaseHibernateDao implements AllergeneDao {
 
 	@Override
 	public void delete(String nome) throws DaoException {
+		if (VegaUtil.stringNullOrEmpty(nome)) {
+			return;
+		}
 		wrapInTransaction(new TxManagedExecutor<Void>() {
 			@Override
 			protected Void execute() {
