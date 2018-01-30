@@ -134,6 +134,12 @@ public class CategoriaHbnDao extends BaseHibernateDao implements CategoriaDao {
 
 	@Override
 	public void create(Categoria categoria) throws DaoException {
+		if (categoria == null) {
+			throw new DaoException("null business object specified");
+		}
+		if (VegaUtil.stringNullOrEmpty(categoria.getNome())) {
+			throw new DaoException("null or empty name specified for the new Categoria");
+		}
 		wrapInTransaction(new TxManagedExecutor<Void>() {
 			@Override
 			protected Void execute() throws DaoException {
@@ -204,7 +210,10 @@ public class CategoriaHbnDao extends BaseHibernateDao implements CategoriaDao {
 	@Override
 	public void updateAllergeni(Categoria categoria) throws DaoException {
 		if (categoria == null) {
-			return;
+			throw new DaoException("null business object specified");
+		}
+		if (VegaUtil.stringNullOrEmpty(categoria.getNome())) {
+			throw new DaoException("null or empty name specified for the new Categoria");
 		}
 		wrapInTransaction(new TxManagedExecutor<Void>() {
 			@Override
@@ -216,13 +225,18 @@ public class CategoriaHbnDao extends BaseHibernateDao implements CategoriaDao {
 						session.update(allergeneEntity);
 					}
 					categoriaEntity.getAllergeni().clear();
-					AllergeneEntity allergeneEntity;
-					Query<AllergeneEntity> allergeneQuery = session.createQuery("select allergene from Allergene allergene where allergene.nome = :nome", AllergeneEntity.class);
-					for (Allergene a : categoria.getAllergeni()) {
-						allergeneEntity = allergeneQuery.setParameter("nome", a.getNome()).getSingleResult();
-						categoriaEntity.getAllergeni().add(allergeneEntity);
-						allergeneEntity.setCategoria(categoriaEntity);
-						session.update(allergeneEntity);
+					try {
+						AllergeneEntity allergeneEntity;
+						Query<AllergeneEntity> allergeneQuery = session.createQuery("select allergene from Allergene allergene where allergene.nome = :nome", AllergeneEntity.class);
+						for (Allergene a : categoria.getAllergeni()) {
+							allergeneEntity = allergeneQuery.setParameter("nome", a.getNome()).getSingleResult();
+							categoriaEntity.getAllergeni().add(allergeneEntity);
+							allergeneEntity.setCategoria(categoriaEntity);
+							session.update(allergeneEntity);
+						}
+					}
+					catch (Exception e) {
+						throw new DaoException("Exception thrown when setting the associated Allergene(s) to this Categoria", e);
 					}
 					session.update(categoriaEntity);
 				} else {
