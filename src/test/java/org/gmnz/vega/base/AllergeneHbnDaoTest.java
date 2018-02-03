@@ -5,38 +5,19 @@ import org.gmnz.vega.domain.Allergene;
 import org.gmnz.vega.repository.AllergeneDao;
 import org.gmnz.vega.repository.AllergeneHbnDao;
 import org.gmnz.vega.repository.DaoException;
-import org.junit.AfterClass;
 import org.junit.Assert;
-import org.junit.BeforeClass;
 import org.junit.Test;
 
 import java.util.Arrays;
 import java.util.List;
 
 
-public class AllergeneHbnDaoTest {
+public class AllergeneHbnDaoTest extends BaseHbnDaoTest {
 
-	public static final String AVENA = "AvenaTest";
-	public static final String FARINA = "FarinaTest";
-	public static final String ORZO = "OrzoTest";
-	public static final String PATATE = "PatateTest";
-
-	private static HibernateUtil hibernateUtil;
-
-
-
-	@BeforeClass
-	public static void boostrapHibernateSystem() {
-		hibernateUtil = new HibernateUtil();
-		hibernateUtil.bootstrap();
-	}
-
-
-
-	@AfterClass
-	public static void shutdownHibernateSystem() {
-		hibernateUtil.shutdown();
-	}
+	static final String AVENA = "AvenaTest";
+	static final String FARINA = "FarinaTest";
+	static final String ORZO = "OrzoTest";
+	static final String PATATE = "PatateTest";
 
 
 
@@ -47,6 +28,34 @@ public class AllergeneHbnDaoTest {
 		for (Allergene a : allergeni) {
 			System.out.println(a);
 		}
+	}
+
+
+
+	@Test(expected = DaoException.class)
+	public void createWithNull() throws DaoException {
+		AllergeneDao dao = new AllergeneHbnDao();
+		Allergene nullValuedBusinessObject = null;
+		dao.create(nullValuedBusinessObject);
+	}
+
+
+
+	@Test(expected = DaoException.class)
+	public void createWithNullNamed() throws DaoException {
+		AllergeneDao dao = new AllergeneHbnDao();
+		String nullString = null;
+		Allergene bo = new Allergene(nullString);
+		dao.create(bo);
+	}
+
+
+
+	@Test(expected = DaoException.class)
+	public void createWithEmptyNamed() throws DaoException {
+		AllergeneDao dao = new AllergeneHbnDao();
+		Allergene bo = new Allergene("");
+		dao.create(bo);
 	}
 
 

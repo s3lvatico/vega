@@ -6,37 +6,18 @@ import org.gmnz.vega.domain.Categoria;
 import org.gmnz.vega.repository.CategoriaDao;
 import org.gmnz.vega.repository.CategoriaHbnDao;
 import org.gmnz.vega.repository.DaoException;
-import org.junit.AfterClass;
 import org.junit.Assert;
-import org.junit.BeforeClass;
 import org.junit.Test;
 
 import java.util.List;
 
 
-public class CategoriaHbnDaoTest {
+public class CategoriaHbnDaoTest extends BaseHbnDaoTest {
 
 	private static final String CARNI_TEST = "CarniTest";
 	private static final String CEREALI_TEST = "CategoriaCerealiTest";
 	private static final String TEST_CATEGORIA_NOME = "testCategoria";
 	private static final String TEST_CATEGORIA_NOME_UPD = "testCategoriaUPDATED";
-
-	private static HibernateUtil hibernateUtil;
-
-
-
-	@BeforeClass
-	public static void boostrapHibernateSystem() {
-		hibernateUtil = new HibernateUtil();
-		hibernateUtil.bootstrap();
-	}
-
-
-
-	@AfterClass
-	public static void shutdownHibernateSystem() {
-		hibernateUtil.shutdown();
-	}
 
 
 
