@@ -59,6 +59,10 @@ public class AllergeneHbnDaoTest extends BaseHbnDaoTest {
 	}
 
 
+
+
+
+
 // TODO togliere e/o modificare test ridondanti
 
 
