@@ -1,12 +1,12 @@
 package org.gmnz.vega.base;
 
 
-import org.gmnz.vega.domain.Allergene;
 import org.gmnz.vega.domain.Categoria;
 import org.gmnz.vega.repository.CategoriaDao;
 import org.gmnz.vega.repository.CategoriaHbnDao;
 import org.gmnz.vega.repository.DaoException;
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Test;
 
 import java.util.List;
@@ -14,6 +14,46 @@ import java.util.List;
 
 public class CategoriaHbnDaoTest extends BaseHbnDaoTest {
 
+	private CategoriaDao dao;
+
+	static final String CAT_W_ALLERGENI_NAME = "CAT_W_ALLERGENI_NAME";
+
+
+
+	@Before
+	public void before() {
+		dao = new CategoriaHbnDao();
+
+	}
+
+
+
+	@Test
+	public void findAll() throws DaoException {
+		final List<Categoria> categoriaList = dao.findAll();
+		Assert.assertTrue(categoriaList.size() >= 1);
+	}
+
+
+
+	@Test
+	public void findByName() throws DaoException {
+		Categoria expected = null;
+		Categoria actual = dao.findByName(null);
+		Assert.assertEquals(expected, actual);
+
+		actual = dao.findByName("");
+		Assert.assertEquals(expected, actual);
+	}
+
+
+
+	@Test
+	public void findCategoryWrongName() throws DaoException {
+		Assert.assertNull(dao.findByName("non-existent-category"));
+	}
+
+	/*
 	private static final String CARNI_TEST = "CarniTest";
 	private static final String CEREALI_TEST = "CategoriaCerealiTest";
 	private static final String TEST_CATEGORIA_NOME = "testCategoria";
