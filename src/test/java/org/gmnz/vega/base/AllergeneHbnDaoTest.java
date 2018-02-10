@@ -2,13 +2,15 @@ package org.gmnz.vega.base;
 
 
 import org.gmnz.vega.domain.Allergene;
+import org.gmnz.vega.domain.Categoria;
 import org.gmnz.vega.repository.AllergeneDao;
 import org.gmnz.vega.repository.AllergeneHbnDao;
 import org.gmnz.vega.repository.DaoException;
+import org.junit.After;
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Test;
 
-import java.util.Arrays;
 import java.util.List;
 
 
@@ -19,11 +21,32 @@ public class AllergeneHbnDaoTest extends BaseHbnDaoTest {
 	static final String ORZO = "OrzoTest";
 	static final String PATATE = "PatateTest";
 
+	static final String SAMPLE_ALLERGENE_NAME = "SAMPLE_ALLERGENE_NAME";
+	static final String ALLERGENE_2B_RENAMED = "ALLERGENE_2B_RENAMED";
+
+	private AllergeneDao dao;
+
+
+
+	@Before
+	public void beforeTest() throws DaoException {
+		dao = new AllergeneHbnDao();
+		dao.create(new Allergene(SAMPLE_ALLERGENE_NAME));
+		dao.create(new Allergene(ALLERGENE_2B_RENAMED));
+	}
+
+
+
+	@After
+	public void afterTest() throws DaoException {
+		dao.delete(SAMPLE_ALLERGENE_NAME);
+		dao.delete(ALLERGENE_2B_RENAMED);
+	}
+
 
 
 	@Test
 	public void findAllTest() throws DaoException {
-		AllergeneDao dao = new AllergeneHbnDao();
 		List<Allergene> allergeni = dao.findAll();
 		for (Allergene a : allergeni) {
 			System.out.println(a);
@@ -34,7 +57,6 @@ public class AllergeneHbnDaoTest extends BaseHbnDaoTest {
 
 	@Test(expected = DaoException.class)
 	public void createWithNull() throws DaoException {
-		AllergeneDao dao = new AllergeneHbnDao();
 		Allergene nullValuedBusinessObject = null;
 		dao.create(nullValuedBusinessObject);
 	}
@@ -43,7 +65,6 @@ public class AllergeneHbnDaoTest extends BaseHbnDaoTest {
 
 	@Test(expected = DaoException.class)
 	public void createWithNullNamed() throws DaoException {
-		AllergeneDao dao = new AllergeneHbnDao();
 		String nullString = null;
 		Allergene bo = new Allergene(nullString);
 		dao.create(bo);
@@ -53,89 +74,107 @@ public class AllergeneHbnDaoTest extends BaseHbnDaoTest {
 
 	@Test(expected = DaoException.class)
 	public void createWithEmptyNamed() throws DaoException {
-		AllergeneDao dao = new AllergeneHbnDao();
 		Allergene bo = new Allergene("");
 		dao.create(bo);
 	}
 
 
 
+	@Test
+	public void getWithInvalidName() throws DaoException {
+		Allergene actualFromNullName = dao.findByName(null);
+		Assert.assertNull(actualFromNullName);
 
-
-
-// TODO togliere e/o modificare test ridondanti
+		Allergene actualFromEmptyName = dao.findByName("");
+		Assert.assertNull(actualFromEmptyName);
+	}
 
 
 
 	@Test
-	public void createAndReadTest() throws DaoException {
-		Allergene avena = new Allergene(AVENA);
+	public void getWithValidName() throws DaoException {
+		Allergene actual = dao.findByName(SAMPLE_ALLERGENE_NAME);
+		Assert.assertNotNull(actual);
+		Assert.assertEquals(actual.getNome(), SAMPLE_ALLERGENE_NAME);
+		Assert.assertEquals(Categoria.DEFAULT_CATEGORY_NAME, actual.getCategoria().getNome());
+		Assert.assertEquals(0, actual.getCategoria().getAllergeni().size());
+	}
 
-		AllergeneDao dao = new AllergeneHbnDao();
 
 
-		dao.create(avena);
+	@Test
+	public void getNonExistentAllergene() throws DaoException {
+		Allergene actual = dao.findByName("this name does not exist");
+		Assert.assertNull(actual);
+	}
 
-		Assert.assertEquals(avena, dao.findByName(AVENA));
 
-		dao.delete(AVENA);
+
+	@Test(expected = DaoException.class)
+	public void updateSrcNullName() throws DaoException {
+		dao.update(null, "qualche altro nome");
+	}
+
+
+
+	@Test(expected = DaoException.class)
+	public void updateSrcEmptyName() throws DaoException {
+		dao.update("", "qualche altro nome");
+	}
+
+
+
+	@Test
+	public void updateSrcNotFound() {
+		try {
+			dao.update("allergene inesistente", "qualche altro nome");
+		} catch (DaoException e) {
+			Assert.assertTrue(e.getMessage().contains("Can't rename non existent entity"));
+		}
+	}
+
+
+
+	@Test(expected = DaoException.class)
+	public void updateDstNullName() throws DaoException {
+		dao.update("qualcosa", null);
+	}
+
+
+
+	@Test(expected = DaoException.class)
+	public void updateDstEmptyName() throws DaoException {
+		dao.update("qualcosa", "");
+	}
+
+
+
+	@Test
+	public void updateWithExisingName() {
+		try {
+			dao.update(ALLERGENE_2B_RENAMED, SAMPLE_ALLERGENE_NAME);
+		} catch (DaoException e) {
+			Assert.assertTrue(e.getMessage().contains("Target entity already exists"));
+		}
 	}
 
 
 
 	@Test
 	public void deletionTest() throws DaoException {
-		Allergene farina = new Allergene(FARINA);
-		AllergeneDao dao = new AllergeneHbnDao();
-		dao.create(farina);
-		Assert.assertEquals(farina, dao.findByName(FARINA));
-		dao.delete(FARINA);
-		Assert.assertNull(dao.findByName(FARINA));
+		int expectedCount = dao.findAll().size();
+		dao.delete("");
+		dao.delete(null);
+		int actualCount = dao.findAll().size();
+		Assert.assertEquals(expectedCount, actualCount);
 	}
 
 
 
 	@Test
-	public void updateTest() throws DaoException {
-		final String ORZO_MODIFICATO = "orzoModificato";
-
-		Allergene orzo = new Allergene(ORZO);
-		AllergeneDao dao = new AllergeneHbnDao();
-
-		// per consistenza nella gestione di eventuali errori precedenti
-		dao.delete(ORZO_MODIFICATO);
-
-		dao.create(orzo);
-
-		dao.update(ORZO, ORZO_MODIFICATO);
-		Assert.assertNull(dao.findByName(ORZO));
-		Assert.assertNotNull(dao.findByName(ORZO_MODIFICATO));
-
-		dao.delete(ORZO_MODIFICATO);
+	public void deletionWhileReferencedByReport() {
+		Assert.fail("not yet implemented");
 	}
 
-
-
-	@Test
-	public void bulkCreateTest() throws DaoException {
-		Allergene farina = new Allergene(FARINA);
-		Allergene orzo = new Allergene(ORZO);
-		Allergene patate = new Allergene(PATATE);
-
-		AllergeneDao dao = new AllergeneHbnDao();
-
-		dao.create(Arrays.asList(farina, orzo, patate));
-
-		// TODO rivedere!
-
-
-//		final List<Allergene> result = dao.findByPattern("%Test");
-//		Assert.assertEquals(3, result.size());
-//
-//		for (Allergene a : result) {
-//			dao.delete(a.getNome());
-//		}
-
-	}
 
 }
