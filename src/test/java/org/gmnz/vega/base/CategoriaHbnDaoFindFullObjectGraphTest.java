@@ -25,7 +25,7 @@ public class CategoriaHbnDaoFindFullObjectGraphTest extends BaseHbnDaoTest {
 	public void before() throws DaoException {
 		categoriaDao = new CategoriaHbnDao();
 		Categoria testCategory = new Categoria(TEST_CATEGORY_NAME);
-		categoriaDao.create(testCategory);
+		categoriaDao.create(TEST_CATEGORY_NAME);
 
 		allergeneDao = new AllergeneHbnDao();
 		Allergene a;

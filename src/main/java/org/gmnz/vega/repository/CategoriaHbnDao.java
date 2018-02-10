@@ -133,45 +133,18 @@ public class CategoriaHbnDao extends BaseHibernateDao implements CategoriaDao {
 
 
 	@Override
-	public void create(Categoria categoria) throws DaoException {
-		if (categoria == null) {
-			throw new DaoException("null business object specified");
-		}
-		if (VegaUtil.stringNullOrEmpty(categoria.getNome())) {
+	public void create(String nome) throws DaoException {
+		if (VegaUtil.stringNullOrEmpty(nome)) {
 			throw new DaoException("null or empty name specified for the new Categoria");
 		}
 		wrapInTransaction(new TxManagedExecutor<Void>() {
 			@Override
 			protected Void execute() throws DaoException {
-				if (getSingleEntityByName(session, categoria.getNome()) == null) {
-
-					CategoriaEntity categoriaEntity = EntityFactory.getInstance().createCategoriaEntity(categoria.getNome());
-
-					// WARN: HHH000437: Attempting to save one or more entities that have a non-nullable association with
-					// an unsaved transient entity. The unsaved transient entity must be saved in an operation prior
-					// to saving these dependent entities
-
+				if (getSingleEntityByName(session, nome) == null) {
+					CategoriaEntity categoriaEntity = EntityFactory.getInstance().createCategoriaEntity(nome);
 					session.save(categoriaEntity);
-
-/*					AllergeneHbnDao allergeneDao = new AllergeneHbnDao();
-
-					AllergeneEntity allergeneEntity;
-					for (Allergene a : categoria.getAllergeni()) {
-						allergeneEntity = allergeneDao.getSingleEntityByName(session, a.getNome());
-						if (allergeneEntity != null) {
-							allergeneEntity.setCategoria(categoriaEntity);
-							session.merge(allergeneEntity);
-						} else {
-							allergeneEntity = EntityFactory.getInstance().createAllergeneEntity(a.getNome());
-							allergeneEntity.setCategoria(categoriaEntity);
-							session.save(allergeneEntity);
-						}
-						categoriaEntity.getAllergeni().add(allergeneEntity);
-					}
-					session.update(categoriaEntity);
-*/
 				} else {
-					throw new DaoException("specified category <" + categoria.getNome() + "> already exists");
+					throw new DaoException("specified category <" + nome + "> already exists");
 				}
 				return null;
 			}
@@ -219,7 +192,8 @@ public class CategoriaHbnDao extends BaseHibernateDao implements CategoriaDao {
 			@Override
 			protected Void execute() throws DaoException {
 				CategoriaEntity categoriaEntity = getSingleEntityByName(session, categoria.getNome());
-				if (categoriaEntity != null) {
+				if (categoriaEntity != null) { // la categoria che cerco esiste
+					// tutti gli allergeni associati passano preventivamente alla categoria predefinita
 					for (AllergeneEntity allergeneEntity : categoriaEntity.getAllergeni()) {
 						allergeneEntity.setCategoria(CategoriaEntity.ENTITY_CATEGORIA_DEFAULT);
 						session.update(allergeneEntity);
@@ -228,12 +202,16 @@ public class CategoriaHbnDao extends BaseHibernateDao implements CategoriaDao {
 					try {
 						AllergeneEntity allergeneEntity;
 						Query<AllergeneEntity> allergeneQuery = session.createQuery("select allergene from Allergene allergene where allergene.nome = :nome", AllergeneEntity.class);
+						// gli allereni specificati nel domain object vengono associati a questa categoria
 						for (Allergene a : categoria.getAllergeni()) {
+							// getSingleResult() può lanciare eccezione
 							allergeneEntity = allergeneQuery.setParameter("nome", a.getNome()).getSingleResult();
 							categoriaEntity.getAllergeni().add(allergeneEntity);
 							allergeneEntity.setCategoria(categoriaEntity);
 							session.update(allergeneEntity);
 						}
+					} catch (NoResultException e) {
+						throw new DaoException("at least one of the specified Allergene(s) was not found in the system", e);
 					} catch (Exception e) {
 						throw new DaoException("Exception thrown when setting the associated Allergene(s) to this Categoria", e);
 					}

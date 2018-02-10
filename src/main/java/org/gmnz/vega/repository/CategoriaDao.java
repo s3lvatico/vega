@@ -12,7 +12,7 @@ public interface CategoriaDao {
 
 	Categoria findByName(String name)throws DaoException;
 
-	void create(Categoria categoria)throws DaoException;
+	void create(String nome)throws DaoException;
 
 	void updateRename(String nome, String newName)throws DaoException;
 
