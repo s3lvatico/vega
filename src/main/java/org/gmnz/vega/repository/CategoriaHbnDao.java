@@ -234,8 +234,7 @@ public class CategoriaHbnDao extends BaseHibernateDao implements CategoriaDao {
 							allergeneEntity.setCategoria(categoriaEntity);
 							session.update(allergeneEntity);
 						}
-					}
-					catch (Exception e) {
+					} catch (Exception e) {
 						throw new DaoException("Exception thrown when setting the associated Allergene(s) to this Categoria", e);
 					}
 					session.update(categoriaEntity);
@@ -260,7 +259,9 @@ public class CategoriaHbnDao extends BaseHibernateDao implements CategoriaDao {
 		wrapInTransaction(new TxManagedExecutor<Void>() {
 			@Override
 			protected Void execute() throws DaoException {
-				Query q = session.createQuery("select rd from ReportData rd where rd.vgAllergeneByIdAllergene.categoria.nome = " + nome);
+				Query q = session.createQuery("select rd from ReportData rd where rd.vgAllergeneByIdAllergene.categoria.nome = :nome");
+				q.setParameter("nome", nome);
+
 				if (q.getResultList().size() != 0) {
 					throw new DaoException("Specified Categoria <" + nome + "> is referenced by at least one report.");
 				}
