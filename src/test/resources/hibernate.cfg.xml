@@ -3,7 +3,7 @@
 
    <session-factory>
       <property name="hibernate.connection.driver_class">org.h2.Driver</property>
-      <property name="hibernate.connection.url">jdbc:h2:tcp://localhost/./vega</property>
+      <property name="hibernate.connection.url">jdbc:h2:tcp://localhost/./vega;AUTO_SERVER=TRUE;TRACE_LEVEL_FILE=3</property>
       <property name="hibernate.connection.username">sa</property>
       <property name="hibernate.connection.password">sa</property>
 
