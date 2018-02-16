@@ -4,10 +4,7 @@ package org.gmnz.vega.base;
 import org.gmnz.vega.domain.Allergene;
 import org.gmnz.vega.domain.Categoria;
 import org.gmnz.vega.repository.*;
-import org.junit.AfterClass;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.*;
 
 import java.util.List;
 
@@ -19,6 +16,7 @@ public class CategoriaHbnDaoTest extends BaseHbnDaoTest {
 	static final String CAT_W_ALLERGENI_NAME = "CAT_W_ALLERGENI_NAME";
 	private static final String CATEGORY_TEST_NAME = "CATEGORY_TEST_NAME";
 	private static final String CATEGORY_TEST_NAME2 = "CATEGORY_TEST_NAME2";
+	private static final String ALLERGENE_TEST_NAME = "CategoriaHbnDaoTest.AllergeneTest";
 
 
 
@@ -29,8 +27,8 @@ public class CategoriaHbnDaoTest extends BaseHbnDaoTest {
 
 
 
-	@AfterClass
-	public static void afterClass() throws DaoException {
+	@After
+	public  void after() throws DaoException {
 		CategoriaDao dao = new CategoriaHbnDao();
 		Categoria byName = dao.findByName(CATEGORY_TEST_NAME);
 		if (byName != null) {
@@ -40,6 +38,10 @@ public class CategoriaHbnDaoTest extends BaseHbnDaoTest {
 		if (byName != null) {
 			dao.delete(CATEGORY_TEST_NAME2);
 		}
+
+		AllergeneDao allergeneDao = new AllergeneHbnDao();
+		allergeneDao.delete(ALLERGENE_TEST_NAME);
+
 	}
 
 
@@ -132,7 +134,7 @@ public class CategoriaHbnDaoTest extends BaseHbnDaoTest {
 	@Test
 	public void createCategoryWithAllergeneList() throws DaoException {
 		Categoria c = new Categoria(CATEGORY_TEST_NAME);
-		Allergene a = new Allergene("Allergene A");
+		Allergene a = new Allergene(ALLERGENE_TEST_NAME);
 		a.setCategoria(c);
 		c.add(a);
 		dao.create(CATEGORY_TEST_NAME);
