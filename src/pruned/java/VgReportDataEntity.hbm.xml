@@ -1,0 +1,26 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+
+   <class name="org.gmnz.vega.integration.VgReportDataEntity" table="vg_report_data" schema="sandbox">
+      <composite-id mapped="true" class="org.gmnz.vega.integration.VgReportDataEntityPK">
+         <key-property name="idReport">
+            <column name="id_report" sql-type="char(36)" length="36"/>
+         </key-property>
+         <key-property name="idAllergene">
+            <column name="id_allergene" sql-type="char(36)" length="36"/>
+         </key-property>
+      </composite-id>
+      <property name="tox">
+         <column name="tox" sql-type="decimal(3,2)" precision="3" scale="2"/>
+      </property>
+      <many-to-one name="vgReportByIdReport" class="org.gmnz.vega.integration.VgReportEntity">
+         <column name="id_report"/>
+      </many-to-one>
+      <many-to-one name="vgAllergeneByIdAllergene" class="org.gmnz.vega.integration.VgAllergeneEntity">
+         <column name="id_allergene"/>
+      </many-to-one>
+   </class>
+</hibernate-mapping>

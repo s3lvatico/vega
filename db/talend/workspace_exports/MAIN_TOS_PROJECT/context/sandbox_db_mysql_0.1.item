@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<talendfile:ContextType xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:talendfile="platform:/resource/org.talend.model/model/TalendFile.xsd" xmi:id="_7DQD4O2DEee6ycHs4OKisQ" confirmationNeeded="false" name="Default">
+  <contextParameter xmi:id="_7DQD4e2DEee6ycHs4OKisQ" comment="" name="sandbox_db_mysql_Database" prompt="sandbox_db_mysql_Database?" promptNeeded="false" type="id_String" value="sandbox"/>
+  <contextParameter xmi:id="_7DQD4u2DEee6ycHs4OKisQ" comment="" name="sandbox_db_mysql_Port" prompt="sandbox_db_mysql_Port?" promptNeeded="false" type="id_String" value="3306"/>
+  <contextParameter xmi:id="_7DQD4-2DEee6ycHs4OKisQ" comment="" name="sandbox_db_mysql_AdditionalParams" prompt="sandbox_db_mysql_AdditionalParams?" promptNeeded="false" type="id_String" value="noDatetimeStringSync=true"/>
+  <contextParameter xmi:id="_7DQD5O2DEee6ycHs4OKisQ" comment="" name="sandbox_db_mysql_Login" prompt="sandbox_db_mysql_Login?" promptNeeded="false" type="id_String" value="sb_user"/>
+  <contextParameter xmi:id="_7DQD5e2DEee6ycHs4OKisQ" comment="" name="sandbox_db_mysql_Password" prompt="sandbox_db_mysql_Password?" promptNeeded="false" type="id_Password" value="jMGD89otl1zoCEI4dgnbTw=="/>
+  <contextParameter xmi:id="_7DQD5u2DEee6ycHs4OKisQ" comment="" name="sandbox_db_mysql_Server" prompt="sandbox_db_mysql_Server?" promptNeeded="false" type="id_String" value="localhost"/>
+</talendfile:ContextType>

@@ -1,0 +1,24 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+
+   <class name="org.gmnz.vega.integration.VgReportEntity" table="vg_report" schema="sandbox">
+      <id name="id">
+         <column name="id" sql-type="char(36)" length="36"/>
+      </id>
+      <property name="dataCreazione">
+         <column name="data_creazione" sql-type="datetime"/>
+      </property>
+      <property name="nomeSoggetto">
+         <column name="nome_soggetto" sql-type="varchar(45)" length="45"/>
+      </property>
+      <set name="vgReportDataById" inverse="true">
+         <key>
+            <column name="id_report"/>
+         </key>
+         <one-to-many not-found="ignore" class="org.gmnz.vega.integration.VgReportDataEntity"/>
+      </set>
+   </class>
+</hibernate-mapping>
