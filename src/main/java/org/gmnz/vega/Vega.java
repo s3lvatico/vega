@@ -1,29 +1,29 @@
 package org.gmnz.vega;
 
 
-import org.gmnz.vega.domain.Allergene;
-import org.gmnz.vega.domain.Categoria;
+import org.gmnz.vega.domain.Allergen;
+import org.gmnz.vega.domain.Category;
 
 import java.util.List;
 
 
 public interface Vega {
 
-	List<Allergene> elencaAllergeni();
+	List<Allergen> elencaAllergeni();
 
 	void creaAllergene(String nome);
 
-	Allergene selezionaAllergene(String nome);
+	Allergen selezionaAllergene(String nome);
 
 	void rinominaAllergene(String vecchioNome, String nuovoNome);
 
 	void eliminaAllergene(String nome);
 
-	List<Categoria> elencaCategorie();
+	List<Category> elencaCategorie();
 
 	void creaCategoria(String nome);
 
-	Categoria selezionaCategoria(String nome);
+	Category selezionaCategoria(String nome);
 
 	void categorizzaAllergene(String nomeAllergene, String nomeCategoria);
 

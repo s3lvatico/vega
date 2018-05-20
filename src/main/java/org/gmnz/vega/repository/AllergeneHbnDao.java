@@ -2,10 +2,10 @@ package org.gmnz.vega.repository;
 
 
 import org.gmnz.vega.base.VegaUtil;
-import org.gmnz.vega.domain.Allergene;
-import org.gmnz.vega.domain.Categoria;
-import org.gmnz.vega.integration.AllergeneEntity;
-import org.gmnz.vega.integration.CategoriaEntity;
+import org.gmnz.vega.domain.Allergen;
+import org.gmnz.vega.domain.Category;
+import org.gmnz.vega.integration.AllergenEntity;
+import org.gmnz.vega.integration.CategoryEntity;
 import org.gmnz.vega.integration.EntityFactory;
 import org.hibernate.Session;
 import org.hibernate.query.Query;
@@ -20,19 +20,19 @@ public class AllergeneHbnDao extends BaseHibernateDao implements AllergeneDao {
 
 
 	@Override
-	public List<Allergene> findAll() throws DaoException {
+	public List<Allergen> findAll() throws DaoException {
 
-		List<AllergeneEntity> queryResult = wrapInTransaction(new TxManagedExecutor<List<AllergeneEntity>>() {
+		List<AllergenEntity> queryResult = wrapInTransaction(new TxManagedExecutor<List<AllergenEntity>>() {
 			@Override
-			protected List<AllergeneEntity> execute() {
-				Query<AllergeneEntity> q = session.createQuery("from Allergene a", AllergeneEntity.class);
+			protected List<AllergenEntity> execute() {
+				Query<AllergenEntity> q = session.createQuery("from Allergene a", AllergenEntity.class);
 				return q.list();
 			}
 		});
 
-		List<Allergene> result = new ArrayList<>();
-		for (AllergeneEntity ae : queryResult) {
-			Allergene a = new Allergene(ae.getNome());
+		List<Allergen> result = new ArrayList<>();
+		for (AllergenEntity ae : queryResult) {
+			Allergen a = new Allergen(ae.getName());
 			result.add(a);
 		}
 		return result;
@@ -40,9 +40,9 @@ public class AllergeneHbnDao extends BaseHibernateDao implements AllergeneDao {
 
 
 
-	AllergeneEntity getSingleEntityByName(Session session, String nome) {
+	AllergenEntity getSingleEntityByName(Session session, String nome) {
 		nome = VegaUtil.normalizeString(nome);
-		Query<AllergeneEntity> q = session.createQuery("select a from Allergene a join fetch a.categoria where a.nome = :nome", AllergeneEntity.class);
+		Query<AllergenEntity> q = session.createQuery("select a from Allergene a join fetch a.categoria where a.nome = :nome", AllergenEntity.class);
 		q.setParameter("nome", nome);
 		try {
 			return q.getSingleResult();
@@ -53,38 +53,38 @@ public class AllergeneHbnDao extends BaseHibernateDao implements AllergeneDao {
 
 
 
-	void addSingleEntity(Session session, Allergene a) throws DaoException {
-		if (getSingleEntityByName(session, a.getNome()) != null) {
-			throw new DaoException("Specified Allergene is already present in the system.");
+	void addSingleEntity(Session session, Allergen a) throws DaoException {
+		if (getSingleEntityByName(session, a.getName()) != null) {
+			throw new DaoException("Specified Allergen is already present in the system.");
 		}
 
-		if (a.getCategoria() == null) {
-			a.setCategoria(Categoria.DEFAULT_CATEGORIA);
+		if (a.getCategory() == null) {
+			a.setCategory(Category.DEFAULT_CATEGORY);
 		}
 		CategoriaHbnDao categoriaDao = new CategoriaHbnDao();
-		String nomeCategoria = a.getCategoria().getNome();
-		AllergeneEntity allergeneEntity = EntityFactory.getInstance().createAllergeneEntity(a.getNome());
-		CategoriaEntity categoriaEntity;
+		String nomeCategoria = a.getCategory().getName();
+		AllergenEntity allergenEntity = EntityFactory.getInstance().createAllergeneEntity(a.getName());
+		CategoryEntity categoryEntity;
 		if (categoriaDao.existsByName(session, nomeCategoria)) {
-			categoriaEntity = categoriaDao.getSingleEntityByName(session, nomeCategoria);
+			categoryEntity = categoriaDao.getSingleEntityByName(session, nomeCategoria);
 		} else {
-			categoriaEntity = CategoriaEntity.ENTITY_CATEGORIA_DEFAULT;
+			categoryEntity = CategoryEntity.ENTITY_CATEGORIA_DEFAULT;
 		}
-		allergeneEntity.setCategoria(categoriaEntity);
-		session.save(allergeneEntity);
+		allergenEntity.setCategory(categoryEntity);
+		session.save(allergenEntity);
 	}
 
 
 
 	@Override
-	public void create(Allergene allergene) throws DaoException {
-		if (allergene == null || VegaUtil.stringNullOrEmpty(allergene.getNome())) {
-			throw new DaoException("Specified Allergene was null or had an empty name");
+	public void create(Allergen allergen) throws DaoException {
+		if (allergen == null || VegaUtil.stringNullOrEmpty(allergen.getName())) {
+			throw new DaoException("Specified Allergen was null or had an empty name");
 		}
 		wrapInTransaction(new TxManagedExecutor<Void>() {
 			@Override
 			protected Void execute() throws DaoException {
-				addSingleEntity(session, allergene);
+				addSingleEntity(session, allergen);
 				return null;
 			}
 		});
@@ -93,39 +93,39 @@ public class AllergeneHbnDao extends BaseHibernateDao implements AllergeneDao {
 
 
 	@Override
-	public Allergene findByName(String name) throws DaoException {
-		AllergeneEntity entity = wrapInTransaction(new TxManagedExecutor<AllergeneEntity>() {
+	public Allergen findByName(String name) throws DaoException {
+		AllergenEntity entity = wrapInTransaction(new TxManagedExecutor<AllergenEntity>() {
 			@Override
-			protected AllergeneEntity execute() {
+			protected AllergenEntity execute() {
 				return getSingleEntityByName(session, name);
 			}
 		});
-		Allergene allergene = null;
+		Allergen allergen = null;
 		if (entity != null) {
-			allergene = new Allergene(entity.getNome());
-			Categoria categoria = new Categoria(entity.getCategoria().getNome());
-			allergene.setCategoria(categoria);
+			allergen = new Allergen(entity.getName());
+			Category category = new Category(entity.getCategory().getName());
+			allergen.setCategory(category);
 		}
-		return allergene;
+		return allergen;
 	}
 
 
 /*
 	@Override
-	public List<Allergene> findByPattern(String pattern) throws DaoException {
-		List<AllergeneEntity> queryResult = wrapInTransaction(new TxManagedExecutor<List<AllergeneEntity>>() {
+	public List<Allergen> findByPattern(String pattern) throws DaoException {
+		List<AllergenEntity> queryResult = wrapInTransaction(new TxManagedExecutor<List<AllergenEntity>>() {
 			@Override
-			protected List<AllergeneEntity> execute() {
-				String query = "select allergene from Allergene allergene where allergene.nome like :pattern";
-				Query<AllergeneEntity> q = session.createQuery(query, AllergeneEntity.class);
+			protected List<AllergenEntity> execute() {
+				String query = "select allergene from Allergen allergene where allergene.nome like :pattern";
+				Query<AllergenEntity> q = session.createQuery(query, AllergenEntity.class);
 				q.setParameter("pattern", pattern);
 				return q.getResultList();
 			}
 		});
 
-		List<Allergene> result = new ArrayList<>();
-		for (AllergeneEntity ae : queryResult) {
-			Allergene a = new Allergene(ae.getNome());
+		List<Allergen> result = new ArrayList<>();
+		for (AllergenEntity ae : queryResult) {
+			Allergen a = new Allergen(ae.getName());
 			result.add(a);
 		}
 		return result;
@@ -135,11 +135,11 @@ public class AllergeneHbnDao extends BaseHibernateDao implements AllergeneDao {
 
 
 	@Override
-	public void create(Collection<Allergene> allergeni) throws DaoException {
+	public void create(Collection<Allergen> allergeni) throws DaoException {
 		wrapInTransaction(new TxManagedExecutor<Void>() {
 			@Override
 			protected Void execute() throws DaoException {
-				for (Allergene a : allergeni) {
+				for (Allergen a : allergeni) {
 					if (a != null) {
 						addSingleEntity(session, a);
 					}
@@ -160,14 +160,14 @@ public class AllergeneHbnDao extends BaseHibernateDao implements AllergeneDao {
 		wrapInTransaction(new TxManagedExecutor<Void>() {
 			@Override
 			protected Void execute() throws DaoException {
-				AllergeneEntity srcEntity = getSingleEntityByName(session, nome);
+				AllergenEntity srcEntity = getSingleEntityByName(session, nome);
 				boolean srcEntityExists = srcEntity != null;
 				if (!srcEntityExists) {
 					throw new DaoException("Can't rename non existent entity <" + nome + ">.");
 				}
-				AllergeneEntity tgtEntity = getSingleEntityByName(session, newName);
+				AllergenEntity tgtEntity = getSingleEntityByName(session, newName);
 				if (tgtEntity == null) {
-					srcEntity.setNome(newName);
+					srcEntity.setName(newName);
 					session.update(srcEntity);
 				} else {
 					String errorMessage = String.format("Can't rename <%s> to <%s>. Target entity already exists.", nome, newName);
@@ -188,7 +188,7 @@ public class AllergeneHbnDao extends BaseHibernateDao implements AllergeneDao {
 		wrapInTransaction(new TxManagedExecutor<Void>() {
 			@Override
 			protected Void execute() {
-				AllergeneEntity entity = getSingleEntityByName(session, nome);
+				AllergenEntity entity = getSingleEntityByName(session, nome);
 				if (entity != null) {
 					session.remove(entity);
 				}

@@ -103,15 +103,15 @@
     <elementParameter field="TEXT" name="FOOTER_LIBRARY" value="" show="false"/>
     <elementParameter field="TEXT" name="FOOTER_CODE" value="" show="false"/>
     <elementParameter field="TEXT" name="FOOTER_IMPORT" value="" show="false"/>
-    <routinesParameter id="_Fym0cu2CEee6ycHs4OKisQ" name="DataOperation"/>
-    <routinesParameter id="_FzDgYO2CEee6ycHs4OKisQ" name="Mathematical"/>
-    <routinesParameter id="_FzWbUO2CEee6ycHs4OKisQ" name="Numeric"/>
-    <routinesParameter id="_FzgMUO2CEee6ycHs4OKisQ" name="Relational"/>
-    <routinesParameter id="_FzpWQO2CEee6ycHs4OKisQ" name="StringHandling"/>
-    <routinesParameter id="_FzzHQO2CEee6ycHs4OKisQ" name="TalendDataGenerator"/>
-    <routinesParameter id="_Fz8RMO2CEee6ycHs4OKisQ" name="TalendDate"/>
-    <routinesParameter id="_F0Y9IO2CEee6ycHs4OKisQ" name="TalendStringUtil"/>
-    <routinesParameter id="_F0PzMO2CEee6ycHs4OKisQ" name="TalendString"/>
+    <routinesParameter uuid="_Fym0cu2CEee6ycHs4OKisQ" name="DataOperation"/>
+    <routinesParameter uuid="_FzDgYO2CEee6ycHs4OKisQ" name="Mathematical"/>
+    <routinesParameter uuid="_FzWbUO2CEee6ycHs4OKisQ" name="Numeric"/>
+    <routinesParameter uuid="_FzgMUO2CEee6ycHs4OKisQ" name="Relational"/>
+    <routinesParameter uuid="_FzpWQO2CEee6ycHs4OKisQ" name="StringHandling"/>
+    <routinesParameter uuid="_FzzHQO2CEee6ycHs4OKisQ" name="TalendDataGenerator"/>
+    <routinesParameter uuid="_Fz8RMO2CEee6ycHs4OKisQ" name="TalendDate"/>
+    <routinesParameter uuid="_F0Y9IO2CEee6ycHs4OKisQ" name="TalendStringUtil"/>
+    <routinesParameter uuid="_F0PzMO2CEee6ycHs4OKisQ" name="TalendString"/>
   </parameters>
   <node componentName="tMysqlConnection" componentVersion="0.102" offsetLabelX="0" offsetLabelY="0" posX="96" posY="32">
     <elementParameter field="TEXT" name="UNIQUE_NAME" value="tMysqlConnection_1" show="false"/>
@@ -198,7 +198,7 @@
     <elementParameter field="TEXT" name="HINT" value="&lt;b>__UNIQUE_NAME__&lt;/b>&lt;br>__COMMENT__"/>
     <elementParameter field="TEXT" name="CONNECTION_FORMAT" value="row"/>
     <metadata connector="FLOW" label="vg_report" name="report_ins">
-      <column comment="" key="true" length="36" name="id" nullable="false" pattern="" precision="0" sourceType="CHAR" type="id_String" usefulColumn="true">
+      <column comment="" key="true" length="36" name="uuid" nullable="false" pattern="" precision="0" sourceType="CHAR" type="id_String" usefulColumn="true">
         <additionalField key="Comment" value=""/>
       </column>
       <column comment="" defaultValue="CURRENT_TIMESTAMP" key="false" length="19" name="data_creazione" nullable="false" pattern="&quot;dd-MM-yyyy&quot;" precision="0" sourceType="DATETIME" type="id_Date" usefulColumn="true">
@@ -213,7 +213,7 @@
       <uiProperties/>
       <varTables sizeState="INTERMEDIATE" name="Var"/>
       <outputTables sizeState="INTERMEDIATE" name="report_ins">
-        <mapperTableEntries name="id" expression="java.util.UUID.randomUUID().toString() " type="id_String"/>
+        <mapperTableEntries name="uuid" expression="java.util.UUID.randomUUID().toString() " type="id_String"/>
         <mapperTableEntries name="data_creazione" expression="row1.data_creazione " type="id_Date"/>
         <mapperTableEntries name="nome_soggetto" expression="row1.nome_soggetto + &quot; &quot; + row1.cognome_soggetto " type="id_String"/>
       </outputTables>
@@ -259,7 +259,7 @@
     <elementParameter field="TABLE" name="ADD_COLS"/>
     <elementParameter field="CHECK" name="USE_FIELD_OPTIONS" value="false"/>
     <elementParameter field="TABLE" name="FIELD_OPTIONS" show="false">
-      <elementValue elementRef="SCHEMA_COLUMN" value="id"/>
+      <elementValue elementRef="SCHEMA_COLUMN" value="uuid"/>
       <elementValue elementRef="UPDATE_KEY" value="false"/>
       <elementValue elementRef="DELETE_KEY" value="false"/>
       <elementValue elementRef="UPDATABLE" value="true"/>
@@ -285,7 +285,7 @@
     <elementParameter field="TEXT" name="HINT" value="&lt;b>__UNIQUE_NAME__&lt;/b>&lt;br>__COMMENT__"/>
     <elementParameter field="TEXT" name="CONNECTION_FORMAT" value="row"/>
     <metadata connector="FLOW" label="vg_report" name="tMysqlOutput_1">
-      <column comment="" key="true" length="36" name="id" nullable="false" pattern="" precision="0" sourceType="CHAR" type="id_String" usefulColumn="true">
+      <column comment="" key="true" length="36" name="uuid" nullable="false" pattern="" precision="0" sourceType="CHAR" type="id_String" usefulColumn="true">
         <additionalField key="Comment" value=""/>
       </column>
       <column comment="" defaultValue="CURRENT_TIMESTAMP" key="false" length="19" name="data_creazione" nullable="false" pattern="&quot;dd-MM-yyyy&quot;" precision="0" sourceType="DATETIME" type="id_Date" usefulColumn="true">
@@ -297,7 +297,7 @@
       <additionalProperties key="Comment" value=""/>
     </metadata>
     <metadata connector="REJECT" label="vg_report" name="REJECT">
-      <column comment="" key="true" length="36" name="id" nullable="false" pattern="" precision="0" sourceType="CHAR" type="id_String" usefulColumn="true">
+      <column comment="" key="true" length="36" name="uuid" nullable="false" pattern="" precision="0" sourceType="CHAR" type="id_String" usefulColumn="true">
         <additionalField key="Comment" value=""/>
       </column>
       <column comment="" defaultValue="CURRENT_TIMESTAMP" key="false" length="19" name="data_creazione" nullable="false" pattern="&quot;dd-MM-yyyy&quot;" precision="0" sourceType="DATETIME" type="id_Date" usefulColumn="true">
@@ -329,7 +329,7 @@
     <elementParameter field="TECHNICAL" name="QUERYSTORE:REPOSITORY_QUERYSTORE_TYPE" value="" show="false"/>
     <elementParameter field="TECHNICAL" name="QUERYSTORE:QUERYSTORE_TYPE" value="BUILT_IN"/>
     <elementParameter field="GUESS_SCHEMA" name="GUESS_SCHEMA" value="&quot;&quot;"/>
-    <elementParameter field="MEMO_SQL" name="QUERY" value="&quot;SELECT &#xA;  `vg_report`.`id`&#xA;FROM `vg_report`&quot;"/>
+    <elementParameter field="MEMO_SQL" name="QUERY" value="&quot;SELECT &#xA;  `vg_report`.`uuid`&#xA;FROM `vg_report`&quot;"/>
     <elementParameter field="LABEL" name="NOTE" value="This option only applies when deploying and running in the Talend Runtime"/>
     <elementParameter field="CHECK" name="SPECIFY_DATASOURCE_ALIAS" value="false"/>
     <elementParameter field="TEXT" name="DATASOURCE_ALIAS" value="&quot;&quot;" show="false"/>
@@ -340,14 +340,14 @@
     <elementParameter field="CHECK" name="ENABLE_STREAM" value="false"/>
     <elementParameter field="CHECK" name="TRIM_ALL_COLUMN" value="false"/>
     <elementParameter field="TABLE" name="TRIM_COLUMN">
-      <elementValue elementRef="SCHEMA_COLUMN" value="id"/>
+      <elementValue elementRef="SCHEMA_COLUMN" value="uuid"/>
       <elementValue elementRef="TRIM" value="false"/>
     </elementParameter>
     <elementParameter field="TEXT" name="LABEL" value="__TABLE__"/>
     <elementParameter field="TEXT" name="HINT" value="&lt;b>__UNIQUE_NAME__&lt;/b>&lt;br>__COMMENT__"/>
     <elementParameter field="TEXT" name="CONNECTION_FORMAT" value="row"/>
     <metadata connector="FLOW" name="tMysqlInput_1">
-      <column comment="" key="false" length="36" name="id" nullable="false" pattern="" precision="0" sourceType="VARCHAR" type="id_String" originalLength="-1" usefulColumn="true"/>
+      <column comment="" key="false" length="36" name="uuid" nullable="false" pattern="" precision="0" sourceType="VARCHAR" type="id_String" originalLength="-1" usefulColumn="true"/>
       <additionalProperties key="Comment" value=""/>
     </metadata>
   </node>
@@ -372,7 +372,7 @@
       <column comment="" key="true" length="36" name="id_allergene" nullable="false" pattern="" precision="0" sourceType="CHAR" type="id_String" usefulColumn="true">
         <additionalField key="Comment" value=""/>
       </column>
-      <column comment="" key="false" length="3" name="tox" nullable="false" pattern="" precision="2" sourceType="DECIMAL" type="id_Double" usefulColumn="true">
+      <column comment="" key="false" length="3" name="toxicity" nullable="false" pattern="" precision="2" sourceType="DECIMAL" type="id_Double" usefulColumn="true">
         <additionalField key="Comment" value=""/>
       </column>
       <additionalProperties key="Comment" value=""/>
@@ -381,15 +381,15 @@
       <uiProperties/>
       <varTables sizeState="INTERMEDIATE" name="Var"/>
       <outputTables sizeState="INTERMEDIATE" name="report_data_insert">
-        <mapperTableEntries name="id_report" expression="report_id.id " type="id_String"/>
-        <mapperTableEntries name="id_allergene" expression="allergene_id.id " type="id_String"/>
-        <mapperTableEntries name="tox" expression="Mathematical.RND(2.0) " type="id_Double"/>
+        <mapperTableEntries name="id_report" expression="report_id.uuid " type="id_String"/>
+        <mapperTableEntries name="id_allergene" expression="allergene_id.uuid " type="id_String"/>
+        <mapperTableEntries name="toxicity" expression="Mathematical.RND(2.0) " type="id_Double"/>
       </outputTables>
       <inputTables sizeState="INTERMEDIATE" name="report_id" matchingMode="UNIQUE_MATCH" lookupMode="LOAD_ONCE">
-        <mapperTableEntries name="id" type="id_String"/>
+        <mapperTableEntries name="uuid" type="id_String"/>
       </inputTables>
       <inputTables sizeState="INTERMEDIATE" name="allergene_id" matchingMode="ALL_ROWS" lookupMode="LOAD_ONCE">
-        <mapperTableEntries name="id" expression="" type="id_String"/>
+        <mapperTableEntries name="uuid" expression="" type="id_String"/>
       </inputTables>
     </nodeData>
   </node>
@@ -411,7 +411,7 @@
     <elementParameter field="TECHNICAL" name="QUERYSTORE:REPOSITORY_QUERYSTORE_TYPE" value="" show="false"/>
     <elementParameter field="TECHNICAL" name="QUERYSTORE:QUERYSTORE_TYPE" value="BUILT_IN"/>
     <elementParameter field="GUESS_SCHEMA" name="GUESS_SCHEMA" value="&quot;&quot;"/>
-    <elementParameter field="MEMO_SQL" name="QUERY" value="&quot;SELECT &#xA;  `vg_allergene`.`id`&#xA;FROM `vg_allergene`&quot;"/>
+    <elementParameter field="MEMO_SQL" name="QUERY" value="&quot;SELECT &#xA;  `vg_allergene`.`uuid`&#xA;FROM `vg_allergene`&quot;"/>
     <elementParameter field="LABEL" name="NOTE" value="This option only applies when deploying and running in the Talend Runtime"/>
     <elementParameter field="CHECK" name="SPECIFY_DATASOURCE_ALIAS" value="false"/>
     <elementParameter field="TEXT" name="DATASOURCE_ALIAS" value="&quot;&quot;" show="false"/>
@@ -422,14 +422,14 @@
     <elementParameter field="CHECK" name="ENABLE_STREAM" value="false"/>
     <elementParameter field="CHECK" name="TRIM_ALL_COLUMN" value="false"/>
     <elementParameter field="TABLE" name="TRIM_COLUMN">
-      <elementValue elementRef="SCHEMA_COLUMN" value="id"/>
+      <elementValue elementRef="SCHEMA_COLUMN" value="uuid"/>
       <elementValue elementRef="TRIM" value="false"/>
     </elementParameter>
     <elementParameter field="TEXT" name="LABEL" value="__TABLE__"/>
     <elementParameter field="TEXT" name="HINT" value="&lt;b>__UNIQUE_NAME__&lt;/b>&lt;br>__COMMENT__"/>
     <elementParameter field="TEXT" name="CONNECTION_FORMAT" value="row"/>
     <metadata connector="FLOW" name="tMysqlInput_2">
-      <column comment="" key="false" length="36" name="id" nullable="false" pattern="" precision="0" sourceType="VARCHAR" type="id_String" originalLength="-1" usefulColumn="true"/>
+      <column comment="" key="false" length="36" name="uuid" nullable="false" pattern="" precision="0" sourceType="VARCHAR" type="id_String" originalLength="-1" usefulColumn="true"/>
       <additionalProperties key="Comment" value=""/>
     </metadata>
   </node>
@@ -476,7 +476,7 @@
       <elementValue elementRef="DELETE_KEY" value="false"/>
       <elementValue elementRef="UPDATABLE" value="true"/>
       <elementValue elementRef="INSERTABLE" value="true"/>
-      <elementValue elementRef="SCHEMA_COLUMN" value="tox"/>
+      <elementValue elementRef="SCHEMA_COLUMN" value="toxicity"/>
       <elementValue elementRef="UPDATE_KEY" value="false"/>
       <elementValue elementRef="DELETE_KEY" value="false"/>
       <elementValue elementRef="UPDATABLE" value="true"/>
@@ -498,7 +498,7 @@
       <column comment="" key="true" length="36" name="id_allergene" nullable="false" pattern="" precision="0" sourceType="VARCHAR" type="id_String" usefulColumn="true">
         <additionalField key="Comment" value=""/>
       </column>
-      <column comment="" key="false" length="3" name="tox" nullable="false" pattern="" precision="2" sourceType="DECIMAL" type="id_Double" usefulColumn="true">
+      <column comment="" key="false" length="3" name="toxicity" nullable="false" pattern="" precision="2" sourceType="DECIMAL" type="id_Double" usefulColumn="true">
         <additionalField key="Comment" value=""/>
       </column>
       <additionalProperties key="Comment" value=""/>
@@ -510,7 +510,7 @@
       <column comment="" key="true" length="36" name="id_allergene" nullable="false" pattern="" precision="0" sourceType="VARCHAR" type="id_String" usefulColumn="true">
         <additionalField key="Comment" value=""/>
       </column>
-      <column comment="" key="false" length="3" name="tox" nullable="false" pattern="" precision="2" sourceType="DECIMAL" type="id_Double" usefulColumn="true">
+      <column comment="" key="false" length="3" name="toxicity" nullable="false" pattern="" precision="2" sourceType="DECIMAL" type="id_Double" usefulColumn="true">
         <additionalField key="Comment" value=""/>
       </column>
       <column defaultValue="" key="false" length="255" name="errorCode" nullable="true" precision="0" sourceType="VARCHAR" type="id_String" originalLength="-1" usefulColumn="true"/>

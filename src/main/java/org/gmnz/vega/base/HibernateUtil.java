@@ -1,7 +1,7 @@
 package org.gmnz.vega.base;
 
 
-import org.gmnz.vega.integration.AllergeneEntity;
+import org.gmnz.vega.integration.AllergenEntity;
 import org.hibernate.SessionFactory;
 import org.hibernate.boot.Metadata;
 import org.hibernate.boot.MetadataSources;
@@ -25,7 +25,7 @@ public class HibernateUtil {
 				.build();
 
 		Metadata metadata = new MetadataSources(standardRegistry)
-				.addAnnotatedClass(AllergeneEntity.class)
+				.addAnnotatedClass(AllergenEntity.class)
 				.getMetadataBuilder()
 				.applyImplicitNamingStrategy(ImplicitNamingStrategyJpaCompliantImpl.INSTANCE)
 				.build();

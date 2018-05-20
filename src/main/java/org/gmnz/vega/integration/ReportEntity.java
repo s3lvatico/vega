@@ -6,18 +6,19 @@ import java.util.Date;
 
 
 @Entity(name = "Report")
-@Table(name = "vg_report")
+@Table(name = "report")
 public class ReportEntity {
 
 	@Id
+	@Column(name = "uuid")
 	private String id;
 
-	@Column(name = "data_creazione")
+	@Column(name = "date_creation")
 	@Temporal(TemporalType.DATE)
-	private Date dataCreazione;
+	private Date dateCreation;
 
-	@Column(name = "nome_soggetto", length = 45)
-	private String nomeSoggetto;
+	@Column(name = "subject_name", length = 45)
+	private String subjectName;
 
 
 
@@ -33,25 +34,25 @@ public class ReportEntity {
 
 
 
-	public Date getDataCreazione() {
-		return dataCreazione;
+	public Date getDateCreation() {
+		return dateCreation;
 	}
 
 
 
-	public void setDataCreazione(Date dataCreazione) {
-		this.dataCreazione = dataCreazione;
+	public void setDateCreation(Date dateCreation) {
+		this.dateCreation = dateCreation;
 	}
 
 
 
-	public String getNomeSoggetto() {
-		return nomeSoggetto;
+	public String getSubjectName() {
+		return subjectName;
 	}
 
 
 
-	public void setNomeSoggetto(String nomeSoggetto) {
-		this.nomeSoggetto = nomeSoggetto;
+	public void setSubjectName(String subjectName) {
+		this.subjectName = subjectName;
 	}
 }

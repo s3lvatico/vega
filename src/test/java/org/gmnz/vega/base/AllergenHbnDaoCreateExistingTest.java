@@ -1,7 +1,7 @@
 package org.gmnz.vega.base;
 
 
-import org.gmnz.vega.domain.Allergene;
+import org.gmnz.vega.domain.Allergen;
 import org.gmnz.vega.repository.AllergeneDao;
 import org.gmnz.vega.repository.AllergeneHbnDao;
 import org.gmnz.vega.repository.DaoException;
@@ -10,17 +10,17 @@ import org.junit.Before;
 import org.junit.Test;
 
 
-public class AllergeneHbnDaoCreateExistingTest extends BaseHbnDaoTest {
+public class AllergenHbnDaoCreateExistingTest extends BaseHbnDaoTest {
 
 	AllergeneDao dao;
 
-	final String TEST_ALLERGENE_NAME = "Test Allergene";
+	final String TEST_ALLERGENE_NAME = "Test Allergen";
 
 
 
 	@Before
 	public void before() throws DaoException {
-		Allergene basicBo = new Allergene(TEST_ALLERGENE_NAME);
+		Allergen basicBo = new Allergen(TEST_ALLERGENE_NAME);
 		dao = new AllergeneHbnDao();
 		dao.create(basicBo);
 	}
@@ -29,7 +29,7 @@ public class AllergeneHbnDaoCreateExistingTest extends BaseHbnDaoTest {
 
 	@Test(expected = DaoException.class)
 	public void createNewWithExistingName() throws DaoException {
-		Allergene duplicateBo = new Allergene(TEST_ALLERGENE_NAME);
+		Allergen duplicateBo = new Allergen(TEST_ALLERGENE_NAME);
 		dao.create(duplicateBo);
 	}
 

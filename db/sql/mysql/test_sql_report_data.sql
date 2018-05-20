@@ -18,18 +18,18 @@ SELECT *
 FROM vg_categoria_allergene;
 
 
--- categorie con allergeni
+-- categorie con allergens
 
 SELECT
-  cat.nome   categoria,
-  allrg.nome allergene
+  cat.name   category,
+  allrg.name allergen
 FROM
   vg_categoria_allergene jn
   JOIN
-  vg_categoria cat ON jn.id_categoria = cat.id
+  vg_categoria cat ON jn.id_categoria = cat.uuid
   JOIN
-  vg_allergene allrg ON jn.id_allergene = allrg.id
-ORDER BY categoria, allergene;
+  vg_allergene allrg ON jn.id_allergene = allrg.uuid
+ORDER BY category, allergen;
 --
 
 

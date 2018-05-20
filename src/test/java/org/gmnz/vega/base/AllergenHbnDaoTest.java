@@ -1,8 +1,8 @@
 package org.gmnz.vega.base;
 
 
-import org.gmnz.vega.domain.Allergene;
-import org.gmnz.vega.domain.Categoria;
+import org.gmnz.vega.domain.Allergen;
+import org.gmnz.vega.domain.Category;
 import org.gmnz.vega.repository.AllergeneDao;
 import org.gmnz.vega.repository.AllergeneHbnDao;
 import org.gmnz.vega.repository.DaoException;
@@ -14,7 +14,7 @@ import org.junit.Test;
 import java.util.List;
 
 
-public class AllergeneHbnDaoTest extends BaseHbnDaoTest {
+public class AllergenHbnDaoTest extends BaseHbnDaoTest {
 
 	static final String AVENA = "AvenaTest";
 	static final String FARINA = "FarinaTest";
@@ -31,8 +31,8 @@ public class AllergeneHbnDaoTest extends BaseHbnDaoTest {
 	@Before
 	public void beforeTest() throws DaoException {
 		dao = new AllergeneHbnDao();
-		dao.create(new Allergene(SAMPLE_ALLERGENE_NAME));
-		dao.create(new Allergene(ALLERGENE_2B_RENAMED));
+		dao.create(new Allergen(SAMPLE_ALLERGENE_NAME));
+		dao.create(new Allergen(ALLERGENE_2B_RENAMED));
 	}
 
 
@@ -47,8 +47,8 @@ public class AllergeneHbnDaoTest extends BaseHbnDaoTest {
 
 	@Test
 	public void findAllTest() throws DaoException {
-		List<Allergene> allergeni = dao.findAll();
-		for (Allergene a : allergeni) {
+		List<Allergen> allergeni = dao.findAll();
+		for (Allergen a : allergeni) {
 			System.out.println(a);
 		}
 	}
@@ -57,7 +57,7 @@ public class AllergeneHbnDaoTest extends BaseHbnDaoTest {
 
 	@Test(expected = DaoException.class)
 	public void createWithNull() throws DaoException {
-		Allergene nullValuedBusinessObject = null;
+		Allergen nullValuedBusinessObject = null;
 		dao.create(nullValuedBusinessObject);
 	}
 
@@ -66,7 +66,7 @@ public class AllergeneHbnDaoTest extends BaseHbnDaoTest {
 	@Test(expected = DaoException.class)
 	public void createWithNullNamed() throws DaoException {
 		String nullString = null;
-		Allergene bo = new Allergene(nullString);
+		Allergen bo = new Allergen(nullString);
 		dao.create(bo);
 	}
 
@@ -74,7 +74,7 @@ public class AllergeneHbnDaoTest extends BaseHbnDaoTest {
 
 	@Test(expected = DaoException.class)
 	public void createWithEmptyNamed() throws DaoException {
-		Allergene bo = new Allergene("");
+		Allergen bo = new Allergen("");
 		dao.create(bo);
 	}
 
@@ -82,10 +82,10 @@ public class AllergeneHbnDaoTest extends BaseHbnDaoTest {
 
 	@Test
 	public void getWithInvalidName() throws DaoException {
-		Allergene actualFromNullName = dao.findByName(null);
+		Allergen actualFromNullName = dao.findByName(null);
 		Assert.assertNull(actualFromNullName);
 
-		Allergene actualFromEmptyName = dao.findByName("");
+		Allergen actualFromEmptyName = dao.findByName("");
 		Assert.assertNull(actualFromEmptyName);
 	}
 
@@ -93,18 +93,18 @@ public class AllergeneHbnDaoTest extends BaseHbnDaoTest {
 
 	@Test
 	public void getWithValidName() throws DaoException {
-		Allergene actual = dao.findByName(SAMPLE_ALLERGENE_NAME);
+		Allergen actual = dao.findByName(SAMPLE_ALLERGENE_NAME);
 		Assert.assertNotNull(actual);
-		Assert.assertEquals(actual.getNome(), SAMPLE_ALLERGENE_NAME);
-		Assert.assertEquals(Categoria.DEFAULT_CATEGORY_NAME, actual.getCategoria().getNome());
-		Assert.assertEquals(0, actual.getCategoria().getAllergeni().size());
+		Assert.assertEquals(actual.getName(), SAMPLE_ALLERGENE_NAME);
+		Assert.assertEquals(Category.DEFAULT_CATEGORY_NAME, actual.getCategory().getName());
+		Assert.assertEquals(0, actual.getCategory().getAllergens().size());
 	}
 
 
 
 	@Test
 	public void getNonExistentAllergene() throws DaoException {
-		Allergene actual = dao.findByName("this name does not exist");
+		Allergen actual = dao.findByName("this name does not exist");
 		Assert.assertNull(actual);
 	}
 

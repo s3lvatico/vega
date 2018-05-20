@@ -1,7 +1,7 @@
 package org.gmnz.vega.repository;
 
 
-import org.gmnz.vega.domain.Allergene;
+import org.gmnz.vega.domain.Allergen;
 
 import java.util.Collection;
 import java.util.List;
@@ -9,15 +9,15 @@ import java.util.List;
 
 public interface AllergeneDao {
 
-	List<Allergene> findAll() throws DaoException;
+	List<Allergen> findAll() throws DaoException;
 
-	Allergene findByName(String name)throws DaoException;
+	Allergen findByName(String name)throws DaoException;
 
-	//List<Allergene> findByPattern(String pattern)throws DaoException;
+	//List<Allergen> findByPattern(String pattern)throws DaoException;
 
-	void create(Allergene allergene)throws DaoException;
+	void create(Allergen allergen)throws DaoException;
 
-	void create(Collection<Allergene> allergeni)throws DaoException;
+	void create(Collection<Allergen> allergeni)throws DaoException;
 
 	void delete(String nome)throws DaoException;
 

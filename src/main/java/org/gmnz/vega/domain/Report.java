@@ -6,40 +6,40 @@ import java.util.*;
 
 public class Report {
 
-	private String nomeSoggetto;
+	private String subjectName;
 
-	private Date dataCreazione;
+	private Date createdOn;
 
-	private Map<String, List<Valutazione>> reportData;
+	private Map<String, List<ToxicityRating>> reportData;
 
 
 
-	public Report(String nomeSoggetto, Date dataCreazione) {
-		this.nomeSoggetto = nomeSoggetto;
-		this.dataCreazione = dataCreazione;
+	public Report(String subjectName, Date createdOn) {
+		this.subjectName = subjectName;
+		this.createdOn = createdOn;
 		reportData = new LinkedHashMap<>();
 	}
 
 
 
-	public void aggiungiValutazione(String categoria, Valutazione valutazione) {
-		if (reportData.get(categoria) == null) {
-			reportData.put(categoria, new ArrayList<>());
+	public void addRating(String category, ToxicityRating rating) {
+		if (reportData.get(category) == null) {
+			reportData.put(category, new ArrayList<>());
 		}
-		reportData.get(categoria).add(valutazione);
+		reportData.get(category).add(rating);
 	}
 
 
 
-	public Set<String> getCategorie() {
+	public Set<String> getCategories() {
 		return Collections.unmodifiableSet(reportData.keySet());
 	}
 
 
 
-	public List<Valutazione> getValutazioni(String categoria) {
-		List<Valutazione> valutazioneList = reportData.get(categoria);
-		return valutazioneList == null ? new ArrayList<>() : valutazioneList;
+	public List<ToxicityRating> getRatings(String category) {
+		List<ToxicityRating> toxicityRatingList = reportData.get(category);
+		return toxicityRatingList == null ? new ArrayList<>() : toxicityRatingList;
 	}
 
 
@@ -47,8 +47,8 @@ public class Report {
 	@Override
 	public String toString() {
 		return "Report{" +
-				"nomeSoggetto='" + nomeSoggetto + '\'' +
-				", dataCreazione=" + dataCreazione +
+				"subjectName='" + subjectName + '\'' +
+				", createdOn=" + createdOn +
 				", reportData=" + reportData +
 				'}';
 	}

@@ -5,21 +5,21 @@
 <hibernate-mapping>
 
    <class name="org.gmnz.vega.integration.VgReportDataEntity" table="vg_report_data" schema="sandbox">
-      <composite-id mapped="true" class="org.gmnz.vega.integration.VgReportDataEntityPK">
-         <key-property name="idReport">
+      <composite-uuid mapped="true" class="org.gmnz.vega.integration.VgReportDataEntityPK">
+         <key-property name="id">
             <column name="id_report" sql-type="char(36)" length="36"/>
          </key-property>
-         <key-property name="idAllergene">
+         <key-property name="id">
             <column name="id_allergene" sql-type="char(36)" length="36"/>
          </key-property>
-      </composite-id>
-      <property name="tox">
-         <column name="tox" sql-type="decimal(3,2)" precision="3" scale="2"/>
+      </composite-uuid>
+      <property name="toxicity">
+         <column name="toxicity" sql-type="decimal(3,2)" precision="3" scale="2"/>
       </property>
-      <many-to-one name="vgReportByIdReport" class="org.gmnz.vega.integration.VgReportEntity">
+      <many-to-one name="report" class="org.gmnz.vega.integration.VgReportEntity">
          <column name="id_report"/>
       </many-to-one>
-      <many-to-one name="vgAllergeneByIdAllergene" class="org.gmnz.vega.integration.VgAllergeneEntity">
+      <many-to-one name="allergen" class="org.gmnz.vega.integration.VgAllergeneEntity">
          <column name="id_allergene"/>
       </many-to-one>
    </class>

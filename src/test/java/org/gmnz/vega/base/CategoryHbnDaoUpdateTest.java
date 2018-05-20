@@ -1,8 +1,8 @@
 package org.gmnz.vega.base;
 
 
-import org.gmnz.vega.domain.Allergene;
-import org.gmnz.vega.domain.Categoria;
+import org.gmnz.vega.domain.Allergen;
+import org.gmnz.vega.domain.Category;
 import org.gmnz.vega.repository.CategoriaDao;
 import org.gmnz.vega.repository.CategoriaHbnDao;
 import org.gmnz.vega.repository.DaoException;
@@ -14,7 +14,7 @@ import org.junit.Test;
 import java.util.List;
 
 
-public class CategoriaHbnDaoUpdateTest extends BaseHbnDaoTest {
+public class CategoryHbnDaoUpdateTest extends BaseHbnDaoTest {
 /*
 	nome categoria da aggiornare vuoto o nullo	nessuna operazione compiuta
 	nome categoria non presente nel sistema	eccezione
@@ -22,8 +22,8 @@ public class CategoriaHbnDaoUpdateTest extends BaseHbnDaoTest {
 	nuovo nome uguale a quello di una categoria già presente nel sistema	eccezione
 */
 
-	private static final String TEST_NAME = CategoriaHbnDaoUpdateTest.class.getSimpleName() + "_TEST_NAME";
-	private static final String TEST_DUMMY_TARGET_NAME = CategoriaHbnDaoUpdateTest.class.getSimpleName() + "_DUMMY_TARGET";
+	private static final String TEST_NAME = CategoryHbnDaoUpdateTest.class.getSimpleName() + "_TEST_NAME";
+	private static final String TEST_DUMMY_TARGET_NAME = CategoryHbnDaoUpdateTest.class.getSimpleName() + "_DUMMY_TARGET";
 
 	private CategoriaDao dao;
 
@@ -48,9 +48,9 @@ public class CategoriaHbnDaoUpdateTest extends BaseHbnDaoTest {
 
 	@Test
 	public void updateNameWithInvalidSourceName() throws DaoException {
-		final List<Categoria> expectedAll = dao.findAll();
+		final List<Category> expectedAll = dao.findAll();
 		dao.updateRename(null, "some other name");
-		List<Categoria> actualAll = dao.findAll();
+		List<Category> actualAll = dao.findAll();
 		Assert.assertEquals(expectedAll, actualAll);
 		dao.updateRename("", "some other name");
 		actualAll = dao.findAll();
@@ -68,9 +68,9 @@ public class CategoriaHbnDaoUpdateTest extends BaseHbnDaoTest {
 
 	@Test
 	public void updateNameWithInvalidDestName() throws DaoException {
-		final List<Categoria> expectedAll = dao.findAll();
+		final List<Category> expectedAll = dao.findAll();
 		dao.updateRename(TEST_NAME, "");
-		List<Categoria> actualAll = dao.findAll();
+		List<Category> actualAll = dao.findAll();
 		Assert.assertEquals(expectedAll, actualAll);
 		dao.updateRename(TEST_NAME, null);
 		actualAll = dao.findAll();
@@ -88,7 +88,7 @@ public class CategoriaHbnDaoUpdateTest extends BaseHbnDaoTest {
 
 	@Test(expected = DaoException.class)
 	public void updateAllergeneListWithNullCategoryName() throws DaoException {
-		Categoria dummyBo = new Categoria(null);
+		Category dummyBo = new Category(null);
 		dao.updateAllergeni(dummyBo);
 	}
 
@@ -96,7 +96,7 @@ public class CategoriaHbnDaoUpdateTest extends BaseHbnDaoTest {
 
 	@Test(expected = DaoException.class)
 	public void updateAllergeneListWithEmptyCategoryName() throws DaoException {
-		Categoria dummyBo = new Categoria("");
+		Category dummyBo = new Category("");
 		dao.updateAllergeni(dummyBo);
 	}
 
@@ -104,7 +104,7 @@ public class CategoriaHbnDaoUpdateTest extends BaseHbnDaoTest {
 
 	@Test
 	public void updateAllergeneListWithNonExistentCategoryName() throws DaoException {
-		Categoria dummyBo = new Categoria("this-one-does-not-exist");
+		Category dummyBo = new Category("this-one-does-not-exist");
 		try {
 			dao.updateAllergeni(dummyBo);
 		} catch (DaoException e) {
@@ -116,9 +116,9 @@ public class CategoriaHbnDaoUpdateTest extends BaseHbnDaoTest {
 
 	@Test
 	public void updateAllergeneListWithNonExistentAllergene() {
-		Categoria dummyBo = new Categoria(TEST_NAME);
-		Allergene nonExistentAllergene = new Allergene(Long.toString(System.currentTimeMillis()));
-		dummyBo.add(nonExistentAllergene);
+		Category dummyBo = new Category(TEST_NAME);
+		Allergen nonExistentAllergen = new Allergen(Long.toString(System.currentTimeMillis()));
+		dummyBo.add(nonExistentAllergen);
 		try {
 			dao.updateAllergeni(dummyBo);
 		} catch (DaoException e) {
@@ -130,9 +130,9 @@ public class CategoriaHbnDaoUpdateTest extends BaseHbnDaoTest {
 
 	@Test
 	public void plainUpdateAllergeneList() {
-		Categoria dummyBo = new Categoria(TEST_NAME);
-		Allergene nonExistentAllergene = new Allergene(Long.toString(System.currentTimeMillis()));
-		dummyBo.add(nonExistentAllergene);
+		Category dummyBo = new Category(TEST_NAME);
+		Allergen nonExistentAllergen = new Allergen(Long.toString(System.currentTimeMillis()));
+		dummyBo.add(nonExistentAllergen);
 		try {
 			dao.updateAllergeni(dummyBo);
 		} catch (DaoException e) {

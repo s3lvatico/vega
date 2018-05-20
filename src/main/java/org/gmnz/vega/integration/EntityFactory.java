@@ -28,17 +28,17 @@ public class EntityFactory {
 
 
 	/**
-	 * Crea una nuova entità {@link AllergeneEntity} con il solo nome definito.
+	 * Crea una nuova entità {@link AllergenEntity} con il solo nome definito.
 	 * <p>Viene eseguito un controllo di validità sul nome specificato. L'entità viene di fatto creata se e solo se il nome è una stringa non nulla e non vuota</p>
 	 *
 	 * @param nome valore dell'atributo <code>nome</code> della nuova entità
 	 * @return una nuova entità, oppure <code>null</code> se si specifica un nome inadeguato.
 	 */
-	public AllergeneEntity createAllergeneEntity(String nome) {
-		AllergeneEntity e = null;
+	public AllergenEntity createAllergeneEntity(String nome) {
+		AllergenEntity e = null;
 		if (!VegaUtil.stringNullOrEmpty(nome)) {
-			e = new AllergeneEntity(nome.trim());
-			e.setId(UUID.randomUUID().toString());
+			e = new AllergenEntity(nome.trim());
+			e.setUuid(UUID.randomUUID().toString());
 		}
 		return e;
 	}
@@ -46,16 +46,16 @@ public class EntityFactory {
 
 
 	/**
-	 * Crea una nuova entità {@link CategoriaEntity} con il solo nome definito.
+	 * Crea una nuova entità {@link CategoryEntity} con il solo nome definito.
 	 * <p>Viene eseguito un controllo di validità sul nome specificato. L'entità viene di fatto creata se e solo se il nome è una stringa non nulla e non vuota</p>
 	 *
 	 * @param nome valore dell'atributo <code>nome</code> della nuova entità
 	 * @return una nuova entità, oppure <code>null</code> se si specifica un nome inadeguato.
 	 */
-	public CategoriaEntity createCategoriaEntity(String nome) {
-		CategoriaEntity e = null;
+	public CategoryEntity createCategoriaEntity(String nome) {
+		CategoryEntity e = null;
 		if (!VegaUtil.stringNullOrEmpty(nome)) {
-			e = new CategoriaEntity(nome.trim());
+			e = new CategoryEntity(nome.trim());
 			e.setId(UUID.randomUUID().toString());
 		}
 		return e;

@@ -1,8 +1,8 @@
 package org.gmnz.vega.base;
 
 
-import org.gmnz.vega.domain.Allergene;
-import org.gmnz.vega.domain.Categoria;
+import org.gmnz.vega.domain.Allergen;
+import org.gmnz.vega.domain.Category;
 import org.gmnz.vega.repository.*;
 import org.junit.After;
 import org.junit.Assert;
@@ -10,7 +10,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 
-public class CategoriaHbnDaoFindFullObjectGraphTest extends BaseHbnDaoTest {
+public class CategoryHbnDaoFindFullObjectGraphTest extends BaseHbnDaoTest {
 
 	private CategoriaDao categoriaDao;
 	private AllergeneDao allergeneDao;
@@ -24,14 +24,14 @@ public class CategoriaHbnDaoFindFullObjectGraphTest extends BaseHbnDaoTest {
 	@Before
 	public void before() throws DaoException {
 		categoriaDao = new CategoriaHbnDao();
-		Categoria testCategory = new Categoria(TEST_CATEGORY_NAME);
+		Category testCategory = new Category(TEST_CATEGORY_NAME);
 		categoriaDao.create(TEST_CATEGORY_NAME);
 
 		allergeneDao = new AllergeneHbnDao();
-		Allergene a;
+		Allergen a;
 		for (int i = 0; i < TEST_ALLERGENE_NOMI.length; i++) {
-			a = new Allergene(TEST_ALLERGENE_NOMI[i]);
-			a.setCategoria(testCategory);
+			a = new Allergen(TEST_ALLERGENE_NOMI[i]);
+			a.setCategory(testCategory);
 			allergeneDao.create(a);
 		}
 	}
@@ -40,8 +40,8 @@ public class CategoriaHbnDaoFindFullObjectGraphTest extends BaseHbnDaoTest {
 
 	@Test
 	public void test() throws DaoException {
-		Categoria actual = categoriaDao.findByName(TEST_CATEGORY_NAME);
-		Assert.assertEquals(actual.getAllergeni().size(), TEST_ALLERGENE_NOMI.length);
+		Category actual = categoriaDao.findByName(TEST_CATEGORY_NAME);
+		Assert.assertEquals(actual.getAllergens().size(), TEST_ALLERGENE_NOMI.length);
 	}
 
 

@@ -6,25 +6,25 @@ package org.gmnz.vega.base;
  */
 public class NamedEntity {
 
-	private String nome;
+	private String name;
 
 	public static final String DEFAULT_CATEGORY_NAME = "DEFAULT_CATEGORY";
 
 
-	public NamedEntity(String nome) {
-		this.nome = nome;
+	public NamedEntity(String name) {
+		this.name = name;
 	}
 
 
 
-	public String getNome() {
-		return nome;
+	public String getName() {
+		return name;
 	}
 
 
 
 	@Override
 	public int hashCode() {
-		return getNome().hashCode();
+		return getName().hashCode();
 	}
 }

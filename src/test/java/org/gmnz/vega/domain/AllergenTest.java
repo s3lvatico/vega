@@ -4,23 +4,23 @@ package org.gmnz.vega.domain;
 import org.junit.Assert;
 import org.junit.Test;
 
-public class AllergeneTest {
+public class AllergenTest {
 
 	@Test
 	public void getNome() {
 		final String aName = "testName";
-		Allergene a = new Allergene(aName);
-		Assert.assertEquals(aName, a.getNome());
+		Allergen a = new Allergen(aName);
+		Assert.assertEquals(aName, a.getName());
 	}
 
 	@Test
 	public void equals() {
-		Allergene x = new Allergene("x");
-		Allergene y = new Allergene("y");
+		Allergen x = new Allergen("x");
+		Allergen y = new Allergen("y");
 
 		Assert.assertNotEquals(x, y);
 
-		Allergene x2 = new Allergene("x");
+		Allergen x2 = new Allergen("x");
 
 		Assert.assertEquals(x, x2);
 	}
@@ -28,24 +28,24 @@ public class AllergeneTest {
 
 	@Test
 	public void testToString() {
-		Allergene x = new Allergene("x");
-		String expected = "Allergene{nome='x', categoria='DEFAULT_CATEGORY'}";
+		Allergen x = new Allergen("x");
+		String expected = "Allergen{nome='x', categoria='DEFAULT_CATEGORY'}";
 		Assert.assertEquals(expected, x.toString());
 	}
 
 	@Test
 	public void testHashcode() {
-		Allergene x = new Allergene("ics");
+		Allergen x = new Allergen("ics");
 		int expected = 104089;
 		Assert.assertEquals(expected, x.hashCode());
 	}
 
 	@Test
 	public void sampleTest() {
-		Allergene avena = new Allergene("Avena");
-		Allergene farina = new Allergene("Farina");
-		Allergene orzo = new Allergene("Orzo");
-		Allergene patate = new Allergene("Patate");
+		Allergen avena = new Allergen("Avena");
+		Allergen farina = new Allergen("Farina");
+		Allergen orzo = new Allergen("Orzo");
+		Allergen patate = new Allergen("Patate");
 
 		System.out.printf("%s - %d%n", avena, avena.hashCode());
 		System.out.printf("%s - %d%n", farina, farina.hashCode());

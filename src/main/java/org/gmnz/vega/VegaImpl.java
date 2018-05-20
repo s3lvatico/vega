@@ -1,15 +1,15 @@
 package org.gmnz.vega;
 
 
-import org.gmnz.vega.domain.Allergene;
-import org.gmnz.vega.domain.Categoria;
+import org.gmnz.vega.domain.Allergen;
+import org.gmnz.vega.domain.Category;
 
 import java.util.List;
 
 
 public class VegaImpl implements Vega {
 	@Override
-	public List<Allergene> elencaAllergeni() {
+	public List<Allergen> elencaAllergeni() {
 		return null;
 	}
 
@@ -23,7 +23,7 @@ public class VegaImpl implements Vega {
 
 
 	@Override
-	public Allergene selezionaAllergene(String nome) {
+	public Allergen selezionaAllergene(String nome) {
 		return null;
 	}
 
@@ -44,7 +44,7 @@ public class VegaImpl implements Vega {
 
 
 	@Override
-	public List<Categoria> elencaCategorie() {
+	public List<Category> elencaCategorie() {
 		return null;
 	}
 
@@ -58,7 +58,7 @@ public class VegaImpl implements Vega {
 
 
 	@Override
-	public Categoria selezionaCategoria(String nome) {
+	public Category selezionaCategoria(String nome) {
 		return null;
 	}
 

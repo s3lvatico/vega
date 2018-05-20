@@ -23,9 +23,9 @@ DROP TABLE IF EXISTS `vg_allergene`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `vg_allergene` (
-  `id` char(36) NOT NULL,
-  `nome` varchar(45) NOT NULL,
-  PRIMARY KEY (`id`)
+  `uuid` char(36) NOT NULL,
+  `name` varchar(45) NOT NULL,
+  PRIMARY KEY (`uuid`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -37,9 +37,9 @@ DROP TABLE IF EXISTS `vg_categoria`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `vg_categoria` (
-  `id` char(36) NOT NULL,
-  `nome` varchar(45) NOT NULL,
-  PRIMARY KEY (`id`)
+  `uuid` char(36) NOT NULL,
+  `name` varchar(45) NOT NULL,
+  PRIMARY KEY (`uuid`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -55,8 +55,8 @@ CREATE TABLE `vg_categoria_allergene` (
   `id_allergene` char(36) DEFAULT NULL,
   KEY `fk_categoria_allergene__id_allergene_idx` (`id_allergene`),
   KEY `fk_categoria_allergene__id_categoria_idx` (`id_categoria`),
-  CONSTRAINT `fk_categoria_allergene__id_allergene` FOREIGN KEY (`id_allergene`) REFERENCES `vg_allergene` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `fk_categoria_allergene__id_categoria` FOREIGN KEY (`id_categoria`) REFERENCES `vg_categoria` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION
+  CONSTRAINT `fk_categoria_allergene__id_allergene` FOREIGN KEY (`id_allergene`) REFERENCES `vg_allergene` (`uuid`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `fk_categoria_allergene__id_categoria` FOREIGN KEY (`id_categoria`) REFERENCES `vg_categoria` (`uuid`) ON DELETE CASCADE ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -68,10 +68,10 @@ DROP TABLE IF EXISTS `vg_report`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `vg_report` (
-  `id` char(36) NOT NULL,
+  `uuid` char(36) NOT NULL,
   `data_creazione` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `nome_soggetto` varchar(45) NOT NULL,
-  PRIMARY KEY (`id`)
+  PRIMARY KEY (`uuid`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;

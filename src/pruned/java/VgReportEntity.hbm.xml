@@ -5,13 +5,13 @@
 <hibernate-mapping>
 
    <class name="org.gmnz.vega.integration.VgReportEntity" table="vg_report" schema="sandbox">
-      <id name="id">
-         <column name="id" sql-type="char(36)" length="36"/>
-      </id>
-      <property name="dataCreazione">
+      <uuid name="uuid">
+         <column name="uuid" sql-type="char(36)" length="36"/>
+      </uuid>
+      <property name="createdOn">
          <column name="data_creazione" sql-type="datetime"/>
       </property>
-      <property name="nomeSoggetto">
+      <property name="subjectName">
          <column name="nome_soggetto" sql-type="varchar(45)" length="45"/>
       </property>
       <set name="vgReportDataById" inverse="true">

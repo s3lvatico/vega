@@ -23,11 +23,11 @@ DROP TABLE IF EXISTS `vg_allergene`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `vg_allergene` (
-  `id` char(36) NOT NULL,
+  `uuid` char(36) NOT NULL,
   `id_categoria` char(36) NOT NULL DEFAULT '00000000-0000-0000-0000-000000000000',
-  `nome` varchar(45) NOT NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `uq_allergene_nome` (`nome`),
+  `name` varchar(45) NOT NULL,
+  PRIMARY KEY (`uuid`),
+  UNIQUE KEY `uq_allergene_nome` (`name`),
   KEY `fk_allergene__categoria_id_idx` (`id_categoria`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -40,10 +40,10 @@ DROP TABLE IF EXISTS `vg_categoria`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `vg_categoria` (
-  `id` char(36) NOT NULL,
-  `nome` varchar(45) NOT NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `nome_UNIQUE` (`nome`)
+  `uuid` char(36) NOT NULL,
+  `name` varchar(45) NOT NULL,
+  PRIMARY KEY (`uuid`),
+  UNIQUE KEY `nome_UNIQUE` (`name`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -55,10 +55,10 @@ DROP TABLE IF EXISTS `vg_report`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `vg_report` (
-  `id` char(36) NOT NULL,
+  `uuid` char(36) NOT NULL,
   `data_creazione` date NOT NULL,
   `nome_soggetto` varchar(45) NOT NULL,
-  PRIMARY KEY (`id`)
+  PRIMARY KEY (`uuid`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -72,11 +72,11 @@ DROP TABLE IF EXISTS `vg_report_data`;
 CREATE TABLE `vg_report_data` (
   `id_report` char(36) NOT NULL,
   `id_allergene` char(36) NOT NULL,
-  `tox` decimal(3,2) NOT NULL,
+  `toxicity` decimal(3,2) NOT NULL,
   PRIMARY KEY (`id_report`,`id_allergene`),
   KEY `fk_report_data__id_allergene_idx` (`id_allergene`),
-  CONSTRAINT `fk_report_data__id_allergene` FOREIGN KEY (`id_allergene`) REFERENCES `vg_allergene` (`id`) ON UPDATE NO ACTION,
-  CONSTRAINT `fk_report_data__id_report` FOREIGN KEY (`id_report`) REFERENCES `vg_report` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+  CONSTRAINT `fk_report_data__id_allergene` FOREIGN KEY (`id_allergene`) REFERENCES `vg_allergene` (`uuid`) ON UPDATE NO ACTION,
+  CONSTRAINT `fk_report_data__id_report` FOREIGN KEY (`id_report`) REFERENCES `vg_report` (`uuid`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
