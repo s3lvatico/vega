@@ -7,6 +7,7 @@
    <groupId>org.gmnz</groupId>
    <artifactId>approach-2</artifactId>
    <version>1.0-SNAPSHOT</version>
+   <packaging>war</packaging>
 
    <properties>
       <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -22,6 +23,23 @@
          <version>${junit.version}</version>
          <scope>test</scope>
       </dependency>
+
+      <!-- https://mvnrepository.com/artifact/javax.servlet/javax.servlet-api -->
+      <dependency>
+         <groupId>javax.servlet</groupId>
+         <artifactId>javax.servlet-api</artifactId>
+         <version>3.1.0</version>
+         <scope>provided</scope>
+      </dependency>
+
+      <!-- https://mvnrepository.com/artifact/javax.servlet.jsp/javax.servlet.jsp-api -->
+      <dependency>
+         <groupId>javax.servlet.jsp</groupId>
+         <artifactId>javax.servlet.jsp-api</artifactId>
+         <version>2.3.1</version>
+         <scope>provided</scope>
+      </dependency>
+
    </dependencies>
 
    <build>
