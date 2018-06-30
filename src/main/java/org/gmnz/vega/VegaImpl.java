@@ -3,69 +3,72 @@ package org.gmnz.vega;
 
 import org.gmnz.vega.domain.Allergen;
 import org.gmnz.vega.domain.Category;
+import org.gmnz.vega.repository.DummyRepository;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
 public class VegaImpl implements Vega {
 	@Override
-	public List<Allergen> elencaAllergeni() {
+	public List<Allergen> getAllAllergens() {
+		return new ArrayList<>(DummyRepository.getRegisteredAllergens());
+	}
+
+
+
+	@Override
+	public void createAllergen(String name) {
+		throw new RuntimeException("not yet implemented");
+	}
+
+
+
+	@Override
+	public Allergen selectAllergen(String nome) {
 		return null;
 	}
 
 
 
 	@Override
-	public void creaAllergene(String nome) {
-
+	public void renameAllergen(String vecchioNome, String nuovoNome) {
+		throw new RuntimeException("not yet implemented");
 	}
 
 
 
 	@Override
-	public Allergen selezionaAllergene(String nome) {
+	public void removeAllergen(String nome) {
+		throw new RuntimeException("not yet implemented");
+	}
+
+
+
+	@Override
+	public List<Category> getAllCategories() {
+		return new ArrayList<>(DummyRepository.getRegisteredCategories());
+	}
+
+
+
+	@Override
+	public void createCategory(String nome) {
+		throw new RuntimeException("not yet implemented");
+	}
+
+
+
+	@Override
+	public Category selectCategory(String nome) {
 		return null;
 	}
 
 
 
 	@Override
-	public void rinominaAllergene(String vecchioNome, String nuovoNome) {
-
+	public void assignAllergenToCategory(String nomeAllergene, String nomeCategoria) {
+		throw new RuntimeException("not yet implemented");
 	}
 
-
-
-	@Override
-	public void eliminaAllergene(String nome) {
-
-	}
-
-
-
-	@Override
-	public List<Category> elencaCategorie() {
-		return null;
-	}
-
-
-
-	@Override
-	public void creaCategoria(String nome) {
-
-	}
-
-
-
-	@Override
-	public Category selezionaCategoria(String nome) {
-		return null;
-	}
-
-
-
-	@Override
-	public void categorizzaAllergene(String nomeAllergene, String nomeCategoria) {
-
-	}
 }
