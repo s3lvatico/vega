@@ -1,4 +1,8 @@
-# Created by .ignore support plugin (hsz.mobi)
-
+# intellij idea support files
 .idea/**
 *.iml
+
+# eclipse generated files
+.classpath
+.project
+.settings
