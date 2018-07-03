@@ -1,20 +1,27 @@
 package org.gmnz.vega;
 
 
-import org.gmnz.vega.domain.Allergen;
-import org.gmnz.vega.domain.Category;
-import org.gmnz.vega.repository.DummyRepository;
-
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
+import org.gmnz.vega.domain.Allergen;
+import org.gmnz.vega.domain.AllergenComparator;
+import org.gmnz.vega.domain.Category;
+import org.gmnz.vega.repository.DummyRepository;
+
 
 public class VegaImpl implements Vega {
+
 	@Override
 	public List<Allergen> getAllAllergens() {
-		return new ArrayList<>(DummyRepository.getRegisteredAllergens());
+		Collection<Allergen> registeredAllergens = DummyRepository.getRegisteredAllergens();
+		List<Allergen> allergensList = new ArrayList<>(registeredAllergens);
+		Collections.sort(allergensList, new AllergenComparator());
+		return allergensList;
 	}
+
 
 
 
@@ -25,10 +32,12 @@ public class VegaImpl implements Vega {
 
 
 
+
 	@Override
 	public Allergen selectAllergen(String nome) {
 		return null;
 	}
+
 
 
 
@@ -39,10 +48,12 @@ public class VegaImpl implements Vega {
 
 
 
+
 	@Override
 	public void removeAllergen(String nome) {
 		throw new RuntimeException("not yet implemented");
 	}
+
 
 
 
@@ -53,6 +64,7 @@ public class VegaImpl implements Vega {
 
 
 
+
 	@Override
 	public void createCategory(String nome) {
 		throw new RuntimeException("not yet implemented");
@@ -60,10 +72,12 @@ public class VegaImpl implements Vega {
 
 
 
+
 	@Override
 	public Category selectCategory(String nome) {
 		return null;
 	}
+
 
 
 

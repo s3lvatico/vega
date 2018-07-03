@@ -1,4 +1,4 @@
-<%@ page import="java.util.Date" %>
+<%@ page import="java.util.Date"%>
 <%--
   Created by IntelliJ IDEA.
   User: simone
@@ -6,25 +6,19 @@
   Time: 14:02
   To change this template use File | Settings | File Templates.
 --%>
-<%@ page contentType="text/html;charset=UTF-8" %>
+<%@ page contentType="text/html;charset=UTF-8"%>
 <html>
 <head>
-    <title>vega</title>
+<title>vega</title>
 </head>
 <body>
-<h1>Gmnz's Vega</h1>
-<h2>Main menu</h2>
-<ul>
-    <li>
-        Categories
-    </li>
-    <li>
-        <a href="allergens.jsp">Allergens</a>
-    </li>
-    <li>
-        Reports
-    </li>
-</ul>
-<%@ include file="WEB-INF/jsp/footer.jsp"%>
+	<jsp:include page="/WEB-INF/jsp/header.jsp"></jsp:include>
+	<h2>Main menu</h2>
+	<ul>
+		<li>Categories</li>
+		<li><a href="allergens.jsp">Allergens</a></li>
+		<li>Reports</li>
+	</ul>
+	<jsp:include page="/WEB-INF/jsp/footer.jsp"></jsp:include>
 </body>
 </html>
