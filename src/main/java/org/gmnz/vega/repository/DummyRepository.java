@@ -80,4 +80,13 @@ public final class DummyRepository {
 	public static Collection<Category> getRegisteredCategories() {
 		return CATEGORIES;
 	}
+
+	public static void addCategory(Category category) {
+		CATEGORIES.add(category);
+	}
+
+	public static void removeCategory(Category category) {
+		// TODO controlla se esiste e  contiene allergeni - in caso eccezione
+		CATEGORIES.remove(category);
+	}
 }
