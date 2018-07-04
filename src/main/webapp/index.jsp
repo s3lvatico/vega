@@ -12,13 +12,13 @@
 <title>vega</title>
 </head>
 <body>
-	<jsp:include page="/WEB-INF/jsp/header.jsp"></jsp:include>
+	<jsp:include page="/WEB-INF/jsp/header.jsp"/>
 	<h2>Main menu</h2>
 	<ul>
-		<li>Categories</li>
+		<li><a href="categories.jsp">Categories</a></li>
 		<li><a href="allergens.jsp">Allergens</a></li>
-		<li>Reports</li>
+		<li>Reports (not yet available)</li>
 	</ul>
-	<jsp:include page="/WEB-INF/jsp/footer.jsp"></jsp:include>
+	<jsp:include page="/WEB-INF/jsp/footer.jsp"/>
 </body>
 </html>
