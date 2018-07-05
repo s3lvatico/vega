@@ -22,7 +22,9 @@ public class CategoryManagementBean {
 
 
 	public void setOperationLabel(String operationLabel) {
-		this.operationLabel = operationLabel;
+		if (operationLabel != null && !operationLabel.isEmpty()) {
+			this.operationLabel = operationLabel;
+		}
 	}
 
 
@@ -34,6 +36,8 @@ public class CategoryManagementBean {
 
 
 	public void setCategoryName(String categoryName) {
-		this.categoryName = categoryName;
+		if (categoryName != null && !categoryName.isEmpty()) {
+			this.categoryName = categoryName;
+		}
 	}
 }
