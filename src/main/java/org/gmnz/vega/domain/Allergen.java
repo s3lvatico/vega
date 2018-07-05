@@ -8,6 +8,8 @@ public class Allergen extends NamedEntity {
 
 	private Category category;
 
+
+
 	public Allergen(String name) {
 		super(name);
 		category = Category.DEFAULT_CATEGORY;
@@ -29,8 +31,10 @@ public class Allergen extends NamedEntity {
 
 	@Override
 	public boolean equals(Object o) {
-		if (this == o) return true;
-		if (o == null || getClass() != o.getClass()) return false;
+		if (this == o)
+			return true;
+		if (o == null || getClass() != o.getClass())
+			return false;
 
 		Allergen allergen = (Allergen) o;
 
@@ -39,15 +43,8 @@ public class Allergen extends NamedEntity {
 
 
 
-
-
-
-
 	@Override
 	public String toString() {
-		return "Allergen{" +
-				"name='" + getName() + "\', " +
-				"category='" + getCategory().getName() + '\'' +
-				'}';
+		return "Allergen{" + "name='" + getName() + "\', " + "category='" + getCategory().getName() + '\'' + '}';
 	}
 }

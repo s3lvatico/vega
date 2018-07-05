@@ -11,19 +11,16 @@ class GSha1 {
 
 
 
-
 	GSha1() {
 		MessageDigest sha1digest1;
 		try {
 			sha1digest1 = MessageDigest.getInstance("SHA1");
-		}
-		catch (NoSuchAlgorithmException e) {
+		} catch (NoSuchAlgorithmException e) {
 			System.err.println("warning - could not initialize the digester");
 			sha1digest1 = null;
 		}
 		sha1digest = sha1digest1;
 	}
-
 
 
 
@@ -33,7 +30,6 @@ class GSha1 {
 		byte[] digest = sha1digest.digest(s.getBytes());
 		return digest;
 	}
-
 
 
 
@@ -49,12 +45,10 @@ class GSha1 {
 
 
 
-
 	private void validateDigester() {
 		if (sha1digest == null)
 			throw new UnsupportedOperationException("digester not initialized");
 	}
-
 
 
 

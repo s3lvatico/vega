@@ -10,11 +10,19 @@ public interface AllergeneService {
 
 	List<Allergen> getAll();
 
+
+
 	void create(String name);
+
+
 
 	void get(String name);
 
+
+
 	void rename(String oldName, String newName);
+
+
 
 	void remove(String name);
 

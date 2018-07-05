@@ -46,10 +46,7 @@ public class Report {
 
 	@Override
 	public String toString() {
-		return "Report{" +
-				"subjectName='" + subjectName + '\'' +
-				", createdOn=" + createdOn +
-				", reportData=" + reportData +
-				'}';
+		return "Report{" + "subjectName='" + subjectName + '\'' + ", createdOn=" + createdOn + ", reportData="
+				+ reportData + '}';
 	}
 }

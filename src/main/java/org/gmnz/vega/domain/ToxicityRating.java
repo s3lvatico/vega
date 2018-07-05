@@ -1,6 +1,5 @@
 package org.gmnz.vega.domain;
 
-
 public class ToxicityRating {
 
 	private Allergen allergen;
@@ -30,9 +29,6 @@ public class ToxicityRating {
 
 	@Override
 	public String toString() {
-		return "ToxicityRating{" +
-				"allergen=" + allergen +
-				", toxicity=" + toxicity +
-				'}';
+		return "ToxicityRating{" + "allergen=" + allergen + ", toxicity=" + toxicity + '}';
 	}
 }

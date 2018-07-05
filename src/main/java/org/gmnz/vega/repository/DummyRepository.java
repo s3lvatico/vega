@@ -56,7 +56,6 @@ public final class DummyRepository {
 		c.add(a);
 		ALLERGENS.add(a);
 
-
 		c = new Category("condimenti");
 		CATEGORIES.add(c);
 
@@ -71,6 +70,8 @@ public final class DummyRepository {
 		ALLERGENS.add(a);
 	}
 
+
+
 	public static Collection<Allergen> getRegisteredAllergens() {
 		return ALLERGENS;
 	}
@@ -81,12 +82,16 @@ public final class DummyRepository {
 		return CATEGORIES;
 	}
 
+
+
 	public static void addCategory(Category category) {
 		CATEGORIES.add(category);
 	}
 
+
+
 	public static void removeCategory(Category category) {
-		// TODO controlla se esiste e  contiene allergeni - in caso eccezione
+		// TODO controlla se esiste e contiene allergeni - in caso eccezione
 		CATEGORIES.remove(category);
 	}
 }

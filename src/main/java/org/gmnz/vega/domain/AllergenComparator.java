@@ -11,8 +11,7 @@ public class AllergenComparator implements Comparator<Allergen> {
 		int categoryCompare = new CategoryComparator().compare(o1.getCategory(), o2.getCategory());
 		if (categoryCompare == 0) {
 			return o1.getName().compareTo(o2.getName());
-		}
-		else {
+		} else {
 			return categoryCompare;
 		}
 	}

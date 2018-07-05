@@ -1,6 +1,5 @@
 package org.gmnz.vega.base;
 
-
 /**
  * creato da simone in data 18/01/2018.
  */
@@ -14,8 +13,10 @@ public class VegaUtil {
 
 
 	public static String normalizeString(String s) {
-		if (s == null) return "";
-		else return s.trim();
+		if (s == null)
+			return "";
+		else
+			return s.trim();
 	}
 
 }

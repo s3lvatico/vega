@@ -24,12 +24,10 @@ public class VegaImpl implements Vega {
 
 
 
-
 	@Override
 	public void createAllergen(String name) {
 		throw new RuntimeException("not yet implemented");
 	}
-
 
 
 
@@ -40,12 +38,10 @@ public class VegaImpl implements Vega {
 
 
 
-
 	@Override
 	public void renameAllergen(String vecchioNome, String nuovoNome) {
 		throw new RuntimeException("not yet implemented");
 	}
-
 
 
 
@@ -56,12 +52,10 @@ public class VegaImpl implements Vega {
 
 
 
-
 	@Override
 	public List<Category> getAllCategories() {
 		return new ArrayList<>(DummyRepository.getRegisteredCategories());
 	}
-
 
 
 
@@ -72,12 +66,10 @@ public class VegaImpl implements Vega {
 
 
 
-
 	@Override
 	public Category selectCategory(String nome) {
 		return null;
 	}
-
 
 
 

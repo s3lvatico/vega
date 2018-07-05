@@ -11,15 +11,25 @@ public interface AllergeneDao {
 
 	List<Allergen> findAll() throws DaoException;
 
-	Allergen findByName(String name)throws DaoException;
 
-	//List<Allergen> findByPattern(String pattern)throws DaoException;
 
-	void create(Allergen allergen)throws DaoException;
+	Allergen findByName(String name) throws DaoException;
 
-	void create(Collection<Allergen> allergeni)throws DaoException;
 
-	void delete(String nome)throws DaoException;
 
-	void update(String nome, String newName)throws DaoException;
+	// List<Allergen> findByPattern(String pattern)throws DaoException;
+
+	void create(Allergen allergen) throws DaoException;
+
+
+
+	void create(Collection<Allergen> allergeni) throws DaoException;
+
+
+
+	void delete(String nome) throws DaoException;
+
+
+
+	void update(String nome, String newName) throws DaoException;
 }
