@@ -23,13 +23,13 @@
     <tr>
         <td>
             <form action="<%=ctxRoot%>/category/edit">
-                <input type="hidden" value="<%=c.getName()%>">
+                <input type="hidden" name="categoryName" value="<%=c.getName()%>">
                 <input type="submit" value="E">
             </form>
         </td>
         <td>
             <form action="<%=ctxRoot%>/category/delete">
-                <input type="hidden" value="<%=c.getName()%>">
+                <input type="hidden" name="categoryName" value="<%=c.getName()%>">
                 <input type="submit" value="D">
             </form>
         </td>
