@@ -1,10 +1,16 @@
 package org.gmnz.vega.ui;
 
+
 public class CategoryManagementBean {
 
 	private String operationLabel;
 
 	private String categoryName;
+
+	private String viewName;
+
+
+	private String command;
 
 
 
@@ -39,4 +45,29 @@ public class CategoryManagementBean {
 			this.categoryName = categoryName;
 		}
 	}
+
+
+
+	public String getViewName() {
+		return viewName;
+	}
+
+
+
+	public void setViewName(String viewName) {
+		this.viewName = viewName;
+	}
+
+
+
+	public String getCommand() {
+		return command;
+	}
+
+
+
+	public void setCommand(String command) {
+		this.command = command;
+	}
+
 }

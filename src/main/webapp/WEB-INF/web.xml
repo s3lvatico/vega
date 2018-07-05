@@ -18,4 +18,16 @@
       <servlet-name>CategoryController</servlet-name>
       <url-pattern>/category/*</url-pattern>
    </servlet-mapping>
+
+   <servlet>
+      <servlet-name>CategoryExecution</servlet-name>
+      <servlet-class>org.gmnz.vega.ui.CategoryExecution</servlet-class>
+   </servlet>
+   <servlet-mapping>
+      <servlet-name>CategoryExecution</servlet-name>
+      <url-pattern>/category/do/*</url-pattern>
+   </servlet-mapping>
+
+
+
 </web-app>

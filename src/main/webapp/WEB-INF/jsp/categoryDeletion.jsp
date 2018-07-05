@@ -14,12 +14,11 @@
 <jsp:include page="/WEB-INF/jsp/header.jsp"/>
 <h2>Categories</h2>
 <h3><%= catBean.getOperationLabel() %></h3>
+<p>Please confirm the deletion:</p>
 <p>Category name: </p>
-<form action="<%=request.getContextPath()%>/category/do">
-    <input type="text" name="categoryName" value="<%=catBean.getCategoryName()%>"/>
-    <input type="hidden" name="action" value="<%=catBean.getCommand()%>"/>
-    <input type="submit" value="Confirm"/>
-</form>
 <jsp:include page="/WEB-INF/jsp/footer.jsp"/>
+<form action="<%=request.get%>">
+
+</form>
 </body>
 </html>
