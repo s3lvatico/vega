@@ -1,14 +1,19 @@
 package org.gmnz.vega.ui;
 
+
+import java.io.IOException;
+
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
+
 
 public class CategoryController extends HttpServlet {
 
 	private static final long serialVersionUID = -2840683919436468123L;
+
+
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -18,6 +23,8 @@ public class CategoryController extends HttpServlet {
 		System.out.println("section requested: " + section);
 		req.getRequestDispatcher("/categories.jsp").forward(req, resp);
 	}
+
+
 
 	private String extractRequestedSection(String requestUrl) {
 		int i = requestUrl.lastIndexOf('/');
