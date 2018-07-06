@@ -17,7 +17,8 @@
 <p>Category name: </p>
 <form action="<%=request.getContextPath()%>/category/do">
     <input type="text" name="categoryName" value="<%=catBean.getCategoryName()%>"/>
-    <input type="hidden" name="action" value="<%=catBean.getCommand()%>"/>
+    <input type="hidden" name="oldCategoryName" value="<%=catBean.getCategoryName()%>"/>
+    <input type="hidden" name="action" value="<%=catBean.getAction()%>"/>
     <input type="submit" value="Confirm"/>
 </form>
 <jsp:include page="/WEB-INF/jsp/footer.jsp"/>

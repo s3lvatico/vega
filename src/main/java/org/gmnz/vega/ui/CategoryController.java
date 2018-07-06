@@ -25,19 +25,19 @@ public class CategoryController extends HttpServlet {
 		CategoryManagementBean cmb = new CategoryManagementBean();
 		cmb.setOperationLabel("New Category Creation");
 		cmb.setViewName("categoryManagement");
-		cmb.setCommand("create");
+		cmb.setAction(Action.CREATE);
 		navMap.put("create", cmb);
 
 		cmb = new CategoryManagementBean();
 		cmb.setOperationLabel("Modify Category Name");
 		cmb.setViewName("categoryManagement");
-		cmb.setCommand("update");
+		cmb.setAction(Action.MODIFY);
 		navMap.put("edit", cmb);
 
 		cmb = new CategoryManagementBean();
 		cmb.setOperationLabel("Confirm Category Deletion");
 		cmb.setViewName("categoryDeletion");
-		cmb.setCommand("delete");
+		cmb.setAction(Action.DELETE);
 		navMap.put("delete", cmb);
 
 	}

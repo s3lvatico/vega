@@ -1,10 +1,10 @@
 package org.gmnz.vega;
 
 
+import java.util.List;
+
 import org.gmnz.vega.domain.Allergen;
 import org.gmnz.vega.domain.Category;
-
-import java.util.List;
 
 
 public interface Vega {
@@ -43,4 +43,11 @@ public interface Vega {
 
 	void assignAllergenToCategory(String allergenName, String categoryName);
 
+
+
+	void renameCategory(String category, String newCategoryName);
+
+
+
+	void removeCategory(String name);
 }

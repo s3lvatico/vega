@@ -78,4 +78,20 @@ public class VegaImpl implements Vega {
 		throw new RuntimeException("not yet implemented");
 	}
 
+
+
+	@Override
+	public void renameCategory(String category, String newCategoryName) {
+		// TODO Auto-generated method stub
+
+	}
+
+
+
+	@Override
+	public void removeCategory(String name) {
+		// TODO Auto-generated method stub
+
+	}
+
 }

@@ -1,6 +1,5 @@
 package org.gmnz.vega.ui;
 
-
 public class CategoryManagementBean {
 
 	private String operationLabel;
@@ -9,8 +8,7 @@ public class CategoryManagementBean {
 
 	private String viewName;
 
-
-	private String command;
+	private String action;
 
 
 
@@ -60,14 +58,14 @@ public class CategoryManagementBean {
 
 
 
-	public String getCommand() {
-		return command;
+	public String getAction() {
+		return action;
 	}
 
 
 
-	public void setCommand(String command) {
-		this.command = command;
+	public void setAction(String action) {
+		this.action = action;
 	}
 
 }
