@@ -1,16 +1,19 @@
 package org.gmnz.vega.ui;
 
 
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 
 public class CategoryController extends HttpServlet {
+
+	private static final long serialVersionUID = 4531766441007641102L;
 
 	private Map<String, CategoryManagementBean> navMap;
 
@@ -43,15 +46,12 @@ public class CategoryController extends HttpServlet {
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		//System.out.format("request URL: <%s>%n", req.getRequestURL());
-		//System.out.format("request URI: <%s>%n", req.getRequestURI());
 		String section = findRequestedSection(req.getRequestURL().toString());
-		//System.out.println("section requested: " + section);
 
 		CategoryManagementBean cmb = navMap.get(section);
 		if (cmb != null) {
 			cmb.setCategoryName(req.getParameter("categoryName"));
-			req.setAttribute("categoryManagementBean", cmb);
+			req.setAttribute("catBean", cmb);
 			String targetUrl = String.format("/WEB-INF/jsp/%s.jsp", cmb.getViewName());
 			req.getRequestDispatcher(targetUrl).forward(req, resp);
 		} else {
