@@ -61,7 +61,13 @@ public class VegaImpl implements Vega {
 
 	@Override
 	public void createCategory(String nome) {
-		throw new RuntimeException("not yet implemented");
+		Collection<Category> registeredCategories = DummyRepository.getRegisteredCategories();
+		Category c = new Category(nome);
+		if (!registeredCategories.contains(c)) {
+			DummyRepository.addCategory(c);
+		} else {
+			System.err.println("category already present");
+		}
 	}
 
 
@@ -82,7 +88,7 @@ public class VegaImpl implements Vega {
 
 	@Override
 	public void renameCategory(String category, String newCategoryName) {
-		// TODO Auto-generated method stub
+		Collection<Category> registeredCategories = DummyRepository.getRegisteredCategories();
 
 	}
 
