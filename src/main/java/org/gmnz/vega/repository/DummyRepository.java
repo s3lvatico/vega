@@ -1,12 +1,12 @@
 package org.gmnz.vega.repository;
 
 
-import org.gmnz.vega.domain.Allergen;
-import org.gmnz.vega.domain.Category;
-
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
+
+import org.gmnz.vega.domain.Allergen;
+import org.gmnz.vega.domain.Category;
 
 
 public final class DummyRepository {
@@ -91,7 +91,6 @@ public final class DummyRepository {
 
 
 	public static void removeCategory(Category category) {
-		// TODO controlla se esiste e contiene allergeni - in caso eccezione
 		CATEGORIES.remove(category);
 	}
 }
