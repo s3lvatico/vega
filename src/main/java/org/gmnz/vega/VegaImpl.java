@@ -1,15 +1,12 @@
 package org.gmnz.vega;
 
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.List;
-
 import org.gmnz.vega.domain.Allergen;
 import org.gmnz.vega.domain.AllergenComparator;
 import org.gmnz.vega.domain.Category;
 import org.gmnz.vega.repository.DummyRepository;
+
+import java.util.*;
 
 
 public class VegaImpl implements Vega {
@@ -92,6 +89,26 @@ public class VegaImpl implements Vega {
 		Category oc = new Category(category);
 		if (!registeredCategories.contains(oc)) {
 			throw new VegaException("requested category is not registered in the system");
+		}
+		Category nc = new Category(newCategoryName);
+		if (registeredCategories.contains(nc)) {
+			String errorMessage = String.format("There is already a category named <%s> in the system", newCategoryName);
+			throw new VegaException(errorMessage);
+		}
+
+		Iterator<Category> iterator = registeredCategories.iterator();
+		while (iterator.hasNext()) {
+			Category c = iterator.next();
+			if (c.getName().equals(category)) {
+				if (c.getAllergens().size() == 0) {
+					registeredCategories.remove(oc);
+					registeredCategories.add(nc);
+					break;
+				}
+				else {
+					throw new VegaException("a category must have no allergens associated in order to be renamed.");
+				}
+			}
 		}
 	}
 

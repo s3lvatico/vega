@@ -15,8 +15,9 @@
 <hr/>
 <h6>
     <% String ctxPath = request.getContextPath(); %>
-    <a href="<%= ctxPath %>/index.jsp">Index</a> <a href="<%= ctxPath %>/allergens.jsp">Allergens</a> <a
-        href="<%= ctxPath %>/categories.jsp">Categories</a>
+    <a href="<%= ctxPath %>/index.jsp">Index</a>
+    <a href="<%= ctxPath %>/categories.jsp">Categories</a>
+    <a href="<%= ctxPath %>/allergens.jsp">Allergens</a>
 </h6>
 <hr/>
 

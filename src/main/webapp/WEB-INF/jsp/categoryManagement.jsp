@@ -1,6 +1,7 @@
 <%@ page import="org.gmnz.vega.Vega" %>
 <%@ page import="org.gmnz.vega.VegaImpl" %>
 <%@ page contentType="text/html;charset=UTF-8" %>
+<%@ page errorPage = "showError.jsp" %>
 
 <jsp:useBean id="catBean" class="org.gmnz.vega.ui.CategoryManagementBean" scope="request" />
 
