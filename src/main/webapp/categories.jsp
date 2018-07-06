@@ -8,7 +8,7 @@
 %>
 <html>
 <head>
-<title>Allergens</title>
+<title>Categories</title>
 </head>
 <body>
 	<%@include file="/WEB-INF/jsp/header.jsp"%>
