@@ -87,9 +87,12 @@ public class VegaImpl implements Vega {
 
 
 	@Override
-	public void renameCategory(String category, String newCategoryName) {
+	public void renameCategory(String category, String newCategoryName) throws VegaException {
 		Collection<Category> registeredCategories = DummyRepository.getRegisteredCategories();
-
+		Category oc = new Category(category);
+		if (!registeredCategories.contains(oc)) {
+			throw new VegaException("requested category is not registered in the system");
+		}
 	}
 
 

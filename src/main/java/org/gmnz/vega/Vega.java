@@ -45,7 +45,7 @@ public interface Vega {
 
 
 
-	void renameCategory(String category, String newCategoryName);
+	void renameCategory(String category, String newCategoryName) throws VegaException;
 
 
 

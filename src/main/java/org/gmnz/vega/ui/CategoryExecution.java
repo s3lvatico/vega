@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.gmnz.vega.Vega;
+import org.gmnz.vega.VegaException;
 import org.gmnz.vega.VegaImpl;
 
 
@@ -45,23 +46,27 @@ public class CategoryExecution extends HttpServlet {
 		if (targetCategoryName == null || targetCategoryName.isEmpty()) {
 			throw new ServletException("invalid category name");
 		}
-		switch (action) {
-		case Action.CREATE:
-			System.out.format("hai scelto: <%s> [%s]%n", action, targetCategoryName);
-			vega.createCategory(targetCategoryName);
-			break;
-		case Action.MODIFY:
-			System.out.println("hai scelto: " + action);
-			String oldCategoryName = req.getParameter("oldCategoryName");
-			System.out.format("Rinomina [%s] --> [%s]%n", oldCategoryName, targetCategoryName);
-			vega.renameCategory(oldCategoryName, targetCategoryName);
-			break;
-		case Action.DELETE:
-			System.out.format("hai scelto: <%s> [%s]%n", action, targetCategoryName);
-			vega.removeCategory(targetCategoryName);
-			break;
-		default:
-			throw new ServletException("invalid action specified");
+		try {
+			switch (action) {
+			case Action.CREATE:
+				System.out.format("hai scelto: <%s> [%s]%n", action, targetCategoryName);
+				vega.createCategory(targetCategoryName);
+				break;
+			case Action.MODIFY:
+				System.out.println("hai scelto: " + action);
+				String oldCategoryName = req.getParameter("oldCategoryName");
+				System.out.format("Rinomina [%s] --> [%s]%n", oldCategoryName, targetCategoryName);
+				vega.renameCategory(oldCategoryName, targetCategoryName);
+				break;
+			case Action.DELETE:
+				System.out.format("hai scelto: <%s> [%s]%n", action, targetCategoryName);
+				vega.removeCategory(targetCategoryName);
+				break;
+			default:
+				throw new ServletException("invalid action specified");
+			}
+		} catch (VegaException ve) {
+			throw new ServletException("service exception caught", ve);
 		}
 		req.getRequestDispatcher("/categories.jsp").forward(req, resp);
 	}
