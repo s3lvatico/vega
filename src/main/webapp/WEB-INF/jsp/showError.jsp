@@ -10,11 +10,13 @@
 <h1>Opps...</h1>
 <table width="100%" border="1">
     <tr>
-        <td width="40%"><b>Error:</b></td>
+        <td width="15%"><b>Error:</b></td>
         <td><%=pageContext.getException()%>
         </td>
     </tr>
-
+    <tr>
+        <td colspan="2"><a href="<%=application.getContextPath()%>/index.jsp">Go back to the main page</a></td>
+    </tr>
     <tr>
         <td><b>URI:</b></td>
         <td><%=pageContext.getErrorData().getRequestURI()%>
