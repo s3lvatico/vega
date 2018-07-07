@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.gmnz.vega.domain.Allergen;
 import org.gmnz.vega.domain.Category;
+import org.gmnz.vega.service.CategoryService;
 
 
 public interface Vega {
@@ -29,14 +30,6 @@ public interface Vega {
 
 
 
-	List<Category> getAllCategories();
-
-
-
-	void createCategory(String name);
-
-
-
 	Category selectCategory(String name);
 
 
@@ -44,10 +37,7 @@ public interface Vega {
 	void assignAllergenToCategory(String allergenName, String categoryName);
 
 
-
-	void renameCategory(String category, String newCategoryName) throws VegaException;
-
+	CategoryService getCategoryService();
 
 
-	void removeCategory(String name) throws VegaException;
 }

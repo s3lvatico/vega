@@ -1,12 +1,12 @@
 package org.gmnz.vega.repository;
 
 
+import org.gmnz.vega.domain.Allergen;
+import org.gmnz.vega.domain.Category;
+
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
-
-import org.gmnz.vega.domain.Allergen;
-import org.gmnz.vega.domain.Category;
 
 
 public final class DummyRepository {
@@ -71,7 +71,6 @@ public final class DummyRepository {
 	}
 
 
-
 	public static Collection<Allergen> getRegisteredAllergens() {
 		return ALLERGENS;
 	}
@@ -92,5 +91,16 @@ public final class DummyRepository {
 
 	public static void removeCategory(Category category) {
 		CATEGORIES.remove(category);
+	}
+
+
+
+	public static Category getCategoryByName(String name) {
+		for (Category c : CATEGORIES) {
+			if (c.getName().equalsIgnoreCase(name)) {
+				return c;
+			}
+		}
+		return null;
 	}
 }

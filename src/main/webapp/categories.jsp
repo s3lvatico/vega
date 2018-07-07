@@ -20,7 +20,7 @@
 		<tbody>
 
 			<%
-				for (Category c : vega.getAllCategories()) {
+				for (Category c : vega.getCategoryService().getAllCategories()) {
 			%>
 			<tr>
 				<td>

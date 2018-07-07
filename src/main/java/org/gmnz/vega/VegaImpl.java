@@ -5,11 +5,33 @@ import org.gmnz.vega.domain.Allergen;
 import org.gmnz.vega.domain.AllergenComparator;
 import org.gmnz.vega.domain.Category;
 import org.gmnz.vega.repository.DummyRepository;
+import org.gmnz.vega.service.CategoryService;
+import org.gmnz.vega.service.CategoryServiceImpl;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
 
 
 public class VegaImpl implements Vega {
+
+	private final CategoryService categoryService;
+
+
+
+	public VegaImpl() {
+		categoryService = new CategoryServiceImpl();
+	}
+
+
+
+	@Override
+	public CategoryService getCategoryService() {
+		return categoryService;
+	}
+
+
 
 	@Override
 	public List<Allergen> getAllAllergens() {
@@ -50,26 +72,6 @@ public class VegaImpl implements Vega {
 
 
 	@Override
-	public List<Category> getAllCategories() {
-		return new ArrayList<>(DummyRepository.getRegisteredCategories());
-	}
-
-
-
-	@Override
-	public void createCategory(String nome) {
-		Collection<Category> registeredCategories = DummyRepository.getRegisteredCategories();
-		Category c = new Category(nome);
-		if (!registeredCategories.contains(c)) {
-			DummyRepository.addCategory(c);
-		} else {
-			System.err.println("category already present");
-		}
-	}
-
-
-
-	@Override
 	public Category selectCategory(String nome) {
 		return null;
 	}
@@ -81,47 +83,5 @@ public class VegaImpl implements Vega {
 		throw new RuntimeException("not yet implemented");
 	}
 
-
-
-	@Override
-	public void renameCategory(String category, String newCategoryName) throws VegaException {
-		Collection<Category> registeredCategories = DummyRepository.getRegisteredCategories();
-		Category oc = new Category(category);
-		if (!registeredCategories.contains(oc)) {
-			throw new VegaException("requested category is not registered in the system");
-		}
-		Category nc = new Category(newCategoryName);
-		if (registeredCategories.contains(nc)) {
-			String errorMessage = String.format("There is already a category named <%s> in the system", newCategoryName);
-			throw new VegaException(errorMessage);
-		}
-
-		Iterator<Category> iterator = registeredCategories.iterator();
-		while (iterator.hasNext()) {
-			Category c = iterator.next();
-			if (c.getName().equals(category)) {
-				if (c.getAllergens().size() == 0) {
-					registeredCategories.remove(oc);
-					registeredCategories.add(nc);
-					break;
-				} else {
-					throw new VegaException("a category must have no allergens associated in order to be renamed.");
-				}
-			}
-		}
-	}
-
-
-
-	@Override
-	public void removeCategory(String name) throws VegaException {
-		Collection<Category> registeredCategories = DummyRepository.getRegisteredCategories();
-		Category c = new Category(name);
-		if (!registeredCategories.contains(c)) {
-			throw new VegaException("requested category is not registered in the system");
-		} else {
-			DummyRepository.removeCategory(c);
-		}
-	}
 
 }
