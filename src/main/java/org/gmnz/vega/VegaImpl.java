@@ -104,8 +104,7 @@ public class VegaImpl implements Vega {
 					registeredCategories.remove(oc);
 					registeredCategories.add(nc);
 					break;
-				}
-				else {
+				} else {
 					throw new VegaException("a category must have no allergens associated in order to be renamed.");
 				}
 			}
@@ -117,12 +116,12 @@ public class VegaImpl implements Vega {
 	@Override
 	public void removeCategory(String name) throws VegaException {
 		Collection<Category> registeredCategories = DummyRepository.getRegisteredCategories();
-		Category oc = new Category(name);
-		if (!registeredCategories.contains(oc)) {
+		Category c = new Category(name);
+		if (!registeredCategories.contains(c)) {
 			throw new VegaException("requested category is not registered in the system");
+		} else {
+			DummyRepository.removeCategory(c);
 		}
-
-
 	}
 
 }
