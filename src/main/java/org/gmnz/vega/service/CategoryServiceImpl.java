@@ -49,7 +49,7 @@ public class CategoryServiceImpl implements CategoryService {
 					DummyRepository.addCategory(new Category(newCategoryName));
 					break;
 				} else {
-					throw new VegaException("a category must have no allergens associated in order to be renamed.");
+					throw new VegaException("renameCategory service error: a category must have no allergens associated in order to be renamed.");
 				}
 			}
 		}
@@ -68,7 +68,7 @@ public class CategoryServiceImpl implements CategoryService {
 					DummyRepository.removeCategory(ic);
 					break;
 				} else {
-					throw new VegaException("a category must have no allergens associated in order to be deleted.");
+					throw new VegaException("removeCategory service error: a category must have no allergens associated in order to be deleted.");
 				}
 			}
 		}
