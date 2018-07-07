@@ -49,5 +49,5 @@ public interface Vega {
 
 
 
-	void removeCategory(String name);
+	void removeCategory(String name) throws VegaException;
 }

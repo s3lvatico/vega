@@ -115,8 +115,13 @@ public class VegaImpl implements Vega {
 
 
 	@Override
-	public void removeCategory(String name) {
-		// TODO Auto-generated method stub
+	public void removeCategory(String name) throws VegaException {
+		Collection<Category> registeredCategories = DummyRepository.getRegisteredCategories();
+		Category oc = new Category(name);
+		if (!registeredCategories.contains(oc)) {
+			throw new VegaException("requested category is not registered in the system");
+		}
+
 
 	}
 
