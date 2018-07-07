@@ -66,7 +66,8 @@ public class CategoryExecution extends HttpServlet {
 				throw new ServletException("invalid action specified");
 			}
 		} catch (VegaException ve) {
-			throw new ServletException("service exception caught", ve);
+			String errorMessage = String.format("exception thrown while executing action -- %s :: %s", ve.getClass().getName(), ve.getMessage());
+			throw new ServletException(errorMessage, ve);
 		}
 		req.getRequestDispatcher("/categories.jsp").forward(req, resp);
 	}
