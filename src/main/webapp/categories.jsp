@@ -1,5 +1,3 @@
-<%@ page import="org.gmnz.vega.Vega" %>
-<%@ page import="org.gmnz.vega.VegaImpl" %>
 <%@ page contentType="text/html;charset=UTF-8" %>
 
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
