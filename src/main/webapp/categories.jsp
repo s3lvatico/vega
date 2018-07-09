@@ -4,12 +4,6 @@
 
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
-<%!Vega vega = new VegaImpl();%>
-<%
-    String ctxRoot = request.getContextPath();
-
-    pageContext.setAttribute("vega", vega);
-%>
 <html>
 <head>
     <title>Categories</title>
@@ -26,12 +20,12 @@
     <c:forEach var="category" items="${vega.categoryService.allCategories}">
         <tr>
             <td>
-                <form action="<%=ctxRoot%>/category/edit">
+                <form method="POST" action="${contextRoot}/category/edit">
                     <input type="hidden" name="categoryName" value="${category.name}"> <input type="submit" value="E">
                 </form>
             </td>
             <td>
-                <form action="<%=ctxRoot%>/category/delete">
+                <form method="POST" action="${contextRoot}/category/delete">
                     <input type="hidden" name="categoryName" value="${category.name}"> <input type="submit" value="D">
                 </form>
             </td>
@@ -42,7 +36,7 @@
 </table>
 <h3>Operations</h3>
 <p>Create new category:</p>
-<form action="<%=ctxRoot%>/category/create">
+<form method="POST" action="${contextRoot}/category/create">
     <input type="submit" value="create new category">
 </form>
 

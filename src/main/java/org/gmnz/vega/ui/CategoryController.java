@@ -10,6 +10,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.gmnz.vega.Vega;
+import org.gmnz.vega.VegaImpl;
+
 
 public class CategoryController extends HttpServlet {
 
@@ -18,11 +21,17 @@ public class CategoryController extends HttpServlet {
 	private Map<String, CategoryManagementBean> navMap;
 
 
-
 	@Override
 	public void init() throws ServletException {
 		navMap = new HashMap<>();
+		
 		CategoryManagementBean cmb = new CategoryManagementBean();
+		cmb.setOperationLabel("Registered categories");
+		cmb.setViewName("categories");
+		cmb.setAction(Action.GET_ALL);
+		navMap.put("getAll", cmb);
+		
+		cmb = new CategoryManagementBean();
 		cmb.setOperationLabel("New Category Creation");
 		cmb.setViewName("categoryManagement");
 		cmb.setAction(Action.CREATE);
@@ -46,6 +55,29 @@ public class CategoryController extends HttpServlet {
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		String section = findRequestedSection(req.getRequestURL().toString());
+
+		CategoryManagementBean cmb = navMap.get(section);
+		if (cmb != null) {
+			cmb.setCategoryName(req.getParameter("categoryName"));
+			req.setAttribute("catBean", cmb);
+			Vega vega = new VegaImpl();
+			req.setAttribute("vega", vega);
+			req.setAttribute("contextRoot", req.getContextPath());
+			String targetUrl = String.format("/%s.jsp", cmb.getViewName());
+			req.getRequestDispatcher(targetUrl).forward(req, resp);
+		} else {
+			resp.sendError(HttpServletResponse.SC_NOT_FOUND, "resource not found: " + section);
+		}
+
+	}
+
+	
+	
+
+
+	@Override
+	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		String section = findRequestedSection(req.getRequestURL().toString());
 
 		CategoryManagementBean cmb = navMap.get(section);
