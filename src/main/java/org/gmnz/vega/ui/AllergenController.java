@@ -1,16 +1,17 @@
 package org.gmnz.vega.ui;
 
 
-import org.gmnz.vega.Vega;
-import org.gmnz.vega.VegaImpl;
+import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
+
+import org.gmnz.vega.Vega;
+import org.gmnz.vega.VegaImpl;
 
 
 public class AllergenController extends HttpServlet {
@@ -58,7 +59,7 @@ public class AllergenController extends HttpServlet {
 
 		AllergenManagementBean cmb = navMap.get(section);
 		if (cmb != null) {
-			cmb.setAllergenName(req.getParameter("allergenName"));
+			// cmb.setAllergenName(req.getParameter("allergenName"));
 			req.setAttribute("allergenBean", cmb);
 			Vega vega = new VegaImpl();
 			req.setAttribute("vega", vega);

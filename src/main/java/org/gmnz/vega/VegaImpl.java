@@ -1,19 +1,10 @@
 package org.gmnz.vega;
 
 
-import org.gmnz.vega.domain.Allergen;
-import org.gmnz.vega.domain.AllergenComparator;
-import org.gmnz.vega.domain.Category;
-import org.gmnz.vega.repository.DummyRepository;
 import org.gmnz.vega.service.AllergenService;
 import org.gmnz.vega.service.AllergenServiceImpl;
 import org.gmnz.vega.service.CategoryService;
 import org.gmnz.vega.service.CategoryServiceImpl;
-
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.List;
 
 
 public class VegaImpl implements Vega {

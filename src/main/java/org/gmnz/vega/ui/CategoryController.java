@@ -59,7 +59,7 @@ public class CategoryController extends HttpServlet {
 
 		CategoryManagementBean cmb = navMap.get(section);
 		if (cmb != null) {
-			cmb.setCategoryName(req.getParameter("categoryName"));
+			// cmb.setCategoryName(req.getParameter("categoryName"));
 			req.setAttribute("catBean", cmb);
 			Vega vega = new VegaImpl();
 			req.setAttribute("vega", vega);
