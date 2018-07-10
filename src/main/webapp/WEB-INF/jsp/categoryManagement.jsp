@@ -1,6 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
 <%@ page errorPage="showError.jsp" %>
-
+<%@ page import="org.gmnz.vega.ui.AllergenManagementBean" %>
 <html>
 <head>
     <title>Category</title>
