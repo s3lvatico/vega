@@ -16,6 +16,7 @@
 	<table>
 		<thead>
 			<tr>
+				<th colspan="2">Commands</th>
 				<th>Allergen Name</th>
 				<th>Category</th>
 			</tr>
