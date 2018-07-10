@@ -1,21 +1,16 @@
 <%@ page import="org.gmnz.vega.Vega"%>
-<%@ page import="org.gmnz.vega.VegaImpl"%>
 <%@ page import="org.gmnz.vega.domain.Allergen"%>
-<%--
-  Created by IntelliJ IDEA.
-  User: simone
-  Date: 30/06/2018
-  Time: 14:28
-  To change this template use File | Settings | File Templates.
---%>
+
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+
 <%@ page contentType="text/html;charset=UTF-8"%>
-<%!Vega vega = new VegaImpl();%>
+
 <html>
 <head>
 <title>Allergens</title>
 </head>
 <body>
-	<jsp:include page="/WEB-INF/jsp/header.jsp"/>
+	<jsp:include page="/WEB-INF/jsp/header.jsp" />
 	<h2>Allergens</h2>
 	<h3>Registered in the system</h3>
 	<table>
@@ -26,18 +21,24 @@
 			</tr>
 		</thead>
 		<tbody>
-			<%
-				for (Allergen a : vega.getAllAllergens()) {
-			%>
-			<tr>
-				<td><%=a.getName()%></td>
-				<td><%=a.getCategory().getName()%></td>
-			</tr>
-			<%
-				}
-			%>
+			<c:forEach var="allergen" items="${vega.allergenService.all}">
+				<tr>
+					<td>
+						<form method="post" action="${contextRoot}/allergen/edit">
+							<input type="hidden" name="allergenName" value="${allergen.name}" /> <input type="submit" value="E" />
+						</form>
+					</td>
+					<td>
+						<form method="post" action="${contextRoot}/allergen/delete">
+							<input type="hidden" name="allergenName" value="${allergen.name}" /> <input type="submit" value="D" />
+						</form>
+					</td>
+					<td>${allergen.name}</td>
+					<td>${allergen.category.name}</td>
+				</tr>
+			</c:forEach>
 		</tbody>
 	</table>
-	<jsp:include page="/WEB-INF/jsp/footer.jsp"/>
+	<jsp:include page="/WEB-INF/jsp/footer.jsp" />
 </body>
 </html>

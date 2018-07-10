@@ -13,6 +13,7 @@
    <error-page>
       <location>/WEB-INF/jsp/showError.jsp</location>
    </error-page>
+
    <servlet>
       <servlet-name>CategoryController</servlet-name>
       <servlet-class>org.gmnz.vega.ui.CategoryController</servlet-class>
@@ -31,5 +32,14 @@
       <url-pattern>/category/do/*</url-pattern>
    </servlet-mapping>
 
+
+   <servlet>
+      <servlet-name>AllergenController</servlet-name>
+      <servlet-class>org.gmnz.vega.ui.AllergenController</servlet-class>
+   </servlet>
+   <servlet-mapping>
+      <servlet-name>AllergenController</servlet-name>
+      <url-pattern>/allergen/*</url-pattern>
+   </servlet-mapping>
 
 </web-app>
