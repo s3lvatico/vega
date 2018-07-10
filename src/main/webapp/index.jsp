@@ -11,7 +11,7 @@
 	<h2>Main menu</h2>
 	<ul>		
 		<li><a href="<%=contextRoot%>/category/getAll">Categories</a></li>
-		<li><a href="allergens.jsp">Allergens</a></li>
+		<li><a href="<%=contextRoot%>/allergen/getAll">Allergens</a></li>
 		<li>Reports (not yet available)</li>
 	</ul>
 	<jsp:include page="/WEB-INF/jsp/footer.jsp" />

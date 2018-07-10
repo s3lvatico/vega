@@ -1,51 +1,50 @@
 package org.gmnz.vega.ui;
 
 
-import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
+import org.gmnz.vega.Vega;
+import org.gmnz.vega.VegaImpl;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 
-import org.gmnz.vega.Vega;
-import org.gmnz.vega.VegaImpl;
 
-
-public class CategoryController extends HttpServlet {
+public class AllergenController extends HttpServlet {
 
 	private static final long serialVersionUID = 4531766441007641102L;
 
-	private Map<String, CategoryManagementBean> navMap;
+	private Map<String, AllergenManagementBean> navMap;
 
 
 	@Override
 	public void init()  {
 		navMap = new HashMap<>();
-		
-		CategoryManagementBean cmb = new CategoryManagementBean();
-		cmb.setOperationLabel("Registered categories");
-		cmb.setViewName("categories");
+
+		AllergenManagementBean cmb = new AllergenManagementBean();
+		cmb.setOperationLabel("Registered allergens");
+		cmb.setViewName("allergens");
 		cmb.setAction(Action.GET_ALL);
 		navMap.put("getAll", cmb);
 		
-		cmb = new CategoryManagementBean();
-		cmb.setOperationLabel("New Category Creation");
-		cmb.setViewName("categoryManagement");
+		cmb = new AllergenManagementBean();
+		cmb.setOperationLabel("New Allergen Creation");
+		cmb.setViewName("allergenManagement");
 		cmb.setAction(Action.CREATE);
 		navMap.put("create", cmb);
 
-		cmb = new CategoryManagementBean();
-		cmb.setOperationLabel("Modify Category Name");
-		cmb.setViewName("categoryManagement");
+		cmb = new AllergenManagementBean();
+		cmb.setOperationLabel("Modify Allergen");
+		cmb.setViewName("allergenManagement");
 		cmb.setAction(Action.MODIFY);
 		navMap.put("edit", cmb);
 
-		cmb = new CategoryManagementBean();
-		cmb.setOperationLabel("Confirm Category Deletion");
-		cmb.setViewName("categoryDeletion");
+		cmb = new AllergenManagementBean();
+		cmb.setOperationLabel("Confirm Allergen Deletion");
+		cmb.setViewName("allergenDeletion");
 		cmb.setAction(Action.DELETE);
 		navMap.put("delete", cmb);
 
@@ -57,10 +56,10 @@ public class CategoryController extends HttpServlet {
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		String section = findRequestedSection(req.getRequestURL().toString());
 
-		CategoryManagementBean cmb = navMap.get(section);
+		AllergenManagementBean cmb = navMap.get(section);
 		if (cmb != null) {
-			cmb.setCategoryName(req.getParameter("categoryName"));
-			req.setAttribute("catBean", cmb);
+			cmb.setAllergenName(req.getParameter("allergenName"));
+			req.setAttribute("allergenBean", cmb);
 			Vega vega = new VegaImpl();
 			req.setAttribute("vega", vega);
 			req.setAttribute("contextRoot", req.getContextPath());
@@ -80,10 +79,10 @@ public class CategoryController extends HttpServlet {
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		String section = findRequestedSection(req.getRequestURL().toString());
 
-		CategoryManagementBean cmb = navMap.get(section);
+		AllergenManagementBean cmb = navMap.get(section);
 		if (cmb != null) {
-			cmb.setCategoryName(req.getParameter("categoryName"));
-			req.setAttribute("catBean", cmb);
+			cmb.setAllergenName(req.getParameter("allergenName"));
+			req.setAttribute("allergenBean", cmb);
 			String targetUrl = String.format("/WEB-INF/jsp/%s.jsp", cmb.getViewName());
 			req.getRequestDispatcher(targetUrl).forward(req, resp);
 		} else {

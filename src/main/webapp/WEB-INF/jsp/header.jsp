@@ -14,10 +14,10 @@
 <h1>Gmnz's Vega</h1>
 <hr/>
 <h6>
-    <% String ctxPath = request.getContextPath(); %>
-    <a href="<%= ctxPath %>/index.jsp">Index</a>
-    <a href="<%= ctxPath %>/category/getAll">Categories</a>
-    <a href="<%= ctxPath %>/allergens.jsp">Allergens</a>
+    <% String contextRoot = request.getContextPath(); %>
+    <a href="<%= contextRoot %>/index.jsp">Index</a>
+    <a href="<%= contextRoot %>/category/getAll">Categories</a>
+    <a href="<%= contextRoot %>/allergen/getAll">Allergens</a>
 </h6>
 <hr/>
 

@@ -15,7 +15,7 @@
 <title>Allergens</title>
 </head>
 <body>
-	<jsp:include page="/WEB-INF/jsp/header.jsp"></jsp:include>
+	<jsp:include page="/WEB-INF/jsp/header.jsp"/>
 	<h2>Allergens</h2>
 	<h3>Registered in the system</h3>
 	<table>
@@ -38,6 +38,6 @@
 			%>
 		</tbody>
 	</table>
-	<jsp:include page="/WEB-INF/jsp/footer.jsp"></jsp:include>
+	<jsp:include page="/WEB-INF/jsp/footer.jsp"/>
 </body>
 </html>
