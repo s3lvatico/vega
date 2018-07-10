@@ -1,32 +1,32 @@
-<%@ page contentType="text/html;charset=UTF-8"%>
-<%@ page errorPage="showError.jsp"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ page contentType="text/html;charset=UTF-8" %>
+<%@ page errorPage="showError.jsp" %>
 
 <html>
 <head>
-<title>Allergen</title>
+    <title>Allergen</title>
 </head>
 <body>
-	<jsp:include page="/WEB-INF/jsp/header.jsp" />
-	<h2>Allergens</h2>
-	<h3>${allergenBean.operationLabel}</h3>
-	<form action="<%=request.getContextPath()%>/allergen/do">
-		<p>
-			Allergen name: 
-			<input type="text" name="allergenName" value="${allergenBean.}" /> 
-			<input type="hidden" name="oldCategoryName" value="${allergenBean.categoryName}"
-			/> <input type="hidden" name="action" value="${allergenBean.action}" />
-		</p>
+<jsp:include page="/WEB-INF/jsp/header.jsp"/>
+<h2>Allergens</h2>
+<h3>${allergenBean.operationLabel}</h3>
+<form action="${contextRoot}/allergen/do" method="post">
+    <p>
+        Allergen name:
+        <input type="text" name="allergenName" value="${allergenBean.allergenName}"/>
+        <input type="hidden" name="originalAllergenName" value="${allergenBean.allergenName}"/>
+        <input type="hidden" name="action" value="${allergenBean.action}"/>
+    </p>
 
-		<p>Category
-			<select name="category">
-				<option value="volvo">Volvo</option>
-				<option value="saab">Saab</option>
-				<option value="fiat">Fiat</option>
-				<option value="audi">Audi</option>
-			</select>
-		</p>
-		<input type="submit" value="Confirm" />
-	</form>
-	<jsp:include page="/WEB-INF/jsp/footer.jsp" />
+    <p>Category
+        <select name="category">
+            <c:forEach var="category" items="${categories}">
+                <option value="${category.name}">${category.name}</option>
+            </c:forEach>
+        </select>
+    </p>
+    <input type="submit" value="Confirm"/>
+</form>
+<jsp:include page="/WEB-INF/jsp/footer.jsp"/>
 </body>
 </html>

@@ -3,6 +3,7 @@ package org.gmnz.vega.ui;
 
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.ServletException;
@@ -12,6 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.gmnz.vega.Vega;
 import org.gmnz.vega.VegaImpl;
+import org.gmnz.vega.domain.Category;
 
 
 public class AllergenController extends HttpServlet {
@@ -59,7 +61,6 @@ public class AllergenController extends HttpServlet {
 
 		AllergenManagementBean cmb = navMap.get(section);
 		if (cmb != null) {
-			// cmb.setAllergenName(req.getParameter("allergenName"));
 			req.setAttribute("allergenBean", cmb);
 			Vega vega = new VegaImpl();
 			req.setAttribute("vega", vega);
@@ -79,11 +80,13 @@ public class AllergenController extends HttpServlet {
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		String section = findRequestedSection(req.getRequestURL().toString());
-
 		AllergenManagementBean cmb = navMap.get(section);
 		if (cmb != null) {
 			cmb.setAllergenName(req.getParameter("allergenName"));
 			req.setAttribute("allergenBean", cmb);
+			req.setAttribute("contextRoot", req.getContextPath());
+			List<Category> categories  = new VegaImpl().getCategoryService().getAllCategories();
+			req.setAttribute("categories", categories);
 			String targetUrl = String.format("/WEB-INF/jsp/%s.jsp", cmb.getViewName());
 			req.getRequestDispatcher(targetUrl).forward(req, resp);
 		} else {

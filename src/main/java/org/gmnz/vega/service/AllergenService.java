@@ -13,7 +13,7 @@ public interface AllergenService {
 
 
 
-	void createAllergen(String name);
+	void createAllergen(String name, String categoryName);
 
 
 

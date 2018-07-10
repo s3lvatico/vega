@@ -28,7 +28,8 @@ public class AllergenServiceImpl implements AllergenService {
 
 
 	@Override
-	public void createAllergen(String name) {
+	public void createAllergen(String name, String categoryName) {
+
 		throw new RuntimeException("not yet implemented");
 	}
 

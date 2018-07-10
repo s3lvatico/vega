@@ -4,6 +4,7 @@ package org.gmnz.vega.ui;
 import org.gmnz.vega.Vega;
 import org.gmnz.vega.VegaException;
 import org.gmnz.vega.VegaImpl;
+import org.gmnz.vega.base.VegaUtil;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -42,14 +43,17 @@ public class AllergenExecution extends HttpServlet {
 	private void executeAction(String action, HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
 		String targetAllergenName = req.getParameter("allergenName");
-		if (targetAllergenName == null || targetAllergenName.isEmpty()) {
+		String targetCategory = req.getParameter("category");
+		if (VegaUtil.stringNullOrEmpty(targetAllergenName)) {
 			throw new ServletException("invalid allergen name");
 		}
 		try {
 			switch (action) {
 			case Action.CREATE:
-				//System.out.format("hai scelto: <%s> [%s]%n", action, targetCategoryName);
-				vega.getAllergenService().createAllergen(targetAllergenName);
+				if (VegaUtil.stringNullOrEmpty(targetCategory)) {
+					throw new ServletException("invalid category name");
+				}
+				vega.getAllergenService().createAllergen(targetAllergenName, targetCategory);
 				break;
 			case Action.MODIFY:
 				//System.out.println("hai scelto: " + action);

@@ -32,7 +32,6 @@
       <url-pattern>/category/do/*</url-pattern>
    </servlet-mapping>
 
-
    <servlet>
       <servlet-name>AllergenController</servlet-name>
       <servlet-class>org.gmnz.vega.ui.AllergenController</servlet-class>
@@ -41,5 +40,15 @@
       <servlet-name>AllergenController</servlet-name>
       <url-pattern>/allergen/*</url-pattern>
    </servlet-mapping>
+
+   <servlet>
+      <servlet-name>AllergenExecution</servlet-name>
+      <servlet-class>org.gmnz.vega.ui.AllergenExecution</servlet-class>
+   </servlet>
+   <servlet-mapping>
+      <servlet-name>AllergenExecution</servlet-name>
+      <url-pattern>/allergen/do/*</url-pattern>
+   </servlet-mapping>
+
 
 </web-app>
