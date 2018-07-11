@@ -131,9 +131,24 @@ public final class DummyRepository {
 
 
 	public static void removeAllergen(String name) {
-		boolean removed = ALLERGENS.remove(new Allergen(name));
-		if (!removed) {
-			System.err.format("warning: tried to remove allergen [%s] but it does not exist in the repository%n", name);
+		Allergen a = getAllergenByName(name);
+		if (a != null) {
+			boolean removed = ALLERGENS.remove(a);
+			if (removed) {
+				Category c0 = getCategoryByName(a.getCategory().getName());
+				Category c = new Category(c0.getName());
+				for (Allergen a0 : c0.getAllergens()) {
+					if (!a0.equals(a)) {
+						c.add(a0);
+					}
+				}
+				CATEGORIES.remove(c);
+				CATEGORIES.add(c);
+			}
+			else {
+				System.err.format("warning: tried to remove allergen [%s] but it does not exist in the repository%n", name);
+			}
 		}
+
 	}
 }
