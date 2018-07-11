@@ -1,16 +1,17 @@
 package org.gmnz.vega.ui;
 
 
-import org.gmnz.vega.Vega;
-import org.gmnz.vega.VegaException;
-import org.gmnz.vega.VegaImpl;
-import org.gmnz.vega.base.VegaUtil;
+import java.io.IOException;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
+
+import org.gmnz.vega.Vega;
+import org.gmnz.vega.VegaException;
+import org.gmnz.vega.VegaImpl;
+import org.gmnz.vega.base.VegaUtil;
 
 
 public class AllergenExecution extends HttpServlet {
@@ -45,26 +46,22 @@ public class AllergenExecution extends HttpServlet {
 		String targetCategoryName = req.getParameter("category");
 		if (VegaUtil.stringNullOrEmpty(targetAllergenName)) {
 			resp.sendError(HttpServletResponse.SC_BAD_REQUEST);
-			// throw new ServletException("invalid allergen name");
-		}
-		if (VegaUtil.stringNullOrEmpty(targetCategoryName)) {
-			resp.sendError(HttpServletResponse.SC_BAD_REQUEST);
-			// throw new ServletException("invalid category name");
+			return;
 		}
 		try {
 			switch (action) {
 			case Action.CREATE:
+				if (VegaUtil.stringNullOrEmpty(targetCategoryName)) {
+					resp.sendError(HttpServletResponse.SC_BAD_REQUEST);
+					return;
+				}
 				vega.getAllergenService().createAllergen(targetAllergenName, targetCategoryName);
 				break;
 			case Action.MODIFY:
-				// System.out.println("hai scelto: " + action);
 				String oldAllergenName = req.getParameter("oldAllergenName");
-				// System.out.format("Rinomina [%s] --> [%s]%n", oldCategoryName,
-				// targetCategoryName);
 				vega.getAllergenService().renameAllergen(oldAllergenName, targetAllergenName);
 				break;
 			case Action.DELETE:
-				// System.out.format("hai scelto: <%s> [%s]%n", action, targetCategoryName);
 				vega.getAllergenService().removeAllergen(targetAllergenName);
 				break;
 			default:
@@ -75,6 +72,6 @@ public class AllergenExecution extends HttpServlet {
 					ve.getClass().getName(), ve.getMessage());
 			throw new ServletException(errorMessage, ve);
 		}
-		req.getRequestDispatcher("/category/getAll").forward(req, resp);
+		req.getRequestDispatcher("/allergen/getAll").forward(req, resp);
 	}
 }

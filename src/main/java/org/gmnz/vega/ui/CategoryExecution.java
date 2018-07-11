@@ -49,18 +49,13 @@ public class CategoryExecution extends HttpServlet {
 		try {
 			switch (action) {
 			case Action.CREATE:
-				// System.out.format("hai scelto: <%s> [%s]%n", action, targetCategoryName);
 				vega.getCategoryService().createCategory(targetCategoryName);
 				break;
 			case Action.MODIFY:
-				// System.out.println("hai scelto: " + action);
 				String oldCategoryName = req.getParameter("oldCategoryName");
-				// System.out.format("Rinomina [%s] --> [%s]%n", oldCategoryName,
-				// targetCategoryName);
 				vega.getCategoryService().renameCategory(oldCategoryName, targetCategoryName);
 				break;
 			case Action.DELETE:
-				// System.out.format("hai scelto: <%s> [%s]%n", action, targetCategoryName);
 				vega.getCategoryService().removeCategory(targetCategoryName);
 				break;
 			default:

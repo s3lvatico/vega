@@ -83,6 +83,7 @@ public class CategoryController extends HttpServlet {
 		if (cmb != null) {
 			cmb.setCategoryName(req.getParameter("categoryName"));
 			req.setAttribute("catBean", cmb);
+			req.setAttribute("contextRoot", req.getContextPath());
 			String targetUrl = String.format("/WEB-INF/jsp/%s.jsp", cmb.getViewName());
 			req.getRequestDispatcher(targetUrl).forward(req, resp);
 		} else {

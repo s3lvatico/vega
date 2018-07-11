@@ -1,12 +1,12 @@
 package org.gmnz.vega.repository;
 
 
-import org.gmnz.vega.domain.Allergen;
-import org.gmnz.vega.domain.Category;
-
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
+
+import org.gmnz.vega.domain.Allergen;
+import org.gmnz.vega.domain.Category;
 
 
 public final class DummyRepository {
@@ -114,5 +114,27 @@ public final class DummyRepository {
 			}
 		}
 		return null;
+	}
+
+
+
+	public static void addAllergen(Allergen a) {
+		ALLERGENS.add(a);
+		for (Category c : CATEGORIES) {
+			if (c.equals(a.getCategory())) {
+				c.add(a);
+				return;
+			}
+		}
+		throw new RuntimeException("anomalous condition: no category found for allergen " + a);
+	}
+
+
+
+	public static void removeAllergen(String name) {
+		boolean removed = ALLERGENS.remove(new Allergen(name));
+		if (!removed) {
+			System.err.format("warning: tried to remove allergen [%s] but it does not exist in the repository%n", name);
+		}
 	}
 }
