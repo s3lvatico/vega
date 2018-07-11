@@ -44,8 +44,8 @@ public class AllergenServiceImpl extends BasicServiceBean implements AllergenSer
 
 
 	@Override
-	public void get(String name) {
-		throw new RuntimeException("not yet implemented");
+	public Allergen get(String name) {
+		return DummyRepository.getAllergenByName(name);
 	}
 
 

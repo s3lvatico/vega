@@ -5,11 +5,13 @@ import org.gmnz.vega.Vega;
 import org.gmnz.vega.VegaException;
 import org.gmnz.vega.VegaImpl;
 import org.gmnz.vega.base.VegaUtil;
+import org.gmnz.vega.domain.Allergen;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
 
@@ -42,7 +44,7 @@ public class AllergenExecution extends HttpServlet {
 	private void executeAction(String action, HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
 		String targetAllergenName = req.getParameter("allergenName");
-		String targetCategoryName = req.getParameter("category");
+		String targetCategoryName = req.getParameter("categoryName");
 		if (VegaUtil.stringNullOrEmpty(targetAllergenName)) {
 			resp.sendError(HttpServletResponse.SC_BAD_REQUEST);
 			return;
@@ -54,11 +56,15 @@ public class AllergenExecution extends HttpServlet {
 						resp.sendError(HttpServletResponse.SC_BAD_REQUEST);
 						return;
 					}
-					vega.getAllergenService().createAllergen(targetAllergenName, targetCategoryName);
+					createNewAllergen(targetAllergenName, targetCategoryName);
 					break;
 				case Action.MODIFY:
-					String oldAllergenName = req.getParameter("oldAllergenName");
-					vega.getAllergenService().renameAllergen(oldAllergenName, targetAllergenName);
+					HttpSession session = req.getSession();
+					String trackingId = req.getParameter("trackingId");
+					Allergen originalAllergen = (Allergen) session.getAttribute(trackingId);
+					session.setAttribute("trackingId", null);
+					// TODO controlla che ci sia effettivamente... se è null ==> 500
+					modifyAllergen(originalAllergen, targetAllergenName, targetCategoryName);
 					break;
 				case Action.DELETE:
 					vega.getAllergenService().removeAllergen(targetAllergenName);
@@ -72,5 +78,19 @@ public class AllergenExecution extends HttpServlet {
 			throw new ServletException(errorMessage, ve);
 		}
 		req.getRequestDispatcher("/allergen/getAll").forward(req, resp);
+	}
+
+
+
+	private void createNewAllergen(String name, String categoryName) throws VegaException {
+		vega.getAllergenService().createAllergen(name, categoryName);
+	}
+
+
+
+	private void modifyAllergen(Allergen oldAllergen, String newName, String newCategory) throws VegaException {
+		// TODO fare
+		throw new RuntimeException("not yet implemented!");
+		// vega.getAllergenService().renameAllergen(oldAllergenName, targetAllergenName);
 	}
 }

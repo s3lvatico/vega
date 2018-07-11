@@ -14,13 +14,13 @@
     <p>
         Allergen name:
         <input type="text" name="allergenName" value="${allergenBean.allergenName}"/>
-        <input type="hidden" name="originalAllergenName" value="${allergenBean.allergenName}"/>
         <input type="hidden" name="action" value="${allergenBean.action}"/>
+        <input type="hidden" name="trackingId" value="${trackingId}"/>
     </p>
 
     <p>Category
         <select name="category">
-            <c:forEach var="category" items="${categories}">
+            <c:forEach var="categoryName" items="${categories}">
                 <option value="${category.name}">${category.name}</option>
             </c:forEach>
         </select>
