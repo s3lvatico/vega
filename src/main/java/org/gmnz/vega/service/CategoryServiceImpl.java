@@ -15,6 +15,7 @@ import java.util.List;
  * creato da simone in data 07/07/2018.
  */
 public class CategoryServiceImpl implements CategoryService {
+
 	@Override
 	public List<Category> getAllCategories() {
 		return new ArrayList<>(DummyRepository.getRegisteredCategories());
@@ -49,7 +50,8 @@ public class CategoryServiceImpl implements CategoryService {
 					DummyRepository.addCategory(new Category(newCategoryName));
 					break;
 				} else {
-					throw new VegaException("renameCategory service error: a category must have no allergens associated in order to be renamed.");
+					throw new VegaException(
+							"renameCategory service error: a category must have no allergens associated in order to be renamed.");
 				}
 			}
 		}
@@ -68,7 +70,8 @@ public class CategoryServiceImpl implements CategoryService {
 					DummyRepository.removeCategory(ic);
 					break;
 				} else {
-					throw new VegaException("removeCategory service error: a category must have no allergens associated in order to be deleted.");
+					throw new VegaException(
+							"removeCategory service error: a category must have no allergens associated in order to be deleted.");
 				}
 			}
 		}
@@ -76,8 +79,7 @@ public class CategoryServiceImpl implements CategoryService {
 
 
 
-	private void checkCategoryRegistration(String categoryName, boolean mustBeInTheSystem)
-			throws VegaException {
+	private void checkCategoryRegistration(String categoryName, boolean mustBeInTheSystem) throws VegaException {
 		boolean categoryIsInTheSystem = DummyRepository.getCategoryByName(categoryName) != null;
 		if (mustBeInTheSystem ^ categoryIsInTheSystem) {
 			String errorMessage = String.format("Category [%s] was%s expected to be in the system but it is%s.",

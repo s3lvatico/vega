@@ -21,16 +21,17 @@ public class CategoryController extends HttpServlet {
 	private Map<String, CategoryManagementBean> navMap;
 
 
+
 	@Override
-	public void init()  {
+	public void init() {
 		navMap = new HashMap<>();
-		
+
 		CategoryManagementBean cmb = new CategoryManagementBean();
 		cmb.setOperationLabel("Registered categories");
 		cmb.setViewName("categories");
 		cmb.setAction(Action.GET_ALL);
 		navMap.put("getAll", cmb);
-		
+
 		cmb = new CategoryManagementBean();
 		cmb.setOperationLabel("New Category Creation");
 		cmb.setViewName("categoryManagement");
@@ -72,8 +73,6 @@ public class CategoryController extends HttpServlet {
 
 	}
 
-	
-	
 
 
 	@Override

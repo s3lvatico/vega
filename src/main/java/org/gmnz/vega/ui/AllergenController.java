@@ -23,8 +23,9 @@ public class AllergenController extends HttpServlet {
 	private Map<String, AllergenManagementBean> navMap;
 
 
+
 	@Override
-	public void init()  {
+	public void init() {
 		navMap = new HashMap<>();
 
 		AllergenManagementBean cmb = new AllergenManagementBean();
@@ -32,7 +33,7 @@ public class AllergenController extends HttpServlet {
 		cmb.setViewName("allergens");
 		cmb.setAction(Action.GET_ALL);
 		navMap.put("getAll", cmb);
-		
+
 		cmb = new AllergenManagementBean();
 		cmb.setOperationLabel("New Allergen Creation");
 		cmb.setViewName("allergenManagement");
@@ -73,8 +74,6 @@ public class AllergenController extends HttpServlet {
 
 	}
 
-	
-	
 
 
 	@Override
@@ -85,7 +84,7 @@ public class AllergenController extends HttpServlet {
 			cmb.setAllergenName(req.getParameter("allergenName"));
 			req.setAttribute("allergenBean", cmb);
 			req.setAttribute("contextRoot", req.getContextPath());
-			List<Category> categories  = new VegaImpl().getCategoryService().getAllCategories();
+			List<Category> categories = new VegaImpl().getCategoryService().getAllCategories();
 			req.setAttribute("categories", categories);
 			String targetUrl = String.format("/WEB-INF/jsp/%s.jsp", cmb.getViewName());
 			req.getRequestDispatcher(targetUrl).forward(req, resp);

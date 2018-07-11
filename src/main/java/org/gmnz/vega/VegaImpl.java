@@ -35,13 +35,9 @@ public class VegaImpl implements Vega {
 
 
 
-
-
-
 	@Override
 	public void assignAllergenToCategory(String nomeAllergene, String nomeCategoria) {
 		throw new RuntimeException("not yet implemented");
 	}
-
 
 }
