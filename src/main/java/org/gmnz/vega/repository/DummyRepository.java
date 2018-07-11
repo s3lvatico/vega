@@ -103,4 +103,13 @@ public final class DummyRepository {
 		}
 		return null;
 	}
+
+	public static Allergen getAllergenByName(String name) {
+		for (Allergen c : ALLERGENS) {
+			if (c.getName().equalsIgnoreCase(name)) {
+				return c;
+			}
+		}
+		return null;
+	}
 }

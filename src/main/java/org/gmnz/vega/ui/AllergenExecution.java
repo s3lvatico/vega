@@ -34,7 +34,6 @@ public class AllergenExecution extends HttpServlet {
 		if (action == null || action.isEmpty()) {
 			throw new ServletException("no action specified");
 		}
-		//System.out.format("action requested: <%s>%n", action);
 		executeAction(action, req, resp);
 	}
 
@@ -43,30 +42,32 @@ public class AllergenExecution extends HttpServlet {
 	private void executeAction(String action, HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
 		String targetAllergenName = req.getParameter("allergenName");
-		String targetCategory = req.getParameter("category");
+		String targetCategoryName = req.getParameter("category");
 		if (VegaUtil.stringNullOrEmpty(targetAllergenName)) {
-			throw new ServletException("invalid allergen name");
+			resp.sendError(HttpServletResponse.SC_BAD_REQUEST);
+			// throw new ServletException("invalid allergen name");
+		}
+		if (VegaUtil.stringNullOrEmpty(targetCategoryName)) {
+			resp.sendError(HttpServletResponse.SC_BAD_REQUEST);
+			// throw new ServletException("invalid category name");
 		}
 		try {
 			switch (action) {
-			case Action.CREATE:
-				if (VegaUtil.stringNullOrEmpty(targetCategory)) {
-					throw new ServletException("invalid category name");
-				}
-				vega.getAllergenService().createAllergen(targetAllergenName, targetCategory);
-				break;
-			case Action.MODIFY:
-				//System.out.println("hai scelto: " + action);
-				String oldAllergenName = req.getParameter("oldAllergenName");
-				//System.out.format("Rinomina [%s] --> [%s]%n", oldCategoryName, targetCategoryName);
-				vega.getAllergenService().renameAllergen(oldAllergenName, targetAllergenName);
-				break;
-			case Action.DELETE:
-				//System.out.format("hai scelto: <%s> [%s]%n", action, targetCategoryName);
-				vega.getAllergenService().removeAllergen(targetAllergenName);
-				break;
-			default:
-				throw new ServletException("invalid action specified");
+				case Action.CREATE:
+					vega.getAllergenService().createAllergen(targetAllergenName, targetCategoryName);
+					break;
+				case Action.MODIFY:
+					//System.out.println("hai scelto: " + action);
+					String oldAllergenName = req.getParameter("oldAllergenName");
+					//System.out.format("Rinomina [%s] --> [%s]%n", oldCategoryName, targetCategoryName);
+					vega.getAllergenService().renameAllergen(oldAllergenName, targetAllergenName);
+					break;
+				case Action.DELETE:
+					//System.out.format("hai scelto: <%s> [%s]%n", action, targetCategoryName);
+					vega.getAllergenService().removeAllergen(targetAllergenName);
+					break;
+				default:
+					throw new ServletException("invalid action specified");
 			}
 		} catch (VegaException ve) {
 			String errorMessage = String.format("exception thrown while executing action -- %s :: %s", ve.getClass().getName(), ve.getMessage());
