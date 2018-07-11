@@ -1,17 +1,16 @@
 package org.gmnz.vega.ui;
 
 
-import java.io.IOException;
+import org.gmnz.vega.Vega;
+import org.gmnz.vega.VegaException;
+import org.gmnz.vega.VegaImpl;
+import org.gmnz.vega.base.VegaUtil;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
-import org.gmnz.vega.Vega;
-import org.gmnz.vega.VegaException;
-import org.gmnz.vega.VegaImpl;
-import org.gmnz.vega.base.VegaUtil;
+import java.io.IOException;
 
 
 public class AllergenExecution extends HttpServlet {
@@ -50,22 +49,22 @@ public class AllergenExecution extends HttpServlet {
 		}
 		try {
 			switch (action) {
-			case Action.CREATE:
-				if (VegaUtil.stringNullOrEmpty(targetCategoryName)) {
-					resp.sendError(HttpServletResponse.SC_BAD_REQUEST);
-					return;
-				}
-				vega.getAllergenService().createAllergen(targetAllergenName, targetCategoryName);
-				break;
-			case Action.MODIFY:
-				String oldAllergenName = req.getParameter("oldAllergenName");
-				vega.getAllergenService().renameAllergen(oldAllergenName, targetAllergenName);
-				break;
-			case Action.DELETE:
-				vega.getAllergenService().removeAllergen(targetAllergenName);
-				break;
-			default:
-				throw new ServletException("invalid action specified");
+				case Action.CREATE:
+					if (VegaUtil.stringNullOrEmpty(targetCategoryName)) {
+						resp.sendError(HttpServletResponse.SC_BAD_REQUEST);
+						return;
+					}
+					vega.getAllergenService().createAllergen(targetAllergenName, targetCategoryName);
+					break;
+				case Action.MODIFY:
+					String oldAllergenName = req.getParameter("oldAllergenName");
+					vega.getAllergenService().renameAllergen(oldAllergenName, targetAllergenName);
+					break;
+				case Action.DELETE:
+					vega.getAllergenService().removeAllergen(targetAllergenName);
+					break;
+				default:
+					throw new ServletException("invalid action specified");
 			}
 		} catch (VegaException ve) {
 			String errorMessage = String.format("exception thrown while executing action -- %s :: %s",

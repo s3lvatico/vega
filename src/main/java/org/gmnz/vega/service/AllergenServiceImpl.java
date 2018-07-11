@@ -1,16 +1,16 @@
 package org.gmnz.vega.service;
 
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.List;
-
 import org.gmnz.vega.VegaException;
 import org.gmnz.vega.domain.Allergen;
 import org.gmnz.vega.domain.AllergenComparator;
 import org.gmnz.vega.domain.Category;
 import org.gmnz.vega.repository.DummyRepository;
+
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
 
 
 /**

@@ -1,5 +1,6 @@
 package org.gmnz.vega.ui;
 
+
 public class CategoryManagementBean {
 
 	private String operationLabel;

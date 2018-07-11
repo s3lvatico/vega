@@ -1,14 +1,14 @@
 package org.gmnz.vega.service;
 
 
+import org.gmnz.vega.VegaException;
+import org.gmnz.vega.domain.Category;
+import org.gmnz.vega.repository.DummyRepository;
+
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
-
-import org.gmnz.vega.VegaException;
-import org.gmnz.vega.domain.Category;
-import org.gmnz.vega.repository.DummyRepository;
 
 
 /**

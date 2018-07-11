@@ -1,5 +1,5 @@
-
 package org.gmnz.vega;
+
 
 public class VegaException extends Exception {
 

@@ -1,12 +1,12 @@
 package org.gmnz.vega.repository;
 
 
+import org.gmnz.vega.domain.Allergen;
+import org.gmnz.vega.domain.Category;
+
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
-
-import org.gmnz.vega.domain.Allergen;
-import org.gmnz.vega.domain.Category;
 
 
 public final class DummyRepository {
@@ -69,7 +69,6 @@ public final class DummyRepository {
 		c.add(a);
 		ALLERGENS.add(a);
 	}
-
 
 
 	public static Collection<Allergen> getRegisteredAllergens() {

@@ -1,5 +1,6 @@
 package org.gmnz.vega.domain;
 
+
 public class ToxicityRating {
 
 	private Allergen allergen;
