@@ -5,6 +5,7 @@ import org.gmnz.vega.domain.Allergen;
 import org.gmnz.vega.domain.Category;
 
 import java.util.Collection;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -14,8 +15,43 @@ public final class DummyRepository {
 	private static final Set<Allergen> ALLERGENS = new HashSet<>();
 	private static final Set<Category> CATEGORIES = new HashSet<>();
 
-	static {
+//	private static final Map<Category, Set<Allergen>> CATEGORY_MAP = new HashMap<>();
 
+
+
+	static {
+		Category c = new Category("Carni");
+		//	CATEGORY_MAP.put(c, new HashSet<>());
+		CATEGORIES.add(c);
+
+		Allergen a = new Allergen("Manzo");
+		a.setCategory(c);
+		c.add(a);
+		ALLERGENS.add(a);
+		// CATEGORY_MAP.get(c).add(a);
+
+		a = new Allergen("Pollo");
+		a.setCategory(c);
+		c.add(a);
+		ALLERGENS.add(a);
+		//CATEGORY_MAP.get(c).add(a);
+
+		a = new Allergen("Maiale");
+		a.setCategory(c);
+		c.add(a);
+		ALLERGENS.add(a);
+		// CATEGORY_MAP.get(c).add(a);
+
+		c = new Category("Cereali");
+		CATEGORIES.add(c);
+		//CATEGORY_MAP.put(c, new HashSet<>());
+
+		a = new Allergen("Avena");
+		a.setCategory(c);
+		c.add(a);
+		ALLERGENS.add(a);
+		// CATEGORY_MAP.get(c).add(a);
+/*
 		Category c = new Category("carni");
 		Allergen a = new Allergen("manzo");
 		a.setCategory(c);
@@ -68,6 +104,8 @@ public final class DummyRepository {
 		a.setCategory(c);
 		c.add(a);
 		ALLERGENS.add(a);
+		*/
+
 	}
 
 
@@ -78,18 +116,21 @@ public final class DummyRepository {
 
 
 	public static Collection<Category> getRegisteredCategories() {
-		return CATEGORIES;
+		//return Collections.unmodifiableCollection(CATEGORY_MAP.keySet());
+		return Collections.unmodifiableCollection(CATEGORIES);
 	}
 
 
 
 	public static void addCategory(Category category) {
+		//CATEGORY_MAP.put(category, new HashSet<>());
 		CATEGORIES.add(category);
 	}
 
 
 
 	public static void removeCategory(Category category) {
+		// CATEGORY_MAP.remove(category);
 		CATEGORIES.remove(category);
 	}
 
@@ -131,11 +172,17 @@ public final class DummyRepository {
 
 
 	public static void removeAllergen(String name) {
+		// originale
 		Allergen a = getAllergenByName(name);
 		if (a != null) {
+			// rimosso dall'insieme
 			boolean removed = ALLERGENS.remove(a);
 			if (removed) {
+				// categoria dell'originale che è stato rimosso
 				Category c0 = getCategoryByName(a.getCategory().getName());
+				// nuova categoria, uguale all'altra
+				// ma con elenco di allergeni diminuito
+				// ricostruito perché la categoria ha la lista allergeni immutabile
 				Category c = new Category(c0.getName());
 				for (Allergen a0 : c0.getAllergens()) {
 					if (!a0.equals(a)) {
@@ -144,11 +191,45 @@ public final class DummyRepository {
 				}
 				CATEGORIES.remove(c);
 				CATEGORIES.add(c);
-			}
-			else {
+			} else {
 				System.err.format("warning: tried to remove allergen [%s] but it does not exist in the repository%n", name);
 			}
 		}
+	}
 
+	private static void removeAllergenFromCategory(String allergenName, String categoryName) {
+		Category c = getCategoryByName(categoryName);
+		Category c1 = new Category(categoryName);
+		for (Allergen a : c.getAllergens()) {
+			if(!a.getName().equals(allergenName)) {
+				c1.add(a);
+			}
+		}
+		CATEGORIES.remove(c);
+		CATEGORIES.add(c1);
+	}
+
+
+	public static void renameAllergen(String fromName, String toName) {
+		// ne va creato uno sostitutivo perché qui gli oggetti sono immutabili
+		Allergen a0 = getAllergenByName(fromName);
+		Allergen a1 = new Allergen(toName);
+		a1.setCategory(a0.getCategory());
+		removeAllergen(fromName);
+		ALLERGENS.add(a1);
+		for (Category c : CATEGORIES) {
+			if (c.equals(a1.getCategory())) {
+				c.add(a1);
+				return;
+			}
+		}
+	}
+
+	public static void changeAllergenCategory(String allergenName, String targetCategoryName) {
+		Allergen a = getAllergenByName(allergenName);
+		removeAllergenFromCategory(allergenName, a.getCategory().getName());
+		Category targetCategory = getCategoryByName(targetCategoryName);
+		targetCategory.add(a);
+		a.setCategory(targetCategory);
 	}
 }

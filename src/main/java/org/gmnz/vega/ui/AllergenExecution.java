@@ -62,9 +62,12 @@ public class AllergenExecution extends HttpServlet {
 					HttpSession session = req.getSession();
 					String trackingId = req.getParameter("trackingId");
 					Allergen originalAllergen = (Allergen) session.getAttribute(trackingId);
+					if (originalAllergen == null) {
+						resp.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "no session content");
+						return;
+					}
 					session.setAttribute("trackingId", null);
-					// TODO controlla che ci sia effettivamente... se è null ==> 500
-					modifyAllergen(originalAllergen, targetAllergenName, targetCategoryName);
+					vega.getAllergenService().modifyAllergen(originalAllergen, targetAllergenName, targetCategoryName);
 					break;
 				case Action.DELETE:
 					vega.getAllergenService().removeAllergen(targetAllergenName);
@@ -87,10 +90,4 @@ public class AllergenExecution extends HttpServlet {
 	}
 
 
-
-	private void modifyAllergen(Allergen oldAllergen, String newName, String newCategory) throws VegaException {
-		// TODO fare
-		throw new RuntimeException("not yet implemented!");
-		// vega.getAllergenService().renameAllergen(oldAllergenName, targetAllergenName);
-	}
 }

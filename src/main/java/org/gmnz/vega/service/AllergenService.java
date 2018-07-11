@@ -18,7 +18,7 @@ public interface AllergenService {
 	Allergen get(String name);
 
 
-	void renameAllergen(String oldName, String newName) throws VegaException;
+	void modifyAllergen(Allergen source, String targetName, String targetCategory) throws VegaException;
 
 
 	void removeAllergen(String name) throws VegaException;
