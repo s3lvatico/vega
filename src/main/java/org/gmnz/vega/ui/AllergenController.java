@@ -100,6 +100,7 @@ public class AllergenController extends HttpServlet {
 				String uuid = UUID.randomUUID().toString();
 				req.getSession().setAttribute(uuid, originalAllergen);
 				req.setAttribute("trackingId", uuid);
+				req.setAttribute("initialAllergenCategoryName", originalAllergen.getCategory().getName());
 			}
 			//
 

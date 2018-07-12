@@ -20,7 +20,14 @@
 
     <p>Category
         <select name="categoryName">
+            <%
+                String selectAttribute = "";
+                String initialAllergenCategoryName = (String) request.getAttribute("initialAllergenCategoryName");
+            %>
             <c:forEach var="category" items="${categories}">
+                <%
+                    selectAttribute = pageContext.
+                %>
                 <option value="${category.name}">${category.name}</option>
             </c:forEach>
         </select>

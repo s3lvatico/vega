@@ -53,12 +53,12 @@ public class AllergenServiceImpl extends BasicServiceBean implements AllergenSer
 	@Override
 	public void modifyAllergen(Allergen source, String targetName, String targetCategory) throws VegaException {
 		checkEntityRegistration(Allergen.class, source.getName(), true);
-		checkEntityRegistration(Allergen.class, targetName, false);
 		checkEntityRegistration(Category.class, targetCategory, true);
 		if (!source.getName().equals(targetName)) {
 			DummyRepository.renameAllergen(source.getName(), targetName);
 		}
 		if(!source.getCategory().getName().equals(targetCategory)) {
+			checkEntityRegistration(Allergen.class, targetName, false);
 			DummyRepository.changeAllergenCategory(source.getName(), targetCategory);
 		}
 	}
