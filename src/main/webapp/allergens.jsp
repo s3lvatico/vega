@@ -22,12 +22,12 @@
     <c:forEach var="allergen" items="${vega.allergenService.all}">
         <tr>
             <td>
-                <form method="post" action="${contextRoot}/allergen/edit">
+                <form method="POST" action="${contextRoot}/allergen/edit">
                     <input type="hidden" name="allergenName" value="${allergen.name}"/> <input type="submit" value="E"/>
                 </form>
             </td>
             <td>
-                <form method="post" action="${contextRoot}/allergen/delete">
+                <form method="POST" action="${contextRoot}/allergen/delete">
                     <input type="hidden" name="allergenName" value="${allergen.name}"/> <input type="submit" value="D"/>
                 </form>
             </td>

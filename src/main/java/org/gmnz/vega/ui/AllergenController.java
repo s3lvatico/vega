@@ -86,16 +86,21 @@ public class AllergenController extends HttpServlet {
 			String allergenName = req.getParameter("allergenName");
 			cmb.setAllergenName(allergenName);
 			req.setAttribute("allergenBean", cmb);
-			req.setAttribute("contextRoot", req.getContextPath());
-			List<Category> categories = new VegaImpl().getCategoryService().getAllCategories();
-			req.setAttribute("categories", categories);
-			// mantengo in sessione l'oggetto allergene originale in modo da determinare eventuali modifiche radicali
+
 			Vega vega = new VegaImpl();
+			req.setAttribute("contextRoot", req.getContextPath());
+			List<Category> categories = vega.getCategoryService().getAllCategories();
+			req.setAttribute("categories", categories);
+
+			// mantengo in sessione l'oggetto allergene originale in modo da determinare eventuali modifiche radicali
+
 			AllergenService allergenService = vega.getAllergenService();
 			Allergen originalAllergen = allergenService.get(allergenName);
-			String uuid = UUID.randomUUID().toString();
-			req.getSession().setAttribute(uuid, originalAllergen);
-			req.setAttribute("trackingId", uuid);
+			if(originalAllergen != null) {
+				String uuid = UUID.randomUUID().toString();
+				req.getSession().setAttribute(uuid, originalAllergen);
+				req.setAttribute("trackingId", uuid);
+			}
 			//
 
 			String targetUrl = String.format("/WEB-INF/jsp/%s.jsp", cmb.getViewName());

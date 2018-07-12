@@ -19,8 +19,8 @@
     </p>
 
     <p>Category
-        <select name="category">
-            <c:forEach var="categoryName" items="${categories}">
+        <select name="categoryName">
+            <c:forEach var="category" items="${categories}">
                 <option value="${category.name}">${category.name}</option>
             </c:forEach>
         </select>
