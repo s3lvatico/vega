@@ -22,11 +22,12 @@ public class Report {
 
 
 
-	public void addRating(String category, ToxicityRating rating) {
-		if (reportData.get(category) == null) {
-			reportData.put(category, new ArrayList<>());
+	public void addRating(ToxicityRating rating) {
+		String categoryName = rating.getAllergen().getCategory().getName();
+		if (reportData.get(categoryName) == null) {
+			reportData.put(categoryName, new ArrayList<>());
 		}
-		reportData.get(category).add(rating);
+		reportData.get(categoryName).add(rating);
 	}
 
 
@@ -37,9 +38,9 @@ public class Report {
 
 
 
-	public List<ToxicityRating> getRatings(String category) {
-		List<ToxicityRating> toxicityRatingList = reportData.get(category);
-		return toxicityRatingList == null ? new ArrayList<>() : toxicityRatingList;
+	public List<ToxicityRating> getRatings(String categoryName) {
+		List<ToxicityRating> ratings = reportData.get(categoryName);
+		return ratings == null ? new ArrayList<>() : ratings;
 	}
 
 

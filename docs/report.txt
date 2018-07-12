@@ -1,0 +1,8 @@
+# che forma ha un report
+
+soggetto
+data
+
+categoria
+    allergene : tossicità
+    ...

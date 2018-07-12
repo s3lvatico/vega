@@ -68,5 +68,22 @@
       <url-pattern>/allergen/do/*</url-pattern>
    </servlet-mapping>
 
+   <servlet>
+      <servlet-name>ReportControllerServlet</servlet-name>
+      <servlet-class>org.gmnz.vega.ui.ReportController</servlet-class>
+   </servlet>
+   <servlet-mapping>
+      <servlet-name>ReportControllerServlet</servlet-name>
+      <url-pattern>/ReportControllerServlet/*</url-pattern>
+   </servlet-mapping>
+
+   <servlet>
+      <servlet-name>ReportExecutionServlet</servlet-name>
+      <servlet-class>org.gmnz.vega.ui.ReportExecution</servlet-class>
+   </servlet>
+   <servlet-mapping>
+      <servlet-name>ReportExecutionServlet</servlet-name>
+      <url-pattern>/ReportControllerServlet/do/*</url-pattern>
+   </servlet-mapping>
 
 </web-app>

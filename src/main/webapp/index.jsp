@@ -13,7 +13,7 @@
 <ul>
     <li><a href="<%=contextRoot%>/category/getAll">Categories</a></li>
     <li><a href="<%=contextRoot%>/allergen/getAll">Allergens</a></li>
-    <li>Reports (not yet available)</li>
+    <li><a href="<%=contextRoot%>/report/getAll">Reports</a></li>
 </ul>
 <jsp:include page="/WEB-INF/jsp/footer.jsp"/>
 </body>
