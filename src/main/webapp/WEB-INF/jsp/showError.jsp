@@ -1,6 +1,8 @@
 <%@ page isErrorPage="true" %>
 <%@ page contentType="text/html;charset=UTF-8" %>
 
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
 <html>
 <head>
     <title>Error occurred</title>
@@ -11,28 +13,29 @@
 <table border="1">
     <tr>
         <td width="15%"><b>Error:</b></td>
-        <td><%=pageContext.getException()%>
-        </td>
+        <td>${pageContext.exception}</td>
     </tr>
     <tr>
         <td colspan="2"><a href="<%=application.getContextPath()%>/index.jsp">Go back to the main page</a></td>
     </tr>
     <tr>
         <td><b>URI:</b></td>
-        <td><%=pageContext.getErrorData().getRequestURI()%></td>
+        <td>${pageContext.errorData.requestURI}</td>
     </tr>
 
     <tr>
         <td><b>Status code:</b></td>
-        <td><%=pageContext.getErrorData().getStatusCode()%></td>
+        <td>${pageContext.errorData.statusCode}</td>
     </tr>
 
     <tr>
         <td><b>Stack trace:</b></td>
         <td>
-            <% for (StackTraceElement stackTraceElement : pageContext.getException().getStackTrace()) {%>
-            <p><%= stackTraceElement %></p>
-            <% } %>
+            <c:if test="${pageContext.exception != null}">
+                <c:forEach var="stackTraceElement" items="${pageContext.exception.stackTrace}">
+                    <p>${stackTraceElement}</p>
+                </c:forEach>
+            </c:if>
         </td>
     </tr>
 </table>
