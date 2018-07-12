@@ -9,7 +9,6 @@ import org.gmnz.vega.repository.DummyRepository;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.List;
 
 
@@ -22,7 +21,7 @@ public class AllergenServiceImpl extends BasicServiceBean implements AllergenSer
 	public List<Allergen> getAll() {
 		Collection<Allergen> registeredAllergens = DummyRepository.getRegisteredAllergens();
 		List<Allergen> allergensList = new ArrayList<>(registeredAllergens);
-		Collections.sort(allergensList, new AllergenComparator());
+		allergensList.sort(new AllergenComparator());
 		return allergensList;
 
 	}
@@ -55,10 +54,10 @@ public class AllergenServiceImpl extends BasicServiceBean implements AllergenSer
 		checkEntityRegistration(Allergen.class, source.getName(), true);
 		checkEntityRegistration(Category.class, targetCategory, true);
 		if (!source.getName().equals(targetName)) {
+			checkEntityRegistration(Allergen.class, targetName, false);
 			DummyRepository.renameAllergen(source.getName(), targetName);
 		}
 		if(!source.getCategory().getName().equals(targetCategory)) {
-			checkEntityRegistration(Allergen.class, targetName, false);
 			DummyRepository.changeAllergenCategory(source.getName(), targetCategory);
 		}
 	}

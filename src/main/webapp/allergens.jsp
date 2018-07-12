@@ -4,6 +4,7 @@
 
 <html>
 <head>
+    <meta charset="utf-8">
     <title>Allergens</title>
 </head>
 <body>

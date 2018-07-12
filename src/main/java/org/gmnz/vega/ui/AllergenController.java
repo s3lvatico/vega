@@ -84,6 +84,7 @@ public class AllergenController extends HttpServlet {
 		AllergenManagementBean cmb = navMap.get(section);
 		if (cmb != null) {
 			String allergenName = req.getParameter("allergenName");
+
 			cmb.setAllergenName(allergenName);
 			req.setAttribute("allergenBean", cmb);
 
