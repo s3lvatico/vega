@@ -43,27 +43,27 @@ public class ReportTest {
 
 
 		ToxicityRating v = new ToxicityRating(avena, 0.8d);
-		report.addRating(cereali.getName(), v);
+		report.addRating(v);
 
 		v = new ToxicityRating(farina, 0.97d);
-		report.addRating(cereali.getName(), v);
+		report.addRating(v);
 
 		v = new ToxicityRating(orzo, 0.35d);
-		report.addRating(cereali.getName(), v);
+		report.addRating(v);
 
 		v = new ToxicityRating(patate, 0.79d);
-		report.addRating(cereali.getName(), v);
+		report.addRating(v);
 
 		System.out.println(report);
 
 		v = new ToxicityRating(lievitoDiBirra, 0.93d);
-		report.addRating(condimenti.getName(), v);
+		report.addRating(v);
 
 		v = new ToxicityRating(olioDiOliva, 0.61d);
-		report.addRating(condimenti.getName(), v);
+		report.addRating(v);
 
 		v = new ToxicityRating(strutto, 0.81d);
-		report.addRating(condimenti.getName(), v);
+		report.addRating(v);
 
 		System.out.println(report);
 

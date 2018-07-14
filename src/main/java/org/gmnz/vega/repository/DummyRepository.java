@@ -138,7 +138,7 @@ public final class DummyRepository {
 
 	public static Category getCategoryByName(String name) {
 		for (Category c : CATEGORIES) {
-			if (c.getName().equalsIgnoreCase(name)) {
+			if (c.getName().equals(name)) {
 				return c;
 			}
 		}
@@ -149,7 +149,7 @@ public final class DummyRepository {
 
 	public static Allergen getAllergenByName(String name) {
 		for (Allergen c : ALLERGENS) {
-			if (c.getName().equalsIgnoreCase(name)) {
+			if (c.getName().equals(name)) {
 				return c;
 			}
 		}
