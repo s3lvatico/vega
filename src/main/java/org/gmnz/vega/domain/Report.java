@@ -1,10 +1,14 @@
 package org.gmnz.vega.domain;
 
 
+import org.gmnz.vega.base.VegaUtil;
+
 import java.util.*;
 
 
 public class Report {
+
+	private String id;
 
 	private String subjectName;
 
@@ -18,6 +22,7 @@ public class Report {
 		this.subjectName = subjectName;
 		this.createdOn = createdOn;
 		reportData = new LinkedHashMap<>();
+		id = VegaUtil.getSha256Digest(this.subjectName, this.createdOn);
 	}
 
 
@@ -45,9 +50,39 @@ public class Report {
 
 
 
+	public String getSubjectName() {
+		return subjectName;
+	}
+
+
+
+	public Date getCreationDate() {
+		return createdOn;
+	}
+
+	public String getId() { return id; }
+
+
 	@Override
 	public String toString() {
 		return "Report{" + "subjectName='" + subjectName + '\'' + ", createdOn=" + createdOn + ", reportData="
 				+ reportData + '}';
+	}
+
+
+
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) return true;
+		if (o == null || getClass() != o.getClass()) return false;
+		Report report = (Report) o;
+		return Objects.equals(id, report.id);
+	}
+
+
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(id);
 	}
 }

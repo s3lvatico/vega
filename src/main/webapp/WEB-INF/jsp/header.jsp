@@ -19,6 +19,7 @@
     <a href="<%= contextRoot %>/index.jsp">Index</a>
     <a href="<%= contextRoot %>/category/getAll">Categories</a>
     <a href="<%= contextRoot %>/allergen/getAll">Allergens</a>
+    <a href="<%= contextRoot %>/report/getAll">Reports</a>
 </h6>
 <hr/>
 

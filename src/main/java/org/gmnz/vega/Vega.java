@@ -3,6 +3,7 @@ package org.gmnz.vega;
 
 import org.gmnz.vega.service.AllergenService;
 import org.gmnz.vega.service.CategoryService;
+import org.gmnz.vega.service.ReportService;
 
 
 public interface Vega {
@@ -14,5 +15,8 @@ public interface Vega {
 
 
 	AllergenService getAllergenService();
+
+
+	ReportService getReportService();
 
 }

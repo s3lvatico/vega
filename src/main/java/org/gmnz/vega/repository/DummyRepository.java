@@ -3,17 +3,16 @@ package org.gmnz.vega.repository;
 
 import org.gmnz.vega.domain.Allergen;
 import org.gmnz.vega.domain.Category;
+import org.gmnz.vega.domain.Report;
 
-import java.util.Collection;
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
 
 public final class DummyRepository {
 
 	private static final Set<Allergen> ALLERGENS = new HashSet<>();
 	private static final Set<Category> CATEGORIES = new HashSet<>();
+	private static final Set<Report> REPORTS = new HashSet<>();
 
 //	private static final Map<Category, Set<Allergen>> CATEGORY_MAP = new HashMap<>();
 
@@ -197,17 +196,20 @@ public final class DummyRepository {
 		}
 	}
 
+
+
 	private static void removeAllergenFromCategory(String allergenName, String categoryName) {
 		Category c = getCategoryByName(categoryName);
 		Category c1 = new Category(categoryName);
 		for (Allergen a : c.getAllergens()) {
-			if(!a.getName().equals(allergenName)) {
+			if (!a.getName().equals(allergenName)) {
 				c1.add(a);
 			}
 		}
 		CATEGORIES.remove(c);
 		CATEGORIES.add(c1);
 	}
+
 
 
 	public static void renameAllergen(String fromName, String toName) {
@@ -225,11 +227,37 @@ public final class DummyRepository {
 		}
 	}
 
+
+
 	public static void changeAllergenCategory(String allergenName, String targetCategoryName) {
 		Allergen a = getAllergenByName(allergenName);
 		removeAllergenFromCategory(allergenName, a.getCategory().getName());
 		Category targetCategory = getCategoryByName(targetCategoryName);
 		targetCategory.add(a);
 		a.setCategory(targetCategory);
+	}
+
+
+
+	public static Collection<Report> getReports() {
+		return Collections.unmodifiableCollection(REPORTS);
+	}
+
+
+
+	public static Report getReport(String subject, Date creationDate) {
+		Report rr = new Report(subject, creationDate);
+		for (Report r : REPORTS) {
+			if (r.equals(rr)) {
+				return r;
+			}
+		}
+		return null;
+	}
+
+
+
+	public static void addReport(Report r) {
+		REPORTS.add(r);
 	}
 }

@@ -1,10 +1,7 @@
 package org.gmnz.vega;
 
 
-import org.gmnz.vega.service.AllergenService;
-import org.gmnz.vega.service.AllergenServiceImpl;
-import org.gmnz.vega.service.CategoryService;
-import org.gmnz.vega.service.CategoryServiceImpl;
+import org.gmnz.vega.service.*;
 
 
 public class VegaImpl implements Vega {
@@ -13,11 +10,14 @@ public class VegaImpl implements Vega {
 
 	private final AllergenService allergenService;
 
+	private final ReportService reportService;
+
 
 
 	public VegaImpl() {
 		categoryService = new CategoryServiceImpl();
 		allergenService = new AllergenServiceImpl();
+		reportService = new ReportServiceImpl();
 	}
 
 
@@ -29,8 +29,16 @@ public class VegaImpl implements Vega {
 
 
 
+	@Override
 	public AllergenService getAllergenService() {
 		return allergenService;
+	}
+
+
+
+	@Override
+	public ReportService getReportService() {
+		return reportService;
 	}
 
 

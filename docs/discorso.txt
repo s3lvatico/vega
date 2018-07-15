@@ -2,6 +2,9 @@
 
 pagina dei report
     elenco dei report
+        dati visualizzati:
+            soggetto
+            data record
         comandi:
             visualizza --> [3]
         comandi opzionali:

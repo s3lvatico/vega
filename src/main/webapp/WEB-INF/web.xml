@@ -74,8 +74,10 @@
    </servlet>
    <servlet-mapping>
       <servlet-name>ReportControllerServlet</servlet-name>
-      <url-pattern>/ReportControllerServlet/*</url-pattern>
+      <url-pattern>/report/*</url-pattern>
    </servlet-mapping>
+
+   <!--
 
    <servlet>
       <servlet-name>ReportExecutionServlet</servlet-name>
@@ -85,5 +87,6 @@
       <servlet-name>ReportExecutionServlet</servlet-name>
       <url-pattern>/ReportControllerServlet/do/*</url-pattern>
    </servlet-mapping>
+   -->
 
 </web-app>
