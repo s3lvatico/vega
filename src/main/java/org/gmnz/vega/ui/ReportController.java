@@ -71,7 +71,18 @@ public class ReportController extends HttpServlet {
 
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		super.doPost(req, resp);
+		String section = findRequestedSection(req.getRequestURL().toString());
+
+		CategoryManagementBean cmb = navMap.get(section);
+		if (cmb != null) {
+			cmb.setCategoryName(req.getParameter("categoryName"));
+			req.setAttribute("catBean", cmb);
+			req.setAttribute("contextRoot", req.getContextPath());
+			String targetUrl = String.format("/WEB-INF/jsp/%s.jsp", cmb.getViewName());
+			req.getRequestDispatcher(targetUrl).forward(req, resp);
+		} else {
+			throw new ServletException("wrong path specified: <" + section + ">");
+		}
 	}
 
 

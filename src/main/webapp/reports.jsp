@@ -40,7 +40,7 @@
 </table>
 <h3>Operations</h3>
 <p>Create new report:</p>
-<form method="POST" action="${contextRoot}/report/create">
+<form action="${contextRoot}/report/create">
     <input type="submit" value="create new report">
 </form>
 <jsp:include page="/WEB-INF/jsp/footer.jsp"/>
