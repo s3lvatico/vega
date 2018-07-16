@@ -1,19 +1,20 @@
 package org.gmnz.vega.ui;
 
 
-import org.gmnz.vega.Vega;
-import org.gmnz.vega.VegaImpl;
-import org.gmnz.vega.domain.Report;
-import org.gmnz.vega.service.ReportService;
+import java.io.IOException;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.Map;
+
+import org.gmnz.vega.Vega;
+import org.gmnz.vega.VegaImpl;
+import org.gmnz.vega.domain.Report;
+import org.gmnz.vega.service.ReportService;
 
 
 public class ReportController extends HttpServlet {
@@ -73,9 +74,9 @@ public class ReportController extends HttpServlet {
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		String section = findRequestedSection(req.getRequestURL().toString());
 
-		CategoryManagementBean cmb = navMap.get(section);
+		ReportManagementBean cmb = navMap.get(section);
 		if (cmb != null) {
-			cmb.setCategoryName(req.getParameter("categoryName"));
+//			cmb.setCategoryName(req.getParameter("categoryName"));
 			req.setAttribute("catBean", cmb);
 			req.setAttribute("contextRoot", req.getContextPath());
 			String targetUrl = String.format("/WEB-INF/jsp/%s.jsp", cmb.getViewName());
