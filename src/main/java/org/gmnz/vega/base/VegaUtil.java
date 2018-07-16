@@ -1,8 +1,6 @@
 package org.gmnz.vega.base;
 
 
-import sun.plugin2.message.Message;
-
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.Date;
@@ -38,6 +36,8 @@ public class VegaUtil {
 		}
 	}
 
+
+
 	public static String getSha256Digest(String s1, Date date) {
 		Long dateTimestamp = date.getTime();
 		String s2 = Long.toString(dateTimestamp);
@@ -60,6 +60,5 @@ public class VegaUtil {
 		String sha256 = getSha256Digest(s1, d);
 		System.out.format("Stringa <%s> | Data <%s> | hash <%s>%n", s1, d, sha256);
 	}
-
 
 }
