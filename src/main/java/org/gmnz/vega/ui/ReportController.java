@@ -19,6 +19,8 @@ import org.gmnz.vega.service.ReportService;
 
 public class ReportController extends HttpServlet {
 
+	private static final long serialVersionUID = -8297293947108342649L;
+	
 	private Map<String, ReportManagementBean> navMap;
 
 

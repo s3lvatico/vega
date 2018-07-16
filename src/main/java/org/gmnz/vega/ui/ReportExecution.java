@@ -1,6 +1,15 @@
 package org.gmnz.vega.ui;
 
 
+import java.io.IOException;
+import java.util.Date;
+import java.util.Enumeration;
+
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 import org.gmnz.vega.Vega;
 import org.gmnz.vega.VegaException;
 import org.gmnz.vega.VegaImpl;
@@ -10,20 +19,14 @@ import org.gmnz.vega.domain.Report;
 import org.gmnz.vega.domain.ToxicityRating;
 import org.gmnz.vega.service.AllergenService;
 
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
-import java.util.Date;
-import java.util.Enumeration;
-
 
 /**
  * creato da simone in data 12/07/2018.
  */
 public class ReportExecution extends HttpServlet {
 
+	private static final long serialVersionUID = -9021626655309704727L;
+	
 	private Vega vega;
 
 
