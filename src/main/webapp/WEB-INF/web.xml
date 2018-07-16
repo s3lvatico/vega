@@ -32,6 +32,7 @@
       <location>/WEB-INF/jsp/showError.jsp</location>
    </error-page>
 
+
    <servlet>
       <servlet-name>CategoryController</servlet-name>
       <servlet-class>org.gmnz.vega.ui.CategoryController</servlet-class>
@@ -49,6 +50,7 @@
       <servlet-name>CategoryExecution</servlet-name>
       <url-pattern>/category/do/*</url-pattern>
    </servlet-mapping>
+
 
    <servlet>
       <servlet-name>AllergenController</servlet-name>
@@ -68,6 +70,7 @@
       <url-pattern>/allergen/do/*</url-pattern>
    </servlet-mapping>
 
+
    <servlet>
       <servlet-name>ReportControllerServlet</servlet-name>
       <servlet-class>org.gmnz.vega.ui.ReportController</servlet-class>
@@ -77,16 +80,14 @@
       <url-pattern>/report/*</url-pattern>
    </servlet-mapping>
 
-   <!--
-
    <servlet>
       <servlet-name>ReportExecutionServlet</servlet-name>
       <servlet-class>org.gmnz.vega.ui.ReportExecution</servlet-class>
    </servlet>
    <servlet-mapping>
       <servlet-name>ReportExecutionServlet</servlet-name>
-      <url-pattern>/ReportControllerServlet/do/*</url-pattern>
+      <url-pattern>/report/do/*</url-pattern>
    </servlet-mapping>
-   -->
+
 
 </web-app>

@@ -1,15 +1,6 @@
 package org.gmnz.vega.ui;
 
 
-import java.io.IOException;
-import java.util.Date;
-import java.util.Enumeration;
-
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
 import org.gmnz.vega.Vega;
 import org.gmnz.vega.VegaException;
 import org.gmnz.vega.VegaImpl;
@@ -19,6 +10,14 @@ import org.gmnz.vega.domain.Report;
 import org.gmnz.vega.domain.ToxicityRating;
 import org.gmnz.vega.service.AllergenService;
 
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.util.Date;
+import java.util.Enumeration;
+
 
 /**
  * creato da simone in data 12/07/2018.
@@ -26,7 +25,7 @@ import org.gmnz.vega.service.AllergenService;
 public class ReportExecution extends HttpServlet {
 
 	private static final long serialVersionUID = -9021626655309704727L;
-	
+
 	private Vega vega;
 
 
@@ -74,7 +73,10 @@ public class ReportExecution extends HttpServlet {
 					ve.getClass().getName(), ve.getMessage());
 			throw new ServletException(errorMessage, ve);
 		}
-		req.getRequestDispatcher("/report/getAll").forward(req, resp);
+		//RequestDispatcher rd = req.getRequestDispatcher("/report/getAll");
+		//rd.forward(req, resp);
+
+		resp.sendRedirect(req.getContextPath() + "/report/getAll");
 	}
 
 
@@ -82,7 +84,6 @@ public class ReportExecution extends HttpServlet {
 	private void createReport(String subjectName, HttpServletRequest req, HttpServletResponse resp) throws VegaException {
 		Report r = new Report(subjectName, new Date());
 		AllergenService allergenService = vega.getAllergenService();
-
 		Enumeration<String> paramNames = req.getParameterNames();
 		String paramName;
 		String allergenName;

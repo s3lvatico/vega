@@ -4,6 +4,7 @@ package org.gmnz.vega.ui;
 import java.io.IOException;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.ServletException;
@@ -13,6 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.gmnz.vega.Vega;
 import org.gmnz.vega.VegaImpl;
+import org.gmnz.vega.domain.Category;
 import org.gmnz.vega.domain.Report;
 import org.gmnz.vega.service.ReportService;
 
@@ -37,7 +39,7 @@ public class ReportController extends HttpServlet {
 
 		cmb = new ReportManagementBean();
 		cmb.setOperationLabel("New Report Creation");
-		cmb.setViewName("reportManagement");
+		cmb.setViewName("reportCreation");
 		cmb.setAction(Action.CREATE);
 		navMap.put("create", cmb);
 
@@ -54,7 +56,6 @@ public class ReportController extends HttpServlet {
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		String section = findRequestedSection(req.getRequestURL().toString());
-
 		ReportManagementBean rmb = navMap.get(section);
 		if (rmb != null) {
 			req.setAttribute("reportBean", rmb);
@@ -75,11 +76,12 @@ public class ReportController extends HttpServlet {
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		String section = findRequestedSection(req.getRequestURL().toString());
-
 		ReportManagementBean cmb = navMap.get(section);
 		if (cmb != null) {
-//			cmb.setCategoryName(req.getParameter("categoryName"));
-			req.setAttribute("catBean", cmb);
+			Vega vega = new VegaImpl();
+			List<Category> categories = vega.getCategoryService().getAllCategories();
+			req.setAttribute("categories", categories);
+			req.setAttribute("reportBean", cmb);
 			req.setAttribute("contextRoot", req.getContextPath());
 			String targetUrl = String.format("/WEB-INF/jsp/%s.jsp", cmb.getViewName());
 			req.getRequestDispatcher(targetUrl).forward(req, resp);

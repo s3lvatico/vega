@@ -1,4 +1,5 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
+
 <%@ page errorPage="showError.jsp" %>
 
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
@@ -12,9 +13,11 @@
 <jsp:include page="/WEB-INF/jsp/header.jsp"/>
 <h2>Report</h2>
 <h3>${reportBean.operationLabel}</h3>
-<form action="${contextRoot}/report/do" method="post">
-
+<form  method="post" action="${contextRoot}/report/do" >
+    <input type="hidden" name="action" value="${reportBean.action}">
+    <h4>Report Summary</h4>
     <p>Subject name <input type="text" name="subjectName"></p>
+    <h4>Toxicity assessment</h4>
     <c:forEach var="category" items="${categories}">
         <table>
             <thead>
