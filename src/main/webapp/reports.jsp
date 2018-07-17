@@ -29,7 +29,7 @@
             </td>
             <td>
                 <form method="POST" action="${contextRoot}/report/delete">
-                    <input type="hidden" name="reportId" value="${report.id}"/> <input type="submit" value="Details"/>
+                    <input type="hidden" name="reportId" value="${report.id}"/> <input type="submit" value="Delete"/>
                 </form>
             </td>
             <td>${report.subjectName}</td>
