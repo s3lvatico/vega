@@ -1,4 +1,4 @@
-package org.gmnz.vega.ui;
+package org.gmnz.vega.ui.web.allergen;
 
 
 import org.gmnz.vega.Vega;
@@ -6,6 +6,7 @@ import org.gmnz.vega.VegaImpl;
 import org.gmnz.vega.domain.Allergen;
 import org.gmnz.vega.domain.Category;
 import org.gmnz.vega.service.AllergenService;
+import org.gmnz.vega.ui.Action;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;

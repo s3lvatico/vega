@@ -1,4 +1,4 @@
-package org.gmnz.vega.ui;
+package org.gmnz.vega.ui.web.report;
 
 
 public class ReportManagementBean {

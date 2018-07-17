@@ -257,6 +257,17 @@ public final class DummyRepository {
 
 
 
+	public static Report getReportById(String id) {
+		for (Report r : REPORTS) {
+			if (r.getId().equals(id)) {
+				return r;
+			}
+		}
+		return null;
+	}
+
+
+
 	public static void addReport(Report r) {
 		REPORTS.add(r);
 	}

@@ -1,8 +1,9 @@
-package org.gmnz.vega.ui;
+package org.gmnz.vega.ui.web.category;
 
 
 import org.gmnz.vega.Vega;
 import org.gmnz.vega.VegaImpl;
+import org.gmnz.vega.ui.Action;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;

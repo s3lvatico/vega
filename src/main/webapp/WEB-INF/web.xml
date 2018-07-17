@@ -35,7 +35,7 @@
 
    <servlet>
       <servlet-name>CategoryController</servlet-name>
-      <servlet-class>org.gmnz.vega.ui.CategoryController</servlet-class>
+      <servlet-class>org.gmnz.vega.ui.web.category.CategoryController</servlet-class>
    </servlet>
    <servlet-mapping>
       <servlet-name>CategoryController</servlet-name>
@@ -44,7 +44,7 @@
 
    <servlet>
       <servlet-name>CategoryExecution</servlet-name>
-      <servlet-class>org.gmnz.vega.ui.CategoryExecution</servlet-class>
+      <servlet-class>org.gmnz.vega.ui.web.category.CategoryExecution</servlet-class>
    </servlet>
    <servlet-mapping>
       <servlet-name>CategoryExecution</servlet-name>
@@ -54,7 +54,7 @@
 
    <servlet>
       <servlet-name>AllergenController</servlet-name>
-      <servlet-class>org.gmnz.vega.ui.AllergenController</servlet-class>
+      <servlet-class>org.gmnz.vega.ui.web.allergen.AllergenController</servlet-class>
    </servlet>
    <servlet-mapping>
       <servlet-name>AllergenController</servlet-name>
@@ -63,7 +63,7 @@
 
    <servlet>
       <servlet-name>AllergenExecution</servlet-name>
-      <servlet-class>org.gmnz.vega.ui.AllergenExecution</servlet-class>
+      <servlet-class>org.gmnz.vega.ui.web.allergen.AllergenExecution</servlet-class>
    </servlet>
    <servlet-mapping>
       <servlet-name>AllergenExecution</servlet-name>
@@ -73,7 +73,7 @@
 
    <servlet>
       <servlet-name>ReportControllerServlet</servlet-name>
-      <servlet-class>org.gmnz.vega.ui.ReportController</servlet-class>
+      <servlet-class>org.gmnz.vega.ui.web.report.ReportController</servlet-class>
    </servlet>
    <servlet-mapping>
       <servlet-name>ReportControllerServlet</servlet-name>
@@ -82,7 +82,7 @@
 
    <servlet>
       <servlet-name>ReportExecutionServlet</servlet-name>
-      <servlet-class>org.gmnz.vega.ui.ReportExecution</servlet-class>
+      <servlet-class>org.gmnz.vega.ui.web.report.ReportExecution</servlet-class>
    </servlet>
    <servlet-mapping>
       <servlet-name>ReportExecutionServlet</servlet-name>

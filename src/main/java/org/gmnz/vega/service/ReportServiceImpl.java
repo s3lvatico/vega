@@ -29,6 +29,13 @@ public class ReportServiceImpl implements ReportService {
 
 
 	@Override
+	public Report getReport(String id) {
+		return DummyRepository.getReportById(id);
+	}
+
+
+
+	@Override
 	public void addReport(Report report) throws VegaException {
 		if (DummyRepository.getReport(report.getSubjectName(), report.getCreationDate()) != null) {
 			throw new VegaException("report already existing");

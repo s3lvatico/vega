@@ -17,6 +17,8 @@ public interface ReportService {
 
 	Report getReport(String subjectName, Date creationDate);
 
+	Report getReport(String id);
+
 	void addReport(Report report) throws VegaException;
 
 }

@@ -1,11 +1,11 @@
-package org.gmnz.vega.ui;
+package org.gmnz.vega.ui.web.allergen;
 
 
-public class CategoryManagementBean {
+public class AllergenManagementBean {
 
 	private String operationLabel;
 
-	private String categoryName;
+	private String allergenName;
 
 	private String viewName;
 
@@ -13,8 +13,8 @@ public class CategoryManagementBean {
 
 
 
-	public CategoryManagementBean() {
-		categoryName = "";
+	public AllergenManagementBean() {
+		allergenName = "";
 	}
 
 
@@ -33,15 +33,15 @@ public class CategoryManagementBean {
 
 
 
-	public String getCategoryName() {
-		return categoryName;
+	public String getAllergenName() {
+		return allergenName;
 	}
 
 
 
-	public void setCategoryName(String categoryName) {
-		if (categoryName != null && !categoryName.isEmpty()) {
-			this.categoryName = categoryName;
+	public void setAllergenName(String allergenName) {
+		if (allergenName != null && !allergenName.isEmpty()) {
+			this.allergenName = allergenName;
 		}
 	}
 

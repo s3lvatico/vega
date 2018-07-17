@@ -1,4 +1,4 @@
-package org.gmnz.vega.ui;
+package org.gmnz.vega.ui.web.report;
 
 
 import java.io.IOException;
@@ -16,38 +16,46 @@ import org.gmnz.vega.Vega;
 import org.gmnz.vega.VegaImpl;
 import org.gmnz.vega.domain.Category;
 import org.gmnz.vega.domain.Report;
+import org.gmnz.vega.domain.ToxicityRating;
 import org.gmnz.vega.service.ReportService;
+import org.gmnz.vega.ui.Action;
 
 
 public class ReportController extends HttpServlet {
 
 	private static final long serialVersionUID = -8297293947108342649L;
 	
-	private Map<String, ReportManagementBean> navMap;
+	private Map<String, ReportManagementBean> viewMap;
 
 
 
 	@Override
 	public void init() {
-		navMap = new HashMap<>();
+		viewMap = new HashMap<>();
 
-		ReportManagementBean cmb = new ReportManagementBean();
-		cmb.setOperationLabel("Stored reports");
-		cmb.setViewName("reports");
-		cmb.setAction(Action.GET_ALL);
-		navMap.put("getAll", cmb);
+		ReportManagementBean rmb = new ReportManagementBean();
+		rmb.setOperationLabel("Stored reports");
+		rmb.setViewName("reports");
+		rmb.setAction(Action.GET_ALL);
+		viewMap.put("getAll", rmb);
 
-		cmb = new ReportManagementBean();
-		cmb.setOperationLabel("New Report Creation");
-		cmb.setViewName("reportCreation");
-		cmb.setAction(Action.CREATE);
-		navMap.put("create", cmb);
+		rmb = new ReportManagementBean();
+		rmb.setOperationLabel("New Report Creation");
+		rmb.setViewName("reportCreation");
+		rmb.setAction(Action.CREATE);
+		viewMap.put("create", rmb);
 
-		cmb = new ReportManagementBean();
-		cmb.setOperationLabel("Confirm Report Deletion");
-		cmb.setViewName("reportDeletion");
-		cmb.setAction(Action.DELETE);
-		navMap.put("delete", cmb);
+		rmb = new ReportManagementBean();
+		rmb.setOperationLabel("Confirm Report Deletion");
+		rmb.setViewName("reportDeletion");
+		rmb.setAction(Action.DELETE);
+		viewMap.put("delete", rmb);
+
+		rmb = new ReportManagementBean();
+		rmb.setOperationLabel("View Report Details");
+		rmb.setViewName("reportView");
+		rmb.setAction(Action.VIEW_DETAILS);
+		viewMap.put("viewDetails", rmb);
 
 	}
 
@@ -56,7 +64,7 @@ public class ReportController extends HttpServlet {
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		String section = findRequestedSection(req.getRequestURL().toString());
-		ReportManagementBean rmb = navMap.get(section);
+		ReportManagementBean rmb = viewMap.get(section);
 		if (rmb != null) {
 			req.setAttribute("reportBean", rmb);
 			Vega vega = new VegaImpl();
@@ -76,19 +84,42 @@ public class ReportController extends HttpServlet {
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		String section = findRequestedSection(req.getRequestURL().toString());
-		ReportManagementBean cmb = navMap.get(section);
+		ReportManagementBean cmb = viewMap.get(section);
 		if (cmb != null) {
 			Vega vega = new VegaImpl();
 			List<Category> categories = vega.getCategoryService().getAllCategories();
 			req.setAttribute("categories", categories);
 			req.setAttribute("reportBean", cmb);
 			req.setAttribute("contextRoot", req.getContextPath());
+
+			if (cmb.getAction().equals(Action.VIEW_DETAILS)) {
+				String reportId = req.getParameter("reportId");
+				Report r = vega.getReportService().getReport(reportId);
+
+				ViewReportData reportData = new ViewReportData();
+				reportData.setSubjectName(r.getSubjectName());
+				reportData.setCreationDate(r.getCreationDate());
+				for (String categoryName : r.getCategories()) {
+					ViewReportCategory vrc = new ViewReportCategory();
+					vrc.setName(categoryName);
+					for (ToxicityRating rating : r.getRatings(categoryName)) {
+						ViewToxicityAssessment vta = new ViewToxicityAssessment();
+						vta.setAllergenName(rating.getAllergen().getName());
+						vta.setToxicityRating(rating.getToxicity());
+						vrc.getToxData().add(vta);
+					}
+					reportData.getCategories().add(vrc);
+				}
+				req.setAttribute("reportData", reportData);
+			}
+
 			String targetUrl = String.format("/WEB-INF/jsp/%s.jsp", cmb.getViewName());
 			req.getRequestDispatcher(targetUrl).forward(req, resp);
 		} else {
 			throw new ServletException("wrong path specified: <" + section + ">");
 		}
 	}
+
 
 
 
