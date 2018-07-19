@@ -60,7 +60,7 @@ public class ReportExecution extends HttpServlet {
 						resp.sendError(HttpServletResponse.SC_BAD_REQUEST, "A subject must be specified");
 						return;
 					}
-					createReport(subjectName, req, resp);
+					createAndStoreReport(subjectName, req, resp);
 					break;
 
 				case Action.DELETE:
@@ -79,7 +79,7 @@ public class ReportExecution extends HttpServlet {
 
 
 
-	private void createReport(String subjectName, HttpServletRequest req, HttpServletResponse resp) throws VegaException {
+	private void createAndStoreReport(String subjectName, HttpServletRequest req, HttpServletResponse resp) throws VegaException {
 		Report r = new Report(subjectName, new Date());
 		AllergenService allergenService = vega.getAllergenService();
 		Enumeration<String> paramNames = req.getParameterNames();
