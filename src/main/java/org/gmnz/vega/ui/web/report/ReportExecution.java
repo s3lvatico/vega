@@ -1,6 +1,15 @@
 package org.gmnz.vega.ui.web.report;
 
 
+import java.io.IOException;
+import java.util.Date;
+import java.util.Enumeration;
+
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 import org.gmnz.vega.Vega;
 import org.gmnz.vega.VegaException;
 import org.gmnz.vega.VegaImpl;
@@ -10,14 +19,6 @@ import org.gmnz.vega.domain.Report;
 import org.gmnz.vega.domain.ToxicityRating;
 import org.gmnz.vega.service.AllergenService;
 import org.gmnz.vega.ui.Action;
-
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
-import java.util.Date;
-import java.util.Enumeration;
 
 
 /**
@@ -44,7 +45,6 @@ public class ReportExecution extends HttpServlet {
 		if (action == null || action.isEmpty()) {
 			throw new ServletException("no action specified");
 		}
-		// System.out.format("action requested: <%s>%n", action);
 		executeAction(action, req, resp);
 	}
 
@@ -74,9 +74,6 @@ public class ReportExecution extends HttpServlet {
 					ve.getClass().getName(), ve.getMessage());
 			throw new ServletException(errorMessage, ve);
 		}
-		//RequestDispatcher rd = req.getRequestDispatcher("/report/getAll");
-		//rd.forward(req, resp);
-
 		resp.sendRedirect(req.getContextPath() + "/report/getAll");
 	}
 
