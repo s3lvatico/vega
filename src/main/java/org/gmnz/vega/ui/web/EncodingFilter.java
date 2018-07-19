@@ -1,11 +1,17 @@
 package org.gmnz.vega.ui.web;
 
 
-import javax.servlet.*;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.util.HashMap;
 import java.util.Map;
+
+import javax.servlet.Filter;
+import javax.servlet.FilterChain;
+import javax.servlet.FilterConfig;
+import javax.servlet.ServletException;
+import javax.servlet.ServletRequest;
+import javax.servlet.ServletResponse;
 
 
 public class EncodingFilter implements Filter {
@@ -36,6 +42,8 @@ public class EncodingFilter implements Filter {
 
 
 
+	@SuppressWarnings("unused")
+	@Deprecated
 	private void reEncodeRequestParameters(ServletRequest request) throws UnsupportedEncodingException {
 		Map<String, String> parametersMap = new HashMap<>();
 		String paramName;
