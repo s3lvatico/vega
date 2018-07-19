@@ -52,29 +52,29 @@ public class AllergenExecution extends HttpServlet {
 		}
 		try {
 			switch (action) {
-				case Action.CREATE:
-					if (VegaUtil.stringNullOrEmpty(targetCategoryName)) {
-						resp.sendError(HttpServletResponse.SC_BAD_REQUEST);
-						return;
-					}
-					createNewAllergen(targetAllergenName, targetCategoryName);
-					break;
-				case Action.MODIFY:
-					HttpSession session = req.getSession();
-					String trackingId = req.getParameter("trackingId");
-					Allergen originalAllergen = (Allergen) session.getAttribute(trackingId);
-					if (originalAllergen == null) {
-						resp.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "no session content");
-						return;
-					}
-					session.setAttribute("trackingId", null);
-					vega.getAllergenService().modifyAllergen(originalAllergen, targetAllergenName, targetCategoryName);
-					break;
-				case Action.DELETE:
-					vega.getAllergenService().removeAllergen(targetAllergenName);
-					break;
-				default:
-					throw new ServletException("invalid action specified");
+			case Action.CREATE:
+				if (VegaUtil.stringNullOrEmpty(targetCategoryName)) {
+					resp.sendError(HttpServletResponse.SC_BAD_REQUEST);
+					return;
+				}
+				createNewAllergen(targetAllergenName, targetCategoryName);
+				break;
+			case Action.MODIFY:
+				HttpSession session = req.getSession();
+				String trackingId = req.getParameter("trackingId");
+				Allergen originalAllergen = (Allergen) session.getAttribute(trackingId);
+				if (originalAllergen == null) {
+					resp.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "no session content");
+					return;
+				}
+				session.setAttribute("trackingId", null);
+				vega.getAllergenService().modifyAllergen(originalAllergen, targetAllergenName, targetCategoryName);
+				break;
+			case Action.DELETE:
+				vega.getAllergenService().removeAllergen(targetAllergenName);
+				break;
+			default:
+				throw new ServletException("invalid action specified");
 			}
 		} catch (VegaException ve) {
 			String errorMessage = String.format("exception thrown while executing action -- %s :: %s",
@@ -89,6 +89,5 @@ public class AllergenExecution extends HttpServlet {
 	private void createNewAllergen(String name, String categoryName) throws VegaException {
 		vega.getAllergenService().createAllergen(name, categoryName);
 	}
-
 
 }

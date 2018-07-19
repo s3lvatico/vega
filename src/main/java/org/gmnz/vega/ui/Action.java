@@ -1,6 +1,5 @@
 package org.gmnz.vega.ui;
 
-
 public interface Action {
 
 	String GET_ALL = "GET_ALL";

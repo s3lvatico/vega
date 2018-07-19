@@ -1,6 +1,5 @@
 package org.gmnz.vega.base;
 
-
 /**
  * creato da simone in data 04/12/2017.
  */

@@ -16,7 +16,7 @@ public class EncodingFilter implements Filter {
 
 
 	@Override
-	public void init(FilterConfig filterConfig)  {
+	public void init(FilterConfig filterConfig) {
 		defaultEncoding = filterConfig.getInitParameter("defaultEncoding");
 		targetEncoding = filterConfig.getInitParameter("targetEncoding");
 	}
@@ -24,13 +24,12 @@ public class EncodingFilter implements Filter {
 
 
 	@Override
-	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
+	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
+			throws IOException, ServletException {
 		/*
-		String requestCharacterEncoding = request.getCharacterEncoding();
-		if (requestCharacterEncoding == null) {
-			reEncodeRequestParameters(request);
-		}
-		*/
+		 * String requestCharacterEncoding = request.getCharacterEncoding(); if
+		 * (requestCharacterEncoding == null) { reEncodeRequestParameters(request); }
+		 */
 		request.setCharacterEncoding(targetEncoding);
 		chain.doFilter(request, response);
 	}

@@ -1,10 +1,8 @@
 package org.gmnz.vega.ui.web.report;
 
-
 public class ReportManagementBean {
 
 	private String operationLabel;
-
 
 	private String viewName;
 

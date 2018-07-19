@@ -1,6 +1,5 @@
 package org.gmnz.vega.ui.web.allergen;
 
-
 public class AllergenManagementBean {
 
 	private String operationLabel;

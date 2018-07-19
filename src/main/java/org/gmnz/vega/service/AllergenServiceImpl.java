@@ -57,11 +57,10 @@ public class AllergenServiceImpl extends BasicServiceBean implements AllergenSer
 			checkEntityRegistration(Allergen.class, targetName, false);
 			DummyRepository.renameAllergen(source.getName(), targetName);
 		}
-		if(!source.getCategory().getName().equals(targetCategory)) {
+		if (!source.getCategory().getName().equals(targetCategory)) {
 			DummyRepository.changeAllergenCategory(source.getName(), targetCategory);
 		}
 	}
-
 
 
 

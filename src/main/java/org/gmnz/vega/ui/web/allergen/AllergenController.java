@@ -94,11 +94,12 @@ public class AllergenController extends HttpServlet {
 			List<Category> categories = vega.getCategoryService().getAllCategories();
 			req.setAttribute("categories", categories);
 
-			// mantengo in sessione l'oggetto allergene originale in modo da determinare eventuali modifiche radicali
+			// mantengo in sessione l'oggetto allergene originale in modo da determinare
+			// eventuali modifiche radicali
 
 			AllergenService allergenService = vega.getAllergenService();
 			Allergen originalAllergen = allergenService.get(allergenName);
-			if(originalAllergen != null) {
+			if (originalAllergen != null) {
 				String uuid = UUID.randomUUID().toString();
 				req.getSession().setAttribute(uuid, originalAllergen);
 				req.setAttribute("trackingId", uuid);

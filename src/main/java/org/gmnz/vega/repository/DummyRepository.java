@@ -20,11 +20,9 @@ public final class DummyRepository {
 
 //	private static final Map<Category, Set<Allergen>> CATEGORY_MAP = new HashMap<>();
 
-
-
 	static {
 		Category c = new Category("Carni");
-		//	CATEGORY_MAP.put(c, new HashSet<>());
+		// CATEGORY_MAP.put(c, new HashSet<>());
 		CATEGORIES.add(c);
 
 		Allergen a = new Allergen("Manzo");
@@ -37,7 +35,7 @@ public final class DummyRepository {
 		a.setCategory(c);
 		c.add(a);
 		ALLERGENS.add(a);
-		//CATEGORY_MAP.get(c).add(a);
+		// CATEGORY_MAP.get(c).add(a);
 
 		a = new Allergen("Maiale");
 		a.setCategory(c);
@@ -47,7 +45,7 @@ public final class DummyRepository {
 
 		c = new Category("Cereali");
 		CATEGORIES.add(c);
-		//CATEGORY_MAP.put(c, new HashSet<>());
+		// CATEGORY_MAP.put(c, new HashSet<>());
 
 		a = new Allergen("Avena");
 		a.setCategory(c);
@@ -55,61 +53,33 @@ public final class DummyRepository {
 		ALLERGENS.add(a);
 		// CATEGORY_MAP.get(c).add(a);
 /*
-		Category c = new Category("carni");
-		Allergen a = new Allergen("manzo");
-		a.setCategory(c);
-		c.add(a);
-		ALLERGENS.add(a);
-		CATEGORIES.add(c);
-
-		a = new Allergen("pollo");
-		a.setCategory(c);
-		c.add(a);
-		ALLERGENS.add(a);
-
-		a = new Allergen("maiale");
-		a.setCategory(c);
-		c.add(a);
-		ALLERGENS.add(a);
-
-		c = new Category("cereali");
-		CATEGORIES.add(c);
-
-		a = new Allergen("avena");
-		a.setCategory(c);
-		c.add(a);
-		ALLERGENS.add(a);
-
-		a = new Allergen("farina");
-		a.setCategory(c);
-		c.add(a);
-		ALLERGENS.add(a);
-
-		a = new Allergen("mais");
-		a.setCategory(c);
-		c.add(a);
-		ALLERGENS.add(a);
-
-		a = new Allergen("orzo");
-		a.setCategory(c);
-		c.add(a);
-		ALLERGENS.add(a);
-
-		c = new Category("condimenti");
-		CATEGORIES.add(c);
-
-		a = new Allergen("lievito");
-		a.setCategory(c);
-		c.add(a);
-		ALLERGENS.add(a);
-
-		a = new Allergen("olio di oliva");
-		a.setCategory(c);
-		c.add(a);
-		ALLERGENS.add(a);
-		*/
+ * Category c = new Category("carni"); Allergen a = new Allergen("manzo");
+ * a.setCategory(c); c.add(a); ALLERGENS.add(a); CATEGORIES.add(c);
+ * 
+ * a = new Allergen("pollo"); a.setCategory(c); c.add(a); ALLERGENS.add(a);
+ * 
+ * a = new Allergen("maiale"); a.setCategory(c); c.add(a); ALLERGENS.add(a);
+ * 
+ * c = new Category("cereali"); CATEGORIES.add(c);
+ * 
+ * a = new Allergen("avena"); a.setCategory(c); c.add(a); ALLERGENS.add(a);
+ * 
+ * a = new Allergen("farina"); a.setCategory(c); c.add(a); ALLERGENS.add(a);
+ * 
+ * a = new Allergen("mais"); a.setCategory(c); c.add(a); ALLERGENS.add(a);
+ * 
+ * a = new Allergen("orzo"); a.setCategory(c); c.add(a); ALLERGENS.add(a);
+ * 
+ * c = new Category("condimenti"); CATEGORIES.add(c);
+ * 
+ * a = new Allergen("lievito"); a.setCategory(c); c.add(a); ALLERGENS.add(a);
+ * 
+ * a = new Allergen("olio di oliva"); a.setCategory(c); c.add(a);
+ * ALLERGENS.add(a);
+ */
 
 	}
+
 
 
 	public static Collection<Allergen> getRegisteredAllergens() {
@@ -119,14 +89,14 @@ public final class DummyRepository {
 
 
 	public static Collection<Category> getRegisteredCategories() {
-		//return Collections.unmodifiableCollection(CATEGORY_MAP.keySet());
+		// return Collections.unmodifiableCollection(CATEGORY_MAP.keySet());
 		return Collections.unmodifiableCollection(CATEGORIES);
 	}
 
 
 
 	public static void addCategory(Category category) {
-		//CATEGORY_MAP.put(category, new HashSet<>());
+		// CATEGORY_MAP.put(category, new HashSet<>());
 		CATEGORIES.add(category);
 	}
 
@@ -275,7 +245,9 @@ public final class DummyRepository {
 	public static void addReport(Report r) {
 		REPORTS.add(r);
 	}
-	
+
+
+
 	public static void removeReport(Report r) {
 		REPORTS.remove(r);
 	}

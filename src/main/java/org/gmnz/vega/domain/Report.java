@@ -60,7 +60,12 @@ public class Report {
 		return createdOn;
 	}
 
-	public String getId() { return id; }
+
+
+	public String getId() {
+		return id;
+	}
+
 
 
 	@Override
@@ -73,8 +78,10 @@ public class Report {
 
 	@Override
 	public boolean equals(Object o) {
-		if (this == o) return true;
-		if (o == null || getClass() != o.getClass()) return false;
+		if (this == o)
+			return true;
+		if (o == null || getClass() != o.getClass())
+			return false;
 		Report report = (Report) o;
 		return Objects.equals(id, report.id);
 	}
