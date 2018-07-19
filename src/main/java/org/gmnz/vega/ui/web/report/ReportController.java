@@ -1,17 +1,6 @@
 package org.gmnz.vega.ui.web.report;
 
 
-import java.io.IOException;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
 import org.gmnz.vega.Vega;
 import org.gmnz.vega.VegaImpl;
 import org.gmnz.vega.domain.Category;
@@ -20,11 +9,21 @@ import org.gmnz.vega.domain.ToxicityRating;
 import org.gmnz.vega.service.ReportService;
 import org.gmnz.vega.ui.Action;
 
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 
 public class ReportController extends HttpServlet {
 
 	private static final long serialVersionUID = -8297293947108342649L;
-	
+
 	private Map<String, ReportManagementBean> viewMap;
 
 
@@ -95,22 +94,15 @@ public class ReportController extends HttpServlet {
 			if (cmb.getAction().equals(Action.VIEW_DETAILS)) {
 				String reportId = req.getParameter("reportId");
 				Report r = vega.getReportService().getReport(reportId);
-
-				ViewReportData reportData = new ViewReportData();
-				reportData.setSubjectName(r.getSubjectName());
-				reportData.setCreationDate(r.getCreationDate());
-				for (String categoryName : r.getCategories()) {
-					ViewReportCategory vrc = new ViewReportCategory();
-					vrc.setName(categoryName);
-					for (ToxicityRating rating : r.getRatings(categoryName)) {
-						ViewToxicityAssessment vta = new ViewToxicityAssessment();
-						vta.setAllergenName(rating.getAllergen().getName());
-						vta.setToxicityRating(rating.getToxicity());
-						vrc.getToxData().add(vta);
-					}
-					reportData.getCategories().add(vrc);
-				}
-				req.setAttribute("reportData", reportData);
+				ViewReportData viewReportData = prepareReportData(r);
+				req.setAttribute("reportData", viewReportData);
+			}
+			if (cmb.getAction().equals(Action.DELETE)) {
+				String reportId = req.getParameter("reportId");
+				Report r = vega.getReportService().getReport(reportId);
+				req.setAttribute("subjectName", r.getSubjectName());
+				req.setAttribute("creationDate", r.getCreationDate());
+				req.setAttribute("reportId", reportId);
 			}
 
 			String targetUrl = String.format("/WEB-INF/jsp/%s.jsp", cmb.getViewName());
@@ -120,6 +112,25 @@ public class ReportController extends HttpServlet {
 		}
 	}
 
+
+
+	private ViewReportData prepareReportData(Report r) {
+		ViewReportData reportData = new ViewReportData();
+		reportData.setSubjectName(r.getSubjectName());
+		reportData.setCreationDate(r.getCreationDate());
+		for (String categoryName : r.getCategories()) {
+			ViewReportCategory vrc = new ViewReportCategory();
+			vrc.setName(categoryName);
+			for (ToxicityRating rating : r.getRatings(categoryName)) {
+				ViewToxicityAssessment vta = new ViewToxicityAssessment();
+				vta.setAllergenName(rating.getAllergen().getName());
+				vta.setToxicityRating(rating.getToxicity());
+				vrc.getToxData().add(vta);
+			}
+			reportData.getCategories().add(vrc);
+		}
+		return reportData;
+	}
 
 
 
