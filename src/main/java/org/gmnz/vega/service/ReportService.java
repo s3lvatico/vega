@@ -1,11 +1,11 @@
 package org.gmnz.vega.service;
 
 
-import org.gmnz.vega.VegaException;
-import org.gmnz.vega.domain.Report;
-
 import java.util.Collection;
 import java.util.Date;
+
+import org.gmnz.vega.VegaException;
+import org.gmnz.vega.domain.Report;
 
 
 /**
@@ -20,5 +20,7 @@ public interface ReportService {
 	Report getReport(String id);
 
 	void addReport(Report report) throws VegaException;
+	
+	void removeReport(String id);
 
 }

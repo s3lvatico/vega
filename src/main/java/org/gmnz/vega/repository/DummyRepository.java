@@ -1,11 +1,15 @@
 package org.gmnz.vega.repository;
 
 
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
+
 import org.gmnz.vega.domain.Allergen;
 import org.gmnz.vega.domain.Category;
 import org.gmnz.vega.domain.Report;
-
-import java.util.*;
 
 
 public final class DummyRepository {
@@ -270,5 +274,9 @@ public final class DummyRepository {
 
 	public static void addReport(Report r) {
 		REPORTS.add(r);
+	}
+	
+	public static void removeReport(Report r) {
+		REPORTS.remove(r);
 	}
 }

@@ -54,20 +54,22 @@ public class ReportExecution extends HttpServlet {
 			throws ServletException, IOException {
 		try {
 			switch (action) {
-				case Action.CREATE:
-					String subjectName = req.getParameter("subjectName");
-					if (VegaUtil.stringNullOrEmpty(subjectName)) {
-						resp.sendError(HttpServletResponse.SC_BAD_REQUEST, "A subject must be specified");
-						return;
-					}
-					createAndStoreReport(subjectName, req, resp);
-					break;
-
-				case Action.DELETE:
-					// TODO fare
-					break;
-				default:
-					throw new ServletException("invalid action specified");
+			case Action.CREATE:
+				String subjectName = req.getParameter("subjectName");
+				if (VegaUtil.stringNullOrEmpty(subjectName)) {
+					resp.sendError(HttpServletResponse.SC_BAD_REQUEST, "A subject must be specified");
+					return;
+				}
+				createAndStoreReport(subjectName, req, resp);
+				break;
+			case Action.DELETE:
+				String reportId = req.getParameter("reportId");
+				if (!VegaUtil.stringNullOrEmpty(reportId)) {
+					vega.getReportService().removeReport(reportId);
+				}
+				break;
+			default:
+				throw new ServletException("invalid action specified");
 			}
 		} catch (VegaException ve) {
 			String errorMessage = String.format("exception thrown while executing action -- %s :: %s",
@@ -79,7 +81,8 @@ public class ReportExecution extends HttpServlet {
 
 
 
-	private void createAndStoreReport(String subjectName, HttpServletRequest req, HttpServletResponse resp) throws VegaException {
+	private void createAndStoreReport(String subjectName, HttpServletRequest req, HttpServletResponse resp)
+			throws VegaException {
 		Report r = new Report(subjectName, new Date());
 		AllergenService allergenService = vega.getAllergenService();
 		Enumeration<String> paramNames = req.getParameterNames();
