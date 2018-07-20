@@ -15,7 +15,7 @@
     <li>Creation date: ${creationDate}</li>
 </ul>
 
-<form action="${contextRoot}/report/do">
+<form action="${contextRoot}/report/do" method="post">
     <input type="submit" value="delete it"/>
     <input type="hidden" name="reportId" value="${reportId}"/>
     <input type="hidden" name="action" value="${reportBean.action}"/>
