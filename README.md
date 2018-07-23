@@ -6,7 +6,7 @@ In questo branch aggiungo la persistenza dei dati tramite jdbc.
 
 Il supporto dell'application server è limitato alla disponibilità di un oggetto DataSource reperibile via JNDI. Il nome jndi cella risorsa sarà fornito in un parametro di avviamento dell'applicazione.
 
-Ho fatto uno schema di massima del db qui: https://app.sqldbm.com/MySQL/Share/Dn47AWj1WVnmmmD2bKGaFkGFrngIE8md_DYjF4jNYw0
+Ho fatto uno schema di massima del db qui: https://goo.gl/YQyU7d
 
 Qui ci sarà il classico meccanismo dei DAO la cui implementazione userà l'API classica JDBC
 
