@@ -1,5 +1,8 @@
-tutte le categorie lo ometto per semplicità
+### Categorie
+Tutte le categorie lo ometto per semplicità.
+Eliminazione categoria? Anche questa deve essere logica e  non fisica, sempre per via dei report che fanno riferimento anche al nome della categoria.
 
+### Allergeni
 tutti gli allergeni
   ```sql
   select * 
@@ -23,5 +26,10 @@ allergene specifico per id
   from allergene
   where id = ? and deleted = 0
   ```
-
+controllo esistenza allergene per nome
+  ```sql
+  select count(*)
+  from allergene
+  where e_name = ? and deleted = 0
+  ```
   
