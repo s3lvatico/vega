@@ -12,12 +12,16 @@ tutti gli allergeni
   ```
   
 allergene specifico per nome
+  ```sql
   select id, e_name
   from allergene
   where e_name = ? and deleted = 0
-  
+  ```
 allergene specifico per id
+  ```sql
   select id, e_name
   from allergene
   where id = ? and deleted = 0
+  ```
+
   
