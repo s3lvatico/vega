@@ -1,6 +1,7 @@
 tutte le categorie lo ometto per semplicità
 
 tutti gli allergeni
+  ```sql
   select * 
   from allergen ag
     join category cat on 
@@ -8,6 +9,7 @@ tutti gli allergeni
   where
     ag.deleted = 0
   order by cat.e_name
+  ```
   
 allergene specifico per nome
   select id, e_name
