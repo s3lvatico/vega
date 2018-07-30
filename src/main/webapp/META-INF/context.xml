@@ -1,0 +1,18 @@
+<context>
+	<Resource 
+		name="jdbc/vegaDS" 
+		auth="Container" 
+		type="javax.sql.DataSource" 
+		maxTotal="100" 
+		maxIdle="30"
+		maxWaitMillis="10000" 
+		username="sandbox_user" 
+		password="sandbox_password" 
+		driverClassName="com.mysql.cj.jdbc.Driver"
+		url="jdbc:mysql://localhost:3306/vega" 
+		timeBetweenEvictionRunsMillis="300000" 
+		removeAbandonedOnBorrow="true"
+		removeAbandonedOnMaintenance="true" 
+		removeAbandonedTimeout="60" 
+		logAbandoned="true" />
+</context>
