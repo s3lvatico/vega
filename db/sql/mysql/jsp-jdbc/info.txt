@@ -1,0 +1,6 @@
+Generalità connessione
+----------------------
+
+url : jdbc:mysql://localhost:3306/vega
+user : sandbox_user
+pass : sandbox_password
