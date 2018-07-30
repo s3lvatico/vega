@@ -1,101 +1,108 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<web-app xmlns="http://java.sun.com/xml/ns/javaee"
-         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"
-         version="3.0">
+<web-app xmlns="http://java.sun.com/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd" version="3.0"
+>
 
-   <display-name>vega-approach-2</display-name>
+	<display-name>vega-approach-2</display-name>
 
-   <filter>
-      <description>Riporta tutto a codifica UTF-8, a causa di problemi di codifica delle lettere accentate</description>
-      <filter-name>EncodingFilter</filter-name>
-      <filter-class>org.gmnz.vega.ui.web.EncodingFilter</filter-class>
-      <init-param>
-         <param-name>defaultEncoding</param-name>
-         <param-value>8859_1</param-value>
-      </init-param>
-      <init-param>
-         <param-name>targetEncoding</param-name>
-         <param-value>UTF-8</param-value>
-      </init-param>
-   </filter>
-   <filter-mapping>
-      <filter-name>EncodingFilter</filter-name>
-      <url-pattern>/*</url-pattern>
-   </filter-mapping>
+	<filter>
+		<description>Riporta tutto a codifica UTF-8, a causa di problemi di codifica delle lettere accentate</description>
+		<filter-name>EncodingFilter</filter-name>
+		<filter-class>org.gmnz.vega.ui.web.EncodingFilter</filter-class>
+		<init-param>
+			<param-name>defaultEncoding</param-name>
+			<param-value>8859_1</param-value>
+		</init-param>
+		<init-param>
+			<param-name>targetEncoding</param-name>
+			<param-value>UTF-8</param-value>
+		</init-param>
+	</filter>
+	<filter-mapping>
+		<filter-name>EncodingFilter</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
 
-   <listener>
-      <listener-class>org.gmnz.vega.base.application.StartupListener</listener-class>
-   </listener>
-   <context-param>
-      <param-name>dummy-jndi-datasource</param-name>
-      <param-value>just-a-test</param-value>
-   </context-param>
+	<listener>
+		<listener-class>org.gmnz.vega.base.application.StartupListener</listener-class>
+	</listener>
 
-   <welcome-file-list>
-      <welcome-file>index.jsp</welcome-file>
-   </welcome-file-list>
+	<context-param>
+		<param-name>dummy-jndi-datasource</param-name>
+		<param-value>just-a-test</param-value>
+	</context-param>
 
-   <error-page>
-      <location>/WEB-INF/jsp/showError.jsp</location>
-   </error-page>
+	<resource-ref>
+		<description>DB Connection</description>
+		<res-ref-name>jdbc/vegaDS</res-ref-name>
+		<res-type>javax.sql.DataSource</res-type>
+		<res-auth>Container</res-auth>
+	</resource-ref>
 
+	<welcome-file-list>
+		<welcome-file>index.jsp</welcome-file>
+	</welcome-file-list>
 
-   <servlet>
-      <servlet-name>CategoryController</servlet-name>
-      <servlet-class>org.gmnz.vega.ui.web.category.CategoryController</servlet-class>
-   </servlet>
-   <servlet-mapping>
-      <servlet-name>CategoryController</servlet-name>
-      <url-pattern>/category/*</url-pattern>
-   </servlet-mapping>
-
-   <servlet>
-      <servlet-name>CategoryExecution</servlet-name>
-      <servlet-class>org.gmnz.vega.ui.web.category.CategoryExecution</servlet-class>
-   </servlet>
-   <servlet-mapping>
-      <servlet-name>CategoryExecution</servlet-name>
-      <url-pattern>/category/do/*</url-pattern>
-   </servlet-mapping>
+	<error-page>
+		<location>/WEB-INF/jsp/showError.jsp</location>
+	</error-page>
 
 
-   <servlet>
-      <servlet-name>AllergenController</servlet-name>
-      <servlet-class>org.gmnz.vega.ui.web.allergen.AllergenController</servlet-class>
-   </servlet>
-   <servlet-mapping>
-      <servlet-name>AllergenController</servlet-name>
-      <url-pattern>/allergen/*</url-pattern>
-   </servlet-mapping>
+	<servlet>
+		<servlet-name>CategoryController</servlet-name>
+		<servlet-class>org.gmnz.vega.ui.web.category.CategoryController</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>CategoryController</servlet-name>
+		<url-pattern>/category/*</url-pattern>
+	</servlet-mapping>
 
-   <servlet>
-      <servlet-name>AllergenExecution</servlet-name>
-      <servlet-class>org.gmnz.vega.ui.web.allergen.AllergenExecution</servlet-class>
-   </servlet>
-   <servlet-mapping>
-      <servlet-name>AllergenExecution</servlet-name>
-      <url-pattern>/allergen/do/*</url-pattern>
-   </servlet-mapping>
+	<servlet>
+		<servlet-name>CategoryExecution</servlet-name>
+		<servlet-class>org.gmnz.vega.ui.web.category.CategoryExecution</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>CategoryExecution</servlet-name>
+		<url-pattern>/category/do/*</url-pattern>
+	</servlet-mapping>
 
 
-   <servlet>
-      <servlet-name>ReportControllerServlet</servlet-name>
-      <servlet-class>org.gmnz.vega.ui.web.report.ReportController</servlet-class>
-   </servlet>
-   <servlet-mapping>
-      <servlet-name>ReportControllerServlet</servlet-name>
-      <url-pattern>/report/*</url-pattern>
-   </servlet-mapping>
+	<servlet>
+		<servlet-name>AllergenController</servlet-name>
+		<servlet-class>org.gmnz.vega.ui.web.allergen.AllergenController</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>AllergenController</servlet-name>
+		<url-pattern>/allergen/*</url-pattern>
+	</servlet-mapping>
 
-   <servlet>
-      <servlet-name>ReportExecutionServlet</servlet-name>
-      <servlet-class>org.gmnz.vega.ui.web.report.ReportExecution</servlet-class>
-   </servlet>
-   <servlet-mapping>
-      <servlet-name>ReportExecutionServlet</servlet-name>
-      <url-pattern>/report/do/*</url-pattern>
-   </servlet-mapping>
+	<servlet>
+		<servlet-name>AllergenExecution</servlet-name>
+		<servlet-class>org.gmnz.vega.ui.web.allergen.AllergenExecution</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>AllergenExecution</servlet-name>
+		<url-pattern>/allergen/do/*</url-pattern>
+	</servlet-mapping>
+
+
+	<servlet>
+		<servlet-name>ReportControllerServlet</servlet-name>
+		<servlet-class>org.gmnz.vega.ui.web.report.ReportController</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>ReportControllerServlet</servlet-name>
+		<url-pattern>/report/*</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>ReportExecutionServlet</servlet-name>
+		<servlet-class>org.gmnz.vega.ui.web.report.ReportExecution</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>ReportExecutionServlet</servlet-name>
+		<url-pattern>/report/do/*</url-pattern>
+	</servlet-mapping>
 
 
 </web-app>
