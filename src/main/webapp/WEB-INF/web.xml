@@ -24,6 +24,14 @@
       <url-pattern>/*</url-pattern>
    </filter-mapping>
 
+   <listener>
+      <listener-class>org.gmnz.vega.base.application.StartupListener</listener-class>
+   </listener>
+   <context-param>
+      <param-name>dummy-jndi-datasource</param-name>
+      <param-value>just-a-test</param-value>
+   </context-param>
+
    <welcome-file-list>
       <welcome-file>index.jsp</welcome-file>
    </welcome-file-list>
