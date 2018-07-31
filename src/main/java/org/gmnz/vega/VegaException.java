@@ -10,4 +10,10 @@ public class VegaException extends Exception {
 		super(message);
 	}
 
+
+
+	public VegaException(String message, Throwable cause) {
+		super(message, cause);
+	}
+
 }
