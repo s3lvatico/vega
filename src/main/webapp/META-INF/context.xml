@@ -15,4 +15,11 @@
 		removeAbandonedOnMaintenance="true" 
 		removeAbandonedTimeout="60" 
 		logAbandoned="true" />
+
+	<!--
+	prova anche con questa stringa di connessione:
+	conn = getConnection("jdbc:mysql://127.0.0.1:3306/vega?useLegacyDatetimeCode=false&serverTimezone=Europe/Rome&useSSL=false", "sandbox_user", "sandbox_password");
+
+	dovrebbe risolvere i problemi dovuti agli errori di fuso orario eventualmente riportati dal driver
+	-->
 </context>
