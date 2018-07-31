@@ -1,13 +1,13 @@
 package org.gmnz.vega.repository;
 
 
-import org.gmnz.vega.domain.Allergen;
-
 import java.util.Collection;
 import java.util.List;
 
+import org.gmnz.vega.domain.Allergen;
 
-public interface AllergeneDao {
+
+public interface AllergenDao {
 
 	List<Allergen> findAll() throws DaoException;
 
@@ -17,19 +17,18 @@ public interface AllergeneDao {
 
 
 
-	// List<Allergen> findByPattern(String pattern)throws DaoException;
-
 	void create(Allergen allergen) throws DaoException;
 
 
 
-	void create(Collection<Allergen> allergeni) throws DaoException;
+	void create(Collection<Allergen> allergens) throws DaoException;
 
 
 
-	void delete(String nome) throws DaoException;
+	void delete(String name) throws DaoException;
 
 
 
-	void update(String nome, String newName) throws DaoException;
+	void update(String oldName, String newName) throws DaoException;
+	
 }

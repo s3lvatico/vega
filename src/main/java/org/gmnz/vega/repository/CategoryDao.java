@@ -1,12 +1,12 @@
 package org.gmnz.vega.repository;
 
 
-import org.gmnz.vega.domain.Category;
-
 import java.util.List;
 
+import org.gmnz.vega.domain.Category;
 
-public interface CategoriaDao {
+
+public interface CategoryDao {
 
 	List<Category> findAll() throws DaoException;
 
@@ -16,11 +16,11 @@ public interface CategoriaDao {
 
 
 
-	void create(String nome) throws DaoException;
+	void create(String name) throws DaoException;
 
 
 
-	void updateRename(String nome, String newName) throws DaoException;
+	void updateRename(String oldName, String newName) throws DaoException;
 
 
 
@@ -28,6 +28,6 @@ public interface CategoriaDao {
 
 
 
-	void delete(String nome) throws DaoException;
+	void delete(String name) throws DaoException;
 
 }
