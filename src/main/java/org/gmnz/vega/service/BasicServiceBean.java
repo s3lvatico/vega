@@ -7,6 +7,7 @@ import org.gmnz.vega.repository.DummyRepository;
 
 class BasicServiceBean {
 
+	// TODO review - this might become useless
 	protected void checkEntityRegistration(Class<?> clazz, String objectName, boolean mustBeInTheSystem)
 			throws VegaException {
 

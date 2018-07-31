@@ -28,8 +28,6 @@ public class CategoryServiceImpl extends BasicServiceBean implements CategorySer
 			e.printStackTrace();
 			throw new VegaException("getAllCategories service error", e);
 		}
-
-		// return new ArrayList<>(DummyRepository.getRegisteredCategories());
 	}
 
 
