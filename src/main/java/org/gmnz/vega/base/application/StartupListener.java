@@ -16,7 +16,9 @@ import javax.sql.DataSource;
 public class StartupListener implements ServletContextListener {
 
 	private DataSource ds;
-	
+
+
+
 	@Override
 	public void contextInitialized(ServletContextEvent sce) {
 		System.out.printf(">>> contextInitialized%n");
@@ -39,7 +41,7 @@ public class StartupListener implements ServletContextListener {
 	@Override
 	public void contextDestroyed(ServletContextEvent sce) {
 		System.out.printf(">>> contextDestroyed%n");
-				
+		ds = null;
 		System.out.printf("<<< contextDestroyed%n");
 	}
 }
