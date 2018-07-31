@@ -1,7 +1,6 @@
 package org.gmnz.vega.service;
 
 
-import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 
@@ -32,22 +31,32 @@ public class CategoryServiceImpl extends BasicServiceBean implements CategorySer
 
 
 
-	// TODO createCategory use the DAO
 	@Override
-	public void createCategory(String nome) {
-		Collection<Category> registeredCategories = DummyRepository.getRegisteredCategories();
-		Category c = new Category(nome);
-		if (!registeredCategories.contains(c)) {
-			DummyRepository.addCategory(c);
-		} else {
-			System.err.println("category already present");
+	public void createCategory(String name) throws VegaException {
+		// TODO createCategory check for existing category
+		// Collection<Category> registeredCategories =
+		// DummyRepository.getRegisteredCategories();
+		DaoFactory daoFactory = DaoFactory.getInstance();
+		try {
+			CategoryDao categoryDao = daoFactory.createCategoryDao();
+			categoryDao.create(name);
+		} catch (DaoException e) {
+			e.printStackTrace();
+			throw new VegaException("createCategory service error", e);
 		}
+//		Category c = new Category(nome);
+//		if (!registeredCategories.contains(c)) {
+//			DummyRepository.addCategory(c);
+//		} else {
+//			System.err.println("category already present");
+//		}
 	}
 
 
 
 	// TODO renameCategory use the DAO
 	@Override
+	@Deprecated
 	public void renameCategory(String oldName, String newCategoryName) throws VegaException {
 		checkEntityRegistration(Category.class, oldName, true);
 		checkEntityRegistration(Category.class, newCategoryName, false);
@@ -66,6 +75,28 @@ public class CategoryServiceImpl extends BasicServiceBean implements CategorySer
 				}
 			}
 		}
+	}
+
+
+
+	@Override
+	public void changeCategoryName(String categoryId, String newCategoryName) throws VegaException {
+		try {
+			CategoryDao dao = DaoFactory.getInstance().createCategoryDao();
+			boolean targetCategoryExists = dao.isCategoryRegistered(newCategoryName);
+			if (targetCategoryExists) {
+				String errorMessage = String
+						.format("changeCategoryName service error - specified category already exists [%s]", newCategoryName);
+				throw new VegaException(errorMessage);
+			}
+			Category c = new Category(newCategoryName);
+			c.setId(categoryId);
+			dao.update(c);
+		} catch (DaoException e) {
+			e.printStackTrace();
+			throw new VegaException("changeCategoryName service error", e);
+		}
+
 	}
 
 

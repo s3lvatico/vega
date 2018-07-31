@@ -16,11 +16,22 @@ public interface CategoryService {
 
 
 
-	void createCategory(String name);
+	void createCategory(String name) throws VegaException;
 
 
 
+	/**
+	 * @deprecated use {@link #changeCategoryName(String, String)} instead.
+	 * @param category
+	 * @param newCategoryName
+	 * @throws VegaException
+	 */
+	@Deprecated
 	void renameCategory(String category, String newCategoryName) throws VegaException;
+
+
+
+	void changeCategoryName(String categoryId, String newCategoryName) throws VegaException;
 
 
 

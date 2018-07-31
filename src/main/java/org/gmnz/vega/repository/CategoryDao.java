@@ -20,7 +20,12 @@ public interface CategoryDao {
 
 
 
+	@Deprecated // TODO forse da rimuovere più in là
 	void updateRename(String oldName, String newName) throws DaoException;
+
+
+
+	void update(Category category) throws DaoException;
 
 
 
@@ -29,5 +34,9 @@ public interface CategoryDao {
 
 
 	void delete(String name) throws DaoException;
+
+
+
+	boolean isCategoryRegistered(String name) throws DaoException;
 
 }

@@ -3,6 +3,7 @@ package org.gmnz.vega.ui.web.category;
 
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.ServletException;
@@ -11,7 +12,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.gmnz.vega.Vega;
+import org.gmnz.vega.VegaException;
 import org.gmnz.vega.VegaImpl;
+import org.gmnz.vega.domain.Category;
+import org.gmnz.vega.service.CategoryService;
 import org.gmnz.vega.ui.Action;
 
 
@@ -62,13 +66,18 @@ public class CategoryController extends HttpServlet {
 		CategoryManagementBean cmb = navMap.get(section);
 		if (cmb != null) {
 			req.setAttribute("catBean", cmb);
-			
-			// TODO cambiare
-			/* questo è un errore concettuale perché induce la vista a utilizzare i metodi di servizio */
+
 			Vega vega = new VegaImpl();
-			req.setAttribute("vega", vega);
-			// 
-			
+			try {
+				List<Category> categories = vega.getCategoryService().getAllCategories();
+				req.setAttribute("categories", categories);
+			} catch (VegaException e) {
+				e.printStackTrace();
+				resp.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR,
+						"exception thrown while retrieving the categories");
+				return;
+			}
+
 			req.setAttribute("contextRoot", req.getContextPath());
 			String targetUrl = String.format("/%s.jsp", cmb.getViewName());
 			req.getRequestDispatcher(targetUrl).forward(req, resp);
@@ -85,15 +94,35 @@ public class CategoryController extends HttpServlet {
 		String section = findRequestedSection(req.getRequestURL().toString());
 
 		CategoryManagementBean cmb = navMap.get(section);
-		if (cmb != null) {
-			cmb.setCategoryName(req.getParameter("categoryName"));
+		if (cmb == null) {
+			throw new ServletException("wrong path specified: <" + section + ">");
+		} else {
+			prepareBean(req, cmb);
+
 			req.setAttribute("catBean", cmb);
 			req.setAttribute("contextRoot", req.getContextPath());
 			String targetUrl = String.format("/WEB-INF/jsp/%s.jsp", cmb.getViewName());
 			req.getRequestDispatcher(targetUrl).forward(req, resp);
-		} else {
-			throw new ServletException("wrong path specified: <" + section + ">");
 		}
+	}
+
+
+
+	private void prepareBean(HttpServletRequest req, CategoryManagementBean cmb) {
+		if (cmb.getAction().equals(Action.CREATE)) {
+			cmb.setCategory(new Category(""));
+			return;
+		}
+		if (cmb.getAction().equals(Action.MODIFY)) {
+			String categoryId = req.getParameter("categoryId");
+			Vega v = new VegaImpl();
+			CategoryService categoryService = v.getCategoryService();
+			
+			cmb.setCategory(new Category(""));
+			return;
+		}
+
+		// TODO gestire anche le altre azioni
 	}
 
 

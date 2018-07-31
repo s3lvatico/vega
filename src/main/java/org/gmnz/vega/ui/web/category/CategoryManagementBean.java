@@ -1,5 +1,9 @@
 package org.gmnz.vega.ui.web.category;
 
+
+import org.gmnz.vega.domain.Category;
+
+
 public class CategoryManagementBean {
 
 	private String operationLabel;
@@ -10,6 +14,8 @@ public class CategoryManagementBean {
 	private String viewName;
 
 	private String action;
+
+	private Category category;
 
 
 
@@ -69,6 +75,18 @@ public class CategoryManagementBean {
 
 	public void setAction(String action) {
 		this.action = action;
+	}
+
+
+
+	public Category getCategory() {
+		return category;
+	}
+
+
+
+	public void setCategory(Category category) {
+		this.category = category;
 	}
 
 }

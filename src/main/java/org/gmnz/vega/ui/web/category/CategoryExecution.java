@@ -1,16 +1,18 @@
 package org.gmnz.vega.ui.web.category;
 
 
-import org.gmnz.vega.Vega;
-import org.gmnz.vega.VegaException;
-import org.gmnz.vega.VegaImpl;
-import org.gmnz.vega.ui.Action;
+import java.io.IOException;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
+
+import org.gmnz.vega.Vega;
+import org.gmnz.vega.VegaException;
+import org.gmnz.vega.VegaImpl;
+import org.gmnz.vega.base.VegaUtil;
+import org.gmnz.vega.ui.Action;
 
 
 public class CategoryExecution extends HttpServlet {
@@ -42,21 +44,21 @@ public class CategoryExecution extends HttpServlet {
 
 	private void executeAction(String action, HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
-		String targetCategoryName = req.getParameter("categoryName");
-		if (targetCategoryName == null || targetCategoryName.isEmpty()) {
+		String newCategoryName = req.getParameter("categoryName");
+		if (VegaUtil.stringNullOrEmpty(newCategoryName)) {
 			throw new ServletException("invalid category name");
 		}
 		try {
 			switch (action) {
 			case Action.CREATE:
-				vega.getCategoryService().createCategory(targetCategoryName);
+				vega.getCategoryService().createCategory(newCategoryName);
 				break;
 			case Action.MODIFY:
-				String oldCategoryName = req.getParameter("oldCategoryName");
-				vega.getCategoryService().renameCategory(oldCategoryName, targetCategoryName);
+				String categoryId = req.getParameter("categoryId");
+				vega.getCategoryService().changeCategoryName(categoryId, newCategoryName);
 				break;
 			case Action.DELETE:
-				vega.getCategoryService().removeCategory(targetCategoryName);
+				vega.getCategoryService().removeCategory(newCategoryName);
 				break;
 			default:
 				throw new ServletException("invalid action specified");
