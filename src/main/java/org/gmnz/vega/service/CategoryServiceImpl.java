@@ -1,14 +1,16 @@
 package org.gmnz.vega.service;
 
 
-import org.gmnz.vega.VegaException;
-import org.gmnz.vega.domain.Category;
-import org.gmnz.vega.repository.DummyRepository;
-
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
+
+import org.gmnz.vega.VegaException;
+import org.gmnz.vega.domain.Category;
+import org.gmnz.vega.repository.CategoryDao;
+import org.gmnz.vega.repository.DaoException;
+import org.gmnz.vega.repository.DaoFactory;
+import org.gmnz.vega.repository.DummyRepository;
 
 
 /**
@@ -17,12 +19,22 @@ import java.util.List;
 public class CategoryServiceImpl extends BasicServiceBean implements CategoryService {
 
 	@Override
-	public List<Category> getAllCategories() {
-		return new ArrayList<>(DummyRepository.getRegisteredCategories());
+	public List<Category> getAllCategories() throws VegaException {
+		try {
+			CategoryDao categoryDao = DaoFactory.getInstance().createCategoryDao();
+			List<Category> categories = categoryDao.findAll();
+			return categories;
+		} catch (DaoException e) {
+			e.printStackTrace();
+			throw new VegaException("getAllCategories service error", e);
+		}
+
+		// return new ArrayList<>(DummyRepository.getRegisteredCategories());
 	}
 
 
 
+	// TODO createCategory use the DAO
 	@Override
 	public void createCategory(String nome) {
 		Collection<Category> registeredCategories = DummyRepository.getRegisteredCategories();
@@ -36,6 +48,7 @@ public class CategoryServiceImpl extends BasicServiceBean implements CategorySer
 
 
 
+	// TODO renameCategory use the DAO
 	@Override
 	public void renameCategory(String oldName, String newCategoryName) throws VegaException {
 		checkEntityRegistration(Category.class, oldName, true);
@@ -59,6 +72,8 @@ public class CategoryServiceImpl extends BasicServiceBean implements CategorySer
 
 
 
+	// TODO removeCategory use the DAO
+	// TODO removeCategory there can be the default category
 	@Override
 	public void removeCategory(String name) throws VegaException {
 		checkEntityRegistration(Category.class, name, true);

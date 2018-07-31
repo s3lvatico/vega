@@ -1,10 +1,10 @@
 package org.gmnz.vega.service;
 
 
+import java.util.List;
+
 import org.gmnz.vega.VegaException;
 import org.gmnz.vega.domain.Category;
-
-import java.util.List;
 
 
 /**
@@ -12,7 +12,7 @@ import java.util.List;
  */
 public interface CategoryService {
 
-	List<Category> getAllCategories();
+	List<Category> getAllCategories() throws VegaException;
 
 
 
