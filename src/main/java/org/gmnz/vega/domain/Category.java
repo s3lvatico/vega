@@ -17,6 +17,7 @@ public class Category extends AbstractListManagedPropertyHolder<Allergen> {
 
 	public Category(String name) {
 		super(name);
+		this.id = "";
 	}
 
 
