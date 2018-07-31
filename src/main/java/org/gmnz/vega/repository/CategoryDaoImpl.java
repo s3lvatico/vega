@@ -1,5 +1,10 @@
 package org.gmnz.vega.repository;
 
+
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.gmnz.vega.domain.Category;
@@ -9,8 +14,26 @@ class CategoryDaoImpl extends BasicDaoImpl implements CategoryDao {
 
 	@Override
 	public List<Category> findAll() throws DaoException {
-		// TODO Auto-generated method stub
-		return null;
+		Statement s = null;
+		ResultSet rs = null;
+		try {
+			s = connection.createStatement();
+			rs = s.executeQuery("SELECT * FROM category WHERE deleted = 0");
+			ArrayList<Category> categories = new ArrayList<>();
+			while (rs.next()) {
+				String id = rs.getString(1);
+				String categoryName = rs.getString(2);
+				Category c = new Category(categoryName);
+				c.setId(id);
+				categories.add(c);
+			}
+			return categories;
+		} catch (SQLException e) {
+			e.printStackTrace();
+			throw new DaoException("CategoryDaoImpl.findAll error", e);
+		} finally {
+			releaseResources(s, rs);
+		}
 	}
 
 
