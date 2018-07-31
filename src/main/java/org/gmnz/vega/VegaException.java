@@ -16,4 +16,10 @@ public class VegaException extends Exception {
 		super(message, cause);
 	}
 
+
+
+	public VegaException(Throwable cause) {
+		super(cause);
+	}
+
 }
