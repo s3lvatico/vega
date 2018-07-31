@@ -1,22 +1,24 @@
 package org.gmnz.vega.ui.web.allergen;
 
 
-import org.gmnz.vega.Vega;
-import org.gmnz.vega.VegaImpl;
-import org.gmnz.vega.domain.Allergen;
-import org.gmnz.vega.domain.Category;
-import org.gmnz.vega.service.AllergenService;
-import org.gmnz.vega.ui.Action;
-
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
+
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import org.gmnz.vega.Vega;
+import org.gmnz.vega.VegaException;
+import org.gmnz.vega.VegaImpl;
+import org.gmnz.vega.domain.Allergen;
+import org.gmnz.vega.domain.Category;
+import org.gmnz.vega.service.AllergenService;
+import org.gmnz.vega.ui.Action;
 
 
 public class AllergenController extends HttpServlet {
@@ -91,8 +93,17 @@ public class AllergenController extends HttpServlet {
 
 			Vega vega = new VegaImpl();
 			req.setAttribute("contextRoot", req.getContextPath());
-			List<Category> categories = vega.getCategoryService().getAllCategories();
-			req.setAttribute("categories", categories);
+			
+			// recupero le categorie
+			try {
+				List<Category> categories = vega.getCategoryService().getAllCategories();
+				req.setAttribute("categories", categories);
+			} catch (VegaException e) {
+				e.printStackTrace();
+				resp.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR,
+						"exception thrown while retrieving the categories");
+				return;
+			}
 
 			// mantengo in sessione l'oggetto allergene originale in modo da determinare
 			// eventuali modifiche radicali
