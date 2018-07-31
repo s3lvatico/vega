@@ -20,4 +20,8 @@ class BasicDaoImpl {
 		try { connection.close(); }           catch (SQLException e) { /* ignored */ }
 	}
 //@formatter:on
+	
+	protected void releaseResources(Statement s) {
+		releaseResources(s, null);
+	}
 }
