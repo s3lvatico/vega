@@ -4,6 +4,7 @@ public class CategoryManagementBean {
 
 	private String operationLabel;
 
+	@Deprecated
 	private String categoryName;
 
 	private String viewName;
@@ -32,12 +33,14 @@ public class CategoryManagementBean {
 
 
 
+	@Deprecated
 	public String getCategoryName() {
 		return categoryName;
 	}
 
 
 
+	@Deprecated
 	public void setCategoryName(String categoryName) {
 		if (categoryName != null && !categoryName.isEmpty()) {
 			this.categoryName = categoryName;
