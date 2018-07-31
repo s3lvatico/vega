@@ -16,6 +16,7 @@
     <thead></thead>
     <tbody>
 
+	<!-- TODO da modificare -->
     <c:forEach var="category" items="${vega.categoryService.allCategories}">
         <tr>
             <td>
