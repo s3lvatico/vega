@@ -1,4 +1,4 @@
-<context>
+<Context>
 	<Resource 
 		name="jdbc/vegaDS" 
 		auth="Container" 
@@ -9,17 +9,10 @@
 		username="sandbox_user" 
 		password="sandbox_password" 
 		driverClassName="com.mysql.cj.jdbc.Driver"
-		url="jdbc:mysql://localhost:3306/vega" 
+		url="jdbc:mysql://localhost:3306/vega?useLegacyDatetimeCode=false&amp;serverTimezone=Europe/Rome&amp;useSSL=false&amp;allowPublicKeyRetrieval=true"
 		timeBetweenEvictionRunsMillis="300000" 
 		removeAbandonedOnBorrow="true"
 		removeAbandonedOnMaintenance="true" 
 		removeAbandonedTimeout="60" 
 		logAbandoned="true" />
-
-	<!--
-	prova anche con questa stringa di connessione:
-	conn = getConnection("jdbc:mysql://127.0.0.1:3306/vega?useLegacyDatetimeCode=false&serverTimezone=Europe/Rome&useSSL=false", "sandbox_user", "sandbox_password");
-
-	dovrebbe risolvere i problemi dovuti agli errori di fuso orario eventualmente riportati dal driver
-	-->
-</context>
+</Context>
