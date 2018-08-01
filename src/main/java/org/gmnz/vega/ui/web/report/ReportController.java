@@ -1,23 +1,26 @@
 package org.gmnz.vega.ui.web.report;
 
 
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 import org.gmnz.vega.Vega;
+import org.gmnz.vega.VegaException;
 import org.gmnz.vega.VegaImpl;
 import org.gmnz.vega.domain.Category;
 import org.gmnz.vega.domain.Report;
 import org.gmnz.vega.domain.ToxicityRating;
 import org.gmnz.vega.service.ReportService;
 import org.gmnz.vega.ui.Action;
-
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 
 public class ReportController extends HttpServlet {
@@ -86,7 +89,18 @@ public class ReportController extends HttpServlet {
 		ReportManagementBean cmb = viewMap.get(section);
 		if (cmb != null) {
 			Vega vega = new VegaImpl();
-			List<Category> categories = vega.getCategoryService().getAllCategories();
+
+			/* è un appiccico, da cambiare */
+
+			// TODO ReportController.doPost() aggiustare
+			List<Category> categories = new ArrayList<Category>();
+			try {
+				categories = vega.getCategoryService().getAllCategories();
+			} catch (VegaException e) {
+				e.printStackTrace();
+			}
+			/* --- */
+
 			req.setAttribute("categories", categories);
 			req.setAttribute("reportBean", cmb);
 			req.setAttribute("contextRoot", req.getContextPath());
