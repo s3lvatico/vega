@@ -12,6 +12,16 @@ import org.gmnz.vega.domain.Category;
 import org.gmnz.vega.domain.Report;
 
 
+/**
+ * Repository di prova.
+ * 
+ * Fornisce una minima persistenza in memoria, e dati di prova.
+ * 
+ * @deprecated questa classe verrà eliminata
+ * @author Simone Monotti
+ *
+ */
+@Deprecated
 public final class DummyRepository {
 
 	private static final Set<Allergen> ALLERGENS = new HashSet<>();
