@@ -1,17 +1,21 @@
 package org.gmnz.vega.ui.web.category;
 
 
-import org.gmnz.vega.Vega;
-import org.gmnz.vega.VegaImpl;
-import org.gmnz.vega.ui.Action;
+import java.io.IOException;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
+
+import org.gmnz.vega.Vega;
+import org.gmnz.vega.VegaException;
+import org.gmnz.vega.VegaImpl;
+import org.gmnz.vega.domain.Category;
+import org.gmnz.vega.ui.Action;
 
 
 public class CategoryController extends HttpServlet {
@@ -60,10 +64,19 @@ public class CategoryController extends HttpServlet {
 
 		CategoryManagementBean cmb = navMap.get(section);
 		if (cmb != null) {
-			// cmb.setCategoryName(req.getParameter("categoryName"));
 			req.setAttribute("catBean", cmb);
+
 			Vega vega = new VegaImpl();
-			req.setAttribute("vega", vega);
+			try {
+				List<Category> categories = vega.getCategoryService().getAllCategories();
+				req.setAttribute("categories", categories);
+			} catch (VegaException e) {
+				e.printStackTrace();
+				resp.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR,
+						"exception thrown while retrieving the categories");
+				return;
+			}
+
 			req.setAttribute("contextRoot", req.getContextPath());
 			String targetUrl = String.format("/%s.jsp", cmb.getViewName());
 			req.getRequestDispatcher(targetUrl).forward(req, resp);
