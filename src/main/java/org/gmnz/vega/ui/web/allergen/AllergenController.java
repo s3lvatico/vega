@@ -68,8 +68,18 @@ public class AllergenController extends HttpServlet {
 		AllergenManagementBean cmb = navMap.get(section);
 		if (cmb != null) {
 			req.setAttribute("allergenBean", cmb);
+
 			Vega vega = new VegaImpl();
-			req.setAttribute("vega", vega);
+			try {
+				List<Allergen> allergens = vega.getAllergenService().getAllAllergens();
+				req.setAttribute("allergens", allergens);
+			} catch (VegaException e) {
+				e.printStackTrace();
+				resp.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR,
+						"exception thrown while retrieving the allergens");
+				return;
+			}
+
 			req.setAttribute("contextRoot", req.getContextPath());
 			String targetUrl = String.format("/%s.jsp", cmb.getViewName());
 			req.getRequestDispatcher(targetUrl).forward(req, resp);

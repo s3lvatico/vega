@@ -34,7 +34,7 @@ public class AllergenExecution extends HttpServlet {
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		String action = req.getParameter("action");
-		if (action == null || action.isEmpty()) {
+		if (VegaUtil.stringNullOrEmpty(action)) {
 			throw new ServletException("no action specified");
 		}
 		executeAction(action, req, resp);

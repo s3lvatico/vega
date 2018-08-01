@@ -9,7 +9,7 @@ import org.gmnz.vega.domain.Allergen;
 
 public interface AllergenService {
 
-	List<Allergen> getAll() throws VegaException;
+	List<Allergen> getAllAllergens() throws VegaException;
 
 
 

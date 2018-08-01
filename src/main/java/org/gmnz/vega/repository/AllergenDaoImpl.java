@@ -1,11 +1,11 @@
 package org.gmnz.vega.repository;
 
 
+import org.gmnz.vega.domain.Allergen;
+
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
-
-import org.gmnz.vega.domain.Allergen;
 
 
 class AllergenDaoImpl extends BasicDaoImpl implements AllergenDao {
@@ -28,8 +28,7 @@ class AllergenDaoImpl extends BasicDaoImpl implements AllergenDao {
 
 	@Override
 	public void create(Allergen allergen) throws DaoException {
-		// TODO Auto-generated method stub
-
+		DummyRepository.addAllergen(allergen);
 	}
 
 

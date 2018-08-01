@@ -20,7 +20,7 @@
     </tr>
     </thead>
     <tbody>
-    <c:forEach var="allergen" items="${vega.allergenService.all}">
+    <c:forEach var="allergen" items="${allergens}">
         <tr>
             <td>
                 <form method="POST" action="${contextRoot}/allergen/edit">
@@ -38,6 +38,7 @@
     </c:forEach>
     </tbody>
 </table>
+<p>Total registered allergens: ${allergens.size()}</p>
 <h3>Operations</h3>
 <p>Create new allergen:</p>
 <form method="POST" action="${contextRoot}/allergen/create">

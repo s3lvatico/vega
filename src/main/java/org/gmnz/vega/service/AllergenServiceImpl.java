@@ -19,7 +19,7 @@ import org.gmnz.vega.repository.DummyRepository;
 public class AllergenServiceImpl extends BasicServiceBean implements AllergenService {
 
 	@Override
-	public List<Allergen> getAll() throws VegaException {
+	public List<Allergen> getAllAllergens() throws VegaException {
 		try {
 			AllergenDao dao = DaoFactory.getInstance().createAllergenDao();
 			List<Allergen> allergens = dao.findAll();
@@ -35,7 +35,6 @@ public class AllergenServiceImpl extends BasicServiceBean implements AllergenSer
 
 	@Override
 	public void createAllergen(String name, String categoryName) throws VegaException {
-		// TODO createAllergen deve referenziare il dao e non il repository
 		checkEntityRegistration(Allergen.class, name, false);
 		checkEntityRegistration(Category.class, categoryName, true);
 
@@ -43,14 +42,21 @@ public class AllergenServiceImpl extends BasicServiceBean implements AllergenSer
 		Allergen a = new Allergen(name);
 		a.setCategory(c);
 
-		DummyRepository.addAllergen(a);
+		try {
+			AllergenDao dao = DaoFactory.getInstance().createAllergenDao();
+			dao.create(a);
+		} catch (DaoException e) {
+			e.printStackTrace();
+			throw new VegaException("AllergenService.createAllergen() service error", e);
+		}
+
+
 	}
 
 
 
 	@Override
 	public Allergen get(String name) {
-		// TODO get deve referenziare il dao e non il repository
 		return DummyRepository.getAllergenByName(name);
 	}
 
