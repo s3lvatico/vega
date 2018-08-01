@@ -1,14 +1,14 @@
 package org.gmnz.vega.service;
 
 
-import org.gmnz.vega.VegaException;
-import org.gmnz.vega.domain.Category;
-import org.gmnz.vega.repository.DummyRepository;
-
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
+
+import org.gmnz.vega.VegaException;
+import org.gmnz.vega.domain.Category;
+import org.gmnz.vega.repository.DummyRepository;
 
 
 /**
@@ -18,6 +18,7 @@ public class CategoryServiceImpl extends BasicServiceBean implements CategorySer
 
 	@Override
 	public List<Category> getAllCategories() {
+		// TODO getAllCategories deve referenziare i dao, non il repository
 		return new ArrayList<>(DummyRepository.getRegisteredCategories());
 	}
 
@@ -25,6 +26,7 @@ public class CategoryServiceImpl extends BasicServiceBean implements CategorySer
 
 	@Override
 	public void createCategory(String nome) {
+		// TODO createCategory deve referenziare i dao, non il repository
 		Collection<Category> registeredCategories = DummyRepository.getRegisteredCategories();
 		Category c = new Category(nome);
 		if (!registeredCategories.contains(c)) {
@@ -38,6 +40,7 @@ public class CategoryServiceImpl extends BasicServiceBean implements CategorySer
 
 	@Override
 	public void renameCategory(String oldName, String newCategoryName) throws VegaException {
+		// TODO renameCategory deve referenziare i dao, non il repository
 		checkEntityRegistration(Category.class, oldName, true);
 		checkEntityRegistration(Category.class, newCategoryName, false);
 
@@ -61,6 +64,7 @@ public class CategoryServiceImpl extends BasicServiceBean implements CategorySer
 
 	@Override
 	public void removeCategory(String name) throws VegaException {
+		// TODO removeCategory deve referenziare i dao, non il repository
 		checkEntityRegistration(Category.class, name, true);
 		Iterator<Category> iterator = DummyRepository.getRegisteredCategories().iterator();
 		while (iterator.hasNext()) {

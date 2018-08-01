@@ -7,6 +7,8 @@ import org.gmnz.vega.repository.DummyRepository;
 
 class BasicServiceBean {
 
+	// TODO referenziare il dao, mai direttamente il repository
+	
 	protected void checkEntityRegistration(Class<?> clazz, String objectName, boolean mustBeInTheSystem)
 			throws VegaException {
 

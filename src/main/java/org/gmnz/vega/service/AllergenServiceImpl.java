@@ -1,15 +1,15 @@
 package org.gmnz.vega.service;
 
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+
 import org.gmnz.vega.VegaException;
 import org.gmnz.vega.domain.Allergen;
 import org.gmnz.vega.domain.AllergenComparator;
 import org.gmnz.vega.domain.Category;
 import org.gmnz.vega.repository.DummyRepository;
-
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
 
 
 /**
@@ -19,6 +19,7 @@ public class AllergenServiceImpl extends BasicServiceBean implements AllergenSer
 
 	@Override
 	public List<Allergen> getAll() {
+		// TODO getAll deve referenziare il dao e non il repository
 		Collection<Allergen> registeredAllergens = DummyRepository.getRegisteredAllergens();
 		List<Allergen> allergensList = new ArrayList<>(registeredAllergens);
 		allergensList.sort(new AllergenComparator());
@@ -30,6 +31,7 @@ public class AllergenServiceImpl extends BasicServiceBean implements AllergenSer
 
 	@Override
 	public void createAllergen(String name, String categoryName) throws VegaException {
+		// TODO createAllergen deve referenziare il dao e non il repository
 		checkEntityRegistration(Allergen.class, name, false);
 		checkEntityRegistration(Category.class, categoryName, true);
 
@@ -44,6 +46,7 @@ public class AllergenServiceImpl extends BasicServiceBean implements AllergenSer
 
 	@Override
 	public Allergen get(String name) {
+		// TODO get deve referenziare il dao e non il repository
 		return DummyRepository.getAllergenByName(name);
 	}
 
@@ -51,6 +54,7 @@ public class AllergenServiceImpl extends BasicServiceBean implements AllergenSer
 
 	@Override
 	public void modifyAllergen(Allergen source, String targetName, String targetCategory) throws VegaException {
+		// TODO modifyAllergen deve referenziare il dao e non il repository
 		checkEntityRegistration(Allergen.class, source.getName(), true);
 		checkEntityRegistration(Category.class, targetCategory, true);
 		if (!source.getName().equals(targetName)) {
@@ -66,6 +70,7 @@ public class AllergenServiceImpl extends BasicServiceBean implements AllergenSer
 
 	@Override
 	public void removeAllergen(String name) throws VegaException {
+		// TODO removeAllergen deve referenziare il dao e non il repository
 		checkEntityRegistration(Allergen.class, name, true);
 		DummyRepository.removeAllergen(name);
 	}

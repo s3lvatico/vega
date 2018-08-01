@@ -15,6 +15,8 @@ import org.gmnz.vega.repository.DummyRepository;
  */
 public class ReportServiceImpl implements ReportService {
 
+	// TODO ReportServiceImpl referenziare il dao, mai direttamente il repository
+
 	@Override
 	public Collection<Report> getStoredReports() {
 		return DummyRepository.getReports();
