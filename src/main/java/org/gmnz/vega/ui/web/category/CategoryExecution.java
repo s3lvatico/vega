@@ -1,16 +1,18 @@
 package org.gmnz.vega.ui.web.category;
 
 
-import org.gmnz.vega.Vega;
-import org.gmnz.vega.VegaException;
-import org.gmnz.vega.VegaImpl;
-import org.gmnz.vega.ui.Action;
+import java.io.IOException;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
+
+import org.gmnz.vega.Vega;
+import org.gmnz.vega.VegaException;
+import org.gmnz.vega.VegaImpl;
+import org.gmnz.vega.base.VegaUtil;
+import org.gmnz.vega.ui.Action;
 
 
 public class CategoryExecution extends HttpServlet {
@@ -43,7 +45,7 @@ public class CategoryExecution extends HttpServlet {
 	private void executeAction(String action, HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
 		String targetCategoryName = req.getParameter("categoryName");
-		if (targetCategoryName == null || targetCategoryName.isEmpty()) {
+		if (VegaUtil.stringNullOrEmpty(targetCategoryName)) {
 			throw new ServletException("invalid category name");
 		}
 		try {
