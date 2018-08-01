@@ -1,15 +1,15 @@
 package org.gmnz.vega.service;
 
 
+import java.util.List;
+
 import org.gmnz.vega.VegaException;
 import org.gmnz.vega.domain.Allergen;
-
-import java.util.List;
 
 
 public interface AllergenService {
 
-	List<Allergen> getAll();
+	List<Allergen> getAll() throws VegaException;
 
 
 

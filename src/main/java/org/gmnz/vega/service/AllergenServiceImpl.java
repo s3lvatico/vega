@@ -1,14 +1,15 @@
 package org.gmnz.vega.service;
 
 
-import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
 import org.gmnz.vega.VegaException;
 import org.gmnz.vega.domain.Allergen;
 import org.gmnz.vega.domain.AllergenComparator;
 import org.gmnz.vega.domain.Category;
+import org.gmnz.vega.repository.AllergenDao;
+import org.gmnz.vega.repository.DaoException;
+import org.gmnz.vega.repository.DaoFactory;
 import org.gmnz.vega.repository.DummyRepository;
 
 
@@ -18,13 +19,16 @@ import org.gmnz.vega.repository.DummyRepository;
 public class AllergenServiceImpl extends BasicServiceBean implements AllergenService {
 
 	@Override
-	public List<Allergen> getAll() {
-		// TODO getAll deve referenziare il dao e non il repository
-		Collection<Allergen> registeredAllergens = DummyRepository.getRegisteredAllergens();
-		List<Allergen> allergensList = new ArrayList<>(registeredAllergens);
-		allergensList.sort(new AllergenComparator());
-		return allergensList;
-
+	public List<Allergen> getAll() throws VegaException {
+		try {
+			AllergenDao dao = DaoFactory.getInstance().createAllergenDao();
+			List<Allergen> allergens = dao.findAll();
+			allergens.sort(new AllergenComparator());
+			return allergens;
+		} catch (DaoException e) {
+			e.printStackTrace();
+			throw new VegaException("AllergenService.getAll() service error", e);
+		}
 	}
 
 

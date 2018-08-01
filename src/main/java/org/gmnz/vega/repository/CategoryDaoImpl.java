@@ -1,16 +1,13 @@
 package org.gmnz.vega.repository;
 
 
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Iterator;
 import java.util.List;
 
 import org.gmnz.vega.domain.Category;
 
-
-// TODO referenziare il dummyrepository
 
 class CategoryDaoImpl extends BasicDaoImpl implements CategoryDao {
 
@@ -31,52 +28,28 @@ class CategoryDaoImpl extends BasicDaoImpl implements CategoryDao {
 
 
 	@Override
-	public Category findByName(String name) throws DaoException {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-
-
-	@Override
 	public void create(String name) throws DaoException {
-// TODO CategoryDaoImpl.create controllo di esistenza da spostare sull'omologo serviceImpl
-		Category c = new Category(name);
-		DummyRepository.addCategory(c);
+		DummyRepository.addCategory(new Category(name));
 	}
 
 
 
-	@Override
-	public void update(Category category) throws DaoException {
-		PreparedStatement s = null;
-		try {
-			s = connection.prepareStatement("UPDATE category SET e_name = ? WHERE id = ?;");
-			s.setString(1, category.getName());
-//			s.setString(2, category.getId());
-			s.executeUpdate();
-		} catch (SQLException e) {
-			e.printStackTrace();
-			throw new DaoException("CategoryDaoImpl.update error", e);
-		} finally {
-			releaseResources(s);
-		}
-	}
-
-
-
-	@Deprecated
 	@Override
 	public void updateRename(String oldName, String newName) throws DaoException {
-		// TODO Auto-generated method stub
-
-	}
-
-
-
-	@Override
-	public void updateAllergeni(Category category) throws DaoException {
-		// TODO Auto-generated method stub
+		Iterator<Category> iterator = DummyRepository.getRegisteredCategories().iterator();
+		while (iterator.hasNext()) {
+			Category c = iterator.next();
+			if (c.getName().equals(oldName)) {
+				if (c.getAllergens().size() == 0) {
+					DummyRepository.removeCategory(new Category(oldName));
+					DummyRepository.addCategory(new Category(newName));
+					break;
+				} else {
+					throw new DaoException(
+							"CategoryDaoImpl.updateRename error: a category must have no allergens associated in order to be renamed.");
+				}
+			}
+		}
 
 	}
 
@@ -84,7 +57,19 @@ class CategoryDaoImpl extends BasicDaoImpl implements CategoryDao {
 
 	@Override
 	public void delete(String name) throws DaoException {
-		// TODO Auto-generated method stub
+		Iterator<Category> iterator = DummyRepository.getRegisteredCategories().iterator();
+		while (iterator.hasNext()) {
+			Category ic = iterator.next();
+			if (ic.getName().equals(name)) {
+				if (ic.getAllergens().size() == 0) {
+					DummyRepository.removeCategory(ic);
+					break;
+				} else {
+					throw new DaoException(
+							"CategoryDaoImpl.delete error: a category must have no allergens associated in order to be deleted.");
+				}
+			}
+		}
 
 	}
 
