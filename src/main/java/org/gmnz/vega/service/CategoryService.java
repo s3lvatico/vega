@@ -12,11 +12,11 @@ import java.util.List;
  */
 public interface CategoryService {
 
-	List<Category> getAllCategories();
+	List<Category> getAllCategories() throws VegaException;
 
 
 
-	void createCategory(String name);
+	void createCategory(String name) throws VegaException;
 
 
 
