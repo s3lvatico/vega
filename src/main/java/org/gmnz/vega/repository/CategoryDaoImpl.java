@@ -11,6 +11,7 @@ import java.util.UUID;
 
 import org.gmnz.vega.domain.Category;
 
+// TODO referenziare il dummyrepository
 
 class CategoryDaoImpl extends BasicDaoImpl implements CategoryDao {
 

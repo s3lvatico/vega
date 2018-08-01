@@ -1,8 +1,6 @@
 package org.gmnz.vega.repository;
 
 
-import java.sql.SQLException;
-
 import javax.sql.DataSource;
 
 
@@ -10,9 +8,14 @@ public abstract class DaoFactory {
 
 	private static DaoFactory INSTANCE = new DaoFactory() {};
 
-	private DataSource dataSource;
+	/*
+	 * in questa versione è molto semplice perché i DAO non hanno bisogno di
+	 * connessioni sql
+	 */
 
-	private static final String ERR_CREATION = "unable to create the data access object";
+//	private DataSource dataSource;
+
+//	private static final String ERR_CREATION = "unable to create the data access object";
 
 
 
@@ -27,32 +30,18 @@ public abstract class DaoFactory {
 
 
 	public static void setDataSource(DataSource dataSource) {
-		INSTANCE.dataSource = dataSource;
+//		INSTANCE.dataSource = dataSource;
 	}
 
 
 
 	public CategoryDao createCategoryDao() throws DaoCreationException {
-		CategoryDaoImpl daoImpl = new CategoryDaoImpl();
-		try {
-			daoImpl.connection = dataSource.getConnection();
-			return daoImpl;
-		} catch (SQLException e) {
-			e.printStackTrace();
-			throw new DaoCreationException(ERR_CREATION, e);
-		}
+		return new CategoryDaoImpl();
 	}
 
 
 
 	public AllergenDao createAllergenDao() throws DaoCreationException {
-		AllergenDaoImpl daoImpl = new AllergenDaoImpl();
-		try {
-			daoImpl.connection = dataSource.getConnection();
-			return daoImpl;
-		} catch (SQLException e) {
-			e.printStackTrace();
-			throw new DaoCreationException(ERR_CREATION, e);
-		}
+		return new AllergenDaoImpl();
 	}
 }
