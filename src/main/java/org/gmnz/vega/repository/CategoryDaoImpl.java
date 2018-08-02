@@ -1,6 +1,8 @@
 package org.gmnz.vega.repository;
 
 
+import org.gmnz.vega.domain.Category;
+
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -8,8 +10,6 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
-
-import org.gmnz.vega.domain.Category;
 
 
 class CategoryDaoImpl extends BasicDaoImpl implements CategoryDao {
@@ -41,6 +41,31 @@ class CategoryDaoImpl extends BasicDaoImpl implements CategoryDao {
 
 
 	@Override
+	public Category findById(String id) throws DaoException {
+		PreparedStatement s = null;
+		ResultSet rs = null;
+		try {
+			s = connection.prepareStatement("SELECT * FROM category WHERE id = ? AND deleted = 0");
+			s.setString(1, id);
+			rs = s.executeQuery();
+
+			Category c = null;
+			while (rs.next()) {
+				c = new Category(rs.getString(2));
+				c.setId(rs.getString(1));
+			}
+			return c;
+		} catch (SQLException e) {
+			e.printStackTrace();
+			throw new DaoException("CategoryDaoImpl.findById error", e);
+		} finally {
+			releaseResources(s, rs);
+		}
+	}
+
+
+
+	@Override
 	public boolean isCategoryRegistered(String name) throws DaoException {
 		PreparedStatement ps = null;
 		ResultSet rs = null;
@@ -61,6 +86,7 @@ class CategoryDaoImpl extends BasicDaoImpl implements CategoryDao {
 
 
 
+	@Deprecated
 	@Override
 	public Category findByName(String name) throws DaoException {
 		// TODO Auto-generated method stub

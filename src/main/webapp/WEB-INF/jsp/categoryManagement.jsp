@@ -11,7 +11,7 @@
 <h3>${catBean.operationLabel}</h3>
 <p>Category name: </p>
 <form action="<%=request.getContextPath()%>/category/do">
-	<input type="text" name="categoryName" value="${catBean.category.name}" title="categoryName"/>
+   <input type="text" name="categoryName" value="${catBean.category.name}" title="categoryName"/>
    <input type="hidden" name="categoryId" value="${catBean.category.id}"/>
    <input type="hidden" name="action" value="${catBean.action}"/>
    <input type="submit" value="Confirm"/>

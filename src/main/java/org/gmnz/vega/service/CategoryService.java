@@ -1,10 +1,10 @@
 package org.gmnz.vega.service;
 
 
-import java.util.List;
-
 import org.gmnz.vega.VegaException;
 import org.gmnz.vega.domain.Category;
+
+import java.util.List;
 
 
 /**
@@ -14,27 +14,25 @@ public interface CategoryService {
 
 	List<Category> getAllCategories() throws VegaException;
 
+	Category getCategoryById(String id) throws VegaException;
 
 
 	void createCategory(String name) throws VegaException;
 
 
-
 	/**
-	 * @deprecated use {@link #changeCategoryName(String, String)} instead.
 	 * @param category
 	 * @param newCategoryName
 	 * @throws VegaException
+	 * @deprecated use {@link #changeCategoryName(String, String)} instead.
 	 */
 	@Deprecated
 	void renameCategory(String category, String newCategoryName) throws VegaException;
 
 
-
 	void changeCategoryName(String categoryId, String newCategoryName) throws VegaException;
 
 
-
-	void removeCategory(String name) throws VegaException;
+	void removeCategory(String id) throws VegaException;
 
 }

@@ -95,6 +95,7 @@ public class CategoryController extends HttpServlet {
 
 		CategoryManagementBean cmb = navMap.get(section);
 		if (cmb == null) {
+			// TODO non mi piace, va fatto meglio
 			throw new ServletException("wrong path specified: <" + section + ">");
 		} else {
 			prepareBean(req, cmb);
@@ -117,12 +118,18 @@ public class CategoryController extends HttpServlet {
 			String categoryId = req.getParameter("categoryId");
 			Vega v = new VegaImpl();
 			CategoryService categoryService = v.getCategoryService();
-			
+			Category c = categoryService.getCategoryById(categoryId);
+			cmb.setCategory(c);
+			return;
+		}
+		if (cmb.getAction().equals(Action.DELETE)) {
+			String categoryId = req.getParameter("categoryId");
+			Vega v = new VegaImpl();
+			CategoryService categoryService = v.getCategoryService();
+
 			cmb.setCategory(new Category(""));
 			return;
 		}
-
-		// TODO gestire anche le altre azioni
 	}
 
 

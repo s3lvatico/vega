@@ -1,15 +1,15 @@
 package org.gmnz.vega.service;
 
 
-import java.util.Iterator;
-import java.util.List;
-
 import org.gmnz.vega.VegaException;
 import org.gmnz.vega.domain.Category;
 import org.gmnz.vega.repository.CategoryDao;
 import org.gmnz.vega.repository.DaoException;
 import org.gmnz.vega.repository.DaoFactory;
 import org.gmnz.vega.repository.DummyRepository;
+
+import java.util.Iterator;
+import java.util.List;
 
 
 /**
@@ -26,6 +26,20 @@ public class CategoryServiceImpl extends BasicServiceBean implements CategorySer
 		} catch (DaoException e) {
 			e.printStackTrace();
 			throw new VegaException("getAllCategories service error", e);
+		}
+	}
+
+
+
+	@Override
+	public Category getCategoryById(String id) throws VegaException {
+		try {
+			CategoryDao dao = DaoFactory.getInstance().createCategoryDao();
+			Category c = dao.findById(id);
+			return c;
+		} catch (DaoException e) {
+			e.printStackTrace();
+			throw new VegaException("getCategoryById service error", e);
 		}
 	}
 
@@ -104,21 +118,8 @@ public class CategoryServiceImpl extends BasicServiceBean implements CategorySer
 	// TODO removeCategory use the DAO
 	// TODO removeCategory there can be the default category
 	@Override
-	public void removeCategory(String name) throws VegaException {
-		checkEntityRegistration(Category.class, name, true);
-		Iterator<Category> iterator = DummyRepository.getRegisteredCategories().iterator();
-		while (iterator.hasNext()) {
-			Category ic = iterator.next();
-			if (ic.getName().equals(name)) {
-				if (ic.getAllergens().size() == 0) {
-					DummyRepository.removeCategory(ic);
-					break;
-				} else {
-					throw new VegaException(
-							"removeCategory service error: a category must have no allergens associated in order to be deleted.");
-				}
-			}
-		}
+	public void removeCategory(String id) throws VegaException {
+		// TODO fare
 	}
 
 }

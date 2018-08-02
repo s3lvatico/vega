@@ -12,7 +12,8 @@
 <p>Please confirm the deletion:</p>
 <p>Category name: ${catBean.categoryName}</p>
 <form action="${contextRoot}/category/do">
-    <input type="submit" value="delete it"/> <input type="hidden" name="categoryName" value="${catBean.categoryName}"/>
+    <input type="submit" value="delete it"/>
+    <input type="hidden" name="categoryId" value="${catBean.categoryName}"/>
     <input type="hidden" name="action" value="${catBean.action}"/>
 </form>
 <p>
