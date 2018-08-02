@@ -10,4 +10,4 @@ Ho fatto uno schema di massima del db qui: https://goo.gl/YQyU7d
 
 Qui ci sarà il classico meccanismo dei DAO la cui implementazione userà l'API classica JDBC
 
-ROADMAP: Data layer in jdbc semplice, frontend jsf/facelets, primefaces o equivalente, zkoss?
+ROADMAP: Data layer in jdbc semplice, sicurezza basic o con mini-db lato server, frontend jsf/facelets, primefaces o equivalente, zkoss?
