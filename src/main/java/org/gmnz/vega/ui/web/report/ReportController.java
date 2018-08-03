@@ -99,7 +99,7 @@ public class ReportController extends HttpServlet {
 						"exception thrown while retrieving the categories");
 				return;
 			}
-			
+
 			req.setAttribute("reportBean", cmb);
 			req.setAttribute("contextRoot", req.getContextPath());
 

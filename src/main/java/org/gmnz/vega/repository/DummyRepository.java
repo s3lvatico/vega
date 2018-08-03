@@ -25,7 +25,7 @@ import org.gmnz.vega.domain.Report;
 public final class DummyRepository {
 
 	// TODO rimuovere class appena possibile
-	
+
 	private static final Set<Allergen> ALLERGENS = new HashSet<>();
 	private static final Set<Category> CATEGORIES = new HashSet<>();
 	private static final Set<Report> REPORTS = new HashSet<>();

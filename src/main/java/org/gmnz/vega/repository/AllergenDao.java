@@ -30,5 +30,5 @@ public interface AllergenDao {
 
 
 	void update(String oldName, String newName) throws DaoException;
-	
+
 }

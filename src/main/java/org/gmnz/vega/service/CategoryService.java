@@ -14,10 +14,14 @@ public interface CategoryService {
 
 	List<Category> getAllCategories() throws VegaException;
 
+
+
 	Category getCategoryById(String id) throws VegaException;
 
 
+
 	void createCategory(String name) throws VegaException;
+
 
 
 	/**
@@ -30,7 +34,9 @@ public interface CategoryService {
 	void renameCategory(String category, String newCategoryName) throws VegaException;
 
 
+
 	void changeCategoryName(String categoryId, String newCategoryName) throws VegaException;
+
 
 
 	void removeCategory(String id) throws VegaException;

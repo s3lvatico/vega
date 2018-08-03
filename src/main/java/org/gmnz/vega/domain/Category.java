@@ -57,13 +57,9 @@ public class Category extends AbstractListManagedPropertyHolder<Allergen> {
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
-		builder.append("Category [id=").append(id)
-		.append(", name=").append(getName())
-		.append(", allergens=").append(getAllergens()).append("]");
+		builder.append("Category [id=").append(id).append(", name=").append(getName()).append(", allergens=")
+				.append(getAllergens()).append("]");
 		return builder.toString();
 	}
 
-
-
-	
 }

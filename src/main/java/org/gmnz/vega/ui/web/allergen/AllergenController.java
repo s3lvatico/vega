@@ -93,7 +93,7 @@ public class AllergenController extends HttpServlet {
 
 			Vega vega = new VegaImpl();
 			req.setAttribute("contextRoot", req.getContextPath());
-			
+
 			// recupero le categorie
 			try {
 				List<Category> categories = vega.getCategoryService().getAllCategories();

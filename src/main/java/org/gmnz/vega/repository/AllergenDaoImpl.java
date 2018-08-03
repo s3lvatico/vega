@@ -1,5 +1,6 @@
 package org.gmnz.vega.repository;
 
+
 import java.util.Collection;
 import java.util.List;
 
