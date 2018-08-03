@@ -31,12 +31,11 @@ public class CategoryExecution extends HttpServlet {
 
 
 	@Override
-	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		String action = req.getParameter("action");
-		if (action == null || action.isEmpty()) {
+		if (VegaUtil.stringNullOrEmpty(action)) {
 			throw new ServletException("no action specified");
 		}
-		// System.out.format("action requested: <%s>%n", action);
 		executeAction(action, req, resp);
 	}
 
@@ -50,7 +49,7 @@ public class CategoryExecution extends HttpServlet {
 		}
 		try {
 			switch (action) {
-			case Action.CREATE:
+			case Action.CREATE:				
 				vega.getCategoryService().createCategory(newCategoryName);
 				break;
 			case Action.MODIFY:
@@ -63,10 +62,10 @@ public class CategoryExecution extends HttpServlet {
 			default:
 				throw new ServletException("invalid action specified");
 			}
-		} catch (VegaException ve) {
+		} catch (VegaException e) {
 			String errorMessage = String.format("exception thrown while executing action -- %s :: %s",
-					ve.getClass().getName(), ve.getMessage());
-			throw new ServletException(errorMessage, ve);
+					e.getClass().getName(), e.getMessage());
+			throw new ServletException(errorMessage, e);
 		}
 		req.getRequestDispatcher("/category/getAll").forward(req, resp);
 	}

@@ -47,28 +47,25 @@ public class CategoryServiceImpl extends BasicServiceBean implements CategorySer
 
 	@Override
 	public void createCategory(String name) throws VegaException {
-		// TODO createCategory check for existing category
-		// Collection<Category> registeredCategories =
-		// DummyRepository.getRegisteredCategories();
+		try {
+			checkEntityRegistration(Category.class, name, false);
+		} catch (VegaException e) {
+			// it just tells me the category is in the system
+			return;
+		}
 		DaoFactory daoFactory = DaoFactory.getInstance();
 		try {
-			CategoryDao categoryDao = daoFactory.createCategoryDao();
-			categoryDao.create(name);
+			CategoryDao dao = daoFactory.createCategoryDao();
+			dao.create(name);
 		} catch (DaoException e) {
 			e.printStackTrace();
 			throw new VegaException("createCategory service error", e);
 		}
-//		Category c = new Category(nome);
-//		if (!registeredCategories.contains(c)) {
-//			DummyRepository.addCategory(c);
-//		} else {
-//			System.err.println("category already present");
-//		}
 	}
 
 
 
-	// TODO renameCategory use the DAO
+	// TODO verosimilmente da rimuovere
 	@Override
 	@Deprecated
 	public void renameCategory(String oldName, String newCategoryName) throws VegaException {
