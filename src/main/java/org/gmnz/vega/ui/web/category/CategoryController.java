@@ -8,11 +8,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.gmnz.vega.Vega;
-import org.gmnz.vega.VegaImpl;
-import org.gmnz.vega.domain.Category;
-import org.gmnz.vega.service.CategoryService;
-import org.gmnz.vega.ui.Action;
 import org.gmnz.vega.ui.web.RequestProcessingResult;
 
 
@@ -62,35 +57,26 @@ public class CategoryController extends HttpServlet {
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		String section = findRequestedSection(req.getRequestURL().toString());
 
-		// TODO completare
+		// TODO gestione CREATE e DELETE
 
-//		CategoryManagementBean cmb = navMap.get(section);
-//		if (cmb == null) {
-//			// TODO non mi piace, va fatto meglio
-//			throw new ServletException("wrong path specified: <" + section + ">");
-//		} else {
-//			prepareBean(req, cmb);
-//
+		/*
+		 * questo è simile al vecchio metodo
+		 */
+
+//		if (cmb.getAction().equals(Action.CREATE)) {
+//			cmb.setCategory(new Category(""));
+//			return;
 //		}
-	}
+//		
+//		if (cmb.getAction().equals(Action.DELETE)) {
+//			String categoryId = req.getParameter("categoryId");
+//			Vega v = new VegaImpl();
+//			CategoryService categoryService = v.getCategoryService();
+//			
+//			cmb.setCategory(new Category(""));
+//			return;
+//		}
 
-
-
-	@Deprecated
-	private void prepareBean(HttpServletRequest req, CategoryManagementBean cmb) {
-		if (cmb.getAction().equals(Action.CREATE)) {
-			cmb.setCategory(new Category(""));
-			return;
-		}
-		
-		if (cmb.getAction().equals(Action.DELETE)) {
-			String categoryId = req.getParameter("categoryId");
-			Vega v = new VegaImpl();
-			CategoryService categoryService = v.getCategoryService();
-
-			cmb.setCategory(new Category(""));
-			return;
-		}
 	}
 
 
