@@ -81,7 +81,7 @@ public class AllergenExecution extends HttpServlet {
 					ve.getClass().getName(), ve.getMessage());
 			throw new ServletException(errorMessage, ve);
 		}
-		req.getRequestDispatcher("/allergen/getAll").forward(req, resp);
+		req.getRequestDispatcher("/allergen/getAllAllergens").forward(req, resp);
 	}
 
 

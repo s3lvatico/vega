@@ -32,7 +32,7 @@ class CategoryNavigationHandler {
 		cmb.setOperationLabel("Registered categories");
 		cmb.setViewName("categories");
 		cmb.setAction(Action.GET_ALL);
-		navigationMap.put("getAll", cmb);
+		navigationMap.put("getAllAllergens", cmb);
 
 		cmb = new CategoryManagementBean();
 		cmb.setOperationLabel("New Category Creation");

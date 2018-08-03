@@ -37,7 +37,7 @@ public class AllergenController extends HttpServlet {
 		cmb.setOperationLabel("Registered allergens");
 		cmb.setViewName("allergens");
 		cmb.setAction(Action.GET_ALL);
-		navMap.put("getAll", cmb);
+		navMap.put("getAllAllergens", cmb);
 
 		cmb = new AllergenManagementBean();
 		cmb.setOperationLabel("New Allergen Creation");

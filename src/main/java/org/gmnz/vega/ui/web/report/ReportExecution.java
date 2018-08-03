@@ -76,7 +76,7 @@ public class ReportExecution extends HttpServlet {
 					ve.getClass().getName(), ve.getMessage());
 			throw new ServletException(errorMessage, ve);
 		}
-		resp.sendRedirect(req.getContextPath() + "/report/getAll");
+		resp.sendRedirect(req.getContextPath() + "/report/getAllAllergens");
 	}
 
 

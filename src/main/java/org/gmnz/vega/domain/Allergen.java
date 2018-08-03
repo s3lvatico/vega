@@ -6,6 +6,7 @@ import org.gmnz.vega.base.NamedEntity;
 
 public class Allergen extends NamedEntity {
 
+	private String id;
 	private Category category;
 
 
@@ -29,6 +30,18 @@ public class Allergen extends NamedEntity {
 
 
 
+	public String getId() {
+		return id;
+	}
+
+
+
+	public void setId(String id) {
+		this.id = id;
+	}
+
+
+
 	@Override
 	public boolean equals(Object o) {
 		if (this == o)
@@ -47,4 +60,6 @@ public class Allergen extends NamedEntity {
 	public String toString() {
 		return "Allergen{" + "name='" + getName() + "\', " + "category='" + getCategory().getName() + '\'' + '}';
 	}
+
+
 }

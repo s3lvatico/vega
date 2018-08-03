@@ -9,7 +9,7 @@
 		username="sandbox_user" 
 		password="sandbox_password" 
 		driverClassName="com.mysql.cj.jdbc.Driver"
-		url="jdbc:mysql://localhost:3306/vega?useLegacyDatetimeCode=false&amp;serverTimezone=Europe/Rome&amp;useSSL=false&amp;allowPublicKeyRetrieval=true"
+		url="jdbc:mysql://localhost:3306/vega?useLegacyDatetimeCode=false&serverTimezone=Europe/Rome&useSSL=false&allowPublicKeyRetrieval=true"
 		timeBetweenEvictionRunsMillis="300000" 
 		removeAbandonedOnBorrow="true"
 		removeAbandonedOnMaintenance="true" 
