@@ -10,10 +10,10 @@
 <h2>Categories</h2>
 <h3>${catBean.operationLabel}</h3>
 <p>Please confirm the deletion:</p>
-<p>Category name: ${catBean.categoryName}</p>
-<form action="${contextRoot}/category/do">
+<p>Category name: ${catBean.category.name}</p>
+<form method="POST" action="${contextRoot}/category/do">
     <input type="submit" value="delete it"/>
-    <input type="hidden" name="categoryId" value="${catBean.categoryName}"/>
+    <input type="hidden" name="categoryId" value="${catBean.category.id}"/>
     <input type="hidden" name="action" value="${catBean.action}"/>
 </form>
 <p>

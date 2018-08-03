@@ -55,9 +55,24 @@ public class CategoryController extends HttpServlet {
 
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		String section = findRequestedSection(req.getRequestURL().toString());
-
 		// TODO gestione CREATE e DELETE
+		/*
+		 * per ora è duplicato della doGet, magari può funzionare un unico metodo
+		 */
+		String section = findRequestedSection(req.getRequestURL().toString());
+		RequestProcessingResult handlerResponse = navigationHandler.handleRequest(section, req, resp);
+		int statusCode = handlerResponse.getStatusCode();
+		switch (statusCode) {
+		case HttpServletResponse.SC_OK:
+			req.setAttribute("contextRoot", req.getContextPath());
+			String targetUrl = String.format("/WEB-INF/jsp/%s.jsp", handlerResponse.getViewName());
+			req.getRequestDispatcher(targetUrl).forward(req, resp);
+			return;
+		case HttpServletResponse.SC_BAD_REQUEST:
+		case HttpServletResponse.SC_INTERNAL_SERVER_ERROR:
+			resp.sendError(statusCode, handlerResponse.getErrorMessage());
+			return;
+		}
 
 		/*
 		 * questo è simile al vecchio metodo

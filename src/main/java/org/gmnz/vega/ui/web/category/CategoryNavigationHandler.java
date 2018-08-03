@@ -58,9 +58,9 @@ class CategoryNavigationHandler {
 
 
 	RequestProcessingResult handleRequest(String section, HttpServletRequest req, HttpServletResponse resp) {
-		CategoryManagementBean cmb = navigationMap.get(section);
-		if (cmb != null) {
-			return handleAction(cmb, req, resp);
+		CategoryManagementBean mgmtBean = navigationMap.get(section);
+		if (mgmtBean != null) {
+			return handleAction(mgmtBean, req, resp);
 		} else {
 			return new RequestProcessingResult(HttpServletResponse.SC_NOT_FOUND, "unknown section requested");
 		}
@@ -68,32 +68,37 @@ class CategoryNavigationHandler {
 
 
 
-	private RequestProcessingResult handleAction(CategoryManagementBean cmb, HttpServletRequest req,
+	private RequestProcessingResult handleAction(CategoryManagementBean mgmtBean, HttpServletRequest req,
 			HttpServletResponse resp) {
 		CategoryService categoryService = vega.getCategoryService();
-		switch (cmb.getAction()) {
+		switch (mgmtBean.getAction()) {
 		case Action.GET_ALL:
 			try {
 				List<Category> categories = categoryService.getAllCategories();
 				req.setAttribute("categories", categories);
-				return new RequestProcessingResult(HttpServletResponse.SC_OK, cmb.getViewName(), null);
+				return new RequestProcessingResult(HttpServletResponse.SC_OK, mgmtBean.getViewName(), null);
 			} catch (VegaException e) {
 				e.printStackTrace();
 				return new RequestProcessingResult(HttpServletResponse.SC_INTERNAL_SERVER_ERROR,
 						"error while retrieving categories");
 			}
 		case Action.MODIFY:
+		case Action.DELETE:
 			String categoryId = req.getParameter("categoryId");
 			try {
 				Category c = categoryService.getCategoryById(categoryId);
-				cmb.setCategory(c);
+				mgmtBean.setCategory(c);
 			} catch (VegaException e) {
 				e.printStackTrace();
 				String errorMessage = String.format("error while retrieving category with id [%s]", categoryId);
 				return new RequestProcessingResult(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, errorMessage);
 			}
-			req.setAttribute("catBean", cmb);
-			return new RequestProcessingResult(HttpServletResponse.SC_OK, cmb.getViewName(), null);
+			req.setAttribute("catBean", mgmtBean);
+			return new RequestProcessingResult(HttpServletResponse.SC_OK, mgmtBean.getViewName(), null);
+		case Action.CREATE:
+			mgmtBean.setCategory(new Category(""));
+			req.setAttribute("catBean", mgmtBean);
+			return new RequestProcessingResult(HttpServletResponse.SC_OK, mgmtBean.getViewName(), null);
 		default:
 			return new RequestProcessingResult(HttpServletResponse.SC_BAD_REQUEST, "unrecognized request");
 		}
