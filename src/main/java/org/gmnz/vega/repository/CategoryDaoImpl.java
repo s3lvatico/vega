@@ -70,7 +70,7 @@ class CategoryDaoImpl extends BasicDaoImpl implements CategoryDao {
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 		try {
-			ps = connection.prepareStatement("SELECT COUNT(*) FROM category WHERE name = ? AND deleted = '0'");
+			ps = connection.prepareStatement("SELECT COUNT(*) FROM category WHERE e_name = ? AND deleted = '0'");
 			ps.setString(1, name);
 			rs = ps.executeQuery();
 			rs.next(); // deve esser fatto per forza
@@ -86,12 +86,12 @@ class CategoryDaoImpl extends BasicDaoImpl implements CategoryDao {
 
 
 
-	@Deprecated
-	@Override
-	public Category findByName(String name) throws DaoException {
-		// TODO Auto-generated method stub
-		return null;
-	}
+//	@Deprecated
+//	@Override
+//	public Category findByName(String name) throws DaoException {
+//		//
+//		return null;
+//	}
 
 
 
@@ -117,7 +117,7 @@ class CategoryDaoImpl extends BasicDaoImpl implements CategoryDao {
 	public void update(Category category) throws DaoException {
 		PreparedStatement s = null;
 		try {
-			s = connection.prepareStatement("UPDATE category SET e_name = ? WHERE id = ?;");
+			s = connection.prepareStatement("UPDATE category SET e_name = ? WHERE id = ?");
 			s.setString(1, category.getName());
 			s.setString(2, category.getId());
 			s.executeUpdate();
@@ -131,27 +131,48 @@ class CategoryDaoImpl extends BasicDaoImpl implements CategoryDao {
 
 
 
-	@Deprecated
 	@Override
-	public void updateRename(String oldName, String newName) throws DaoException {
-		// TODO Auto-generated method stub
-
+	public int countAllergens(String categoryId) throws DaoException {
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		try {
+			ps = connection.prepareStatement("SELECT COUNT(*) FROM allergen WHERE id_category = ?");
+			ps.setString(1, categoryId);
+			rs = ps.executeQuery();
+			rs.next(); // deve esser fatto per forza
+			int countValue = rs.getInt(1);
+			return countValue;
+		} catch (SQLException e) {
+			e.printStackTrace();
+			throw new DaoException("CategoryDaoImpl.countAllergens error", e);
+		} finally {
+			releaseResources(ps, rs);
+		}
 	}
 
 
 
+//	@Deprecated
+//	@Override
+//	public void updateRename(String oldName, String newName) throws DaoException {
+//		//
+//
+//	}
+
+
 	@Override
-	public void updateAllergeni(Category category) throws DaoException {
-		// TODO Auto-generated method stub
-
-	}
-
-
-
-	@Override
-	public void delete(String name) throws DaoException {
-		// TODO Auto-generated method stub
-
+	public void delete(String categoryId) throws DaoException {
+		PreparedStatement s = null;
+		try {
+			s = connection.prepareStatement("DELETE  FROM category WHERE id = ?");
+			s.setString(1, categoryId);
+			s.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+			throw new DaoException("CategoryDaoImpl.delete error", e);
+		} finally {
+			releaseResources(s);
+		}
 	}
 
 }
