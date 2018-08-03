@@ -2,14 +2,26 @@ package org.gmnz.vega.ui.web.category;
 
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import org.gmnz.vega.Vega;
+import org.gmnz.vega.VegaException;
+import org.gmnz.vega.VegaImpl;
+import org.gmnz.vega.domain.Category;
+import org.gmnz.vega.service.CategoryService;
 import org.gmnz.vega.ui.Action;
+import org.gmnz.vega.ui.web.RequestProcessingResult;
 
 
 class CategoryNavigationHandler {
 
 	private Map<String, CategoryManagementBean> navigationMap;
+
+	private Vega vega;
 
 
 
@@ -39,5 +51,51 @@ class CategoryNavigationHandler {
 		cmb.setViewName("categoryDeletion");
 		cmb.setAction(Action.DELETE);
 		navigationMap.put("delete", cmb);
+
+		vega = new VegaImpl();
+	}
+
+
+
+	RequestProcessingResult handleRequest(String section, HttpServletRequest req, HttpServletResponse resp) {
+		CategoryManagementBean cmb = navigationMap.get(section);
+		if (cmb != null) {
+			return handleAction(cmb, req, resp);
+		} else {
+			return new RequestProcessingResult(HttpServletResponse.SC_NOT_FOUND, "unknown section requested");
+		}
+	}
+
+
+
+	private RequestProcessingResult handleAction(CategoryManagementBean cmb, HttpServletRequest req,
+			HttpServletResponse resp) {
+		CategoryService categoryService = vega.getCategoryService();
+		switch (cmb.getAction()) {
+		case Action.GET_ALL:
+			try {
+				List<Category> categories = categoryService.getAllCategories();
+				req.setAttribute("categories", categories);
+				return new RequestProcessingResult(HttpServletResponse.SC_OK, cmb.getViewName(), null);
+			} catch (VegaException e) {
+				e.printStackTrace();
+				return new RequestProcessingResult(HttpServletResponse.SC_INTERNAL_SERVER_ERROR,
+						"error while retrieving categories");
+			}
+		case Action.MODIFY:
+			String categoryId = req.getParameter("categoryId");
+			try {
+				Category c = categoryService.getCategoryById(categoryId);
+				cmb.setCategory(c);
+			} catch (VegaException e) {
+				e.printStackTrace();
+				String errorMessage = String.format("error while retrieving category with id [%s]", categoryId);
+				return new RequestProcessingResult(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, errorMessage);
+			}
+			req.setAttribute("catBean", cmb);
+			return new RequestProcessingResult(HttpServletResponse.SC_OK, cmb.getViewName(), null);
+		default:
+			return new RequestProcessingResult(HttpServletResponse.SC_BAD_REQUEST, "unrecognized request");
+		}
 	}
 }

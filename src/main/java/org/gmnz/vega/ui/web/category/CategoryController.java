@@ -2,9 +2,6 @@ package org.gmnz.vega.ui.web.category;
 
 
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -12,79 +9,51 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.gmnz.vega.Vega;
-import org.gmnz.vega.VegaException;
 import org.gmnz.vega.VegaImpl;
 import org.gmnz.vega.domain.Category;
 import org.gmnz.vega.service.CategoryService;
 import org.gmnz.vega.ui.Action;
+import org.gmnz.vega.ui.web.RequestProcessingResult;
 
 
 public class CategoryController extends HttpServlet {
 
 	private static final long serialVersionUID = 4531766441007641102L;
 
-	private Map<String, CategoryManagementBean> navMap;
+	private CategoryNavigationHandler navigationHandler;
 
 
 
 	@Override
 	public void init() {
-		navMap = new HashMap<>();
-
-		CategoryManagementBean cmb = new CategoryManagementBean();
-		cmb.setOperationLabel("Registered categories");
-		cmb.setViewName("categories");
-		cmb.setAction(Action.GET_ALL);
-		navMap.put("getAll", cmb);
-
-		cmb = new CategoryManagementBean();
-		cmb.setOperationLabel("New Category Creation");
-		cmb.setViewName("categoryManagement");
-		cmb.setAction(Action.CREATE);
-		navMap.put("create", cmb);
-
-		cmb = new CategoryManagementBean();
-		cmb.setOperationLabel("Modify Category Name");
-		cmb.setViewName("categoryManagement");
-		cmb.setAction(Action.MODIFY);
-		navMap.put("edit", cmb);
-
-		cmb = new CategoryManagementBean();
-		cmb.setOperationLabel("Confirm Category Deletion");
-		cmb.setViewName("categoryDeletion");
-		cmb.setAction(Action.DELETE);
-		navMap.put("delete", cmb);
-
+		navigationHandler = new CategoryNavigationHandler();
 	}
+
+//
+//	GET .... usare solo per funzioni tipo
+//				- getAll
+//				- vista di dettaglio per modifica (ma non per la modifica stessa)
+//	POST ... tutto il resto
+//
 
 
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		String section = findRequestedSection(req.getRequestURL().toString());
-
-		CategoryManagementBean cmb = navMap.get(section);
-		if (cmb != null) {
-			req.setAttribute("catBean", cmb);
-
-			Vega vega = new VegaImpl();
-			try {
-				List<Category> categories = vega.getCategoryService().getAllCategories();
-				req.setAttribute("categories", categories);
-			} catch (VegaException e) {
-				e.printStackTrace();
-				resp.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR,
-						"exception thrown while retrieving the categories");
-				return;
-			}
-
+		RequestProcessingResult handlerResponse = navigationHandler.handleRequest(section, req, resp);
+		int statusCode = handlerResponse.getStatusCode();
+		switch (statusCode) {
+		case HttpServletResponse.SC_OK:
 			req.setAttribute("contextRoot", req.getContextPath());
-			String targetUrl = String.format("/%s.jsp", cmb.getViewName());
+			String targetUrl = String.format("/WEB-INF/jsp/%s.jsp", handlerResponse.getViewName());
 			req.getRequestDispatcher(targetUrl).forward(req, resp);
-		} else {
-			resp.sendError(HttpServletResponse.SC_NOT_FOUND, "resource not found: " + section);
+			return;
+		case HttpServletResponse.SC_BAD_REQUEST:
+		case HttpServletResponse.SC_INTERNAL_SERVER_ERROR:
+			resp.sendError(statusCode, handlerResponse.getErrorMessage());
+			return;
 		}
-
 	}
 
 
@@ -93,35 +62,27 @@ public class CategoryController extends HttpServlet {
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		String section = findRequestedSection(req.getRequestURL().toString());
 
-		CategoryManagementBean cmb = navMap.get(section);
-		if (cmb == null) {
-			// TODO non mi piace, va fatto meglio
-			throw new ServletException("wrong path specified: <" + section + ">");
-		} else {
-			prepareBean(req, cmb);
+		// TODO completare
 
-			req.setAttribute("catBean", cmb);
-			req.setAttribute("contextRoot", req.getContextPath());
-			String targetUrl = String.format("/WEB-INF/jsp/%s.jsp", cmb.getViewName());
-			req.getRequestDispatcher(targetUrl).forward(req, resp);
-		}
+//		CategoryManagementBean cmb = navMap.get(section);
+//		if (cmb == null) {
+//			// TODO non mi piace, va fatto meglio
+//			throw new ServletException("wrong path specified: <" + section + ">");
+//		} else {
+//			prepareBean(req, cmb);
+//
+//		}
 	}
 
 
 
+	@Deprecated
 	private void prepareBean(HttpServletRequest req, CategoryManagementBean cmb) {
 		if (cmb.getAction().equals(Action.CREATE)) {
 			cmb.setCategory(new Category(""));
 			return;
 		}
-		if (cmb.getAction().equals(Action.MODIFY)) {
-			String categoryId = req.getParameter("categoryId");
-			Vega v = new VegaImpl();
-			CategoryService categoryService = v.getCategoryService();
-			Category c = categoryService.getCategoryById(categoryId);
-			cmb.setCategory(c);
-			return;
-		}
+		
 		if (cmb.getAction().equals(Action.DELETE)) {
 			String categoryId = req.getParameter("categoryId");
 			Vega v = new VegaImpl();

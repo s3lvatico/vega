@@ -1,15 +1,15 @@
 package org.gmnz.vega.service;
 
 
+import java.util.Iterator;
+import java.util.List;
+
 import org.gmnz.vega.VegaException;
 import org.gmnz.vega.domain.Category;
 import org.gmnz.vega.repository.CategoryDao;
 import org.gmnz.vega.repository.DaoException;
 import org.gmnz.vega.repository.DaoFactory;
 import org.gmnz.vega.repository.DummyRepository;
-
-import java.util.Iterator;
-import java.util.List;
 
 
 /**

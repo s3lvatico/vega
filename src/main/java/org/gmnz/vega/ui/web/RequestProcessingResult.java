@@ -2,32 +2,40 @@ package org.gmnz.vega.ui.web;
 
 public class RequestProcessingResult {
 
-	int responseCode;
+	int statusCode;
 	String viewName;
+	String errorMessage;
 
 
 
-	public RequestProcessingResult(int responseCode, String viewName) {
-		this.responseCode = responseCode;
+	public RequestProcessingResult(int statusCode, String viewName, String errorMessage) {
+		this.statusCode = statusCode;
 		this.viewName = viewName;
+		this.errorMessage = errorMessage;
 	}
 
 
 
-	public RequestProcessingResult(int responseCode) {
-		this(responseCode, null);
+	public RequestProcessingResult(int statusCode, String errorMessage) {
+		this(statusCode, null, errorMessage);
 	}
 
 
 
-	public int getResponseCode() {
-		return responseCode;
+	public int getStatusCode() {
+		return statusCode;
 	}
 
 
 
 	public String getViewName() {
 		return viewName;
+	}
+
+
+
+	public String getErrorMessage() {
+		return errorMessage;
 	}
 
 }

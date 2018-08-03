@@ -21,13 +21,17 @@
 			<c:forEach var="category" items="${categories}">
 				<tr>
 					<td>
-						<form method="POST" action="${contextRoot}/category/edit">
-							<input type="hidden" name="categoryId" value="${category.id}"> <input type="submit" value="E">
+						<form method="GET" action="${contextRoot}/category/edit">
+							<!--  edit -->
+							<input type="hidden" name="categoryId" value="${category.id}"> 
+							<input type="submit" value="E">
 						</form>
 					</td>
 					<td>
 						<form method="POST" action="${contextRoot}/category/delete">
-							<input type="hidden" name="categoryId" value="${category.id}"> <input type="submit" value="D">
+							<!--  delete -->
+							<input type="hidden" name="categoryId" value="${category.id}"> 
+							<input type="submit" value="D">
 						</form>
 					</td>
 					<td>${category.name}</td>
