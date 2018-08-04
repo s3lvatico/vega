@@ -5,6 +5,7 @@ import org.gmnz.vega.Vega;
 import org.gmnz.vega.VegaException;
 import org.gmnz.vega.VegaImpl;
 import org.gmnz.vega.base.VegaUtil;
+import org.gmnz.vega.domain.Allergen;
 import org.gmnz.vega.ui.Action;
 
 import javax.servlet.ServletException;
@@ -45,12 +46,6 @@ public class AllergenExecution extends HttpServlet {
 
 	private void executeAction(String action, HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
-//		String targetAllergenName = req.getParameter("allergenName");
-//		String targetCategoryName = req.getParameter("categoryName");
-//		if (VegaUtil.stringNullOrEmpty(targetAllergenName)) {
-//			resp.sendError(HttpServletResponse.SC_BAD_REQUEST);
-//			return;
-//		}
 		try {
 			switch (action) {
 				case Action.CREATE:
@@ -64,33 +59,40 @@ public class AllergenExecution extends HttpServlet {
 					createNewAllergen(newAllergenName, categoryId);
 					break;
 				case Action.MODIFY:
-					// TODO Allergen MODIFY
-//					HttpSession session = req.getSession();
-//					String trackingId = req.getParameter("trackingId");
-//					Allergen originalAllergen = (Allergen) session.getAttribute(trackingId);
-//					if (originalAllergen == null) {
-//						resp.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "no session content");
-//						return;
-//					}
-//					session.setAttribute("trackingId", null);
-//					vega.getAllergenService().modifyAllergen(originalAllergen, newAllergenName, targetCategoryName);
-					resp.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "not yet implemented");
-					return;
-//					break;
+					Allergen initialAllergen = (Allergen) req.getSession().getAttribute("allergen");
+					if (initialAllergen == null) {
+						resp.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "no original allergen stored in session");
+						return;
+					}
+					req.getSession().removeAttribute("allergen");
+
+					String paramAllergenName = req.getParameter("allergenName");
+					String paramCategoryId = req.getParameter("categoryId");
+
+					if (VegaUtil.stringNullOrEmpty(paramAllergenName)
+							|| VegaUtil.stringNullOrEmpty(paramCategoryId)) {
+						resp.sendError(HttpServletResponse.SC_BAD_REQUEST, "empty values for parameters are not allowed");
+						return;
+					}
+
+					vega.getAllergenService().modifyAllergen(initialAllergen, paramAllergenName, paramCategoryId);
+
+					break;
 				case Action.DELETE:
-					// TODO Allergen DELETE
-//					vega.getAllergenService().removeAllergen(allergenId);
-					resp.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "not yet implemented");
-					return;
-//					break;
+					String paramAllergenId = req.getParameter("allergenId");
+					if (VegaUtil.stringNullOrEmpty(paramAllergenId)) {
+						resp.sendError(HttpServletResponse.SC_BAD_REQUEST, "no allergen id specified");
+						return;
+					}
+					vega.getAllergenService().removeAllergen(paramAllergenId);
+					break;
 				default:
 					throw new ServletException("unrecognized action specified");
 			}
-		} catch (VegaException ve) {
-			// TODO meglio gestire gli errori applicativi con gli status code http
-			String errorMessage = String.format("exception thrown while executing action -- %s :: %s",
-					ve.getClass().getName(), ve.getMessage());
-			throw new ServletException(errorMessage, ve);
+		} catch (VegaException e) {
+			String errorMessage = String.format("exception thrown while executing action [%s] -- %s :: %s", action,
+					e.getClass().getName(), e.getMessage());
+			resp.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, errorMessage);
 		}
 		req.getRequestDispatcher("/allergen/getAll").forward(req, resp);
 	}
@@ -100,5 +102,6 @@ public class AllergenExecution extends HttpServlet {
 	private void createNewAllergen(String newAllergenName, String categoryId) throws VegaException {
 		vega.getAllergenService().createAllergen(newAllergenName, categoryId);
 	}
+
 
 }

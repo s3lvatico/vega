@@ -1,31 +1,17 @@
 package org.gmnz.vega.domain;
 
 
-import org.gmnz.vega.base.NamedEntity;
-
-
-public class Allergen extends NamedEntity {
+public class Allergen {
 
 	private String id;
+	private String name;
 	private Category category;
 
 
 
 	public Allergen(String name) {
-		super(name);
+		this.name = name;
 		category = Category.DEFAULT_CATEGORY;
-	}
-
-
-
-	public Category getCategory() {
-		return category;
-	}
-
-
-
-	public void setCategory(Category category) {
-		this.category = category;
 	}
 
 
@@ -38,6 +24,30 @@ public class Allergen extends NamedEntity {
 
 	public void setId(String id) {
 		this.id = id;
+	}
+
+
+
+	public String getName() {
+		return name;
+	}
+
+
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+
+
+	public Category getCategory() {
+		return category;
+	}
+
+
+
+	public void setCategory(Category category) {
+		this.category = category;
 	}
 
 

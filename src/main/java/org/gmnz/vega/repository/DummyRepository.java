@@ -39,19 +39,19 @@ public final class DummyRepository {
 
 		Allergen a = new Allergen("Manzo");
 		a.setCategory(c);
-		c.add(a);
+		c.addAllergen(a);
 		ALLERGENS.add(a);
 		// CATEGORY_MAP.get(c).add(a);
 
 		a = new Allergen("Pollo");
 		a.setCategory(c);
-		c.add(a);
+		c.addAllergen(a);
 		ALLERGENS.add(a);
 		// CATEGORY_MAP.get(c).add(a);
 
 		a = new Allergen("Maiale");
 		a.setCategory(c);
-		c.add(a);
+		c.addAllergen(a);
 		ALLERGENS.add(a);
 		// CATEGORY_MAP.get(c).add(a);
 
@@ -61,7 +61,7 @@ public final class DummyRepository {
 
 		a = new Allergen("Avena");
 		a.setCategory(c);
-		c.add(a);
+		c.addAllergen(a);
 		ALLERGENS.add(a);
 		// CATEGORY_MAP.get(c).add(a);
 /*
@@ -147,7 +147,7 @@ public final class DummyRepository {
 		ALLERGENS.add(a);
 		for (Category c : CATEGORIES) {
 			if (c.equals(a.getCategory())) {
-				c.add(a);
+				c.addAllergen(a);
 				return;
 			}
 		}
@@ -171,7 +171,7 @@ public final class DummyRepository {
 				Category c = new Category(c0.getName());
 				for (Allergen a0 : c0.getAllergens()) {
 					if (!a0.equals(a)) {
-						c.add(a0);
+						c.addAllergen(a0);
 					}
 				}
 				CATEGORIES.remove(c);
@@ -189,7 +189,7 @@ public final class DummyRepository {
 		Category c1 = new Category(categoryName);
 		for (Allergen a : c.getAllergens()) {
 			if (!a.getName().equals(allergenName)) {
-				c1.add(a);
+				c1.addAllergen(a);
 			}
 		}
 		CATEGORIES.remove(c);
@@ -207,7 +207,7 @@ public final class DummyRepository {
 		ALLERGENS.add(a1);
 		for (Category c : CATEGORIES) {
 			if (c.equals(a1.getCategory())) {
-				c.add(a1);
+				c.addAllergen(a1);
 				return;
 			}
 		}
@@ -219,7 +219,7 @@ public final class DummyRepository {
 		Allergen a = getAllergenByName(allergenName);
 		removeAllergenFromCategory(allergenName, a.getCategory().getName());
 		Category targetCategory = getCategoryByName(targetCategoryName);
-		targetCategory.add(a);
+		targetCategory.addAllergen(a);
 		a.setCategory(targetCategory);
 	}
 

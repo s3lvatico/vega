@@ -13,9 +13,12 @@
 <h3>${allergenBean.operationLabel}</h3>
 <form method="POST" action="${contextRoot}/allergen/do">
     <p>
-        Allergen name: <input type="text" name="allergenName" value="${allergenBean.allergen.name}" title="allergenName"/>
+        Allergen name:
+        <input type="text" name="allergenName" value="${allergenBean.allergen.name}" title="allergenName"/>
         <input type="hidden" name="action" value="${allergenBean.action}"/>
-        <input type="hidden" name="trackingId" value="${trackingId}"/>
+        <!--
+        <input type="hidden" name="allergenId" value="${allergenBean.allergen.id}"/>
+        -->
     </p>
 
     <p>Category

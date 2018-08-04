@@ -1,23 +1,29 @@
 package org.gmnz.vega.domain;
 
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
-import org.gmnz.vega.base.AbstractListManagedPropertyHolder;
-import org.gmnz.vega.base.NamedEntity;
+
+public class Category {
+
+	public static final String DEFAULT_CATEGORY_NAME = "DEFAULT_CATEGORY";
+
+	public static final Category DEFAULT_CATEGORY = new Category(DEFAULT_CATEGORY_NAME);
 
 
-public class Category extends AbstractListManagedPropertyHolder<Allergen> {
-
-	public static final Category DEFAULT_CATEGORY = new Category(NamedEntity.DEFAULT_CATEGORY_NAME);
 
 	private String id;
+	private String name;
+	private List<Allergen> allergens;
 
 
 
 	public Category(String name) {
-		super(name);
 		this.id = "";
+		this.name = name;
+		allergens = new ArrayList<>();
 	}
 
 
@@ -34,8 +40,27 @@ public class Category extends AbstractListManagedPropertyHolder<Allergen> {
 
 
 
+	public String getName() {
+		return name;
+	}
+
+
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+
+
 	public List<Allergen> getAllergens() {
-		return getListProperty();
+		return Collections.unmodifiableList(allergens);
+
+	}
+
+
+
+	public void addAllergen(Allergen allergen) {
+		allergens.add(allergen);
 	}
 
 

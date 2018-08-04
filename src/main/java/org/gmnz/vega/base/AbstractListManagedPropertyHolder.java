@@ -5,7 +5,13 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-
+/**
+ * da togliere
+ * @param <T> tipo generico contenuto in una lista
+ *
+ * @deprecated verrà presto cancellato
+ */
+@Deprecated
 public abstract class AbstractListManagedPropertyHolder<T> extends NamedEntity implements ListManagedPropertyHolder<T> {
 
 	protected List<T> listProperty;

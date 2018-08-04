@@ -81,23 +81,44 @@ public class AllergenServiceImpl extends BasicServiceBean implements AllergenSer
 
 
 	@Override
-	public void modifyAllergen(Allergen source, String targetName, String targetCategory) throws VegaException {
-		checkEntityRegistration(Allergen.class, source.getName(), true);
-		checkEntityRegistration(Category.class, targetCategory, true);
+	public void modifyAllergen(Allergen source, String targetName, String targetCategoryId) throws VegaException {
+		boolean mustUpdateDb = false;
 		if (!source.getName().equals(targetName)) {
 			checkEntityRegistration(Allergen.class, targetName, false);
-			DummyRepository.renameAllergen(source.getName(), targetName);
+			source.setName(targetName);
+			mustUpdateDb = true;
 		}
-		if (!source.getCategory().getName().equals(targetCategory)) {
-			DummyRepository.changeAllergenCategory(source.getName(), targetCategory);
+		if (!source.getCategory().getId().equals(targetCategoryId)) {
+			source.getCategory().setId(targetCategoryId);
+			mustUpdateDb = true;
+		}
+		if(mustUpdateDb) {
+			AllergenDao dao = null;
+			try {
+				dao = DaoFactory.getInstance().createAllergenDao();
+				dao.update(source);
+			} catch (DaoException e) {
+				throw new VegaException("modifyAllergen service error",e );
+			}
+			finally {
+				finalizeDao(dao);
+			}
 		}
 	}
 
 
 
 	@Override
-	public void removeAllergen(String name) throws VegaException {
-		checkEntityRegistration(Allergen.class, name, true);
-		DummyRepository.removeAllergen(name);
+	public void removeAllergen(String id) throws VegaException {
+		AllergenDao dao = null;
+		try {
+			dao = DaoFactory.getInstance().createAllergenDao();
+			dao.delete(id);
+		} catch (DaoException e) {
+			e.printStackTrace();
+			throw new VegaException("removeAllergen service error", e);
+		} finally {
+			finalizeDao(dao);
+		}
 	}
 }

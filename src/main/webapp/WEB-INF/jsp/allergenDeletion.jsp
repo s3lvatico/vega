@@ -10,11 +10,11 @@
 <h3>${allergenBean.operationLabel}</h3>
 <p>Please confirm the deletion:</p>
 <p>
-    Allergen name: ${allergenBean.allergenName}
+    Allergen name: ${allergenBean.allergen.name}
 </p>
-<form action="${contextRoot}/allergen/do">
+<form method="POST" action="${contextRoot}/allergen/do">
     <input type="submit" value="delete it"/>
-    <input type="hidden" name="allergenName" value="${allergenBean.allergenName}"/>
+    <input type="hidden" name="allergenId" value="${allergenBean.allergen.id}"/>
     <input type="hidden" name="action" value="${allergenBean.action}"/>
 </form>
 <p>

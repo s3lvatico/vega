@@ -25,7 +25,7 @@ public class ReportTest {
 		orzo = new Allergen("Orzo");
 		patate = new Allergen("Patate");
 
-		cereali.add(avena); cereali.add(farina); cereali.add(orzo); cereali.add(patate);
+		cereali.addAllergen(avena); cereali.addAllergen(farina); cereali.addAllergen(orzo); cereali.addAllergen(patate);
 
 
 		condimenti = new Category("Condimenti");
@@ -34,7 +34,7 @@ public class ReportTest {
 		olioDiOliva = new Allergen("Olio di oliva");
 		strutto = new Allergen("Strutto");
 
-		condimenti.add(lievitoDiBirra); condimenti.add(olioDiOliva); condimenti.add(strutto);
+		condimenti.addAllergen(lievitoDiBirra); condimenti.addAllergen(olioDiOliva); condimenti.addAllergen(strutto);
 	}
 
 	@Test public void creaReport() {

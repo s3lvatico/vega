@@ -16,10 +16,8 @@ public interface AllergenDao extends ConnectionOrientedDao {
 
 	void create(Allergen allergen) throws DaoException;
 
-	// TODO AllergenDao.delete sarà una cancellazione per id
-	void delete(String name) throws DaoException;
+	void update(Allergen allergen) throws DaoException;
 
-	// TODO AllergenDao.update sarà una modifica più elaborata
-	void update(String oldName, String newName) throws DaoException;
+	void delete(String id) throws DaoException;
 
 }

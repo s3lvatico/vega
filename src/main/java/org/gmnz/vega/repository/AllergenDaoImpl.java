@@ -103,12 +103,6 @@ class AllergenDaoImpl extends BasicDaoImpl implements AllergenDao {
 	}
 
 
-//	@Override
-//	public Allergen findByName(String name) throws DaoException {
-//		return null;
-//	}
-
-
 
 	@Override
 	public void create(Allergen allergen) throws DaoException {
@@ -128,26 +122,40 @@ class AllergenDaoImpl extends BasicDaoImpl implements AllergenDao {
 	}
 
 
-//	@Override
-//	public void create(Collection<Allergen> allergens) throws DaoException {
-//
-//	}
-
-
 
 	@Override
-	public void delete(String name) throws DaoException {
-		// TODO NYI
-		throw new DaoException("not yet implemented");
-
+	public void update(Allergen allergen) throws DaoException {
+		PreparedStatement s = null;
+		try {
+			s = connection.prepareStatement("update allergen set e_name = ?, id_category = ? where id = ? and deleted = 0");
+			s.setString(1, allergen.getName());
+			s.setString(2, allergen.getCategory().getId());
+			s.setString(3, allergen.getId());
+			s.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+			throw new DaoException("AllergenDaoImpl.update error", e);
+		} finally {
+			releaseResources(s);
+		}
 	}
 
 
 
 	@Override
-	public void update(String oldName, String newName) throws DaoException {
-		// TODO NYI
-		throw new DaoException("not yet implemented");
+	public void delete(String id) throws DaoException {
+		PreparedStatement s = null;
+		try {
+			s = connection.prepareStatement("update allergen set deleted = 1 where id = ?");
+			s.setString(1, id);
+			s.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+			throw new DaoException("AllergenDaoImpl.delete error", e);
+		} finally {
+			releaseResources(s);
+		}
 	}
+
 
 }

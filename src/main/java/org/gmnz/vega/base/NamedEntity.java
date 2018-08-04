@@ -3,6 +3,14 @@ package org.gmnz.vega.base;
 /**
  * creato da simone in data 04/12/2017.
  */
+
+
+
+
+/**
+ * @deprecated  da togliere
+ */
+@Deprecated
 public class NamedEntity {
 
 	private String name;
