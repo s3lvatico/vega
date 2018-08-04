@@ -38,7 +38,7 @@ public class ReportController extends HttpServlet {
 		rmb.setOperationLabel("Stored reports");
 		rmb.setViewName("reports");
 		rmb.setAction(Action.GET_ALL);
-		viewMap.put("getAllAllergens", rmb);
+		viewMap.put("getAll", rmb);
 
 		rmb = new ReportManagementBean();
 		rmb.setOperationLabel("New Report Creation");

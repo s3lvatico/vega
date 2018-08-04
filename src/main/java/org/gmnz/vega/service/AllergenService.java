@@ -19,6 +19,8 @@ public interface AllergenService {
 	Allergen get(String name);
 
 
+	Allergen getAllergenById(String id) throws VegaException;
+
 	void modifyAllergen(Allergen source, String targetName, String targetCategory) throws VegaException;
 
 

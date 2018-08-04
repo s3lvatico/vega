@@ -1,19 +1,29 @@
 package org.gmnz.vega.ui.web.allergen;
 
+
+import org.gmnz.vega.domain.Allergen;
+
+
 public class AllergenManagementBean {
 
 	private String operationLabel;
-
-	private String allergenName;
 
 	private String viewName;
 
 	private String action;
 
+	private Allergen allergen;
 
 
-	public AllergenManagementBean() {
-		allergenName = "";
+
+	public Allergen getAllergen() {
+		return allergen;
+	}
+
+
+
+	public void setAllergen(Allergen allergen) {
+		this.allergen = allergen;
 	}
 
 
@@ -27,20 +37,6 @@ public class AllergenManagementBean {
 	public void setOperationLabel(String operationLabel) {
 		if (operationLabel != null && !operationLabel.isEmpty()) {
 			this.operationLabel = operationLabel;
-		}
-	}
-
-
-
-	public String getAllergenName() {
-		return allergenName;
-	}
-
-
-
-	public void setAllergenName(String allergenName) {
-		if (allergenName != null && !allergenName.isEmpty()) {
-			this.allergenName = allergenName;
 		}
 	}
 

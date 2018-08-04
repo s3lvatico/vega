@@ -60,6 +60,14 @@ public class AllergenServiceImpl extends BasicServiceBean implements AllergenSer
 
 
 	@Override
+	public Allergen getAllergenById(String id) throws VegaException {
+		// TODO fare
+		throw new VegaException("not yet implemented");
+	}
+
+
+
+	@Override
 	public void modifyAllergen(Allergen source, String targetName, String targetCategory) throws VegaException {
 		checkEntityRegistration(Allergen.class, source.getName(), true);
 		checkEntityRegistration(Category.class, targetCategory, true);

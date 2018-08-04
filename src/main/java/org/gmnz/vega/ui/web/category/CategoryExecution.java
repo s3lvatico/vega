@@ -69,6 +69,6 @@ public class CategoryExecution extends HttpServlet {
 					e.getClass().getName(), e.getMessage());
 			throw new ServletException(errorMessage, e);
 		}
-		req.getRequestDispatcher("/category/getAllAllergens").forward(req, resp);
+		req.getRequestDispatcher("/category/getAll").forward(req, resp);
 	}
 }

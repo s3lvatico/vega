@@ -32,7 +32,7 @@ class AllergenNavigationHandler {
 		mgmtBean.setOperationLabel("Registered allergens");
 		mgmtBean.setViewName("allergens");
 		mgmtBean.setAction(Action.GET_ALL);
-		navigationMap.put("getAllAllergens", mgmtBean);
+		navigationMap.put("getAll", mgmtBean);
 
 		mgmtBean = new AllergenManagementBean();
 		mgmtBean.setOperationLabel("New Allergen Creation");
@@ -82,23 +82,26 @@ class AllergenNavigationHandler {
 				return new RequestProcessingResult(HttpServletResponse.SC_INTERNAL_SERVER_ERROR,
 						"error while retrieving allergens");
 			}
+			case Action.CREATE:
+				// TODO : Allergen : CREATE
+				return new RequestProcessingResult(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "not yet implemented");
+//				mgmtBean.setCategory(new Category(""));
+//				req.setAttribute("catBean", mgmtBean);
+//				return new RequestProcessingResult(HttpServletResponse.SC_OK, mgmtBean.getViewName(), null);
 		case Action.MODIFY:
 		case Action.DELETE:
+			// TODO : Allergen : MODIFY, DELETE
 			String allergenId = req.getParameter("allergenId");
-			try {
-				Allergen a = allergenService.getCategoryById(categoryId);
-				mgmtBean.setCategory(c);
-			} catch (VegaException e) {
-				e.printStackTrace();
-				String errorMessage = String.format("error while retrieving category with id [%s]", categoryId);
-				return new RequestProcessingResult(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, errorMessage);
-			}
-			req.setAttribute("catBean", mgmtBean);
-			return new RequestProcessingResult(HttpServletResponse.SC_OK, mgmtBean.getViewName(), null);
-		case Action.CREATE:
-			mgmtBean.setCategory(new Category(""));
-			req.setAttribute("catBean", mgmtBean);
-			return new RequestProcessingResult(HttpServletResponse.SC_OK, mgmtBean.getViewName(), null);
+//			try {
+				// Allergen a = allergenService.getAllergenById(allergenId);
+				return new RequestProcessingResult(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "not yet implemented");
+//			} catch (VegaException e) {
+//				e.printStackTrace();
+//				String errorMessage = String.format("error while managing allergen with id [%s]", allergenId);
+//				return new RequestProcessingResult(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, errorMessage);
+//			}
+//			req.setAttribute("catBean", mgmtBean);
+//			return new RequestProcessingResult(HttpServletResponse.SC_OK, mgmtBean.getViewName(), null);
 		default:
 			return new RequestProcessingResult(HttpServletResponse.SC_BAD_REQUEST, "unrecognized request");
 		}
