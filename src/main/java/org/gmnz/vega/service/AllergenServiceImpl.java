@@ -29,7 +29,6 @@ public class AllergenServiceImpl extends BasicServiceBean implements AllergenSer
 		} finally {
 			finalizeDao(dao);
 		}
-
 	}
 
 
@@ -64,18 +63,19 @@ public class AllergenServiceImpl extends BasicServiceBean implements AllergenSer
 
 
 
-	@Deprecated
-	@Override
-	public Allergen get(String name) {
-		return DummyRepository.getAllergenByName(name);
-	}
-
-
-
 	@Override
 	public Allergen getAllergenById(String id) throws VegaException {
-		// TODO fare AllergenServiceImpl.getAllergenById
-		throw new VegaException("not yet implemented");
+		AllergenDao dao = null;
+		try {
+			dao = DaoFactory.getInstance().createAllergenDao();
+			Allergen a = dao.findById(id);
+			return a;
+		} catch (DaoException e) {
+			e.printStackTrace();
+			throw new VegaException("getAllergenById service error", e);
+		} finally {
+			finalizeDao(dao);
+		}
 	}
 
 

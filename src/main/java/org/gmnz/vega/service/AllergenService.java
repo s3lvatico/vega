@@ -15,8 +15,8 @@ public interface AllergenService {
 	void createAllergen(String newAllergenName, String categoryId) throws VegaException;
 
 
-	@Deprecated
-	Allergen get(String name);
+//	@Deprecated
+//	Allergen get(String name);
 
 
 	Allergen getAllergenById(String id) throws VegaException;

@@ -9,7 +9,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 import java.util.UUID;
 
@@ -41,6 +40,42 @@ class AllergenDaoImpl extends BasicDaoImpl implements AllergenDao {
 		} catch (SQLException e) {
 			e.printStackTrace();
 			throw new DaoException("AllergenDaoImpl.findAll error", e);
+		} finally {
+			releaseResources(s, rs);
+		}
+	}
+
+
+
+	@Override
+	public Allergen findById(String id) throws DaoException {
+		PreparedStatement s = null;
+		ResultSet rs = null;
+		try {
+			s = connection.prepareStatement("select \n" +
+					" allergen.id allergen_id, " +
+					" allergen.e_name allergen_name, " +
+					" category.id category_id, " +
+					" category.e_name category_name " +
+					" from allergen " +
+					" join category on " +
+					" allergen.id_category = category.id and allergen.deleted = 0 " +
+					"where  allergen.id = ?");
+			s.setString(1, id);
+			rs = s.executeQuery();
+
+			Allergen a = null;
+			if (rs.next()) {
+				a = new Allergen(rs.getString("allergen_name"));
+				a.setId(rs.getString("allergen_id"));
+				Category c = new Category(rs.getString("category_name"));
+				c.setId(rs.getString("category_id"));
+				a.setCategory(c);
+			}
+			return a;
+		} catch (SQLException e) {
+			e.printStackTrace();
+			throw new DaoException("AllergenDaoImpl.findById error", e);
 		} finally {
 			releaseResources(s, rs);
 		}
@@ -91,7 +126,6 @@ class AllergenDaoImpl extends BasicDaoImpl implements AllergenDao {
 			releaseResources(s);
 		}
 	}
-
 
 
 //	@Override

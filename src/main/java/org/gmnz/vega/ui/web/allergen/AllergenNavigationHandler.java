@@ -15,6 +15,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 
 class AllergenNavigationHandler {
@@ -84,11 +85,7 @@ class AllergenNavigationHandler {
 				}
 			case Action.CREATE:
 				// recupero le categorie
-				try {
-					List<Category> categories = vega.getCategoryService().getAllCategories();
-					req.setAttribute("categories", categories);
-				} catch (VegaException e) {
-					e.printStackTrace();
+				if (injectCategories(req) != null) {
 					return new RequestProcessingResult(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "error while retrieving categories");
 				}
 				mgmtBean.setAllergen(new Allergen(""));
@@ -98,17 +95,31 @@ class AllergenNavigationHandler {
 				String allergenId = req.getParameter("allergenId");
 				Allergen targetAllergen = null;
 				try {
+					// recupero allergene
 					targetAllergen = allergenService.getAllergenById(allergenId);
 					if (targetAllergen == null) {
-
+						return new RequestProcessingResult(HttpServletResponse.SC_INTERNAL_SERVER_ERROR,
+								"no allergen found with id " + allergenId);
 					}
+					mgmtBean.setAllergen(targetAllergen);
+
 				} catch (VegaException e) {
 					e.printStackTrace();
 					return new RequestProcessingResult(HttpServletResponse.SC_INTERNAL_SERVER_ERROR,
 							"error while retrieving allergens");
 				}
+				req.setAttribute("trackingId", UUID.randomUUID().toString());
+
+				// recupero categorie
+				if (injectCategories(req) != null) {
+					return new RequestProcessingResult(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "error while retrieving categories");
+				}
+				// categoria iniziale dell'allergene
+				req.setAttribute("initialAllergenCategoryName", targetAllergen.getCategory().getName());
+				req.setAttribute("allergenBean", mgmtBean);
+				return new RequestProcessingResult(HttpServletResponse.SC_OK, mgmtBean.getViewName(), null);
 			case Action.DELETE:
-				// TODO : Allergen : MODIFY, DELETE
+				// TODO : Allergen : DELETE
 
 //			try {
 				// Allergen a = allergenService.getAllergenById(allergenId);
@@ -123,5 +134,19 @@ class AllergenNavigationHandler {
 			default:
 				return new RequestProcessingResult(HttpServletResponse.SC_BAD_REQUEST, "unrecognized request");
 		}
+	}
+
+
+
+	private RequestProcessingResult injectCategories(HttpServletRequest request) {
+		try {
+			List<Category> categories = vega.getCategoryService().getAllCategories();
+			request.setAttribute("categories", categories);
+		} catch (VegaException e) {
+			e.printStackTrace();
+			return new RequestProcessingResult(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "error while retrieving categories");
+		}
+		return null;
+
 	}
 }
