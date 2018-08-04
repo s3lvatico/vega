@@ -33,7 +33,10 @@ public class CategoryExecution extends HttpServlet {
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		String action = req.getParameter("action");
 		if (VegaUtil.stringNullOrEmpty(action)) {
-			throw new ServletException("no action specified");
+			String errorMessage = "no action specified";
+			req.setAttribute("errorMessage", errorMessage);
+			resp.sendError(HttpServletResponse.SC_BAD_REQUEST, errorMessage);
+			return;
 		}
 		executeAction(action, req, resp);
 	}
