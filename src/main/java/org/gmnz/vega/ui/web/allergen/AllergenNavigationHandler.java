@@ -95,9 +95,21 @@ class AllergenNavigationHandler {
 				req.setAttribute("allergenBean", mgmtBean);
 				return new RequestProcessingResult(HttpServletResponse.SC_OK, mgmtBean.getViewName(), null);
 			case Action.MODIFY:
+				String allergenId = req.getParameter("allergenId");
+				Allergen targetAllergen = null;
+				try {
+					targetAllergen = allergenService.getAllergenById(allergenId);
+					if (targetAllergen == null) {
+
+					}
+				} catch (VegaException e) {
+					e.printStackTrace();
+					return new RequestProcessingResult(HttpServletResponse.SC_INTERNAL_SERVER_ERROR,
+							"error while retrieving allergens");
+				}
 			case Action.DELETE:
 				// TODO : Allergen : MODIFY, DELETE
-				String allergenId = req.getParameter("allergenId");
+
 //			try {
 				// Allergen a = allergenService.getAllergenById(allergenId);
 				return new RequestProcessingResult(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "not yet implemented");

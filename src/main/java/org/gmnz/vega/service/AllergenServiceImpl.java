@@ -74,7 +74,7 @@ public class AllergenServiceImpl extends BasicServiceBean implements AllergenSer
 
 	@Override
 	public Allergen getAllergenById(String id) throws VegaException {
-		// TODO fare
+		// TODO fare AllergenServiceImpl.getAllergenById
 		throw new VegaException("not yet implemented");
 	}
 
