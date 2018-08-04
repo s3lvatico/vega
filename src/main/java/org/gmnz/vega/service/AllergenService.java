@@ -12,7 +12,7 @@ public interface AllergenService {
 	List<Allergen> getAllAllergens() throws VegaException;
 
 
-	void createAllergen(String name, String categoryName) throws VegaException;
+	void createAllergen(String newAllergenName, String categoryId) throws VegaException;
 
 
 	@Deprecated
