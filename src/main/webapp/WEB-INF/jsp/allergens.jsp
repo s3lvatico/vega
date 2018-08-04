@@ -20,16 +20,18 @@
     </tr>
     </thead>
     <tbody>
-    <c:forEach var="allergen" items="${vega.allergenService.all}">
+    <c:forEach var="allergen" items="${allergens}">
         <tr>
             <td>
                 <form method="POST" action="${contextRoot}/allergen/edit">
-                    <input type="hidden" name="allergenName" value="${allergen.name}"/> <input type="submit" value="E"/>
+                    <input type="hidden" name="allergenId" value="${allergen.id}"/>
+                    <input type="submit" value="E"/>
                 </form>
             </td>
             <td>
                 <form method="POST" action="${contextRoot}/allergen/delete">
-                    <input type="hidden" name="allergenName" value="${allergen.name}"/> <input type="submit" value="D"/>
+                    <input type="hidden" name="allergenId" value="${allergen.id}"/>
+                    <input type="submit" value="D"/>
                 </form>
             </td>
             <td>${allergen.name}</td>
@@ -38,6 +40,7 @@
     </c:forEach>
     </tbody>
 </table>
+<p>Total registered allergens: ${allergens.size()} </p>
 <h3>Operations</h3>
 <p>Create new allergen:</p>
 <form method="POST" action="${contextRoot}/allergen/create">
