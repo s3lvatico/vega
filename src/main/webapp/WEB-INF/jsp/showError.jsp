@@ -39,6 +39,11 @@
             </c:if>
         </td>
     </tr>
+    <tr>
+        <td><b>error message:</b></td>
+        <td><%= request.getAttribute("errorMessage") %></td>
+    </tr>
+
 </table>
 
 </body>

@@ -11,21 +11,21 @@
 <jsp:include page="/WEB-INF/jsp/header.jsp"/>
 <h2>Allergens</h2>
 <h3>${allergenBean.operationLabel}</h3>
-<form action="${contextRoot}/allergen/do">
+<form method="POST" action="${contextRoot}/allergen/do">
     <p>
-        Allergen name: <input type="text" name="allergenName" value="${allergenBean.allergenName}" title="allergenName"/>
+        Allergen name: <input type="text" name="allergenName" value="${allergenBean.allergen.name}" title="allergenName"/>
         <input type="hidden" name="action" value="${allergenBean.action}"/>
         <input type="hidden" name="trackingId" value="${trackingId}"/>
     </p>
 
     <p>Category
-        <select name="categoryName" title="categoryName">
+        <select name="categoryId" title="categoryName">
             <c:forEach var="category" items="${categories}">
                 <c:set var="selectedAttribute" scope="page" value=""/>
                 <c:if test="${category.name == initialAllergenCategoryName}">
                     <c:set var="selectedAttribute" scope="page" value="selected"/>
                 </c:if>
-                <option value="${category.name}" ${selectedAttribute}>${category.name}</option>
+                <option value="${category.id}" ${selectedAttribute}>${category.name}</option>
             </c:forEach>
         </select>
     </p>

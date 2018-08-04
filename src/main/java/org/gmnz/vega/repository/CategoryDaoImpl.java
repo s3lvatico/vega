@@ -66,7 +66,7 @@ class CategoryDaoImpl extends BasicDaoImpl implements CategoryDao {
 
 
 	@Override
-	public boolean isCategoryRegistered(String name) throws DaoException {
+	public boolean isCategoryRegisteredByName(String name) throws DaoException {
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 		try {
@@ -78,7 +78,26 @@ class CategoryDaoImpl extends BasicDaoImpl implements CategoryDao {
 			return countValue == 1;
 		} catch (SQLException e) {
 			e.printStackTrace();
-			throw new DaoException("CategoryDaoImpl.isCategoryRegistered error", e);
+			throw new DaoException("CategoryDaoImpl.isCategoryRegisteredByName error", e);
+		} finally {
+			releaseResources(ps, rs);
+		}
+	}
+
+	@Override
+	public boolean isCategoryRegisteredById(String categoryId) throws DaoException {
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		try {
+			ps = connection.prepareStatement("SELECT COUNT(*) FROM category WHERE id = ? AND deleted = '0'");
+			ps.setString(1, categoryId);
+			rs = ps.executeQuery();
+			rs.next(); // deve esser fatto per forza
+			int countValue = rs.getInt(1);
+			return countValue == 1;
+		} catch (SQLException e) {
+			e.printStackTrace();
+			throw new DaoException("CategoryDaoImpl.isCategoryRegisteredById error", e);
 		} finally {
 			releaseResources(ps, rs);
 		}

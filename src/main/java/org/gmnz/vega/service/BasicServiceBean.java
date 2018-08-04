@@ -5,7 +5,6 @@ import org.gmnz.vega.VegaException;
 import org.gmnz.vega.repository.ConnectionOrientedDao;
 import org.gmnz.vega.repository.DaoException;
 import org.gmnz.vega.repository.DaoFactory;
-import org.gmnz.vega.repository.DummyRepository;
 
 
 class BasicServiceBean {
@@ -19,8 +18,7 @@ class BasicServiceBean {
 				entityIsInTheSystem = checkForCategory(objectName);
 				break;
 			case "Allergen":
-				// TODO referenziare il dao, mai direttamente il repository
-				entityIsInTheSystem = DummyRepository.getAllergenByName(objectName) != null;
+				entityIsInTheSystem = checkForAllergen(objectName);
 				break;
 			default:
 				StringBuilder sbError = new StringBuilder("anomalous condition occurred - ");
@@ -45,6 +43,19 @@ class BasicServiceBean {
 			e.printStackTrace();
 			String errorMessage = String.format(
 					"unable to check the presence of the category [%s] - exception was thrown by data layer", categoryName);
+			throw new VegaException(errorMessage, e);
+		}
+	}
+
+
+
+	private boolean checkForAllergen(String allergenName) throws VegaException{
+		try {
+			return DaoFactory.getInstance().createAllergenDao().isAllergenRegisteredByName(allergenName);
+		} catch (DaoException e) {
+			e.printStackTrace();
+			String errorMessage = String.format(
+					"unable to check the presence of the allergen [%s] - exception was thrown by data layer", allergenName);
 			throw new VegaException(errorMessage, e);
 		}
 	}

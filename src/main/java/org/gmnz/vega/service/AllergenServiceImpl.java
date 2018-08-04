@@ -5,10 +5,7 @@ import org.gmnz.vega.VegaException;
 import org.gmnz.vega.domain.Allergen;
 import org.gmnz.vega.domain.AllergenComparator;
 import org.gmnz.vega.domain.Category;
-import org.gmnz.vega.repository.AllergenDao;
-import org.gmnz.vega.repository.DaoException;
-import org.gmnz.vega.repository.DaoFactory;
-import org.gmnz.vega.repository.DummyRepository;
+import org.gmnz.vega.repository.*;
 
 import java.util.List;
 
@@ -38,15 +35,31 @@ public class AllergenServiceImpl extends BasicServiceBean implements AllergenSer
 
 
 	@Override
-	public void createAllergen(String name, String categoryName) throws VegaException {
-		checkEntityRegistration(Allergen.class, name, false);
-		checkEntityRegistration(Category.class, categoryName, true);
+	public void createAllergen(String newAllergenName, String categoryId) throws VegaException {
+		checkEntityRegistration(Allergen.class, newAllergenName, false);
 
-		Category c = DummyRepository.getCategoryByName(categoryName);
-		Allergen a = new Allergen(name);
-		a.setCategory(c);
+		AllergenDao allergenDao = null;
+		CategoryDao categoryDao = null;
+		try {
+			categoryDao = DaoFactory.getInstance().createCategoryDao();
+			Category targetCategory = categoryDao.findById(categoryId);
+			if (targetCategory == null) {
+				String errorMessage = String.format("no category with id [%s]", categoryId);
+				throw new VegaException(errorMessage);
+			}
 
-		DummyRepository.addAllergen(a);
+			Allergen a = new Allergen(newAllergenName);
+			a.setCategory(targetCategory);
+
+			allergenDao = DaoFactory.getInstance().createAllergenDao();
+			allergenDao.create(a);
+		} catch (DaoException e) {
+			e.printStackTrace();
+			throw new VegaException("getAllAllergens service error", e);
+		} finally {
+			finalizeDao(categoryDao);
+			finalizeDao(allergenDao);
+		}
 	}
 
 

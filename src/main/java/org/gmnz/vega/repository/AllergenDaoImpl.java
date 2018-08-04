@@ -4,12 +4,14 @@ package org.gmnz.vega.repository;
 import org.gmnz.vega.domain.Allergen;
 import org.gmnz.vega.domain.Category;
 
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.UUID;
 
 
 class AllergenDaoImpl extends BasicDaoImpl implements AllergenDao {
@@ -47,32 +49,62 @@ class AllergenDaoImpl extends BasicDaoImpl implements AllergenDao {
 
 
 	@Override
-	public Allergen findByName(String name) throws DaoException {
-		// TODO Auto-generated method stub
-		return null;
+	public boolean isAllergenRegisteredByName(String name) throws DaoException {
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		try {
+			ps = connection.prepareStatement("SELECT COUNT(*) FROM allergen WHERE e_name = ? AND deleted = '0'");
+			ps.setString(1, name);
+			rs = ps.executeQuery();
+			rs.next(); // deve esser fatto per forza
+			int countValue = rs.getInt(1);
+			return countValue == 1;
+		} catch (SQLException e) {
+			e.printStackTrace();
+			throw new DaoException("AllergenDaoImpl.isAllergenRegisteredByName error", e);
+		} finally {
+			releaseResources(ps, rs);
+		}
 	}
+
+
+//	@Override
+//	public Allergen findByName(String name) throws DaoException {
+//		return null;
+//	}
 
 
 
 	@Override
 	public void create(Allergen allergen) throws DaoException {
-		// TODO Auto-generated method stub
-
+		PreparedStatement s = null;
+		try {
+			s = connection.prepareStatement("INSERT  INTO  allergen VALUES (?, ?, 0, ?)");
+			s.setString(1, UUID.randomUUID().toString());
+			s.setString(2, allergen.getName());
+			s.setString(3, allergen.getCategory().getId());
+			s.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+			throw new DaoException("AllergenDaoImpl.create error", e);
+		} finally {
+			releaseResources(s);
+		}
 	}
 
 
 
-	@Override
-	public void create(Collection<Allergen> allergens) throws DaoException {
-		// TODO Auto-generated method stub
-
-	}
+//	@Override
+//	public void create(Collection<Allergen> allergens) throws DaoException {
+//
+//	}
 
 
 
 	@Override
 	public void delete(String name) throws DaoException {
-		// TODO Auto-generated method stub
+		// TODO NYI
+		throw new DaoException("not yet implemented");
 
 	}
 
@@ -80,8 +112,8 @@ class AllergenDaoImpl extends BasicDaoImpl implements AllergenDao {
 
 	@Override
 	public void update(String oldName, String newName) throws DaoException {
-		// TODO Auto-generated method stub
-
+		// TODO NYI
+		throw new DaoException("not yet implemented");
 	}
 
 }
