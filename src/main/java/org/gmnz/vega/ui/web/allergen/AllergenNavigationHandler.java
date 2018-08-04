@@ -69,29 +69,35 @@ class AllergenNavigationHandler {
 
 
 	private RequestProcessingResult handleAction(AllergenManagementBean mgmtBean, HttpServletRequest req,
-			HttpServletResponse resp) {
+																HttpServletResponse resp) {
 		AllergenService allergenService = vega.getAllergenService();
 		switch (mgmtBean.getAction()) {
-		case Action.GET_ALL:
-			try {
-				List<Allergen> allergens = allergenService.getAllAllergens();
-				req.setAttribute("allergens", allergens);
-				return new RequestProcessingResult(HttpServletResponse.SC_OK, mgmtBean.getViewName(), null);
-			} catch (VegaException e) {
-				e.printStackTrace();
-				return new RequestProcessingResult(HttpServletResponse.SC_INTERNAL_SERVER_ERROR,
-						"error while retrieving allergens");
-			}
+			case Action.GET_ALL:
+				try {
+					List<Allergen> allergens = allergenService.getAllAllergens();
+					req.setAttribute("allergens", allergens);
+					return new RequestProcessingResult(HttpServletResponse.SC_OK, mgmtBean.getViewName(), null);
+				} catch (VegaException e) {
+					e.printStackTrace();
+					return new RequestProcessingResult(HttpServletResponse.SC_INTERNAL_SERVER_ERROR,
+							"error while retrieving allergens");
+				}
 			case Action.CREATE:
-				// TODO : Allergen : CREATE
-				return new RequestProcessingResult(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "not yet implemented");
-//				mgmtBean.setCategory(new Category(""));
-//				req.setAttribute("catBean", mgmtBean);
-//				return new RequestProcessingResult(HttpServletResponse.SC_OK, mgmtBean.getViewName(), null);
-		case Action.MODIFY:
-		case Action.DELETE:
-			// TODO : Allergen : MODIFY, DELETE
-			String allergenId = req.getParameter("allergenId");
+				// recupero le categorie
+				try {
+					List<Category> categories = vega.getCategoryService().getAllCategories();
+					req.setAttribute("categories", categories);
+				} catch (VegaException e) {
+					e.printStackTrace();
+					return new RequestProcessingResult(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "error while retrieving categories");
+				}
+				mgmtBean.setAllergen(new Allergen(""));
+				req.setAttribute("allergenBean", mgmtBean);
+				return new RequestProcessingResult(HttpServletResponse.SC_OK, mgmtBean.getViewName(), null);
+			case Action.MODIFY:
+			case Action.DELETE:
+				// TODO : Allergen : MODIFY, DELETE
+				String allergenId = req.getParameter("allergenId");
 //			try {
 				// Allergen a = allergenService.getAllergenById(allergenId);
 				return new RequestProcessingResult(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "not yet implemented");
@@ -102,8 +108,8 @@ class AllergenNavigationHandler {
 //			}
 //			req.setAttribute("catBean", mgmtBean);
 //			return new RequestProcessingResult(HttpServletResponse.SC_OK, mgmtBean.getViewName(), null);
-		default:
-			return new RequestProcessingResult(HttpServletResponse.SC_BAD_REQUEST, "unrecognized request");
+			default:
+				return new RequestProcessingResult(HttpServletResponse.SC_BAD_REQUEST, "unrecognized request");
 		}
 	}
 }
