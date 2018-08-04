@@ -40,7 +40,7 @@ class BasicServiceBean {
 
 	private boolean checkForCategory(String categoryName) throws VegaException {
 		try {
-			return DaoFactory.getInstance().createCategoryDao().isCategoryRegistered(categoryName);
+			return DaoFactory.getInstance().createCategoryDao().isCategoryRegisteredByName(categoryName);
 		} catch (DaoException e) {
 			e.printStackTrace();
 			String errorMessage = String.format(
@@ -52,7 +52,9 @@ class BasicServiceBean {
 
 
 	protected void finalizeDao(ConnectionOrientedDao dao) {
-		dao.close();
+		if (dao != null) {
+			dao.close();
+		}
 	}
 
 }
