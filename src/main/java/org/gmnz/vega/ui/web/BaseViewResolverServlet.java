@@ -10,6 +10,8 @@ import java.io.IOException;
 
 public class BaseViewResolverServlet extends HttpServlet {
 
+	private static final long serialVersionUID = 5139974582329075960L;
+
 	private HttpServletRequest request;
 	private HttpServletResponse response;
 
