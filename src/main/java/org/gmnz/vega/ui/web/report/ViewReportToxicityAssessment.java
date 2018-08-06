@@ -1,6 +1,6 @@
 package org.gmnz.vega.ui.web.report;
 
-public class ViewToxicityAssessment {
+public class ViewReportToxicityAssessment {
 
 	String allergenName;
 	Double toxicityRating;

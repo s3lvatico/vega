@@ -8,7 +8,7 @@ import java.util.List;
 public class ViewReportCategory {
 
 	private String name;
-	private List<ViewToxicityAssessment> toxData;
+	private List<ViewReportToxicityAssessment> toxData;
 
 
 
@@ -30,13 +30,13 @@ public class ViewReportCategory {
 
 
 
-	public List<ViewToxicityAssessment> getToxData() {
+	public List<ViewReportToxicityAssessment> getToxData() {
 		return toxData;
 	}
 
 
 
-	public void setToxData(List<ViewToxicityAssessment> toxData) {
+	public void setToxData(List<ViewReportToxicityAssessment> toxData) {
 		this.toxData = toxData;
 	}
 }
