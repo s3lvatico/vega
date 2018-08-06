@@ -70,7 +70,14 @@ public class ReportController extends HttpServlet {
 			req.setAttribute("reportBean", rmb);
 			Vega vega = new VegaImpl();
 			ReportService rs = vega.getReportService();
-			Collection<Report> storedReports = rs.getStoredReports();
+			Collection<Report> storedReports = null;
+			try {
+				storedReports = rs.getStoredReports();
+			} catch (VegaException e) {
+				e.printStackTrace();
+				resp.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "error while retrieving stored reports");
+				return;
+			}
 			req.setAttribute("reports", storedReports);
 			req.setAttribute("contextRoot", req.getContextPath());
 			String targetUrl = String.format("/%s.jsp", rmb.getViewName());
@@ -120,7 +127,7 @@ public class ReportController extends HttpServlet {
 			String targetUrl = String.format("/WEB-INF/jsp/%s.jsp", cmb.getViewName());
 			req.getRequestDispatcher(targetUrl).forward(req, resp);
 		} else {
-			throw new ServletException("wrong path specified: <" + section + ">");
+			resp.sendError(HttpServletResponse.SC_NOT_FOUND, "unknown section: <" + section + ">");
 		}
 	}
 
