@@ -1,14 +1,14 @@
 package org.gmnz.vega.repository;
 
 
-import javax.sql.DataSource;
 import java.sql.SQLException;
+
+import javax.sql.DataSource;
 
 
 public abstract class DaoFactory {
 
-	private static DaoFactory INSTANCE = new DaoFactory() {
-	};
+	private static DaoFactory INSTANCE = new DaoFactory() {};
 
 	private DataSource dataSource;
 
@@ -16,8 +16,7 @@ public abstract class DaoFactory {
 
 
 
-	private DaoFactory() {
-	}
+	private DaoFactory() {}
 
 
 
@@ -43,6 +42,14 @@ public abstract class DaoFactory {
 
 	public AllergenDao createAllergenDao() throws DaoCreationException {
 		AllergenDaoImpl daoImpl = new AllergenDaoImpl();
+		injectConnection(daoImpl);
+		return daoImpl;
+	}
+
+
+
+	public ReportDao createReportDao() throws DaoCreationException {
+		ReportDaoImpl daoImpl = new ReportDaoImpl();
 		injectConnection(daoImpl);
 		return daoImpl;
 	}
