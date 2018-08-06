@@ -149,11 +149,11 @@ class AllergenNavigationHandler {
 						"no allergen found with id " + allergenId);
 			}
 			mgmtBean.setAllergen(targetAllergen);
+			return null;
 		} catch (VegaException e) {
 			e.printStackTrace();
 			return new RequestProcessingResult(HttpServletResponse.SC_INTERNAL_SERVER_ERROR,
 					"error while retrieving allergen");
 		}
-		return null;
 	}
 }

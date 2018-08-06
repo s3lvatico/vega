@@ -9,3 +9,6 @@ le due classi controller per categorie e allergeni.
 BaseViewResolverServlet.service
     Ho aggiunto degli intercettatori fittizi prima e dopo la chiamata effettiva
     ai vari metodi doGet e doPost.
+    L'oggetto da cui tutto dipende strettamente è il RequestProcessingResult,
+    che verrà poi usato dal metodo dispatchToView() per capire come gestire
+    definitivamente la richiesta.
