@@ -4,7 +4,6 @@ package org.gmnz.vega.ui.web.report;
 import java.io.IOException;
 import java.util.Collection;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import javax.servlet.ServletException;
@@ -15,7 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.gmnz.vega.Vega;
 import org.gmnz.vega.VegaException;
 import org.gmnz.vega.VegaImpl;
-import org.gmnz.vega.domain.Category;
+import org.gmnz.vega.base.VegaUtil;
 import org.gmnz.vega.domain.Report;
 import org.gmnz.vega.domain.ToxicityRating;
 import org.gmnz.vega.service.ReportService;
@@ -94,52 +93,32 @@ public class ReportController extends HttpServlet {
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		String section = findRequestedSection(req.getRequestURL().toString());
-		ReportManagementBean cmb = viewMap.get(section);
-		if (cmb == null) {
+		ReportManagementBean rmb = viewMap.get(section);
+		if (rmb == null) {
 			resp.sendError(HttpServletResponse.SC_NOT_FOUND, "unknown section: <" + section + ">");
 			return;
 		}
 
-		Vega vega = new VegaImpl();
+//		Vega vega = new VegaImpl();
+//		String reportId = req.getParameter("reportId");
+//		Report r = vega.getReportService().getReport(reportId);
 
-		switch (cmb.getAction()) {
+		RequestProcessingOutcome outcome;
+		switch (rmb.getAction()) {
 		case Action.CREATE:
+			outcome = new ViewHelperCreation().processRequest(req, resp, rmb);
 			break;
 		case Action.VIEW_DETAILS:
+			outcome = new ViewHelperDetails().processRequest(req, resp, rmb);
 			break;
 		case Action.DELETE:
+			outcome = new ViewHelperDeletion().processRequest(req, resp, rmb);
 			break;
 		}
 
-		// recupero categorie
-		try {
-			List<Category> categories = vega.getCategoryService().getAllCategories();
-			req.setAttribute("categories", categories);
-		} catch (VegaException e) {
-			e.printStackTrace();
-			resp.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR,
-					"exception thrown while retrieving the categories");
-			return;
-		}
-
-		req.setAttribute("reportBean", cmb);
+		req.setAttribute("reportBean", rmb);
 		req.setAttribute("contextRoot", req.getContextPath());
-
-		if (cmb.getAction().equals(Action.VIEW_DETAILS)) {
-			String reportId = req.getParameter("reportId");
-			Report r = vega.getReportService().getReport(reportId);
-			ViewReportData viewReportData = prepareReportData(r);
-			req.setAttribute("reportData", viewReportData);
-		}
-		if (cmb.getAction().equals(Action.DELETE)) {
-			String reportId = req.getParameter("reportId");
-			Report r = vega.getReportService().getReport(reportId);
-			req.setAttribute("subjectName", r.getSubjectName());
-			req.setAttribute("creationDate", r.getCreationDate());
-			req.setAttribute("reportId", reportId);
-		}
-
-		String targetUrl = String.format("/WEB-INF/jsp/%s.jsp", cmb.getViewName());
+		String targetUrl = String.format("/WEB-INF/jsp/%s.jsp", rmb.getViewName());
 		req.getRequestDispatcher(targetUrl).forward(req, resp);
 	}
 
@@ -167,7 +146,8 @@ public class ReportController extends HttpServlet {
 
 	private String findRequestedSection(String requestUrl) {
 		int i = requestUrl.lastIndexOf('/');
-		// forse c'è da gestire il caso in cui ritorna -1
-		return requestUrl.substring(i + 1);
+		String section = requestUrl.substring(i + 1);
+		section = VegaUtil.normalizeString(section);
+		return section;
 	}
 }

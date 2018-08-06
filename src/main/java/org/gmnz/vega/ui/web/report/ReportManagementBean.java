@@ -3,10 +3,10 @@ package org.gmnz.vega.ui.web.report;
 public class ReportManagementBean {
 
 	private String operationLabel;
-
 	private String viewName;
-
 	private String action;
+
+	private String reportId;
 
 
 
@@ -44,6 +44,18 @@ public class ReportManagementBean {
 
 	public void setAction(String action) {
 		this.action = action;
+	}
+
+
+
+	public String getReportId() {
+		return reportId;
+	}
+
+
+
+	public void setReportId(String reportId) {
+		this.reportId = reportId;
 	}
 
 }
