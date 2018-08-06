@@ -88,6 +88,7 @@ public class ReportController extends HttpServlet {
 	}
 
 
+	// TODO modificare la logica di navigazione, NON E' AFFATTO CHIARA
 
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
