@@ -1,19 +1,20 @@
 package org.gmnz.vega.ui.web;
 
 
+import java.io.IOException;
+
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
 
 
 public class BaseViewResolverServlet extends HttpServlet {
 
 	private static final long serialVersionUID = 5139974582329075960L;
 
-	private HttpServletRequest request;
-	private HttpServletResponse response;
+//	private HttpServletRequest request;
+//	private HttpServletResponse response;
 
 
 	protected RequestProcessingResult requestProcessingResult;
@@ -23,26 +24,26 @@ public class BaseViewResolverServlet extends HttpServlet {
 
 	@Override
 	protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		this.request = req;
-		this.response = resp;
+//		this.request = req;
+//		this.response = resp;
 		requestedSection = findRequestedSection(req);
 		super.service(req, resp);
-		dispatchToView();
+		dispatchToView(req, resp);
 	}
 
 
 
-	private void dispatchToView() throws ServletException, IOException {
+	private void dispatchToView(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		int statusCode = requestProcessingResult.getStatusCode();
 		switch (statusCode) {
 			case HttpServletResponse.SC_OK:
-				request.setAttribute("contextRoot", request.getContextPath());
+				req.setAttribute("contextRoot", req.getContextPath());
 				String targetUrl = String.format("/WEB-INF/jsp/%s.jsp", requestProcessingResult.getViewName());
-				request.getRequestDispatcher(targetUrl).forward(request, response);
+				req.getRequestDispatcher(targetUrl).forward(req, resp);
 				return;
 			case HttpServletResponse.SC_BAD_REQUEST:
 			case HttpServletResponse.SC_INTERNAL_SERVER_ERROR:
-				response.sendError(statusCode, requestProcessingResult.getErrorMessage());
+				resp.sendError(statusCode, requestProcessingResult.getErrorMessage());
 				return;
 		}
 	}
