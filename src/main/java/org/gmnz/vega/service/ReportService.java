@@ -13,7 +13,7 @@ import org.gmnz.vega.domain.Report;
  */
 public interface ReportService {
 
-	Collection<Report> getStoredReports();
+	Collection<Report> getStoredReports() throws VegaException;
 
 
 

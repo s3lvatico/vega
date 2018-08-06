@@ -12,7 +12,7 @@ import java.util.List;
 import org.gmnz.vega.domain.Report;
 
 
-public class ReportDaoImpl extends BasicDaoImpl implements ReportDao {
+class ReportDaoImpl extends BasicDaoImpl implements ReportDao {
 
 	@Override
 	public Collection<Report> findAll() throws DaoException {

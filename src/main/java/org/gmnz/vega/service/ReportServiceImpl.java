@@ -7,17 +7,30 @@ import java.util.Date;
 import org.gmnz.vega.VegaException;
 import org.gmnz.vega.base.VegaUtil;
 import org.gmnz.vega.domain.Report;
+import org.gmnz.vega.repository.DaoException;
+import org.gmnz.vega.repository.DaoFactory;
 import org.gmnz.vega.repository.DummyRepository;
+import org.gmnz.vega.repository.ReportDao;
 
 
 /**
  * creato da simone in data 15/07/2018.
  */
-public class ReportServiceImpl implements ReportService {
+public class ReportServiceImpl extends BasicServiceBean implements ReportService {
 
 	@Override
-	public Collection<Report> getStoredReports() {
-		return DummyRepository.getReports();
+	public Collection<Report> getStoredReports() throws VegaException {
+		ReportDao dao = null;
+		try {
+			dao = DaoFactory.getInstance().createReportDao();
+			Collection<Report> reports = dao.findAll();
+			return reports;
+		} catch (DaoException e) {
+			e.printStackTrace();
+			throw new VegaException("getStoredReports service error", e);
+		} finally {
+			finalizeDao(dao);
+		}
 	}
 
 
