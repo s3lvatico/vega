@@ -44,7 +44,6 @@ public class Report {
 
 	public void addRating(ToxicityRating rating) {
 		String categoryName = rating.getAllergen().getCategory().getName();
-
 //		if (reportData.get(categoryName) == null) {
 		if (!reportData.containsKey(categoryName)) {
 			reportData.put(categoryName, new ArrayList<>());
