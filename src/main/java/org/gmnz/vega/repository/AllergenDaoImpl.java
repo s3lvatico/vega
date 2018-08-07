@@ -1,9 +1,6 @@
 package org.gmnz.vega.repository;
 
 
-import org.gmnz.vega.domain.Allergen;
-import org.gmnz.vega.domain.Category;
-
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -11,6 +8,9 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
+
+import org.gmnz.vega.domain.Allergen;
+import org.gmnz.vega.domain.Category;
 
 
 class AllergenDaoImpl extends BasicDaoImpl implements AllergenDao {
@@ -52,7 +52,7 @@ class AllergenDaoImpl extends BasicDaoImpl implements AllergenDao {
 		PreparedStatement s = null;
 		ResultSet rs = null;
 		try {
-			s = connection.prepareStatement("select \n" +
+			s = connection.prepareStatement("select " +
 					" allergen.id allergen_id, " +
 					" allergen.e_name allergen_name, " +
 					" category.id category_id, " +
@@ -60,7 +60,7 @@ class AllergenDaoImpl extends BasicDaoImpl implements AllergenDao {
 					" from allergen " +
 					" join category on " +
 					" allergen.id_category = category.id and allergen.deleted = 0 " +
-					"where  allergen.id = ?");
+					" where  allergen.id = ?");
 			s.setString(1, id);
 			rs = s.executeQuery();
 
