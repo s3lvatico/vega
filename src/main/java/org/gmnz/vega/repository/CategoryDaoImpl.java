@@ -1,8 +1,6 @@
 package org.gmnz.vega.repository;
 
 
-import org.gmnz.vega.domain.Category;
-
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -10,6 +8,9 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
+
+import org.gmnz.vega.domain.Allergen;
+import org.gmnz.vega.domain.Category;
 
 
 class CategoryDaoImpl extends BasicDaoImpl implements CategoryDao {
@@ -46,6 +47,7 @@ class CategoryDaoImpl extends BasicDaoImpl implements CategoryDao {
 		ResultSet rs = null;
 		try {
 			s = connection.createStatement();
+//@formatter:off			
 			String sqlQuery = "select  " +
 					"category.id 		category_id, " +
 					"category.e_name 	category_name, " +
@@ -57,11 +59,9 @@ class CategoryDaoImpl extends BasicDaoImpl implements CategoryDao {
 					"        and allergen.deleted = 0 " +
 					"        and category.deleted = 0 " +
 					"order by category_name, allergen_name";
+//@formatter:on			
 			rs = s.executeQuery(sqlQuery);
-			ArrayList<Category> categories = new ArrayList<>();
-			while (rs.next()) {
-				// TODO CategoryDaoImpl.findAllWithAllergens elabora resultset
-			}
+			List<Category> categories = buildCategoriesList(rs);
 			return categories;
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -69,6 +69,34 @@ class CategoryDaoImpl extends BasicDaoImpl implements CategoryDao {
 		} finally {
 			releaseResources(s, rs);
 		}
+	}
+
+
+
+	private List<Category> buildCategoriesList(ResultSet rs) throws SQLException {
+		ArrayList<Category> categories = new ArrayList<>();
+		String currentCategoryId = "";
+		Category currentCategory = null;
+		while(rs.next()) {
+			String rsCategoryId = rs.getString("category_id");
+			if (currentCategoryId.equals(rsCategoryId)) {
+				Allergen a = new Allergen(rs.getString("allergen_name"));
+				a.setId(rs.getString("allergen_id"));
+				a.setCategory(currentCategory);
+				currentCategory.addAllergen(a);
+			}
+			else {
+				// crea nuova categoria, 
+				currentCategory = new Category(rs.getString("category_name"));
+				currentCategory.setId(rsCategoryId);
+				// definisci allergene e aggiungilo alla categoria corrente
+				Allergen a = new Allergen(rs.getString("allergen_name"));
+				a.setId(rs.getString("allergen_id"));
+				a.setCategory(currentCategory);
+				currentCategory.addAllergen(a);
+			}
+		}
+		return categories;
 	}
 
 
@@ -117,6 +145,8 @@ class CategoryDaoImpl extends BasicDaoImpl implements CategoryDao {
 		}
 	}
 
+
+
 	@Override
 	public boolean isCategoryRegisteredById(String categoryId) throws DaoException {
 		PreparedStatement ps = null;
@@ -144,8 +174,6 @@ class CategoryDaoImpl extends BasicDaoImpl implements CategoryDao {
 //		//
 //		return null;
 //	}
-
-
 
 	@Override
 	public void create(String name) throws DaoException {
@@ -210,7 +238,6 @@ class CategoryDaoImpl extends BasicDaoImpl implements CategoryDao {
 //		//
 //
 //	}
-
 
 	@Override
 	public void delete(String categoryId) throws DaoException {

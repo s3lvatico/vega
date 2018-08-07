@@ -1,41 +1,31 @@
 package org.gmnz.vega.ui.web.report;
 
-import org.gmnz.vega.VegaException;
-import org.gmnz.vega.domain.Category;
+
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.util.List;
+
+import org.gmnz.vega.VegaException;
+import org.gmnz.vega.domain.Category;
 
 
 class ViewHelperCreation extends ViewHelperBase {
 
 	@Override
-	protected RequestProcessingOutcome processRequest(HttpServletRequest req, HttpServletResponse resp, ReportManagementBean rmb) {
-		// TODO Auto-generated method stub
+	protected RequestProcessingOutcome processRequest(HttpServletRequest req, HttpServletResponse resp,
+			ReportManagementBean rmb) {
 		RequestProcessingOutcome rpo = new RequestProcessingOutcome();
 		try {
-			List<Category> categories = vega.getCategoryService().getAllCategories();
+			List<Category> categories = vega.getCategoryService().getAllCategoriesWithAllergens();
 			req.setAttribute("categories", categories);
-		}
-		catch (VegaException e) {
+			rpo.statusCode = 200;
+		} catch (VegaException e) {
 			e.printStackTrace();
 			rpo.statusCode = 500;
 			rpo.errorMessage = "error while retrieving categories";
-			return rpo;
 		}
-		// recupero categorie
-//		try {
-//			List<Category> categories = vega.getCategoryService().getAllCategories();
-//			req.setAttribute("categories", categories);
-//		} catch (VegaException e) {
-//			e.printStackTrace();
-//			resp.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR,
-//					"exception thrown while retrieving the categories");
-//			return;
-//		}
-
-		return null;
+		return rpo;
 	}
 
 }

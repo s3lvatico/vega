@@ -1,13 +1,13 @@
 package org.gmnz.vega.service;
 
 
+import java.util.List;
+
 import org.gmnz.vega.VegaException;
 import org.gmnz.vega.domain.Category;
 import org.gmnz.vega.repository.CategoryDao;
 import org.gmnz.vega.repository.DaoException;
 import org.gmnz.vega.repository.DaoFactory;
-
-import java.util.List;
 
 
 /**
@@ -37,11 +37,11 @@ public class CategoryServiceImpl extends BasicServiceBean implements CategorySer
 		CategoryDao dao = null;
 		try {
 			dao = DaoFactory.getInstance().createCategoryDao();
-			List<Category> categories = dao.findAll();
+			List<Category> categories = dao.findAllWithAllergens();
 			return categories;
 		} catch (DaoException e) {
 			e.printStackTrace();
-			throw new VegaException("getAllCategories service error", e);
+			throw new VegaException("getAllCategoriesWithAllergens service error", e);
 		} finally {
 			finalizeDao(dao);
 		}
