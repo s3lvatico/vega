@@ -27,7 +27,23 @@ public class ReportServiceImpl extends BasicServiceBean implements ReportService
 			return reports;
 		} catch (DaoException e) {
 			e.printStackTrace();
-			throw new VegaException("getStoredReports service error", e);
+			throw new VegaException("getStoredReports data access error", e);
+		} finally {
+			finalizeDao(dao);
+		}
+	}
+
+
+
+	@Override
+	public void createReport(Report report) throws VegaException {
+		ReportDao dao = null;
+		try {
+			dao = DaoFactory.getInstance().createReportDao();
+			dao.createReport(report);
+		} catch (DaoException e) {
+			e.printStackTrace();
+			throw new VegaException("createReport data access error", e);
 		} finally {
 			finalizeDao(dao);
 		}
@@ -45,18 +61,6 @@ public class ReportServiceImpl extends BasicServiceBean implements ReportService
 	@Override
 	public Report getReport(String id) {
 		return DummyRepository.getReportById(id);
-	}
-
-
-
-	@Override
-	public void createReport(Report report) throws VegaException {
-		if (DummyRepository.getReport(report.getSubjectName(), report.getCreationDate()) != null) {
-			throw new VegaException("report already existing");
-		} else {
-			DummyRepository.addReport(report);
-		}
-
 	}
 
 
