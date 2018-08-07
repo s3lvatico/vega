@@ -1,11 +1,7 @@
 package org.gmnz.vega.repository;
 
 
-import java.sql.Date;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -51,14 +47,15 @@ class ReportDaoImpl extends BasicDaoImpl implements ReportDao {
 			psRptHeader = connection.prepareStatement("INSERT INTO report VALUES (?, ?, ?)");
 			psRptHeader.setString(1, r.getId());
 			psRptHeader.setString(2, r.getSubjectName());
-			psRptHeader.setDate(3, new Date(r.getCreationDate().getTime()));
+			//psRptHeader.setDate(3, new Date(r.getCreationDate().getTime()));
+			psRptHeader.setTimestamp(3, new Timestamp(r.getCreationDate().getTime()));
 			psRptHeader.execute();
 
 			psRptDetail = connection.prepareStatement("INSERT INTO report_line VALUES (?, ?, ?)");
 			for (String category : r.getCategories()) {
 				for (ToxicityRating tr : r.getRatings(category)) {
-					psRptDetail.setString(1, tr.getAllergen().getId());
-					psRptDetail.setString(2, r.getId());					
+					psRptDetail.setString(1, r.getId());
+					psRptDetail.setString(2, tr.getAllergen().getId());
 					psRptDetail.setDouble(3, tr.getToxicity());
 					psRptDetail.execute();
 				}
