@@ -8,10 +8,6 @@ import java.sql.Statement;
 
 class BasicDaoImpl extends ConnectionOrientedDaoImpl {
 
-
-
-
-
 	//@formatter:off
 	protected void releaseResources(Statement s, ResultSet rs) {
 		if (rs != null) { try { rs.close(); } catch (SQLException e) { /* ignored */ } }

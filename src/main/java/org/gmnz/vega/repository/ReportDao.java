@@ -10,4 +10,9 @@ public interface ReportDao extends ConnectionOrientedDao {
 
 	Collection<Report> findAll() throws DaoException;
 
+
+
+	void createReport(Report r) throws DaoException;
+	
+
 }
