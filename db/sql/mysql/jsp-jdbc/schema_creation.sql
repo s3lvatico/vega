@@ -15,7 +15,7 @@ DROP TABLE IF EXISTS `category`;
 
 CREATE TABLE `report`
 (
- `id`            CHAR(36) NOT NULL ,
+ `id`            CHAR(64) NOT NULL ,
  `subject_name`  VARCHAR(100) NOT NULL ,
  `date_creation` DATETIME NOT NULL ,
 
@@ -53,8 +53,7 @@ CREATE TABLE `allergen`
 
 PRIMARY KEY (`id`),
 KEY `fkIdx_75` (`id_category`),
-CONSTRAINT `FK_75` FOREIGN KEY `fkIdx_75` (`id_category`) REFERENCES `category` (`id`),
-KEY `idx_category` (`id_category`)
+CONSTRAINT `FK_75` FOREIGN KEY `fkIdx_75` (`id_category`) REFERENCES `category` (`id`)
 );
 
 
@@ -66,7 +65,7 @@ KEY `idx_category` (`id_category`)
 CREATE TABLE `report_line`
 (
  `id_allergen` CHAR(36) NOT NULL ,
- `id_report`   CHAR(36) NOT NULL ,
+ `id_report`   CHAR(64) NOT NULL ,
  `toxicity`    DECIMAL(4,2) NOT NULL ,
 
 PRIMARY KEY (`id_allergen`, `id_report`),

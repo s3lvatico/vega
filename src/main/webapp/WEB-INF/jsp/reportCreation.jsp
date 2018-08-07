@@ -29,7 +29,7 @@
             <c:forEach var="allergen" items="${category.allergens}">
                 <tr>
                     <td>${allergen.name}</td>
-                    <td><input type="range" name="Tox${allergen.name}" min="0" max="100"></td>
+                    <td><input type="range" name="tr-${allergen.id}" min="0" max="100"></td>
                 </tr>
             </c:forEach>
             </tbody>

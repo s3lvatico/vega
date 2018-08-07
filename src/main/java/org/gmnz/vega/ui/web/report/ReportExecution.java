@@ -1,21 +1,24 @@
 package org.gmnz.vega.ui.web.report;
 
 
-import org.gmnz.vega.Vega;
-import org.gmnz.vega.VegaException;
-import org.gmnz.vega.VegaImpl;
-import org.gmnz.vega.base.VegaUtil;
-import org.gmnz.vega.domain.Report;
-import org.gmnz.vega.service.AllergenService;
-import org.gmnz.vega.ui.Action;
+import java.io.IOException;
+import java.util.Date;
+import java.util.Enumeration;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
-import java.util.Date;
-import java.util.Enumeration;
+
+import org.gmnz.vega.Vega;
+import org.gmnz.vega.VegaException;
+import org.gmnz.vega.VegaImpl;
+import org.gmnz.vega.base.VegaUtil;
+import org.gmnz.vega.domain.Allergen;
+import org.gmnz.vega.domain.Report;
+import org.gmnz.vega.domain.ToxicityRating;
+import org.gmnz.vega.service.AllergenService;
+import org.gmnz.vega.ui.Action;
 
 
 /**
@@ -51,27 +54,29 @@ public class ReportExecution extends HttpServlet {
 			throws ServletException, IOException {
 		try {
 			switch (action) {
-				case Action.CREATE:
-					String subjectName = req.getParameter("subjectName");
-					if (VegaUtil.stringNullOrEmpty(subjectName)) {
-						resp.sendError(HttpServletResponse.SC_BAD_REQUEST, "A subject must be specified");
-						return;
-					}
-					createAndStoreReport(subjectName, req, resp);
-					break;
-				case Action.DELETE:
-					String reportId = req.getParameter("reportId");
-					if (!VegaUtil.stringNullOrEmpty(reportId)) {
-						vega.getReportService().removeReport(reportId);
-					}
-					break;
-				default:
-					throw new ServletException("invalid action specified");
+			case Action.CREATE:
+				String subjectName = req.getParameter("subjectName");
+				if (VegaUtil.stringNullOrEmpty(subjectName)) {
+					resp.sendError(HttpServletResponse.SC_BAD_REQUEST, "A subject must be specified");
+					return;
+				}
+				createAndStoreReport(subjectName, req, resp);
+				break;
+			case Action.DELETE:
+				String reportId = req.getParameter("reportId");
+				if (!VegaUtil.stringNullOrEmpty(reportId)) {
+					vega.getReportService().removeReport(reportId);
+				}
+				break;
+			default:
+				resp.sendError(HttpServletResponse.SC_BAD_REQUEST, "invalid action specified");
+				return;
 			}
 		} catch (VegaException ve) {
 			String errorMessage = String.format("exception thrown while executing action -- %s :: %s",
 					ve.getClass().getName(), ve.getMessage());
-			throw new ServletException(errorMessage, ve);
+			resp.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, errorMessage);
+			return;
 		}
 		resp.sendRedirect(req.getContextPath() + "/report/getAll");
 	}
@@ -80,21 +85,24 @@ public class ReportExecution extends HttpServlet {
 
 	private void createAndStoreReport(String subjectName, HttpServletRequest req, HttpServletResponse resp)
 			throws VegaException {
-		// TODO ReportExecution.createAndStoreReport - fare
 		Report r = new Report(subjectName, new Date());
 		AllergenService allergenService = vega.getAllergenService();
 		Enumeration<String> paramNames = req.getParameterNames();
 		String paramName;
-		String allergenName;
+		String allergenId;
 		while (paramNames.hasMoreElements()) {
 			paramName = paramNames.nextElement();
-			if (paramName.startsWith("Tox")) {
-				allergenName = paramName.substring(3);
+			if (paramName.startsWith("tr-")) {
+				allergenId = paramName.substring(3);
+				Allergen a = allergenService.getAllergenById(allergenId);
+				if (a == null) {
+					// TODO questo va sistemato in altro modo
+					continue;
+				}
 				String strToxValue = req.getParameter(paramName);
 				double toxValue = Double.parseDouble(strToxValue);
-//				Allergen a = allergenService.get(allergenName);
-//				ToxicityRating tr = new ToxicityRating(null, toxValue);
-//				r.addRating(tr);
+				ToxicityRating tr = new ToxicityRating(a, toxValue);
+				r.addRating(tr);
 			}
 		}
 		vega.getReportService().addReport(r);
