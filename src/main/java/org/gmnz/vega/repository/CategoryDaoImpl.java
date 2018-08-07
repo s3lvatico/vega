@@ -77,24 +77,16 @@ class CategoryDaoImpl extends BasicDaoImpl implements CategoryDao {
 		ArrayList<Category> categories = new ArrayList<>();
 		String currentCategoryId = "";
 		Category currentCategory = null;
-		while(rs.next()) {
+		while (rs.next()) {
 			String rsCategoryId = rs.getString("category_id");
-			if (currentCategoryId.equals(rsCategoryId)) {
-				Allergen a = new Allergen(rs.getString("allergen_name"));
-				a.setId(rs.getString("allergen_id"));
-				a.setCategory(currentCategory);
-				currentCategory.addAllergen(a);
-			}
-			else {
-				// crea nuova categoria, 
+			if (!currentCategoryId.equals(rsCategoryId)) {
 				currentCategory = new Category(rs.getString("category_name"));
 				currentCategory.setId(rsCategoryId);
-				// definisci allergene e aggiungilo alla categoria corrente
-				Allergen a = new Allergen(rs.getString("allergen_name"));
-				a.setId(rs.getString("allergen_id"));
-				a.setCategory(currentCategory);
-				currentCategory.addAllergen(a);
 			}
+			Allergen a = new Allergen(rs.getString("allergen_name"));
+			a.setId(rs.getString("allergen_id"));
+			a.setCategory(currentCategory);
+			currentCategory.addAllergen(a);
 		}
 		return categories;
 	}

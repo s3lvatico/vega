@@ -88,8 +88,6 @@ public class ReportController extends HttpServlet {
 
 
 
-	// TODO modificare la logica di navigazione, NON E' AFFATTO CHIARA
-
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		String section = findRequestedSection(req.getRequestURL().toString());
@@ -99,11 +97,7 @@ public class ReportController extends HttpServlet {
 			return;
 		}
 
-//		Vega vega = new VegaImpl();
-//		String reportId = req.getParameter("reportId");
-//		Report r = vega.getReportService().getReport(reportId);
-
-		RequestProcessingOutcome outcome;
+		RequestProcessingOutcome outcome = null;
 		switch (rmb.getAction()) {
 		case Action.CREATE:
 			outcome = new ViewHelperCreation().processRequest(req, resp, rmb);
@@ -116,10 +110,14 @@ public class ReportController extends HttpServlet {
 			break;
 		}
 
-		req.setAttribute("reportBean", rmb);
-		req.setAttribute("contextRoot", req.getContextPath());
-		String targetUrl = String.format("/WEB-INF/jsp/%s.jsp", rmb.getViewName());
-		req.getRequestDispatcher(targetUrl).forward(req, resp);
+		if (outcome.statusCode == HttpServletResponse.SC_OK) {
+			req.setAttribute("reportBean", rmb);
+			req.setAttribute("contextRoot", req.getContextPath());
+			String targetUrl = String.format("/WEB-INF/jsp/%s.jsp", rmb.getViewName());
+			req.getRequestDispatcher(targetUrl).forward(req, resp);
+		} else {
+			resp.sendError(outcome.statusCode, outcome.errorMessage);
+		}
 	}
 
 
