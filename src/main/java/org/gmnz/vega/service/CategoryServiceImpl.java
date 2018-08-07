@@ -33,6 +33,23 @@ public class CategoryServiceImpl extends BasicServiceBean implements CategorySer
 
 
 	@Override
+	public List<Category> getAllCategoriesWithAllergens() throws VegaException {
+		CategoryDao dao = null;
+		try {
+			dao = DaoFactory.getInstance().createCategoryDao();
+			List<Category> categories = dao.findAll();
+			return categories;
+		} catch (DaoException e) {
+			e.printStackTrace();
+			throw new VegaException("getAllCategories service error", e);
+		} finally {
+			finalizeDao(dao);
+		}
+	}
+
+
+
+	@Override
 	public Category getCategoryById(String id) throws VegaException {
 		CategoryDao dao = null;
 		try {

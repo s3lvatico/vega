@@ -14,7 +14,7 @@ abstract class ViewHelperBase {
 
 
 
-	public ViewHelperBase() {
+	ViewHelperBase() {
 		vega = new VegaImpl();
 	}
 

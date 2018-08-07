@@ -41,6 +41,39 @@ class CategoryDaoImpl extends BasicDaoImpl implements CategoryDao {
 
 
 	@Override
+	public List<Category> findAllWithAllergens() throws DaoException {
+		Statement s = null;
+		ResultSet rs = null;
+		try {
+			s = connection.createStatement();
+			String sqlQuery = "select  " +
+					"category.id 		category_id, " +
+					"category.e_name 	category_name, " +
+					"allergen.id 		allergen_id,  " +
+					"allergen.e_name 	allergen_name " +
+					"from category  " +
+					"	join allergen on  " +
+					"		allergen.id_category = category.id  " +
+					"        and allergen.deleted = 0 " +
+					"        and category.deleted = 0 " +
+					"order by category_name, allergen_name";
+			rs = s.executeQuery(sqlQuery);
+			ArrayList<Category> categories = new ArrayList<>();
+			while (rs.next()) {
+				// TODO CategoryDaoImpl.findAllWithAllergens elabora resultset
+			}
+			return categories;
+		} catch (SQLException e) {
+			e.printStackTrace();
+			throw new DaoException("CategoryDaoImpl.findAllWithAllergens error", e);
+		} finally {
+			releaseResources(s, rs);
+		}
+	}
+
+
+
+	@Override
 	public Category findById(String id) throws DaoException {
 		PreparedStatement s = null;
 		ResultSet rs = null;

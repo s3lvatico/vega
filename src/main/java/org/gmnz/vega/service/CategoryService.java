@@ -14,26 +14,13 @@ public interface CategoryService {
 
 	List<Category> getAllCategories() throws VegaException;
 
+	List<Category> getAllCategoriesWithAllergens() throws VegaException;
 
 	Category getCategoryById(String id) throws VegaException;
 
-
 	void createCategory(String name) throws VegaException;
 
-
-
-	/*
-	 * @param category
-	 * @param newCategoryName
-	 * @throws VegaException
-	 * @deprecated use {@link #changeCategoryName(String, String)} instead.
-	 */
-//	@Deprecated
-//	void renameCategory(String category, String newCategoryName) throws VegaException;
-
-
 	void changeCategoryName(String categoryId, String newCategoryName) throws VegaException;
-
 
 	void removeCategory(String id) throws VegaException;
 

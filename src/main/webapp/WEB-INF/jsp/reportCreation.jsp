@@ -13,7 +13,7 @@
 <jsp:include page="/WEB-INF/jsp/header.jsp"/>
 <h2>Report</h2>
 <h3>${reportBean.operationLabel}</h3>
-<form  method="post" action="${contextRoot}/report/do" >
+<form  method="POST" action="${contextRoot}/report/do" >
     <input type="hidden" name="action" value="${reportBean.action}">
     <h4>Report Summary</h4>
     <p>Subject name <input type="text" name="subjectName"></p>
