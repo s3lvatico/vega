@@ -50,7 +50,7 @@ public class ReportServiceImpl extends BasicServiceBean implements ReportService
 
 
 	@Override
-	public void addReport(Report report) throws VegaException {
+	public void createReport(Report report) throws VegaException {
 		if (DummyRepository.getReport(report.getSubjectName(), report.getCreationDate()) != null) {
 			throw new VegaException("report already existing");
 		} else {

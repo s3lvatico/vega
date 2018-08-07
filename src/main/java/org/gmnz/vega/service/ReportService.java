@@ -25,7 +25,7 @@ public interface ReportService {
 
 
 
-	void addReport(Report report) throws VegaException;
+	void createReport(Report report) throws VegaException;
 
 
 

@@ -105,6 +105,6 @@ public class ReportExecution extends HttpServlet {
 				r.addRating(tr);
 			}
 		}
-		vega.getReportService().addReport(r);
+		vega.getReportService().createReport(r);
 	}
 }
