@@ -80,8 +80,12 @@ class CategoryDaoImpl extends BasicDaoImpl implements CategoryDao {
 		while (rs.next()) {
 			String rsCategoryId = rs.getString("category_id");
 			if (!currentCategoryId.equals(rsCategoryId)) {
+				if (currentCategory != null) {
+					categories.add(currentCategory);
+				}
+				currentCategoryId = rsCategoryId;
 				currentCategory = new Category(rs.getString("category_name"));
-				currentCategory.setId(rsCategoryId);
+				currentCategory.setId(currentCategoryId);
 			}
 			Allergen a = new Allergen(rs.getString("allergen_name"));
 			a.setId(rs.getString("allergen_id"));
