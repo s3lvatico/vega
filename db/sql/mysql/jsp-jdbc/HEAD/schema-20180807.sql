@@ -22,9 +22,10 @@ CREATE TABLE `report` (
 ) ENGINE=InnoDB;
 
 CREATE TABLE `report_line` (
-  `id_allergen` char(36) NOT NULL,
   `id_report` char(64) NOT NULL,
+  `id_allergen` char(36) NOT NULL,
   `toxicity` decimal(4,2) NOT NULL,
-  PRIMARY KEY (`id_allergen`,`id_report`),
-  CONSTRAINT `FK_109` FOREIGN KEY (`id_allergen`) REFERENCES `allergen` (`id`)
+  PRIMARY KEY (`id_report`,`id_allergen`),
+  CONSTRAINT `FK_report_line__report` FOREIGN KEY (`id_report`) REFERENCES `report` (`id`),
+  CONSTRAINT `FK_report_line__allergen` FOREIGN KEY (`id_allergen`) REFERENCES `allergen` (`id`)
 ) ENGINE=InnoDB;
