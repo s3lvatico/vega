@@ -59,6 +59,7 @@ public class VegaUtil {
 		Date d = new Date();
 		String sha256 = getSha256Digest(s1, d);
 		System.out.format("Stringa <%s> | Data <%s> | hash <%s>%n", s1, d, sha256);
+		System.out.printf("Lunghezza hash : %d%n", sha256.length());
 	}
 
 }
