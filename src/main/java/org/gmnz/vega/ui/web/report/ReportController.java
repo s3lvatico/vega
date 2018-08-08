@@ -122,23 +122,7 @@ public class ReportController extends HttpServlet {
 
 
 
-	private ViewReportData prepareReportData(Report r) {
-		ViewReportData reportData = new ViewReportData();
-		reportData.setSubjectName(r.getSubjectName());
-		reportData.setCreationDate(r.getCreationDate());
-		for (String categoryName : r.getCategories()) {
-			ViewReportCategory vrc = new ViewReportCategory();
-			vrc.setName(categoryName);
-			for (ToxicityRating rating : r.getRatings(categoryName)) {
-				ViewReportToxicityAssessment vta = new ViewReportToxicityAssessment();
-				vta.setAllergenName(rating.getAllergen().getName());
-				vta.setToxicityRating(rating.getToxicity());
-				vrc.getToxData().add(vta);
-			}
-			reportData.getCategories().add(vrc);
-		}
-		return reportData;
-	}
+
 
 
 

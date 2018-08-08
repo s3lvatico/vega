@@ -29,7 +29,7 @@
             <tr>
                 <td>${toxicityAssessment.allergenName}</td>
                 <td>
-                    <input type="range" disabled="true" min="0" max="100" value="${toxicityAssessment.toxicityRating}">
+                    <input type="range" disabled min="0" max="100" value="${toxicityAssessment.toxicityRating}">
                 </td>
                 <td>
                     ${toxicityAssessment.toxicityRating}

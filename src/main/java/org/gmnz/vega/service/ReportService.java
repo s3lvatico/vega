@@ -1,11 +1,11 @@
 package org.gmnz.vega.service;
 
 
-import java.util.Collection;
-import java.util.Date;
-
 import org.gmnz.vega.VegaException;
 import org.gmnz.vega.domain.Report;
+
+import java.util.Collection;
+import java.util.Date;
 
 
 /**
@@ -16,17 +16,13 @@ public interface ReportService {
 	Collection<Report> getStoredReports() throws VegaException;
 
 
-
-	Report getReport(String subjectName, Date creationDate);
-
+	Report getReportSummaryById(String id) throws VegaException;
 
 
-	Report getReport(String id);
-
+	Report getReportById(String id) throws VegaException;
 
 
 	void createReport(Report report) throws VegaException;
-
 
 
 	void removeReport(String id);

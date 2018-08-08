@@ -1,9 +1,6 @@
 package org.gmnz.vega.service;
 
 
-import java.util.Collection;
-import java.util.Date;
-
 import org.gmnz.vega.VegaException;
 import org.gmnz.vega.base.VegaUtil;
 import org.gmnz.vega.domain.Report;
@@ -11,6 +8,8 @@ import org.gmnz.vega.repository.DaoException;
 import org.gmnz.vega.repository.DaoFactory;
 import org.gmnz.vega.repository.DummyRepository;
 import org.gmnz.vega.repository.ReportDao;
+
+import java.util.Collection;
 
 
 /**
@@ -36,14 +35,14 @@ public class ReportServiceImpl extends BasicServiceBean implements ReportService
 
 
 	@Override
-	public void createReport(Report report) throws VegaException {
+	public Report getReportSummaryById(String id) throws VegaException {
 		ReportDao dao = null;
 		try {
 			dao = DaoFactory.getInstance().createReportDao();
-			dao.createReport(report);
+			return dao.findById(id);
 		} catch (DaoException e) {
 			e.printStackTrace();
-			throw new VegaException("createReport data access error", e);
+			throw new VegaException("getReportSummaryById service error", e);
 		} finally {
 			finalizeDao(dao);
 		}
@@ -52,15 +51,33 @@ public class ReportServiceImpl extends BasicServiceBean implements ReportService
 
 
 	@Override
-	public Report getReport(String subjectName, Date creationDate) {
-		return DummyRepository.getReport(subjectName, creationDate);
+	public void createReport(Report report) throws VegaException {
+		ReportDao dao = null;
+		try {
+			dao = DaoFactory.getInstance().createReportDao();
+			dao.createReport(report);
+		} catch (DaoException e) {
+			e.printStackTrace();
+			throw new VegaException("createReport service error", e);
+		} finally {
+			finalizeDao(dao);
+		}
 	}
 
 
 
 	@Override
-	public Report getReport(String id) {
-		return DummyRepository.getReportById(id);
+	public Report getReportById(String id) throws VegaException {
+		ReportDao dao = null;
+		try {
+			dao = DaoFactory.getInstance().createReportDao();
+			return dao.findById(id);
+		} catch (DaoException e) {
+			e.printStackTrace();
+			throw new VegaException("getReportById service error", e);
+		} finally {
+			finalizeDao(dao);
+		}
 	}
 
 

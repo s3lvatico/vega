@@ -38,6 +38,7 @@ public class Report {
 		this.id = id;
 		this.subjectName = subjectName;
 		this.createdOn = creationDate;
+		reportData = new LinkedHashMap<>();
 	}
 
 
