@@ -2,6 +2,8 @@ package org.gmnz.vega.service;
 
 
 import org.gmnz.vega.VegaException;
+import org.gmnz.vega.repository.AllergenDao;
+import org.gmnz.vega.repository.CategoryDao;
 import org.gmnz.vega.repository.ConnectionOrientedDao;
 import org.gmnz.vega.repository.DaoException;
 import org.gmnz.vega.repository.DaoFactory;
@@ -37,26 +39,34 @@ class BasicServiceBean {
 
 
 	private boolean checkForCategory(String categoryName) throws VegaException {
+		CategoryDao dao = null;
 		try {
-			return DaoFactory.getInstance().createCategoryDao().isCategoryRegisteredByName(categoryName);
+			dao = DaoFactory.getInstance().createCategoryDao();
+			return dao.isCategoryRegisteredByName(categoryName);
 		} catch (DaoException e) {
 			e.printStackTrace();
 			String errorMessage = String.format(
 					"unable to check the presence of the category [%s] - exception was thrown by data layer", categoryName);
 			throw new VegaException(errorMessage, e);
+		} finally {
+			finalizeDao(dao);
 		}
 	}
 
 
 
 	private boolean checkForAllergen(String allergenName) throws VegaException {
+		AllergenDao dao = null;
 		try {
-			return DaoFactory.getInstance().createAllergenDao().isAllergenRegisteredByName(allergenName);
+			dao = DaoFactory.getInstance().createAllergenDao();
+			return dao.isAllergenRegisteredByName(allergenName);
 		} catch (DaoException e) {
 			e.printStackTrace();
 			String errorMessage = String.format(
 					"unable to check the presence of the allergen [%s] - exception was thrown by data layer", allergenName);
 			throw new VegaException(errorMessage, e);
+		} finally {
+			finalizeDao(dao);
 		}
 	}
 
