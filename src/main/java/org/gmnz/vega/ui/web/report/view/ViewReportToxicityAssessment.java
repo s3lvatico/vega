@@ -1,4 +1,4 @@
-package org.gmnz.vega.ui.web.report;
+package org.gmnz.vega.ui.web.report.view;
 
 public class ViewReportToxicityAssessment {
 

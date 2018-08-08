@@ -8,6 +8,9 @@ import org.gmnz.vega.VegaException;
 import org.gmnz.vega.VegaUtil;
 import org.gmnz.vega.domain.Report;
 import org.gmnz.vega.domain.ToxicityRating;
+import org.gmnz.vega.ui.web.report.view.ViewReportCategory;
+import org.gmnz.vega.ui.web.report.view.ViewReportData;
+import org.gmnz.vega.ui.web.report.view.ViewReportToxicityAssessment;
 
 
 class ViewHelperDetails extends ViewHelperBase {

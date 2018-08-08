@@ -1,6 +1,7 @@
-package org.gmnz.vega.ui.web.category;
+package org.gmnz.vega.ui.web.report;
 
 
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -12,77 +13,81 @@ import org.gmnz.vega.Vega;
 import org.gmnz.vega.VegaException;
 import org.gmnz.vega.VegaImpl;
 import org.gmnz.vega.domain.Category;
+import org.gmnz.vega.domain.Report;
 import org.gmnz.vega.service.CategoryService;
+import org.gmnz.vega.service.ReportService;
 import org.gmnz.vega.ui.Action;
 import org.gmnz.vega.ui.web.RequestProcessingResult;
+import org.gmnz.vega.ui.web.category.CategoryManagementBean;
 
 
-class CategoryNavigationHandler {
+class ReportNavigationHandler {
 
-	private Map<String, CategoryManagementBean> navigationMap;
+	private Map<String, ReportManagementBean> navigationMap;
 
 	private Vega vega;
 
 
 
-	CategoryNavigationHandler() {
+	ReportNavigationHandler() {
 		navigationMap = new HashMap<>();
+		ReportManagementBean rmb = new ReportManagementBean();
+		rmb.setOperationLabel("Stored reports");
+		rmb.setViewName("reports");
+		rmb.setAction(Action.GET_ALL);
+		navigationMap.put("getAll", rmb);
 
-		CategoryManagementBean cmb = new CategoryManagementBean();
-		cmb.setOperationLabel("Registered categories");
-		cmb.setViewName("categories");
-		cmb.setAction(Action.GET_ALL);
-		navigationMap.put("getAll", cmb);
+		rmb = new ReportManagementBean();
+		rmb.setOperationLabel("New Report Creation");
+		rmb.setViewName("reportCreation");
+		rmb.setAction(Action.CREATE);
+		navigationMap.put("create", rmb);
 
-		cmb = new CategoryManagementBean();
-		cmb.setOperationLabel("New Category Creation");
-		cmb.setViewName("categoryManagement");
-		cmb.setAction(Action.CREATE);
-		navigationMap.put("create", cmb);
+		rmb = new ReportManagementBean();
+		rmb.setOperationLabel("Confirm Report Deletion");
+		rmb.setViewName("reportDeletion");
+		rmb.setAction(Action.DELETE);
+		navigationMap.put("delete", rmb);
 
-		cmb = new CategoryManagementBean();
-		cmb.setOperationLabel("Modify Category Name");
-		cmb.setViewName("categoryManagement");
-		cmb.setAction(Action.MODIFY);
-		navigationMap.put("edit", cmb);
-
-		cmb = new CategoryManagementBean();
-		cmb.setOperationLabel("Confirm Category Deletion");
-		cmb.setViewName("categoryDeletion");
-		cmb.setAction(Action.DELETE);
-		navigationMap.put("delete", cmb);
+		rmb = new ReportManagementBean();
+		rmb.setOperationLabel("View Report Details");
+		rmb.setViewName("reportView");
+		rmb.setAction(Action.VIEW_DETAILS);
+		navigationMap.put("viewDetails", rmb);
 
 		vega = new VegaImpl();
 	}
-
-
-
+	
 	RequestProcessingResult handleRequest(String section, HttpServletRequest req, HttpServletResponse resp) {
-		CategoryManagementBean mgmtBean = navigationMap.get(section);
+		ReportManagementBean mgmtBean = navigationMap.get(section);
 		if (mgmtBean != null) {
 			return handleAction(mgmtBean, req, resp);
 		} else {
 			return new RequestProcessingResult(HttpServletResponse.SC_NOT_FOUND, "unknown section requested");
 		}
 	}
-
-
-
-	private RequestProcessingResult handleAction(CategoryManagementBean mgmtBean, HttpServletRequest req,
+	
+	private RequestProcessingResult handleAction(ReportManagementBean mgmtBean, HttpServletRequest req,
 			HttpServletResponse resp) {
-		CategoryService categoryService = vega.getCategoryService();
+		ReportService reportService = vega.getReportService();
 		switch (mgmtBean.getAction()) {
 		case Action.GET_ALL:
 			try {
-				List<Category> categories = categoryService.getAllCategories();
-				req.setAttribute("categories", categories);
+				Collection<Report> storedReports = null;
+				try {
+					storedReports = reportService.getStoredReports();
+					req.setAttribute("reports", storedReports);
+				} catch (VegaException e) {
+					e.printStackTrace();
+					return new RequestProcessingResult(HttpServletResponse.SC_INTERNAL_SERVER_ERROR,
+							"error while retrieving reports");
+				}
 				return new RequestProcessingResult(HttpServletResponse.SC_OK, mgmtBean.getViewName(), null);
 			} catch (VegaException e) {
 				e.printStackTrace();
 				return new RequestProcessingResult(HttpServletResponse.SC_INTERNAL_SERVER_ERROR,
 						"error while retrieving categories");
 			}
-		case Action.MODIFY:
 		case Action.DELETE:
 			String categoryId = req.getParameter("categoryId");
 			try {
@@ -103,4 +108,6 @@ class CategoryNavigationHandler {
 			return new RequestProcessingResult(HttpServletResponse.SC_BAD_REQUEST, "unrecognized request");
 		}
 	}
+	}
+
 }

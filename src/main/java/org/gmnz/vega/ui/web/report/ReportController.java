@@ -3,11 +3,8 @@ package org.gmnz.vega.ui.web.report;
 
 import java.io.IOException;
 import java.util.Collection;
-import java.util.HashMap;
-import java.util.Map;
 
 import javax.servlet.ServletException;
-import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -18,44 +15,40 @@ import org.gmnz.vega.VegaUtil;
 import org.gmnz.vega.domain.Report;
 import org.gmnz.vega.service.ReportService;
 import org.gmnz.vega.ui.Action;
+import org.gmnz.vega.ui.web.BaseControllerServlet;
 
 
-public class ReportController extends HttpServlet {
+public class ReportController extends BaseControllerServlet {
 
 	private static final long serialVersionUID = -8297293947108342649L;
 
-	private Map<String, ReportManagementBean> viewMap;
+	private ReportNavigationHandler navigationHandler;
 
 
 
 	@Override
 	public void init() {
-		viewMap = new HashMap<>();
+		navigationHandler = new ReportNavigationHandler();
+	}
 
-		ReportManagementBean rmb = new ReportManagementBean();
-		rmb.setOperationLabel("Stored reports");
-		rmb.setViewName("reports");
-		rmb.setAction(Action.GET_ALL);
-		viewMap.put("getAll", rmb);
 
-		rmb = new ReportManagementBean();
-		rmb.setOperationLabel("New Report Creation");
-		rmb.setViewName("reportCreation");
-		rmb.setAction(Action.CREATE);
-		viewMap.put("create", rmb);
 
-		rmb = new ReportManagementBean();
-		rmb.setOperationLabel("Confirm Report Deletion");
-		rmb.setViewName("reportDeletion");
-		rmb.setAction(Action.DELETE);
-		viewMap.put("delete", rmb);
+	@Override
+	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		processRequest(req, resp);
+	}
 
-		rmb = new ReportManagementBean();
-		rmb.setOperationLabel("View Report Details");
-		rmb.setViewName("reportView");
-		rmb.setAction(Action.VIEW_DETAILS);
-		viewMap.put("viewDetails", rmb);
 
+
+	@Override
+	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		processRequest(req, resp);
+	}
+
+
+
+	private void processRequest(HttpServletRequest req, HttpServletResponse resp) {
+		requestProcessingResult = navigationHandler.handleRequest(requestedSection, req, resp);
 	}
 
 

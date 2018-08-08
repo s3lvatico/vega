@@ -9,12 +9,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 
-public class BaseViewResolverServlet extends HttpServlet {
+public class BaseControllerServlet extends HttpServlet {
 
 	private static final long serialVersionUID = 5139974582329075960L;
-
-//	private HttpServletRequest request;
-//	private HttpServletResponse response;
 
 	protected RequestProcessingResult requestProcessingResult;
 	protected String requestedSection;
@@ -23,8 +20,6 @@ public class BaseViewResolverServlet extends HttpServlet {
 
 	@Override
 	protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-//		this.request = req;
-//		this.response = resp;
 		requestedSection = findRequestedSection(req);
 		super.service(req, resp);
 		dispatchToView(req, resp);

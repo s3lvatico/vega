@@ -7,10 +7,10 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.gmnz.vega.ui.web.BaseViewResolverServlet;
+import org.gmnz.vega.ui.web.BaseControllerServlet;
 
 
-public class CategoryController extends BaseViewResolverServlet {
+public class CategoryController extends BaseControllerServlet {
 
 	private static final long serialVersionUID = 4531766441007641102L;
 

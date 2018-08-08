@@ -1,7 +1,7 @@
 package org.gmnz.vega.ui.web.allergen;
 
 
-import org.gmnz.vega.ui.web.BaseViewResolverServlet;
+import org.gmnz.vega.ui.web.BaseControllerServlet;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -9,7 +9,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 
-public class AllergenController extends BaseViewResolverServlet {
+public class AllergenController extends BaseControllerServlet {
 
 	private static final long serialVersionUID = 4409051097972758443L;
 

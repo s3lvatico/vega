@@ -41,7 +41,10 @@
     </tr>
     <tr>
         <td><b>error message:</b></td>
+        <!-- 
         <td><%= request.getAttribute("errorMessage") %></td>
+         -->
+         <td>${errorMessage}</td>
     </tr>
 
 </table>

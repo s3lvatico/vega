@@ -52,13 +52,17 @@ public class CategoryExecution extends HttpServlet {
 			switch (action) {
 			case Action.CREATE:
 				if (VegaUtil.stringNullOrEmpty(newCategoryName)) {
-					throw new ServletException("invalid category name");
+					resp.sendError(HttpServletResponse.SC_BAD_REQUEST);
+					req.setAttribute("errorMessage", "cannot specify an empty name for a new category");
+					return;
 				}
 				vega.getCategoryService().createCategory(newCategoryName);
 				break;
 			case Action.MODIFY:
 				if (VegaUtil.stringNullOrEmpty(newCategoryName)) {
-					throw new ServletException("invalid category name");
+					resp.sendError(HttpServletResponse.SC_BAD_REQUEST);
+					req.setAttribute("errorMessage", "cannot specify an empty name");
+					return;
 				}
 				vega.getCategoryService().changeCategoryName(categoryId, newCategoryName);
 				break;
@@ -66,12 +70,16 @@ public class CategoryExecution extends HttpServlet {
 				vega.getCategoryService().removeCategory(categoryId);
 				break;
 			default:
-				throw new ServletException("invalid action specified");
+				resp.sendError(HttpServletResponse.SC_BAD_REQUEST);
+				req.setAttribute("errorMessage", "invalid action specified");
+				return;
 			}
 		} catch (VegaException e) {
 			String errorMessage = String.format("exception thrown while executing action -- %s :: %s",
 					e.getClass().getName(), e.getMessage());
-			throw new ServletException(errorMessage, e);
+			resp.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+			req.setAttribute("errorMessage", errorMessage);
+			return;
 		}
 		req.getRequestDispatcher("/category/getAll").forward(req, resp);
 	}
