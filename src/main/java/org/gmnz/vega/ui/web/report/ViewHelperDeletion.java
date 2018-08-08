@@ -12,7 +12,7 @@ import org.gmnz.vega.domain.Report;
 class ViewHelperDeletion extends ViewHelperBase {
 
 	@Override
-	protected RequestProcessingOutcome processRequest(HttpServletRequest req, HttpServletResponse resp,
+	protected RequestProcessingOutcome processRequest(HttpServletRequest req, 
 			ReportManagementBean rmb) {
 		RequestProcessingOutcome outcome = new RequestProcessingOutcome();
 		String reportId = req.getParameter("reportId");

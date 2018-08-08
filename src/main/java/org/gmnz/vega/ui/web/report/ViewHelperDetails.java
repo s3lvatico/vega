@@ -16,8 +16,7 @@ import org.gmnz.vega.ui.web.report.view.ViewReportToxicityAssessment;
 class ViewHelperDetails extends ViewHelperBase {
 
 	@Override
-	protected RequestProcessingOutcome processRequest(HttpServletRequest req, HttpServletResponse resp,
-			ReportManagementBean rmb) {
+	protected RequestProcessingOutcome processRequest(HttpServletRequest req, ReportManagementBean rmb) {
 		RequestProcessingOutcome outcome = new RequestProcessingOutcome();
 		String reportId = req.getParameter("reportId");
 		if (VegaUtil.stringNullOrEmpty(reportId)) {

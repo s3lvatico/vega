@@ -1,31 +1,19 @@
 package org.gmnz.vega.ui.web.report;
 
 
-import java.util.Collection;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.gmnz.vega.Vega;
-import org.gmnz.vega.VegaException;
-import org.gmnz.vega.VegaImpl;
-import org.gmnz.vega.domain.Category;
-import org.gmnz.vega.domain.Report;
-import org.gmnz.vega.service.CategoryService;
-import org.gmnz.vega.service.ReportService;
 import org.gmnz.vega.ui.Action;
 import org.gmnz.vega.ui.web.RequestProcessingResult;
-import org.gmnz.vega.ui.web.category.CategoryManagementBean;
 
 
 class ReportNavigationHandler {
 
 	private Map<String, ReportManagementBean> navigationMap;
-
-	private Vega vega;
 
 
 
@@ -55,9 +43,10 @@ class ReportNavigationHandler {
 		rmb.setAction(Action.VIEW_DETAILS);
 		navigationMap.put("viewDetails", rmb);
 
-		vega = new VegaImpl();
 	}
-	
+
+
+
 	RequestProcessingResult handleRequest(String section, HttpServletRequest req, HttpServletResponse resp) {
 		ReportManagementBean mgmtBean = navigationMap.get(section);
 		if (mgmtBean != null) {
@@ -66,48 +55,35 @@ class ReportNavigationHandler {
 			return new RequestProcessingResult(HttpServletResponse.SC_NOT_FOUND, "unknown section requested");
 		}
 	}
-	
+
+
+
 	private RequestProcessingResult handleAction(ReportManagementBean mgmtBean, HttpServletRequest req,
 			HttpServletResponse resp) {
-		ReportService reportService = vega.getReportService();
+		RequestProcessingOutcome outcome = null;
 		switch (mgmtBean.getAction()) {
 		case Action.GET_ALL:
-			try {
-				Collection<Report> storedReports = null;
-				try {
-					storedReports = reportService.getStoredReports();
-					req.setAttribute("reports", storedReports);
-				} catch (VegaException e) {
-					e.printStackTrace();
-					return new RequestProcessingResult(HttpServletResponse.SC_INTERNAL_SERVER_ERROR,
-							"error while retrieving reports");
-				}
-				return new RequestProcessingResult(HttpServletResponse.SC_OK, mgmtBean.getViewName(), null);
-			} catch (VegaException e) {
-				e.printStackTrace();
-				return new RequestProcessingResult(HttpServletResponse.SC_INTERNAL_SERVER_ERROR,
-						"error while retrieving categories");
-			}
-		case Action.DELETE:
-			String categoryId = req.getParameter("categoryId");
-			try {
-				Category c = categoryService.getCategoryById(categoryId);
-				mgmtBean.setCategory(c);
-			} catch (VegaException e) {
-				e.printStackTrace();
-				String errorMessage = String.format("error while retrieving category with id [%s]", categoryId);
-				return new RequestProcessingResult(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, errorMessage);
-			}
-			req.setAttribute("catBean", mgmtBean);
-			return new RequestProcessingResult(HttpServletResponse.SC_OK, mgmtBean.getViewName(), null);
+			outcome = new ViewHelperGetAll().processRequest(req, mgmtBean);
+			break;
 		case Action.CREATE:
-			mgmtBean.setCategory(new Category(""));
-			req.setAttribute("catBean", mgmtBean);
-			return new RequestProcessingResult(HttpServletResponse.SC_OK, mgmtBean.getViewName(), null);
+			outcome = new ViewHelperCreation().processRequest(req, mgmtBean);
+			break;
+		case Action.VIEW_DETAILS:
+			outcome = new ViewHelperDetails().processRequest(req, mgmtBean);
+			break;
+		case Action.DELETE:
+			outcome = new ViewHelperDeletion().processRequest(req, mgmtBean);
+			break;
 		default:
 			return new RequestProcessingResult(HttpServletResponse.SC_BAD_REQUEST, "unrecognized request");
 		}
-	}
+		if (outcome.statusCode == HttpServletResponse.SC_OK) {
+			req.setAttribute("reportBean", mgmtBean);
+			return new RequestProcessingResult(HttpServletResponse.SC_OK, mgmtBean.getViewName(), null);
+		} else {
+			return new RequestProcessingResult(outcome.statusCode, outcome.errorMessage);
+		}
+
 	}
 
 }

@@ -4,7 +4,6 @@ package org.gmnz.vega.ui.web.report;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 import org.gmnz.vega.VegaException;
 import org.gmnz.vega.domain.Category;
@@ -13,7 +12,7 @@ import org.gmnz.vega.domain.Category;
 class ViewHelperCreation extends ViewHelperBase {
 
 	@Override
-	protected RequestProcessingOutcome processRequest(HttpServletRequest req, HttpServletResponse resp,
+	protected RequestProcessingOutcome processRequest(HttpServletRequest req, 
 			ReportManagementBean rmb) {
 		RequestProcessingOutcome rpo = new RequestProcessingOutcome();
 		try {
