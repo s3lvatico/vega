@@ -51,7 +51,7 @@ public class ReportExecution extends HttpServlet {
 
 
 	private void executeAction(String action, HttpServletRequest req, HttpServletResponse resp)
-			throws ServletException, IOException {
+			throws IOException {
 		try {
 			switch (action) {
 			case Action.CREATE:

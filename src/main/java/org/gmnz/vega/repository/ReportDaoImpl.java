@@ -49,7 +49,6 @@ class ReportDaoImpl extends BasicDaoImpl implements ReportDao {
 			psRptHeader = connection.prepareStatement("INSERT INTO report VALUES (?, ?, ?)");
 			psRptHeader.setString(1, r.getId());
 			psRptHeader.setString(2, r.getSubjectName());
-			//psRptHeader.setDate(3, new Date(r.getCreationDate().getTime()));
 			psRptHeader.setTimestamp(3, new Timestamp(r.getCreationDate().getTime()));
 			psRptHeader.execute();
 
@@ -126,7 +125,7 @@ class ReportDaoImpl extends BasicDaoImpl implements ReportDao {
 
 
 	@Override
-	public Report getSummryById(String id) throws DaoException {
+	public Report getSummaryById(String id) throws DaoException {
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 		try {
@@ -145,6 +144,24 @@ class ReportDaoImpl extends BasicDaoImpl implements ReportDao {
 		} catch (SQLException e) {
 			e.printStackTrace();
 			throw new DaoException("ReportDaoImpl.getSummryById error", e);
+		} finally {
+			releaseResources(ps, rs);
+		}
+	}
+
+
+
+	@Override
+	public void remove(String id) throws DaoException {
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		try {
+			ps = connection.prepareStatement("DELETE FROM report WHERE id = ?");
+			ps.setString(1, id);
+			ps.execute();
+		} catch (SQLException e) {
+			e.printStackTrace();
+			throw new DaoException("ReportDaoImpl.remove error", e);
 		} finally {
 			releaseResources(ps, rs);
 		}

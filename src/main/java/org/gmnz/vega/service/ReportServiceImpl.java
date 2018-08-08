@@ -2,11 +2,9 @@ package org.gmnz.vega.service;
 
 
 import org.gmnz.vega.VegaException;
-import org.gmnz.vega.base.VegaUtil;
 import org.gmnz.vega.domain.Report;
 import org.gmnz.vega.repository.DaoException;
 import org.gmnz.vega.repository.DaoFactory;
-import org.gmnz.vega.repository.DummyRepository;
 import org.gmnz.vega.repository.ReportDao;
 
 import java.util.Collection;
@@ -35,11 +33,27 @@ public class ReportServiceImpl extends BasicServiceBean implements ReportService
 
 
 	@Override
-	public Report getReportSummaryById(String id) throws VegaException {
+	public Report getReportById(String id) throws VegaException {
 		ReportDao dao = null;
 		try {
 			dao = DaoFactory.getInstance().createReportDao();
 			return dao.findById(id);
+		} catch (DaoException e) {
+			e.printStackTrace();
+			throw new VegaException("getReportById service error", e);
+		} finally {
+			finalizeDao(dao);
+		}
+	}
+
+
+
+	@Override
+	public Report getReportSummaryById(String id) throws VegaException {
+		ReportDao dao = null;
+		try {
+			dao = DaoFactory.getInstance().createReportDao();
+			return dao.getSummaryById(id);
 		} catch (DaoException e) {
 			e.printStackTrace();
 			throw new VegaException("getReportSummaryById service error", e);
@@ -67,28 +81,16 @@ public class ReportServiceImpl extends BasicServiceBean implements ReportService
 
 
 	@Override
-	public Report getReportById(String id) throws VegaException {
+	public void removeReport(String id) throws VegaException {
 		ReportDao dao = null;
 		try {
 			dao = DaoFactory.getInstance().createReportDao();
-			return dao.findById(id);
+			dao.remove(id);
 		} catch (DaoException e) {
 			e.printStackTrace();
-			throw new VegaException("getReportById service error", e);
+			throw new VegaException("removeReport service error", e);
 		} finally {
 			finalizeDao(dao);
-		}
-	}
-
-
-
-	@Override
-	public void removeReport(String id) {
-		if (!VegaUtil.stringNullOrEmpty(id)) {
-			Report r = DummyRepository.getReportById(id);
-			if (r != null) {
-				DummyRepository.removeReport(r);
-			}
 		}
 	}
 }

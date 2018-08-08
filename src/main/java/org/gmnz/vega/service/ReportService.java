@@ -25,6 +25,6 @@ public interface ReportService {
 	void createReport(Report report) throws VegaException;
 
 
-	void removeReport(String id);
+	void removeReport(String id) throws VegaException;
 
 }

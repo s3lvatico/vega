@@ -29,3 +29,11 @@ CREATE TABLE `report_line` (
   CONSTRAINT `FK_report_line__report` FOREIGN KEY (`id_report`) REFERENCES `report` (`id`),
   CONSTRAINT `FK_report_line__allergen` FOREIGN KEY (`id_allergen`) REFERENCES `allergen` (`id`)
 ) ENGINE=InnoDB;
+
+ALTER TABLE `vega`.`report_line`
+DROP FOREIGN KEY `FK_report_line__report`;
+ALTER TABLE `vega`.`report_line`
+ADD CONSTRAINT `FK_report_line__report`
+FOREIGN KEY (`id_report`)
+REFERENCES `vega`.`report` (`id`)
+ON DELETE CASCADE;

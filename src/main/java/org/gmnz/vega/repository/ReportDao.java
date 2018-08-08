@@ -16,6 +16,8 @@ public interface ReportDao extends ConnectionOrientedDao {
 
 	Report findById(String id) throws DaoException;
 
-	Report getSummryById(String id) throws DaoException;
+	Report getSummaryById(String id) throws DaoException;
+
+	void remove(String id) throws DaoException;
 
 }
