@@ -14,9 +14,8 @@ import javax.servlet.http.HttpServletResponse;
 import org.gmnz.vega.Vega;
 import org.gmnz.vega.VegaException;
 import org.gmnz.vega.VegaImpl;
-import org.gmnz.vega.base.VegaUtil;
+import org.gmnz.vega.VegaUtil;
 import org.gmnz.vega.domain.Report;
-import org.gmnz.vega.domain.ToxicityRating;
 import org.gmnz.vega.service.ReportService;
 import org.gmnz.vega.ui.Action;
 
@@ -119,10 +118,6 @@ public class ReportController extends HttpServlet {
 			resp.sendError(outcome.statusCode, outcome.errorMessage);
 		}
 	}
-
-
-
-
 
 
 

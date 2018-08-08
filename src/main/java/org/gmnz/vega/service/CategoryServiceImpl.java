@@ -87,7 +87,6 @@ public class CategoryServiceImpl extends BasicServiceBean implements CategorySer
 		}
 	}
 
-
 //	@Override
 //	@Deprecated
 //	public void renameCategory(String oldName, String newCategoryName) throws VegaException {

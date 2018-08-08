@@ -12,8 +12,6 @@ public class Category {
 
 	public static final Category DEFAULT_CATEGORY = new Category(DEFAULT_CATEGORY_NAME);
 
-
-
 	private String id;
 	private String name;
 	private List<Allergen> allergens;

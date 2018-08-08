@@ -20,5 +20,6 @@ abstract class ViewHelperBase {
 
 
 
-	protected abstract RequestProcessingOutcome processRequest(HttpServletRequest req, HttpServletResponse resp, ReportManagementBean rmb);
+	protected abstract RequestProcessingOutcome processRequest(HttpServletRequest req, HttpServletResponse resp,
+			ReportManagementBean rmb);
 }

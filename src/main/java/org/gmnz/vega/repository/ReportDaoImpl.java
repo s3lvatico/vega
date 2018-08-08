@@ -78,25 +78,12 @@ class ReportDaoImpl extends BasicDaoImpl implements ReportDao {
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 		try {
-			String sqlQuery = "select " +
-					" rpt_head.subject_name, " +
-					" rpt_head.date_creation, " +
-					" cat.e_name category_name, " +
-					" al.e_name allergen_name, " +
-					" rpt_detail.toxicity " +
-					"from " +
-					" report rpt_head " +
-					"join report_line rpt_detail on " +
-					" rpt_head.id = rpt_detail.id_report " +
-					"join allergen al on " +
-					" rpt_detail.id_allergen = al.id " +
-					"join category cat on " +
-					" al.id_category = cat.id " +
-					"where " +
-					" rpt_head.id = ? " +
-					"order by " +
-					" cat.e_name, " +
-					" allergen_name";
+			String sqlQuery = "select " + " rpt_head.subject_name, " + " rpt_head.date_creation, "
+					+ " cat.e_name category_name, " + " al.e_name allergen_name, " + " rpt_detail.toxicity " + "from "
+					+ " report rpt_head " + "join report_line rpt_detail on " + " rpt_head.id = rpt_detail.id_report "
+					+ "join allergen al on " + " rpt_detail.id_allergen = al.id " + "join category cat on "
+					+ " al.id_category = cat.id " + "where " + " rpt_head.id = ? " + "order by " + " cat.e_name, "
+					+ " allergen_name";
 			ps = connection.prepareStatement(sqlQuery);
 			ps.setString(1, id);
 			rs = ps.executeQuery();
@@ -166,6 +153,5 @@ class ReportDaoImpl extends BasicDaoImpl implements ReportDao {
 			releaseResources(ps, rs);
 		}
 	}
-
 
 }

@@ -1,17 +1,18 @@
 package org.gmnz.vega.ui.web.category;
 
 
-import org.gmnz.vega.Vega;
-import org.gmnz.vega.VegaException;
-import org.gmnz.vega.VegaImpl;
-import org.gmnz.vega.base.VegaUtil;
-import org.gmnz.vega.ui.Action;
+import java.io.IOException;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
+
+import org.gmnz.vega.Vega;
+import org.gmnz.vega.VegaException;
+import org.gmnz.vega.VegaImpl;
+import org.gmnz.vega.VegaUtil;
+import org.gmnz.vega.ui.Action;
 
 
 public class CategoryExecution extends HttpServlet {
@@ -49,23 +50,23 @@ public class CategoryExecution extends HttpServlet {
 		String categoryId = req.getParameter("categoryId");
 		try {
 			switch (action) {
-				case Action.CREATE:
-					if (VegaUtil.stringNullOrEmpty(newCategoryName)) {
-						throw new ServletException("invalid category name");
-					}
-					vega.getCategoryService().createCategory(newCategoryName);
-					break;
-				case Action.MODIFY:
-					if (VegaUtil.stringNullOrEmpty(newCategoryName)) {
-						throw new ServletException("invalid category name");
-					}
-					vega.getCategoryService().changeCategoryName(categoryId, newCategoryName);
-					break;
-				case Action.DELETE:
-					vega.getCategoryService().removeCategory(categoryId);
-					break;
-				default:
-					throw new ServletException("invalid action specified");
+			case Action.CREATE:
+				if (VegaUtil.stringNullOrEmpty(newCategoryName)) {
+					throw new ServletException("invalid category name");
+				}
+				vega.getCategoryService().createCategory(newCategoryName);
+				break;
+			case Action.MODIFY:
+				if (VegaUtil.stringNullOrEmpty(newCategoryName)) {
+					throw new ServletException("invalid category name");
+				}
+				vega.getCategoryService().changeCategoryName(categoryId, newCategoryName);
+				break;
+			case Action.DELETE:
+				vega.getCategoryService().removeCategory(categoryId);
+				break;
+			default:
+				throw new ServletException("invalid action specified");
 			}
 		} catch (VegaException e) {
 			String errorMessage = String.format("exception thrown while executing action -- %s :: %s",

@@ -11,7 +11,6 @@ import java.io.IOException;
 
 public class AllergenController extends BaseViewResolverServlet {
 
-
 	private static final long serialVersionUID = 4409051097972758443L;
 
 	private AllergenNavigationHandler navigationHandler;
@@ -42,6 +41,5 @@ public class AllergenController extends BaseViewResolverServlet {
 	private void processRequest(HttpServletRequest req, HttpServletResponse resp) {
 		requestProcessingResult = navigationHandler.handleRequest(requestedSection, req, resp);
 	}
-
 
 }

@@ -1,6 +1,5 @@
 package org.gmnz.vega.domain;
 
-
 public class Allergen {
 
 	private String id;
@@ -70,6 +69,5 @@ public class Allergen {
 	public String toString() {
 		return "Allergen{" + "name='" + getName() + "\', " + "category='" + getCategory().getName() + '\'' + '}';
 	}
-
 
 }

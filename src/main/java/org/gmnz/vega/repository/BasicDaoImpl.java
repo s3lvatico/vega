@@ -22,7 +22,4 @@ class BasicDaoImpl extends ConnectionOrientedDaoImpl {
 		releaseResources(s, null);
 	}
 
-
-
-
 }

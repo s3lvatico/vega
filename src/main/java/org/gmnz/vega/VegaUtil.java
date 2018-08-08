@@ -1,4 +1,4 @@
-package org.gmnz.vega.base;
+package org.gmnz.vega;
 
 
 import java.security.MessageDigest;

@@ -13,7 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.gmnz.vega.Vega;
 import org.gmnz.vega.VegaException;
 import org.gmnz.vega.VegaImpl;
-import org.gmnz.vega.base.VegaUtil;
+import org.gmnz.vega.VegaUtil;
 import org.gmnz.vega.domain.Allergen;
 import org.gmnz.vega.domain.Report;
 import org.gmnz.vega.domain.ToxicityRating;
@@ -50,8 +50,7 @@ public class ReportExecution extends HttpServlet {
 
 
 
-	private void executeAction(String action, HttpServletRequest req, HttpServletResponse resp)
-			throws IOException {
+	private void executeAction(String action, HttpServletRequest req, HttpServletResponse resp) throws IOException {
 		try {
 			switch (action) {
 			case Action.CREATE:

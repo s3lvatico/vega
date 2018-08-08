@@ -1,21 +1,22 @@
 package org.gmnz.vega.ui.web.allergen;
 
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 import org.gmnz.vega.Vega;
 import org.gmnz.vega.VegaException;
 import org.gmnz.vega.VegaImpl;
-import org.gmnz.vega.base.VegaUtil;
+import org.gmnz.vega.VegaUtil;
 import org.gmnz.vega.domain.Allergen;
 import org.gmnz.vega.domain.Category;
 import org.gmnz.vega.service.AllergenService;
 import org.gmnz.vega.ui.Action;
 import org.gmnz.vega.ui.web.RequestProcessingResult;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 
 class AllergenNavigationHandler {
@@ -70,58 +71,59 @@ class AllergenNavigationHandler {
 
 
 	private RequestProcessingResult handleAction(AllergenManagementBean mgmtBean, HttpServletRequest req,
-																HttpServletResponse resp) {
+			HttpServletResponse resp) {
 		AllergenService allergenService = vega.getAllergenService();
 		String paramAllergenId = req.getParameter("allergenId");
 		switch (mgmtBean.getAction()) {
-			case Action.GET_ALL:
-				try {
-					List<Allergen> allergens = allergenService.getAllAllergens();
-					req.setAttribute("allergens", allergens);
-					return new RequestProcessingResult(HttpServletResponse.SC_OK, mgmtBean.getViewName(), null);
-				} catch (VegaException e) {
-					e.printStackTrace();
-					return new RequestProcessingResult(HttpServletResponse.SC_INTERNAL_SERVER_ERROR,
-							"error while retrieving allergens");
-				}
-			case Action.CREATE:
-				// recupero le categorie
-				RequestProcessingResult injectCategoriesError = injectCategories(req);
-				if (injectCategoriesError != null) {
-					return new RequestProcessingResult(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "error while retrieving categories");
-				}
-				mgmtBean.setAllergen(new Allergen(""));
-				req.setAttribute("allergenBean", mgmtBean);
+		case Action.GET_ALL:
+			try {
+				List<Allergen> allergens = allergenService.getAllAllergens();
+				req.setAttribute("allergens", allergens);
 				return new RequestProcessingResult(HttpServletResponse.SC_OK, mgmtBean.getViewName(), null);
-			case Action.MODIFY:
-				Allergen targetAllergen = null;
-				// aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-				if (injectAllergen(mgmtBean, paramAllergenId) != null) {
+			} catch (VegaException e) {
+				e.printStackTrace();
+				return new RequestProcessingResult(HttpServletResponse.SC_INTERNAL_SERVER_ERROR,
+						"error while retrieving allergens");
+			}
+		case Action.CREATE:
+			// recupero le categorie
+			RequestProcessingResult injectCategoriesError = injectCategories(req);
+			if (injectCategoriesError != null) {
+				return new RequestProcessingResult(HttpServletResponse.SC_INTERNAL_SERVER_ERROR,
+						"error while retrieving categories");
+			}
+			mgmtBean.setAllergen(new Allergen(""));
+			req.setAttribute("allergenBean", mgmtBean);
+			return new RequestProcessingResult(HttpServletResponse.SC_OK, mgmtBean.getViewName(), null);
+		case Action.MODIFY:
+			if (injectAllergen(mgmtBean, paramAllergenId) != null) {
+				return new RequestProcessingResult(HttpServletResponse.SC_INTERNAL_SERVER_ERROR,
+						"error while retrieving allergen from id " + paramAllergenId);
+			}
+			// salva in sessione l'allergene iniziale
+			req.getSession().setAttribute("allergen", mgmtBean.getAllergen());
 
-				}
-				// salva in sessione l'allergene iniziale
-				req.getSession().setAttribute("allergen", targetAllergen);
-
-				// recupero categorie
-				if (injectCategories(req) != null) {
-					return new RequestProcessingResult(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "error while retrieving categories");
-				}
-				// categoria iniziale dell'allergene
-				req.setAttribute("initialAllergenCategoryName", targetAllergen.getCategory().getName());
-				req.setAttribute("allergenBean", mgmtBean);
-				return new RequestProcessingResult(HttpServletResponse.SC_OK, mgmtBean.getViewName(), null);
-			case Action.DELETE:
-				if (VegaUtil.stringNullOrEmpty(paramAllergenId)) {
-					return new RequestProcessingResult(HttpServletResponse.SC_BAD_REQUEST, "no allergen id specified");
-				}
-				RequestProcessingResult rpr = injectAllergen(mgmtBean, paramAllergenId);
-				if (rpr != null) {
-					return rpr;
-				}
-				req.setAttribute("allergenBean", mgmtBean);
-				return new RequestProcessingResult(HttpServletResponse.SC_OK, mgmtBean.getViewName(), null);
-			default:
-				return new RequestProcessingResult(HttpServletResponse.SC_BAD_REQUEST, "unrecognized request");
+			// recupero categorie
+			if (injectCategories(req) != null) {
+				return new RequestProcessingResult(HttpServletResponse.SC_INTERNAL_SERVER_ERROR,
+						"error while retrieving categories");
+			}
+			// categoria iniziale dell'allergene
+			req.setAttribute("initialAllergenCategoryName", mgmtBean.getAllergen().getCategory().getName());
+			req.setAttribute("allergenBean", mgmtBean);
+			return new RequestProcessingResult(HttpServletResponse.SC_OK, mgmtBean.getViewName(), null);
+		case Action.DELETE:
+			if (VegaUtil.stringNullOrEmpty(paramAllergenId)) {
+				return new RequestProcessingResult(HttpServletResponse.SC_BAD_REQUEST, "no allergen id specified");
+			}
+			RequestProcessingResult rpr = injectAllergen(mgmtBean, paramAllergenId);
+			if (rpr != null) {
+				return rpr;
+			}
+			req.setAttribute("allergenBean", mgmtBean);
+			return new RequestProcessingResult(HttpServletResponse.SC_OK, mgmtBean.getViewName(), null);
+		default:
+			return new RequestProcessingResult(HttpServletResponse.SC_BAD_REQUEST, "unrecognized request");
 		}
 	}
 
@@ -133,7 +135,8 @@ class AllergenNavigationHandler {
 			request.setAttribute("categories", categories);
 		} catch (VegaException e) {
 			e.printStackTrace();
-			return new RequestProcessingResult(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "error while retrieving categories");
+			return new RequestProcessingResult(HttpServletResponse.SC_INTERNAL_SERVER_ERROR,
+					"error while retrieving categories");
 		}
 		return null;
 	}

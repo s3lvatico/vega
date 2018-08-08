@@ -1,4 +1,4 @@
-package org.gmnz.vega.base.application;
+package org.gmnz.vega.web;
 
 
 import javax.naming.Context;

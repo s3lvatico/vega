@@ -92,15 +92,14 @@ public class AllergenServiceImpl extends BasicServiceBean implements AllergenSer
 			source.getCategory().setId(targetCategoryId);
 			mustUpdateDb = true;
 		}
-		if(mustUpdateDb) {
+		if (mustUpdateDb) {
 			AllergenDao dao = null;
 			try {
 				dao = DaoFactory.getInstance().createAllergenDao();
 				dao.update(source);
 			} catch (DaoException e) {
-				throw new VegaException("modifyAllergen service error",e );
-			}
-			finally {
+				throw new VegaException("modifyAllergen service error", e);
+			} finally {
 				finalizeDao(dao);
 			}
 		}

@@ -6,7 +6,7 @@
 	<display-name>vega-approach-2</display-name>
 
 	<listener>
-		<listener-class>org.gmnz.vega.base.application.StartupListener</listener-class>
+		<listener-class>org.gmnz.vega.web.StartupListener</listener-class>
 	</listener>
 
 	<filter>

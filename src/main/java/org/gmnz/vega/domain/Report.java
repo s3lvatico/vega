@@ -10,7 +10,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 
-import org.gmnz.vega.base.VegaUtil;
+import org.gmnz.vega.VegaUtil;
 
 
 public class Report {

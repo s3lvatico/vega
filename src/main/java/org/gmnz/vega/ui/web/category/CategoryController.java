@@ -39,7 +39,7 @@ public class CategoryController extends BaseViewResolverServlet {
 
 
 
-	private void processRequest(HttpServletRequest req, HttpServletResponse resp)  {
+	private void processRequest(HttpServletRequest req, HttpServletResponse resp) {
 		requestProcessingResult = navigationHandler.handleRequest(requestedSection, req, resp);
 	}
 

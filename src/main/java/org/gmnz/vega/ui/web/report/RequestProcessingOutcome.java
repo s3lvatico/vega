@@ -4,5 +4,5 @@ class RequestProcessingOutcome {
 
 	int statusCode;
 	String errorMessage;
-	
+
 }

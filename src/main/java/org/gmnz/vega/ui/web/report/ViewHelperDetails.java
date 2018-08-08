@@ -1,20 +1,20 @@
 package org.gmnz.vega.ui.web.report;
 
 
-import org.gmnz.vega.VegaException;
-import org.gmnz.vega.base.VegaUtil;
-import org.gmnz.vega.domain.Report;
-import org.gmnz.vega.domain.ToxicityRating;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import org.gmnz.vega.VegaException;
+import org.gmnz.vega.VegaUtil;
+import org.gmnz.vega.domain.Report;
+import org.gmnz.vega.domain.ToxicityRating;
 
 
 class ViewHelperDetails extends ViewHelperBase {
 
 	@Override
 	protected RequestProcessingOutcome processRequest(HttpServletRequest req, HttpServletResponse resp,
-																	  ReportManagementBean rmb) {
+			ReportManagementBean rmb) {
 		RequestProcessingOutcome outcome = new RequestProcessingOutcome();
 		String reportId = req.getParameter("reportId");
 		if (VegaUtil.stringNullOrEmpty(reportId)) {

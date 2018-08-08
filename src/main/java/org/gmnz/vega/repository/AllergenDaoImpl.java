@@ -21,11 +21,9 @@ class AllergenDaoImpl extends BasicDaoImpl implements AllergenDao {
 		ResultSet rs = null;
 		try {
 			s = connection.createStatement();
-			rs = s.executeQuery("SELECT allrg.id, allrg.e_name allergen_name, cat.e_name category_name \n" +
-					" FROM category cat\n" +
-					" JOIN allergen allrg ON allrg.id_category = cat.id\n" +
-					" WHERE allrg.deleted = 0" +
-					" ORDER BY category_name");
+			rs = s.executeQuery("SELECT allrg.id, allrg.e_name allergen_name, cat.e_name category_name \n"
+					+ " FROM category cat\n" + " JOIN allergen allrg ON allrg.id_category = cat.id\n"
+					+ " WHERE allrg.deleted = 0" + " ORDER BY category_name");
 			ArrayList<Allergen> allergens = new ArrayList<>();
 			while (rs.next()) {
 				String id = rs.getString(1);
@@ -52,15 +50,10 @@ class AllergenDaoImpl extends BasicDaoImpl implements AllergenDao {
 		PreparedStatement s = null;
 		ResultSet rs = null;
 		try {
-			s = connection.prepareStatement("select " +
-					" allergen.id allergen_id, " +
-					" allergen.e_name allergen_name, " +
-					" category.id category_id, " +
-					" category.e_name category_name " +
-					" from allergen " +
-					" join category on " +
-					" allergen.id_category = category.id and allergen.deleted = 0 " +
-					" where  allergen.id = ?");
+			s = connection.prepareStatement("select " + " allergen.id allergen_id, " + " allergen.e_name allergen_name, "
+					+ " category.id category_id, " + " category.e_name category_name " + " from allergen "
+					+ " join category on " + " allergen.id_category = category.id and allergen.deleted = 0 "
+					+ " where  allergen.id = ?");
 			s.setString(1, id);
 			rs = s.executeQuery();
 
@@ -127,7 +120,8 @@ class AllergenDaoImpl extends BasicDaoImpl implements AllergenDao {
 	public void update(Allergen allergen) throws DaoException {
 		PreparedStatement s = null;
 		try {
-			s = connection.prepareStatement("update allergen set e_name = ?, id_category = ? where id = ? and deleted = 0");
+			s = connection
+					.prepareStatement("update allergen set e_name = ?, id_category = ? where id = ? and deleted = 0");
 			s.setString(1, allergen.getName());
 			s.setString(2, allergen.getCategory().getId());
 			s.setString(3, allergen.getId());
@@ -156,6 +150,5 @@ class AllergenDaoImpl extends BasicDaoImpl implements AllergenDao {
 			releaseResources(s);
 		}
 	}
-
 
 }
