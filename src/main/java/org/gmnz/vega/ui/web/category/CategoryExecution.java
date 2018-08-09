@@ -81,6 +81,6 @@ public class CategoryExecution extends HttpServlet {
 			req.setAttribute("errorMessage", errorMessage);
 			return;
 		}
-		req.getRequestDispatcher("/category/getAll").forward(req, resp);
+		req.getRequestDispatcher("/app/category/getAll").forward(req, resp);
 	}
 }

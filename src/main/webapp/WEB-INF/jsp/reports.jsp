@@ -23,13 +23,13 @@
     <c:forEach var="report" items="${reports}">
         <tr>
             <td>
-                <form method="POST" action="${contextRoot}/report/viewDetails">
+                <form method="POST" action="${contextRoot}/app/report/viewDetails">
                     <input type="hidden" name="reportId" value="${report.id}"/>
                     <input type="submit" value="Details"/>
                 </form>
             </td>
             <td>
-                <form method="POST" action="${contextRoot}/report/delete">
+                <form method="POST" action="${contextRoot}/app/report/delete">
                     <input type="hidden" name="reportId" value="${report.id}"/>
                     <input type="submit" value="Delete"/>
                 </form>
@@ -42,7 +42,7 @@
 </table>
 <h3>Operations</h3>
 <p>Create new report:</p>
-<form method="post" action="${contextRoot}/report/create">
+<form method="post" action="${contextRoot}/app/report/create">
     <input type="submit" value="create new report">
 </form>
 <jsp:include page="/WEB-INF/jsp/footer.jsp"/>

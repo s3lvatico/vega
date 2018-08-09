@@ -77,7 +77,7 @@ public class ReportExecution extends HttpServlet {
 			resp.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, errorMessage);
 			return;
 		}
-		resp.sendRedirect(req.getContextPath() + "/report/getAll");
+		resp.sendRedirect(req.getContextPath() + "/app/report/getAll");
 	}
 
 

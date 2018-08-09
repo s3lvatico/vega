@@ -93,7 +93,7 @@ public class AllergenExecution extends HttpServlet {
 					e.getClass().getName(), e.getMessage());
 			resp.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, errorMessage);
 		}
-		req.getRequestDispatcher("/allergen/getAll").forward(req, resp);
+		req.getRequestDispatcher("/app/allergen/getAll").forward(req, resp);
 	}
 
 

@@ -11,7 +11,7 @@
 <jsp:include page="/WEB-INF/jsp/header.jsp"/>
 <h2>Allergens</h2>
 <h3>${allergenBean.operationLabel}</h3>
-<form method="POST" action="${contextRoot}/allergen/do">
+<form method="POST" action="${contextRoot}/app/allergen/do">
     <p>
         Allergen name:
         <input type="text" name="allergenName" value="${allergenBean.allergen.name}" title="allergenName"/>

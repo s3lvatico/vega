@@ -17,7 +17,7 @@
         <td>${pageContext.exception}</td>
     </tr>
     <tr>
-        <td colspan="2"><a href="<%=application.getContextPath()%>/index.jsp">Go back to the main page</a></td>
+        <td colspan="2"><a href="<%=application.getContextPath()%>/app/mainMenu.jsp">Go back to the main page</a></td>
     </tr>
     <tr>
         <td><b>URI:</b></td>

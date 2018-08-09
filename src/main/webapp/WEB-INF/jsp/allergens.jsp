@@ -14,7 +14,9 @@
 <table border="1">
     <thead>
     <tr>
-        <th colspan="2">Commands</th>
+        <c:if test="${managementEnabled}">
+            <th colspan="2">Commands</th>
+        </c:if>
         <th>Allergen Name</th>
         <th>Category</th>
     </tr>
@@ -22,18 +24,20 @@
     <tbody>
     <c:forEach var="allergen" items="${allergens}">
         <tr>
-            <td>
-                <form method="POST" action="${contextRoot}/allergen/edit">
-                    <input type="hidden" name="allergenId" value="${allergen.id}"/>
-                    <input type="submit" value="E"/>
-                </form>
-            </td>
-            <td>
-                <form method="POST" action="${contextRoot}/allergen/delete">
-                    <input type="hidden" name="allergenId" value="${allergen.id}"/>
-                    <input type="submit" value="D"/>
-                </form>
-            </td>
+            <c:if test="${managementEnabled}">
+                <td>
+                    <form method="POST" action="${contextRoot}/app/allergen/edit">
+                        <input type="hidden" name="allergenId" value="${allergen.id}"/>
+                        <input type="submit" value="E"/>
+                    </form>
+                </td>
+                <td>
+                    <form method="POST" action="${contextRoot}/app/allergen/delete">
+                        <input type="hidden" name="allergenId" value="${allergen.id}"/>
+                        <input type="submit" value="D"/>
+                    </form>
+                </td>
+            </c:if>
             <td>${allergen.name}</td>
             <td>${allergen.category.name}</td>
         </tr>
@@ -41,11 +45,19 @@
     </tbody>
 </table>
 <p>Total registered allergens: ${allergens.size()} </p>
-<h3>Operations</h3>
-<p>Create new allergen:</p>
-<form method="POST" action="${contextRoot}/allergen/create">
-    <input type="submit" value="create new allergen">
-</form>
+<c:choose>
+    <c:when test="${managementEnabled}">
+
+        <h3>Operations</h3>
+        <p>Create new allergen:</p>
+        <form method="POST" action="${contextRoot}/app/allergen/create">
+            <input type="submit" value="create new allergen">
+        </form>
+    </c:when>
+    <c:otherwise>
+        <h5>You are not permitted to manage the allergens.</h5>
+    </c:otherwise>
+</c:choose>
 <jsp:include page="/WEB-INF/jsp/footer.jsp"/>
 </body>
 </html>

@@ -10,7 +10,7 @@
 <h2>Categories</h2>
 <h3>${catBean.operationLabel}</h3>
 <p>Category name: </p>
-<form method="POST" action="<%=request.getContextPath()%>/category/do">
+<form method="POST" action="<%=request.getContextPath()%>/app/category/do">
    <input type="text" name="categoryName" value="${catBean.category.name}" title="categoryName"/>
    <input type="hidden" name="categoryId" value="${catBean.category.id}"/>
    <input type="hidden" name="action" value="${catBean.action}"/>

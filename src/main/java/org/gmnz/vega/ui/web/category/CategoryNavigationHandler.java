@@ -76,12 +76,14 @@ class CategoryNavigationHandler {
 			try {
 				List<Category> categories = categoryService.getAllCategories();
 				req.setAttribute("categories", categories);
+				req.setAttribute("managementEnabled", req.isUserInRole("v-admin"));
 				return new RequestProcessingResult(HttpServletResponse.SC_OK, mgmtBean.getViewName(), null);
 			} catch (VegaException e) {
 				e.printStackTrace();
 				return new RequestProcessingResult(HttpServletResponse.SC_INTERNAL_SERVER_ERROR,
 						"error while retrieving categories");
 			}
+
 		case Action.MODIFY:
 		case Action.DELETE:
 			String categoryId = req.getParameter("categoryId");

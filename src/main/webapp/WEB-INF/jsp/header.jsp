@@ -16,10 +16,10 @@
 <hr/>
 <h6>
     <% String contextRoot = request.getContextPath(); %>
-    <a href="<%= contextRoot %>/index.jsp">Index</a>
-    <a href="<%= contextRoot %>/category/getAll">Categories</a>
-    <a href="<%= contextRoot %>/allergen/getAll">Allergens</a>
-    <a href="<%= contextRoot %>/report/getAll">Reports</a>
+    <a href="<%= contextRoot %>/app/mainMenu.jsp">Index</a>
+    <a href="<%= contextRoot %>/app/category/getAll">Categories</a>
+    <a href="<%= contextRoot %>/app/allergen/getAll">Allergens</a>
+    <a href="<%= contextRoot %>/app/report/getAll">Reports</a>
 </h6>
 <hr/>
 

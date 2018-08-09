@@ -79,6 +79,7 @@ class AllergenNavigationHandler {
 			try {
 				List<Allergen> allergens = allergenService.getAllAllergens();
 				req.setAttribute("allergens", allergens);
+				req.setAttribute("managementEnabled", req.isUserInRole("v-admin"));
 				return new RequestProcessingResult(HttpServletResponse.SC_OK, mgmtBean.getViewName(), null);
 			} catch (VegaException e) {
 				e.printStackTrace();

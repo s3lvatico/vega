@@ -61,7 +61,7 @@
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>CategoryController</servlet-name>
-		<url-pattern>/category/*</url-pattern>
+		<url-pattern>/app/category/*</url-pattern>
 	</servlet-mapping>
 
 
@@ -71,7 +71,7 @@
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>CategoryExecution</servlet-name>
-		<url-pattern>/category/do/*</url-pattern>
+		<url-pattern>/app/category/do/*</url-pattern>
 	</servlet-mapping>
 
 
@@ -81,7 +81,7 @@
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>AllergenController</servlet-name>
-		<url-pattern>/allergen/*</url-pattern>
+		<url-pattern>/app/allergen/*</url-pattern>
 	</servlet-mapping>
 
 
@@ -91,7 +91,7 @@
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>AllergenExecution</servlet-name>
-		<url-pattern>/allergen/do/*</url-pattern>
+		<url-pattern>/app/allergen/do/*</url-pattern>
 	</servlet-mapping>
 
 
@@ -101,7 +101,7 @@
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>ReportControllerServlet</servlet-name>
-		<url-pattern>/report/*</url-pattern>
+		<url-pattern>/app/report/*</url-pattern>
 	</servlet-mapping>
 
 
@@ -111,7 +111,7 @@
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>ReportExecutionServlet</servlet-name>
-		<url-pattern>/report/do/*</url-pattern>
+		<url-pattern>/app/report/do/*</url-pattern>
 	</servlet-mapping>
 
 

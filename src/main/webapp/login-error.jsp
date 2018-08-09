@@ -13,7 +13,7 @@
 <body>
 	<h1>Login Error</h1>
 	<p>
-		Authentication failed. Go back to the <a href="<%=contextRoot%>/index.jsp">main page</a>.
+		Authentication failed. Go back to the <a href="<%=contextRoot%>/home.jsp">main page</a>.
 	</p>
 </body>
 </html>
