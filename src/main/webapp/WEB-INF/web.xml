@@ -45,7 +45,8 @@
 
 
 	<welcome-file-list>
-		<welcome-file>index.jsp</welcome-file>
+		<!-- <welcome-file>index.jsp</welcome-file> -->
+		<welcome-file>home.jsp</welcome-file>
 	</welcome-file-list>
 
 
@@ -114,4 +115,24 @@
 	</servlet-mapping>
 
 
+	<!-- sicurezza -->
+	<login-config>
+		<auth-method>FORM</auth-method>
+		<form-login-config>
+			<form-login-page>/login.jsp</form-login-page>
+			<form-error-page>/login-error.jsp</form-error-page>
+		</form-login-config>
+	</login-config>
+
+	<security-constraint>
+		<web-resource-collection>
+			<web-resource-name>application-content</web-resource-name>
+			<url-pattern>/app/*</url-pattern>
+		</web-resource-collection>
+		<auth-constraint>
+			<role-name>v-user</role-name>
+		</auth-constraint>
+	</security-constraint>
+
+	<!-- == sicurezza -->
 </web-app>
