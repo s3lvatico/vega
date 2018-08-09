@@ -1,13 +1,6 @@
 package org.gmnz.vega.ui.web.category;
 
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
 import org.gmnz.vega.Vega;
 import org.gmnz.vega.VegaException;
 import org.gmnz.vega.VegaImpl;
@@ -15,6 +8,12 @@ import org.gmnz.vega.domain.Category;
 import org.gmnz.vega.service.CategoryService;
 import org.gmnz.vega.ui.Action;
 import org.gmnz.vega.ui.web.RequestProcessingResult;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 
 class CategoryNavigationHandler {
@@ -69,40 +68,39 @@ class CategoryNavigationHandler {
 
 
 	private RequestProcessingResult handleAction(CategoryManagementBean mgmtBean, HttpServletRequest req,
-			HttpServletResponse resp) {
+																HttpServletResponse resp) {
 		CategoryService categoryService = vega.getCategoryService();
 		switch (mgmtBean.getAction()) {
-		case Action.GET_ALL:
-			try {
-				List<Category> categories = categoryService.getAllCategories();
-				req.setAttribute("categories", categories);
-				req.setAttribute("managementEnabled", req.isUserInRole("v-admin"));
-				return new RequestProcessingResult(HttpServletResponse.SC_OK, mgmtBean.getViewName(), null);
-			} catch (VegaException e) {
-				e.printStackTrace();
-				return new RequestProcessingResult(HttpServletResponse.SC_INTERNAL_SERVER_ERROR,
-						"error while retrieving categories");
-			}
+			case Action.GET_ALL:
+				try {
+					List<Category> categories = categoryService.getAllCategories();
+					req.setAttribute("categories", categories);
+					req.setAttribute("managementEnabled", req.isUserInRole("v-admin"));
+					return RequestProcessingResult.OK(mgmtBean.getViewName());
+				} catch (VegaException e) {
+					e.printStackTrace();
+					return RequestProcessingResult.INTERNAL_SERVER_ERROR("error while retrieving categories");
+				}
 
-		case Action.MODIFY:
-		case Action.DELETE:
-			String categoryId = req.getParameter("categoryId");
-			try {
-				Category c = categoryService.getCategoryById(categoryId);
-				mgmtBean.setCategory(c);
-			} catch (VegaException e) {
-				e.printStackTrace();
-				String errorMessage = String.format("error while retrieving category with id [%s]", categoryId);
-				return new RequestProcessingResult(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, errorMessage);
-			}
-			req.setAttribute("catBean", mgmtBean);
-			return new RequestProcessingResult(HttpServletResponse.SC_OK, mgmtBean.getViewName(), null);
-		case Action.CREATE:
-			mgmtBean.setCategory(new Category(""));
-			req.setAttribute("catBean", mgmtBean);
-			return new RequestProcessingResult(HttpServletResponse.SC_OK, mgmtBean.getViewName(), null);
-		default:
-			return new RequestProcessingResult(HttpServletResponse.SC_BAD_REQUEST, "unrecognized request");
+			case Action.MODIFY:
+			case Action.DELETE:
+				String categoryId = req.getParameter("categoryId");
+				try {
+					Category c = categoryService.getCategoryById(categoryId);
+					mgmtBean.setCategory(c);
+				} catch (VegaException e) {
+					e.printStackTrace();
+					String errorMessage = String.format("error while retrieving category with id [%s]", categoryId);
+					return RequestProcessingResult.INTERNAL_SERVER_ERROR(errorMessage);
+				}
+				req.setAttribute("catBean", mgmtBean);
+				return RequestProcessingResult.OK(mgmtBean.getViewName());
+			case Action.CREATE:
+				mgmtBean.setCategory(new Category(""));
+				req.setAttribute("catBean", mgmtBean);
+				return RequestProcessingResult.OK(mgmtBean.getViewName());
+			default:
+				return RequestProcessingResult.BAD_REQUEST("unrecognized request");
 		}
 	}
 }

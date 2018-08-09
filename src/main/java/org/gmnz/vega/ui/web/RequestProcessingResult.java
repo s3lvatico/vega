@@ -1,5 +1,6 @@
 package org.gmnz.vega.ui.web;
 
+
 public class RequestProcessingResult {
 
 	int statusCode;
@@ -18,6 +19,24 @@ public class RequestProcessingResult {
 
 	public RequestProcessingResult(int statusCode, String errorMessage) {
 		this(statusCode, null, errorMessage);
+	}
+
+
+
+	public static RequestProcessingResult OK(String viewName) {
+		return new RequestProcessingResult(200, viewName, null);
+	}
+
+
+
+	public static RequestProcessingResult BAD_REQUEST(String message) {
+		return new RequestProcessingResult(400, message);
+	}
+
+
+
+	public static RequestProcessingResult INTERNAL_SERVER_ERROR(String message) {
+		return new RequestProcessingResult(500, message);
 	}
 
 
