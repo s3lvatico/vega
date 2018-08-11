@@ -20,13 +20,30 @@ class ReportDaoImpl extends BasicDaoImpl implements ReportDao {
 		ResultSet rs = null;
 		try {
 			s = connection.createStatement();
-			rs = s.executeQuery("SELECT * FROM report ORDER BY subject_name, date_creation");
+//@formatter:off
+			String sqlQuery = "select " +
+									" rpt.id, " +
+									" rpt.subject_name, " +
+									" rpt.date_creation, " +
+									" owner.user_name, " +
+									" owner.full_name " +
+									"from " +
+									" report rpt " +
+									" join vega_user owner  on rpt.owner = owner.user_name " +
+									"order by " +
+									" subject_name, " +
+									" date_creation;";
+//@formatter:on
+			// rs = s.executeQuery("SELECT * FROM report ORDER BY subject_name, date_creation");
+			rs = s.executeQuery(sqlQuery);
 			List<Report> reports = new ArrayList<>();
 			while (rs.next()) {
 				String id = rs.getString(1);
 				String subjectName = rs.getString(2);
 				Date creationDate = rs.getDate(3);
-				Report r = new Report(id, subjectName, creationDate);
+				String owner = rs.getString(4);
+				Report r = new Report(id, subjectName, creationDate, owner);
+				r.setOwnerFullName(rs.getString(5));
 				reports.add(r);
 			}
 			return reports;
@@ -46,10 +63,11 @@ class ReportDaoImpl extends BasicDaoImpl implements ReportDao {
 		PreparedStatement psRptDetail = null;
 		try {
 			connection.setAutoCommit(false);
-			psRptHeader = connection.prepareStatement("INSERT INTO report VALUES (?, ?, ?)");
+			psRptHeader = connection.prepareStatement("INSERT INTO report VALUES (?, ?, ?, ?)");
 			psRptHeader.setString(1, r.getId());
 			psRptHeader.setString(2, r.getSubjectName());
 			psRptHeader.setTimestamp(3, new Timestamp(r.getCreationDate().getTime()));
+			psRptHeader.setString(4, r.getOwner());
 			psRptHeader.execute();
 
 			psRptDetail = connection.prepareStatement("INSERT INTO report_line VALUES (?, ?, ?)");
@@ -78,12 +96,24 @@ class ReportDaoImpl extends BasicDaoImpl implements ReportDao {
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 		try {
-			String sqlQuery = "select " + " rpt_head.subject_name, " + " rpt_head.date_creation, "
-					+ " cat.e_name category_name, " + " al.e_name allergen_name, " + " rpt_detail.toxicity " + "from "
-					+ " report rpt_head " + "join report_line rpt_detail on " + " rpt_head.id = rpt_detail.id_report "
-					+ "join allergen al on " + " rpt_detail.id_allergen = al.id " + "join category cat on "
-					+ " al.id_category = cat.id " + "where " + " rpt_head.id = ? " + "order by " + " cat.e_name, "
-					+ " allergen_name";
+//@formatter:off
+			String sqlQuery = "select " +
+					" rpt_head.subject_name, " +
+					" rpt_head.date_creation, " +
+					" rpt_head.owner, " +
+					" vega_user.full_name owner_full_name, " +
+					" cat.e_name category_name, " +
+					" al.e_name allergen_name, " +
+					" rpt_detail.toxicity " +
+					"from " +
+					" report rpt_head " +
+					"join report_line rpt_detail on  rpt_head.id = rpt_detail.id_report " +
+					"join allergen al on  rpt_detail.id_allergen = al.id " +
+					"join category cat on  al.id_category = cat.id " +
+					"join vega_user on  rpt_head.owner = vega_user.user_name " +
+					"where  rpt_head.id = ? " +
+					"order by cat.e_name,  allergen_name";
+//@formatter:off
 			ps = connection.prepareStatement(sqlQuery);
 			ps.setString(1, id);
 			rs = ps.executeQuery();
@@ -91,13 +121,14 @@ class ReportDaoImpl extends BasicDaoImpl implements ReportDao {
 			while (rs.next()) {
 				if (r == null) {
 					Timestamp ts = rs.getTimestamp(2);
-					r = new Report(rs.getString(1), new java.util.Date(ts.getTime()));
+					r = new Report(rs.getString(1), new java.util.Date(ts.getTime()), rs.getString(3));
+					r.setOwnerFullName(rs.getString(4));
 				}
 				Category c = new Category(rs.getString("category_name"));
 				Allergen a = new Allergen(rs.getString("allergen_name"));
 				a.setCategory(c);
 
-				ToxicityRating tr = new ToxicityRating(a, rs.getDouble(5));
+				ToxicityRating tr = new ToxicityRating(a, rs.getDouble(7));
 				r.addRating(tr);
 			}
 			return r;
@@ -125,7 +156,8 @@ class ReportDaoImpl extends BasicDaoImpl implements ReportDao {
 				String subjectName = rs.getString(2);
 				Timestamp ts = rs.getTimestamp(3);
 				java.util.Date rptCreationDate = new Date(ts.getTime());
-				r = new Report(rptId, subjectName, rptCreationDate);
+				String rptOwner = rs.getString(4);
+				r = new Report(rptId, subjectName, rptCreationDate, rptOwner);
 			}
 			return r;
 		} catch (SQLException e) {

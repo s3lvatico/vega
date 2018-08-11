@@ -1,7 +1,10 @@
+<%@ page contentType="text/html;charset=UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
-<%@ page contentType="text/html;charset=UTF-8" %>
-
+<%
+    String currentUser = request.getRemoteUser();
+    request.setAttribute("currentUser", currentUser);
+%>
 <html>
 <head>
     <meta charset="utf-8">
@@ -17,25 +20,39 @@
         <th colspan="2">Commands</th>
         <th>Subject Name</th>
         <th>Creation date</th>
+        <th>Owner</th>
     </tr>
     </thead>
     <tbody>
     <c:forEach var="report" items="${reports}">
         <tr>
-            <td>
-                <form method="POST" action="${contextRoot}/app/report/viewDetails">
-                    <input type="hidden" name="reportId" value="${report.id}"/>
-                    <input type="submit" value="Details"/>
-                </form>
-            </td>
-            <td>
-                <form method="POST" action="${contextRoot}/app/report/delete">
-                    <input type="hidden" name="reportId" value="${report.id}"/>
-                    <input type="submit" value="Delete"/>
-                </form>
-            </td>
+            <c:choose>
+                <c:when test="${report.owner eq currentUser}">
+                    <td>
+                        <form method="POST" action="${contextRoot}/app/report/viewDetails">
+                            <input type="hidden" name="reportId" value="${report.id}"/>
+                            <input type="submit" value="Details"/>
+                        </form>
+                    </td>
+                    <td>
+                        <form method="POST" action="${contextRoot}/app/report/delete">
+                            <input type="hidden" name="reportId" value="${report.id}"/>
+                            <input type="submit" value="Delete"/>
+                        </form>
+                    </td>
+                </c:when>
+                <c:otherwise>
+                    <td colspan="2">
+                        <form method="POST" action="${contextRoot}/app/report/viewDetails">
+                            <input type="hidden" name="reportId" value="${report.id}"/>
+                            <input type="submit" value="Details"/>
+                        </form>
+                    </td>
+                </c:otherwise>
+            </c:choose>
             <td>${report.subjectName}</td>
             <td>${report.creationDate}</td>
+            <td>${report.ownerFullName}</td>
         </tr>
     </c:forEach>
     </tbody>

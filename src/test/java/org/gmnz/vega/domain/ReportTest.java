@@ -38,7 +38,7 @@ public class ReportTest {
 	}
 
 	@Test public void creaReport() {
-		Report report = new Report("Simone", new Date());
+		Report report = new Report("Simone", new Date(), "gemini");
 		System.out.println(report);
 
 

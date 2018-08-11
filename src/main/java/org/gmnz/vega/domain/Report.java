@@ -21,23 +21,29 @@ public class Report {
 
 	private Date createdOn;
 
+	private String owner;
+
+	private String ownerFullName;
+
 	private Map<String, List<ToxicityRating>> reportData;
 
 
 
-	public Report(String subjectName, Date createdOn) {
+	public Report(String subjectName, Date createdOn, String owner) {
 		this.subjectName = subjectName;
 		this.createdOn = createdOn;
+		this.owner = owner;
 		reportData = new LinkedHashMap<>();
 		id = VegaUtil.getSha256Digest(this.subjectName, this.createdOn);
 	}
 
 
 
-	public Report(String id, String subjectName, Date creationDate) {
+	public Report(String id, String subjectName, Date creationDate, String owner) {
 		this.id = id;
 		this.subjectName = subjectName;
 		this.createdOn = creationDate;
+		this.owner = owner;
 		reportData = new LinkedHashMap<>();
 	}
 
@@ -45,7 +51,6 @@ public class Report {
 
 	public void addRating(ToxicityRating rating) {
 		String categoryName = rating.getAllergen().getCategory().getName();
-//		if (reportData.get(categoryName) == null) {
 		if (!reportData.containsKey(categoryName)) {
 			reportData.put(categoryName, new ArrayList<>());
 		}
@@ -83,6 +88,18 @@ public class Report {
 		return id;
 	}
 
+	public String getOwner() { return owner; }
+
+
+	public String getOwnerFullName() {
+		return ownerFullName;
+	}
+
+
+
+	public void setOwnerFullName(String ownerFullName) {
+		this.ownerFullName = ownerFullName;
+	}
 
 
 	@Override
@@ -109,4 +126,7 @@ public class Report {
 	public int hashCode() {
 		return Objects.hash(id);
 	}
+
+
+
 }

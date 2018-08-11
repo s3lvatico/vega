@@ -84,7 +84,8 @@ public class ReportExecution extends HttpServlet {
 
 	private void createAndStoreReport(String subjectName, HttpServletRequest req, HttpServletResponse resp)
 			throws VegaException {
-		Report r = new Report(subjectName, new Date());
+		String reportOwner = req.getRemoteUser();
+		Report r = new Report(subjectName, new Date(), reportOwner);
 		AllergenService allergenService = vega.getAllergenService();
 		Enumeration<String> paramNames = req.getParameterNames();
 		String paramName;
