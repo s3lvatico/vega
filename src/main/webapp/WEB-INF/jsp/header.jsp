@@ -25,7 +25,7 @@
     <a href="<%= contextRoot %>/app/allergen/getAll">Allergens</a>
     <a href="<%= contextRoot %>/app/report/getAll">Reports</a>
     <c:if test="${userIsLogged}">
-        <a href="<%= contextRoot %>/logout.jsp"> | Log out</a>
+        <%= " |  logged in as [" + request.getRemoteUser() + "] - " %> <a href="<%= contextRoot %>/logout.jsp">Log out</a>
     </c:if>
 </h6>
 <hr/>

@@ -1,4 +1,0 @@
-
-INSERT INTO `category` VALUES ('35d6f3e7-4638-4ba8-b27c-19089570fbeb','sdfghgr4gvd',0),('842b5f72-d188-4bd6-af5d-8b7e69a919fe','cat2',0),('e03daf50-de31-471a-9a02-b70097fc114a','catUno',0),('e03daf50-de31-471a-9a02-b70097fc11da','catoffio',0);
-
-INSERT INTO `allergen` VALUES ('111122fd-bbe7-4a64-b42c-d52f81ad146b','all1',0,'e03daf50-de31-471a-9a02-b70097fc114a'),('20adc510-6b14-457c-915a-807b2e150f42','Lonfo',0,'e03daf50-de31-471a-9a02-b70097fc11da'),('27465574-94fd-4dbc-8ba9-806f1e64fe1c','allergene-2_3',0,'842b5f72-d188-4bd6-af5d-8b7e69a919fe'),('4826ea33-d5c5-4c78-8db7-e12da9d3453f','allergene-2_1',0,'842b5f72-d188-4bd6-af5d-8b7e69a919fe'),('683f2544-36b5-4826-b2cd-94d7d321fc7b','all1-2',0,'e03daf50-de31-471a-9a02-b70097fc114a'),('c12cc584-891c-496d-8186-498fd1d60fcc','allergene-2_2',0,'842b5f72-d188-4bd6-af5d-8b7e69a919fe');

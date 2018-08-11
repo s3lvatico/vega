@@ -17,3 +17,5 @@ CREATE TABLE `vega`.`vega_role`
 (20) NOT NULL,
   PRIMARY KEY
 (`role_name`, `user_name`));
+
+ALTER TABLE vega.report ADD owner varchar(20) NOT NULL;
