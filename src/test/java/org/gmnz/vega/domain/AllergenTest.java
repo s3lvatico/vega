@@ -29,14 +29,14 @@ public class AllergenTest {
 	@Test
 	public void testToString() {
 		Allergen x = new Allergen("x");
-		String expected = "Allergen{nome='x', categoria='DEFAULT_CATEGORY'}";
+		String expected = "Allergen{name='x', category='DEFAULT_CATEGORY'}";
 		Assert.assertEquals(expected, x.toString());
 	}
 
 	@Test
 	public void testHashcode() {
 		Allergen x = new Allergen("ics");
-		int expected = 104089;
+		int expected = 992136656;
 		Assert.assertEquals(expected, x.hashCode());
 	}
 
