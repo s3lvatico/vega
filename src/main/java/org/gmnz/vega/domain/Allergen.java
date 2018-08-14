@@ -70,4 +70,11 @@ public class Allergen {
 		return "Allergen{" + "name='" + getName() + "\', " + "category='" + getCategory().getName() + '\'' + '}';
 	}
 
+
+
+	@Override
+	public int hashCode() {
+		return name.hashCode();
+	}
+
 }

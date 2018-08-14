@@ -85,4 +85,11 @@ public class Category {
 		return builder.toString();
 	}
 
+
+
+	@Override
+	public int hashCode() {
+		return name.hashCode();
+	}
+
 }
