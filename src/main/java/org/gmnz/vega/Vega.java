@@ -8,7 +8,7 @@ import org.gmnz.vega.service.ReportService;
 
 public interface Vega {
 
-	void assignAllergenToCategory(String allergenName, String categoryName);
+//	void assignAllergenToCategory(String allergenName, String categoryName);
 
 
 

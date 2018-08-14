@@ -1,7 +1,12 @@
 package org.gmnz.vega;
 
 
-import org.gmnz.vega.service.*;
+import org.gmnz.vega.service.AllergenService;
+import org.gmnz.vega.service.AllergenServiceImpl;
+import org.gmnz.vega.service.CategoryService;
+import org.gmnz.vega.service.CategoryServiceImpl;
+import org.gmnz.vega.service.ReportService;
+import org.gmnz.vega.service.ReportServiceImpl;
 
 
 public class VegaImpl implements Vega {
@@ -43,9 +48,9 @@ public class VegaImpl implements Vega {
 
 
 
-	@Override
-	public void assignAllergenToCategory(String nomeAllergene, String nomeCategoria) {
-		throw new RuntimeException("not yet implemented");
-	}
+//	@Override
+//	public void assignAllergenToCategory(String nomeAllergene, String nomeCategoria) {
+//		throw new RuntimeException("not yet implemented");
+//	}
 
 }
