@@ -34,7 +34,8 @@ public abstract class DaoFactory {
 
 	public CategoryDao createCategoryDao() throws DaoCreationException {
 		CategoryDaoImpl daoImpl = new CategoryDaoImpl();
-		injectConnection(daoImpl);
+//		injectConnection(daoImpl);
+		daoImpl.setDataSource(dataSource);
 		return daoImpl;
 	}
 

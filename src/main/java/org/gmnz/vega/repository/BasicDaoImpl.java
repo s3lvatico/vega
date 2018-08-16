@@ -5,6 +5,10 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
+import javax.sql.DataSource;
+
+import org.springframework.jdbc.core.JdbcTemplate;
+
 
 class BasicDaoImpl extends ConnectionOrientedDaoImpl {
 
@@ -22,4 +26,11 @@ class BasicDaoImpl extends ConnectionOrientedDaoImpl {
 		releaseResources(s, null);
 	}
 
+	protected JdbcTemplate jdbcTemplate;
+
+
+
+	protected void setDataSource(DataSource ds) {
+		this.jdbcTemplate = new JdbcTemplate(ds);
+	}
 }

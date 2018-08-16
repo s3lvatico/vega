@@ -1,13 +1,13 @@
 package org.gmnz.vega.web;
 
 
-import javax.naming.Context;
-import javax.naming.InitialContext;
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
 import javax.sql.DataSource;
 
 import org.gmnz.vega.repository.DaoFactory;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 
 /**
@@ -15,19 +15,29 @@ import org.gmnz.vega.repository.DaoFactory;
  */
 public class StartupListener implements ServletContextListener {
 
+	private ApplicationContext springCtx;
+
+
+
 	@Override
 	public void contextInitialized(ServletContextEvent sce) {
 		System.out.println(">>> contextInitialized");
-		String jndiDataSource = sce.getServletContext().getInitParameter("jndi-datasource");
-		System.out.printf("data source JNDI name: <%s>%n", jndiDataSource);
-		try {
-			Context initContext = new InitialContext();
-			Context envContext = (Context) initContext.lookup("java:/comp/env");
-			DataSource ds = (DataSource) envContext.lookup("jdbc/vegaDS");
-			DaoFactory.setDataSource(ds);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+
+//		String jndiDataSource = sce.getServletContext().getInitParameter("jndi-datasource");
+//		System.out.printf("data source JNDI name: <%s>%n", jndiDataSource);
+//		try {
+//			Context initContext = new InitialContext();
+//			Context envContext = (Context) initContext.lookup("java:/comp/env");
+//			DataSource ds = (DataSource) envContext.lookup("jdbc/vegaDS");
+//			DaoFactory.setDataSource(ds);
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//		}
+
+		springCtx = new ClassPathXmlApplicationContext("/applicationContext.xml");
+		DataSource ds = springCtx.getBean("dataSource", DataSource.class);
+		DaoFactory.setDataSource(ds);
+
 		System.out.printf("<<< contextInitialized%n");
 	}
 
@@ -36,6 +46,7 @@ public class StartupListener implements ServletContextListener {
 	@Override
 	public void contextDestroyed(ServletContextEvent sce) {
 		System.out.printf(">>> contextDestroyed%n");
+		springCtx = null;
 		System.out.printf("<<< contextDestroyed%n");
 	}
 }
