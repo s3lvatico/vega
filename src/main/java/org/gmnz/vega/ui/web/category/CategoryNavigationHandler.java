@@ -10,12 +10,11 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.gmnz.vega.Vega;
 import org.gmnz.vega.VegaException;
+import org.gmnz.vega.VegaImpl;
 import org.gmnz.vega.domain.Category;
 import org.gmnz.vega.service.CategoryService;
 import org.gmnz.vega.ui.Action;
 import org.gmnz.vega.ui.web.RequestProcessingResult;
-import org.springframework.web.context.WebApplicationContext;
-import org.springframework.web.context.support.WebApplicationContextUtils;
 
 
 class CategoryNavigationHandler {
@@ -60,8 +59,9 @@ class CategoryNavigationHandler {
 	RequestProcessingResult handleRequest(String section, HttpServletRequest req, HttpServletResponse resp) {
 		CategoryManagementBean mgmtBean = navigationMap.get(section);
 		if (mgmtBean != null) {
-			WebApplicationContext wCtx = WebApplicationContextUtils.getRequiredWebApplicationContext(req.getServletContext());
-			vega = wCtx.getBean("vega", Vega.class);
+//			WebApplicationContext wCtx = WebApplicationContextUtils.getRequiredWebApplicationContext(req.getServletContext());
+//			vega = wCtx.getBean("vega", Vega.class);
+			vega = new VegaImpl(); // TODO inietta un'istanza di Vega vera e propria
 			return handleAction(mgmtBean, req, resp);
 		} else {
 			return new RequestProcessingResult(HttpServletResponse.SC_NOT_FOUND, "unknown section requested");
