@@ -15,6 +15,8 @@ import org.gmnz.vega.domain.Category;
 
 class CategoryDaoImpl extends BasicDaoImpl implements CategoryDao {
 
+// TODO usare il jdbcTemplate di Spring, al momento viene lanciata una NPE
+
 	@Override
 	public List<Category> findAll() throws DaoException {
 		Statement s = null;
