@@ -5,6 +5,7 @@ import org.gmnz.vega.domain.Allergen;
 import org.gmnz.vega.domain.Category;
 import org.gmnz.vega.domain.Report;
 import org.gmnz.vega.domain.ToxicityRating;
+import org.springframework.jdbc.core.RowMapper;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -16,43 +17,72 @@ class ReportDaoImpl extends BasicDaoImpl implements ReportDao {
 
 	@Override
 	public Collection<Report> findAll() throws DaoException {
-		Statement s = null;
-		ResultSet rs = null;
-		try {
-			s = connection.createStatement();
+
 //@formatter:off
-			String sqlQuery = "select " +
-									" rpt.id, " +
-									" rpt.subject_name, " +
-									" rpt.date_creation, " +
-									" owner.user_name, " +
-									" owner.full_name " +
-									"from " +
-									" report rpt " +
-									" join vega_user owner  on rpt.owner = owner.user_name " +
-									"order by " +
-									" subject_name, " +
-									" date_creation;";
+		String sqlQuery = "select " +
+								" rpt.id, " +
+								" rpt.subject_name, " +
+								" rpt.date_creation, " +
+								" owner.user_name, " +
+								" owner.full_name " +
+								"from " +
+								" report rpt " +
+								" join vega_user owner  on rpt.owner = owner.user_name " +
+								"order by " +
+								" subject_name, " +
+								" date_creation;";
 //@formatter:on
-			// rs = s.executeQuery("SELECT * FROM report ORDER BY subject_name, date_creation");
-			rs = s.executeQuery(sqlQuery);
-			List<Report> reports = new ArrayList<>();
-			while (rs.next()) {
-				String id = rs.getString(1);
-				String subjectName = rs.getString(2);
-				Date creationDate = rs.getDate(3);
-				String owner = rs.getString(4);
+		return jdbcTemplate.query(sqlQuery, new RowMapper<Report>() {
+			@Override
+			public Report mapRow(ResultSet resultSet, int i) throws SQLException {
+				String id = resultSet.getString(1);
+				String subjectName = resultSet.getString(2);
+				Date creationDate = resultSet.getDate(3);
+				String owner = resultSet.getString(4);
 				Report r = new Report(id, subjectName, creationDate, owner);
-				r.setOwnerFullName(rs.getString(5));
-				reports.add(r);
+				r.setOwnerFullName(resultSet.getString(5));
+				return r;
 			}
-			return reports;
-		} catch (SQLException e) {
-			e.printStackTrace();
-			throw new DaoException("ReportDaoImpl.findAll error", e);
-		} finally {
-			releaseResources(s, rs);
-		}
+		});
+
+
+//		Statement s = null;
+//		ResultSet rs = null;
+//		try {
+//			s = connection.createStatement();
+////@formatter:off
+//			String sqlQuery = "select " +
+//									" rpt.id, " +
+//									" rpt.subject_name, " +
+//									" rpt.date_creation, " +
+//									" owner.user_name, " +
+//									" owner.full_name " +
+//									"from " +
+//									" report rpt " +
+//									" join vega_user owner  on rpt.owner = owner.user_name " +
+//									"order by " +
+//									" subject_name, " +
+//									" date_creation;";
+////@formatter:on
+//			// rs = s.executeQuery("SELECT * FROM report ORDER BY subject_name, date_creation");
+//			rs = s.executeQuery(sqlQuery);
+//			List<Report> reports = new ArrayList<>();
+//			while (rs.next()) {
+//				String id = rs.getString(1);
+//				String subjectName = rs.getString(2);
+//				Date creationDate = rs.getDate(3);
+//				String owner = rs.getString(4);
+//				Report r = new Report(id, subjectName, creationDate, owner);
+//				r.setOwnerFullName(rs.getString(5));
+//				reports.add(r);
+//			}
+//			return reports;
+//		} catch (SQLException e) {
+//			e.printStackTrace();
+//			throw new DaoException("ReportDaoImpl.findAll error", e);
+//		} finally {
+//			releaseResources(s, rs);
+//		}
 	}
 
 
@@ -91,6 +121,7 @@ class ReportDaoImpl extends BasicDaoImpl implements ReportDao {
 
 
 
+
 	@Override
 	public Report findById(String id) throws DaoException {
 		PreparedStatement ps = null;
@@ -113,7 +144,7 @@ class ReportDaoImpl extends BasicDaoImpl implements ReportDao {
 					"join vega_user on  rpt_head.owner = vega_user.user_name " +
 					"where  rpt_head.id = ? " +
 					"order by cat.e_name,  allergen_name";
-//@formatter:off
+//@formatter:on
 			ps = connection.prepareStatement(sqlQuery);
 			ps.setString(1, id);
 			rs = ps.executeQuery();
@@ -142,48 +173,71 @@ class ReportDaoImpl extends BasicDaoImpl implements ReportDao {
 
 
 
-	@Override
-	public Report getSummaryById(String id) throws DaoException {
-		PreparedStatement ps = null;
-		ResultSet rs = null;
-		try {
-			ps = connection.prepareStatement("SELECT * FROM report WHERE id = ?");
-			ps.setString(1, id);
-			rs = ps.executeQuery();
-			Report r = null;
-			if (rs.next()) {
-				String rptId = rs.getString(1);
-				String subjectName = rs.getString(2);
-				Timestamp ts = rs.getTimestamp(3);
-				java.util.Date rptCreationDate = new Date(ts.getTime());
-				String rptOwner = rs.getString(4);
-				r = new Report(rptId, subjectName, rptCreationDate, rptOwner);
-			}
-			return r;
-		} catch (SQLException e) {
-			e.printStackTrace();
-			throw new DaoException("ReportDaoImpl.getSummryById error", e);
-		} finally {
-			releaseResources(ps, rs);
+	static class BasicReportRowMapper implements RowMapper<Report> {
+
+		@Override
+		public Report mapRow(ResultSet resultSet, int i) throws SQLException {
+			String rptId = resultSet.getString(1);
+			String subjectName = resultSet.getString(2);
+			Timestamp ts = resultSet.getTimestamp(3);
+			java.util.Date rptCreationDate = new Date(ts.getTime());
+			String rptOwner = resultSet.getString(4);
+			return new Report(rptId, subjectName, rptCreationDate, rptOwner);
 		}
 	}
 
 
 
 	@Override
+	public Report getSummaryById(String id) throws DaoException {
+		String sqlQuery = "SELECT * FROM report WHERE id = ?";
+		return jdbcTemplate.queryForObject(sqlQuery, new Object[]{id}, new BasicReportRowMapper());
+
+//		PreparedStatement ps = null;
+//		ResultSet rs = null;
+//		try {
+//			ps = connection.prepareStatement("SELECT * FROM report WHERE id = ?");
+//			ps.setString(1, id);
+//			rs = ps.executeQuery();
+//			Report r = null;
+//			if (rs.next()) {
+//				String rptId = rs.getString(1);
+//				String subjectName = rs.getString(2);
+//				Timestamp ts = rs.getTimestamp(3);
+//				java.util.Date rptCreationDate = new Date(ts.getTime());
+//				String rptOwner = rs.getString(4);
+//				r = new Report(rptId, subjectName, rptCreationDate, rptOwner);
+//			}
+//			return r;
+//		} catch (SQLException e) {
+//			e.printStackTrace();
+//			throw new DaoException("ReportDaoImpl.getSummryById error", e);
+//		} finally {
+//			releaseResources(ps, rs);
+//		}
+
+	}
+
+
+
+	@Override
 	public void remove(String id) throws DaoException {
-		PreparedStatement ps = null;
-		ResultSet rs = null;
-		try {
-			ps = connection.prepareStatement("DELETE FROM report WHERE id = ?");
-			ps.setString(1, id);
-			ps.execute();
-		} catch (SQLException e) {
-			e.printStackTrace();
-			throw new DaoException("ReportDaoImpl.remove error", e);
-		} finally {
-			releaseResources(ps, rs);
-		}
+		String sqlStatement = "DELETE FROM report WHERE id = ?";
+		jdbcTemplate.update(sqlStatement, id);
+
+//		PreparedStatement ps = null;
+//		ResultSet rs = null;
+//		try {
+//			ps = connection.prepareStatement("DELETE FROM report WHERE id = ?");
+//			ps.setString(1, id);
+//			ps.execute();
+//		} catch (SQLException e) {
+//			e.printStackTrace();
+//			throw new DaoException("ReportDaoImpl.remove error", e);
+//		} finally {
+//			releaseResources(ps, rs);
+//		}
+
 	}
 
 }
