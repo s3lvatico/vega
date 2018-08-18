@@ -35,8 +35,9 @@ public class AllergenTest {
 
 	@Test
 	public void testHashcode() {
-		Allergen x = new Allergen("ics");
-		int expected = 992136656;
+		String allergenName = "ics";
+		Allergen x = new Allergen(allergenName);
+		int expected = allergenName.hashCode();
 		Assert.assertEquals(expected, x.hashCode());
 	}
 
