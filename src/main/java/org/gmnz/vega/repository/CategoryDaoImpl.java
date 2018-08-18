@@ -6,7 +6,6 @@ import org.gmnz.vega.domain.Category;
 import org.springframework.jdbc.core.ResultSetExtractor;
 import org.springframework.jdbc.core.RowMapper;
 
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -15,10 +14,6 @@ import java.util.UUID;
 
 
 class CategoryDaoImpl extends BasicDaoImpl implements CategoryDao {
-
-// TODO usare il jdbcTemplate di Spring, al momento viene lanciata una NPE
-
-
 
 
 	static final class CategoryRowMapper implements RowMapper<Category> {
@@ -92,122 +87,60 @@ class CategoryDaoImpl extends BasicDaoImpl implements CategoryDao {
 
 	@Override
 	public Category findById(String id) {
-		return jdbcTemplate.queryForObject("SELECT * FROM category WHERE id = ? AND deleted = 0", new Object[]{id}, new CategoryRowMapper());
+		String sqlQuery = "SELECT * FROM category WHERE id = ? AND deleted = 0";
+		return jdbcTemplate.queryForObject(sqlQuery, new Object[]{id}, new CategoryRowMapper());
 	}
 
 
 
 	@Override
 	public boolean isCategoryRegisteredByName(String name) throws DaoException {
-		PreparedStatement ps = null;
-		ResultSet rs = null;
-		try {
-			ps = connection.prepareStatement("SELECT COUNT(*) FROM category WHERE e_name = ? AND deleted = '0'");
-			ps.setString(1, name);
-			rs = ps.executeQuery();
-			rs.next(); // deve esser fatto per forza
-			int countValue = rs.getInt(1);
-			return countValue == 1;
-		} catch (SQLException e) {
-			e.printStackTrace();
-			throw new DaoException("CategoryDaoImpl.isCategoryRegisteredByName error", e);
-		} finally {
-			releaseResources(ps, rs);
+		String sqlQuery = "SELECT COUNT(*) FROM category WHERE e_name = ? AND deleted = '0'";
+		int foundCategoriesWithName = jdbcTemplate.queryForObject(sqlQuery, Integer.class, name);
+		if (foundCategoriesWithName > 1) {
+			throw new DaoException("wrong number of categories found with name <" + name + ">");
+		} else {
+			return foundCategoriesWithName == 1;
 		}
 	}
 
 
 
 	@Override
-	public boolean isCategoryRegisteredById(String categoryId) throws DaoException {
-		PreparedStatement ps = null;
-		ResultSet rs = null;
-		try {
-			ps = connection.prepareStatement("SELECT COUNT(*) FROM category WHERE id = ? AND deleted = '0'");
-			ps.setString(1, categoryId);
-			rs = ps.executeQuery();
-			rs.next(); // deve esser fatto per forza
-			int countValue = rs.getInt(1);
-			return countValue == 1;
-		} catch (SQLException e) {
-			e.printStackTrace();
-			throw new DaoException("CategoryDaoImpl.isCategoryRegisteredById error", e);
-		} finally {
-			releaseResources(ps, rs);
-		}
+	public boolean isCategoryRegisteredById(String categoryId) {
+		String sqlQuery = "SELECT COUNT(*) FROM category WHERE id = ? AND deleted = '0'";
+		int foundCategoriesWithId = jdbcTemplate.queryForObject(sqlQuery, Integer.class, categoryId);
+		return foundCategoriesWithId == 1;
 	}
 
 
 
 	@Override
-	public void create(String name) throws DaoException {
-		PreparedStatement s = null;
-		try {
-			s = connection.prepareStatement("INSERT INTO category VALUES(?, ?, '0')");
-			s.setString(1, UUID.randomUUID().toString());
-			s.setString(2, name);
-			s.executeUpdate();
-		} catch (SQLException e) {
-			e.printStackTrace();
-			throw new DaoException("CategoryDaoImpl.create error", e);
-		} finally {
-			releaseResources(s);
-		}
+	public void create(String name) {
+		jdbcTemplate.update("INSERT INTO category VALUES(?, ?, '0')", UUID.randomUUID().toString(), name);
 	}
 
 
 
 	@Override
-	public void update(Category category) throws DaoException {
-		PreparedStatement s = null;
-		try {
-			s = connection.prepareStatement("UPDATE category SET e_name = ? WHERE id = ?");
-			s.setString(1, category.getName());
-			s.setString(2, category.getId());
-			s.executeUpdate();
-		} catch (SQLException e) {
-			e.printStackTrace();
-			throw new DaoException("CategoryDaoImpl.update error", e);
-		} finally {
-			releaseResources(s);
-		}
+	public void update(Category category) {
+		jdbcTemplate.update("UPDATE category SET e_name = ? WHERE id = ?", category.getName(), category.getId());
 	}
 
 
 
 	@Override
-	public int countAllergens(String categoryId) throws DaoException {
-		PreparedStatement ps = null;
-		ResultSet rs = null;
-		try {
-			ps = connection.prepareStatement("SELECT COUNT(*) FROM allergen WHERE id_category = ?");
-			ps.setString(1, categoryId);
-			rs = ps.executeQuery();
-			rs.next(); // deve esser fatto per forza
-			return rs.getInt(1);
-		} catch (SQLException e) {
-			e.printStackTrace();
-			throw new DaoException("CategoryDaoImpl.countAllergens error", e);
-		} finally {
-			releaseResources(ps, rs);
-		}
+	public int countAllergens(String categoryId) {
+		String sqlQuery = "SELECT COUNT(*) FROM allergen WHERE id_category = ?";
+		return jdbcTemplate.queryForObject(sqlQuery, Integer.class, categoryId);
 	}
 
 
 
 	@Override
 	public void delete(String categoryId) throws DaoException {
-		PreparedStatement s = null;
-		try {
-			s = connection.prepareStatement("DELETE  FROM category WHERE id = ?");
-			s.setString(1, categoryId);
-			s.executeUpdate();
-		} catch (SQLException e) {
-			e.printStackTrace();
-			throw new DaoException("CategoryDaoImpl.delete error", e);
-		} finally {
-			releaseResources(s);
-		}
+		String sqlStatement = "DELETE  FROM category WHERE id = ?";
+		jdbcTemplate.update(sqlStatement, categoryId);
 	}
 
 }
