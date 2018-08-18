@@ -1,6 +1,10 @@
 package org.gmnz.vega.repository;
 
 
+import org.gmnz.vega.domain.Allergen;
+import org.gmnz.vega.domain.Category;
+import org.springframework.jdbc.core.RowMapper;
+
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -9,36 +13,46 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-import org.gmnz.vega.domain.Allergen;
-import org.gmnz.vega.domain.Category;
-
 
 class CategoryDaoImpl extends BasicDaoImpl implements CategoryDao {
 
 // TODO usare il jdbcTemplate di Spring, al momento viene lanciata una NPE
 
+
+
 	@Override
-	public List<Category> findAll() throws DaoException {
-		Statement s = null;
-		ResultSet rs = null;
-		try {
-			s = connection.createStatement();
-			rs = s.executeQuery("SELECT * FROM category WHERE deleted = 0");
-			ArrayList<Category> categories = new ArrayList<>();
-			while (rs.next()) {
-				String id = rs.getString(1);
-				String categoryName = rs.getString(2);
-				Category c = new Category(categoryName);
-				c.setId(id);
-				categories.add(c);
+	public List<Category> findAll() {
+
+		List<Category> categories = jdbcTemplate.query("SELECT * FROM category WHERE deleted = 0", new RowMapper<Category>() {
+			@Override
+			public Category mapRow(ResultSet resultSet, int i) throws SQLException {
+				Category c = new Category(resultSet.getString(2));
+				c.setId(resultSet.getString(1));
+				return c;
 			}
-			return categories;
-		} catch (SQLException e) {
-			e.printStackTrace();
-			throw new DaoException("CategoryDaoImpl.findAll error", e);
-		} finally {
-			releaseResources(s, rs);
-		}
+		});
+
+		return categories;
+//		Statement s = null;
+//		ResultSet rs = null;
+//		try {
+//			s = connection.createStatement();
+//			rs = s.executeQuery("SELECT * FROM category WHERE deleted = 0");
+//			ArrayList<Category> categories = new ArrayList<>();
+//			while (rs.next()) {
+//				String id = rs.getString(1);
+//				String categoryName = rs.getString(2);
+//				Category c = new Category(categoryName);
+//				c.setId(id);
+//				categories.add(c);
+//			}
+//			return categories;
+//		} catch (SQLException e) {
+//			e.printStackTrace();
+//			throw new DaoException("CategoryDaoImpl.findAll error", e);
+//		} finally {
+//			releaseResources(s, rs);
+//		}
 	}
 
 
@@ -165,13 +179,14 @@ class CategoryDaoImpl extends BasicDaoImpl implements CategoryDao {
 	}
 
 
-
 //	@Deprecated
 //	@Override
 //	public Category findByName(String name) throws DaoException {
 //		//
 //		return null;
 //	}
+
+
 
 	@Override
 	public void create(String name) throws DaoException {
@@ -229,13 +244,14 @@ class CategoryDaoImpl extends BasicDaoImpl implements CategoryDao {
 	}
 
 
-
 //	@Deprecated
 //	@Override
 //	public void updateRename(String oldName, String newName) throws DaoException {
 //		//
 //
 //	}
+
+
 
 	@Override
 	public void delete(String categoryId) throws DaoException {
