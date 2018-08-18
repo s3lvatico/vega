@@ -3,12 +3,12 @@ package org.gmnz.vega.repository;
 
 import org.gmnz.vega.domain.Allergen;
 import org.gmnz.vega.domain.Category;
+import org.springframework.jdbc.core.ResultSetExtractor;
 import org.springframework.jdbc.core.RowMapper;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -33,37 +33,13 @@ class CategoryDaoImpl extends BasicDaoImpl implements CategoryDao {
 		});
 
 		return categories;
-//		Statement s = null;
-//		ResultSet rs = null;
-//		try {
-//			s = connection.createStatement();
-//			rs = s.executeQuery("SELECT * FROM category WHERE deleted = 0");
-//			ArrayList<Category> categories = new ArrayList<>();
-//			while (rs.next()) {
-//				String id = rs.getString(1);
-//				String categoryName = rs.getString(2);
-//				Category c = new Category(categoryName);
-//				c.setId(id);
-//				categories.add(c);
-//			}
-//			return categories;
-//		} catch (SQLException e) {
-//			e.printStackTrace();
-//			throw new DaoException("CategoryDaoImpl.findAll error", e);
-//		} finally {
-//			releaseResources(s, rs);
-//		}
 	}
 
 
 
 	@Override
-	public List<Category> findAllWithAllergens() throws DaoException {
-		Statement s = null;
-		ResultSet rs = null;
-		try {
-			s = connection.createStatement();
-//@formatter:off			
+	public List<Category> findAllWithAllergens() {
+//@formatter:off
 			String sqlQuery = "select  " +
 					"category.id 		category_id, " +
 					"category.e_name 	category_name, " +
@@ -75,40 +51,37 @@ class CategoryDaoImpl extends BasicDaoImpl implements CategoryDao {
 					"        and allergen.deleted = 0 " +
 					"        and category.deleted = 0 " +
 					"order by category_name, allergen_name";
-//@formatter:on			
-			rs = s.executeQuery(sqlQuery);
-			List<Category> categories = buildCategoriesList(rs);
-			return categories;
-		} catch (SQLException e) {
-			e.printStackTrace();
-			throw new DaoException("CategoryDaoImpl.findAllWithAllergens error", e);
-		} finally {
-			releaseResources(s, rs);
-		}
+//@formatter:on
+
+		return jdbcTemplate.query(sqlQuery, new CategoryWithAllergensRsExtractor());
 	}
 
 
 
-	private List<Category> buildCategoriesList(ResultSet rs) throws SQLException {
-		ArrayList<Category> categories = new ArrayList<>();
-		String currentCategoryId = "";
-		Category currentCategory = null;
-		while (rs.next()) {
-			String rsCategoryId = rs.getString("category_id");
-			if (!currentCategoryId.equals(rsCategoryId)) {
-				if (currentCategory != null) {
+	static class CategoryWithAllergensRsExtractor implements ResultSetExtractor<List<Category>> {
+
+
+		@Override
+		public List<Category> extractData(ResultSet rs) throws SQLException {
+			ArrayList<Category> categories = new ArrayList<>();
+
+			Category currentCategory = new Category("dummyName");
+			currentCategory.setId("dummyId");
+
+			while (rs.next()) {
+				String rsCategoryId = rs.getString("category_id");
+				if (!currentCategory.getId().equals(rsCategoryId)) {
+					currentCategory = new Category(rs.getString("category_name"));
+					currentCategory.setId(rsCategoryId);
 					categories.add(currentCategory);
 				}
-				currentCategoryId = rsCategoryId;
-				currentCategory = new Category(rs.getString("category_name"));
-				currentCategory.setId(currentCategoryId);
+				Allergen a = new Allergen(rs.getString("allergen_name"));
+				a.setId(rs.getString("allergen_id"));
+				a.setCategory(currentCategory);
+				currentCategory.addAllergen(a);
 			}
-			Allergen a = new Allergen(rs.getString("allergen_name"));
-			a.setId(rs.getString("allergen_id"));
-			a.setCategory(currentCategory);
-			currentCategory.addAllergen(a);
+			return categories;
 		}
-		return categories;
 	}
 
 
@@ -179,14 +152,6 @@ class CategoryDaoImpl extends BasicDaoImpl implements CategoryDao {
 	}
 
 
-//	@Deprecated
-//	@Override
-//	public Category findByName(String name) throws DaoException {
-//		//
-//		return null;
-//	}
-
-
 
 	@Override
 	public void create(String name) throws DaoException {
@@ -233,8 +198,7 @@ class CategoryDaoImpl extends BasicDaoImpl implements CategoryDao {
 			ps.setString(1, categoryId);
 			rs = ps.executeQuery();
 			rs.next(); // deve esser fatto per forza
-			int countValue = rs.getInt(1);
-			return countValue;
+			return rs.getInt(1);
 		} catch (SQLException e) {
 			e.printStackTrace();
 			throw new DaoException("CategoryDaoImpl.countAllergens error", e);
@@ -242,14 +206,6 @@ class CategoryDaoImpl extends BasicDaoImpl implements CategoryDao {
 			releaseResources(ps, rs);
 		}
 	}
-
-
-//	@Deprecated
-//	@Override
-//	public void updateRename(String oldName, String newName) throws DaoException {
-//		//
-//
-//	}
 
 
 
