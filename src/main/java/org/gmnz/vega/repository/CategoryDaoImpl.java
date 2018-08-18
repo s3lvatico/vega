@@ -20,19 +20,23 @@ class CategoryDaoImpl extends BasicDaoImpl implements CategoryDao {
 
 
 
+
+	static final class CategoryRowMapper implements RowMapper<Category> {
+
+		@Override
+		public Category mapRow(ResultSet resultSet, int i) throws SQLException {
+			Category c = new Category(resultSet.getString(2));
+			c.setId(resultSet.getString(1));
+			return c;
+		}
+
+	}
+
+
+
 	@Override
 	public List<Category> findAll() {
-
-		List<Category> categories = jdbcTemplate.query("SELECT * FROM category WHERE deleted = 0", new RowMapper<Category>() {
-			@Override
-			public Category mapRow(ResultSet resultSet, int i) throws SQLException {
-				Category c = new Category(resultSet.getString(2));
-				c.setId(resultSet.getString(1));
-				return c;
-			}
-		});
-
-		return categories;
+		return jdbcTemplate.query("SELECT * FROM category WHERE deleted = 0", new CategoryRowMapper());
 	}
 
 
@@ -87,26 +91,8 @@ class CategoryDaoImpl extends BasicDaoImpl implements CategoryDao {
 
 
 	@Override
-	public Category findById(String id) throws DaoException {
-		PreparedStatement s = null;
-		ResultSet rs = null;
-		try {
-			s = connection.prepareStatement("SELECT * FROM category WHERE id = ? AND deleted = 0");
-			s.setString(1, id);
-			rs = s.executeQuery();
-
-			Category c = null;
-			while (rs.next()) {
-				c = new Category(rs.getString(2));
-				c.setId(rs.getString(1));
-			}
-			return c;
-		} catch (SQLException e) {
-			e.printStackTrace();
-			throw new DaoException("CategoryDaoImpl.findById error", e);
-		} finally {
-			releaseResources(s, rs);
-		}
+	public Category findById(String id) {
+		return jdbcTemplate.queryForObject("SELECT * FROM category WHERE id = ? AND deleted = 0", new Object[]{id}, new CategoryRowMapper());
 	}
 
 
