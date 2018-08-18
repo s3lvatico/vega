@@ -9,7 +9,7 @@
 	<h1>Access</h1>
 	<p>Use your credentials to access the application services</p>
 	<h2>Identification</h2>
-	<form method="POST" , action="j_security_check">
+	<form method="POST" action="j_security_check">
 		<div>
 			user id : <input type="text" name="j_username" />
 		</div>
