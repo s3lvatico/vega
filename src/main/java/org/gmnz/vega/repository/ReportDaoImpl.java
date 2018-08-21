@@ -50,44 +50,6 @@ class ReportDaoImpl extends BasicDaoImpl implements ReportDao {
 				return r;
 			}
 		});
-
-//		Statement s = null;
-//		ResultSet rs = null;
-//		try {
-//			s = connection.createStatement();
-////@formatter:off
-//			String sqlQuery = "SELECT " +
-//									" rpt.id, " +
-//									" rpt.subject_name, " +
-//									" rpt.date_creation, " +
-//									" owner.user_name, " +
-//									" owner.full_name " +
-//									"FROM " +
-//									" report rpt " +
-//									" JOIN vega_user owner  ON rpt.owner = owner.user_name " +
-//									"ORDER BY " +
-//									" subject_name, " +
-//									" date_creation;";
-////@formatter:on
-//			// rs = s.executeQuery("SELECT * FROM report ORDER BY subject_name, date_creation");
-//			rs = s.executeQuery(sqlQuery);
-//			List<Report> reports = new ArrayList<>();
-//			while (rs.next()) {
-//				String id = rs.getString(1);
-//				String subjectName = rs.getString(2);
-//				Date creationDate = rs.getDate(3);
-//				String owner = rs.getString(4);
-//				Report r = new Report(id, subjectName, creationDate, owner);
-//				r.setOwnerFullName(rs.getString(5));
-//				reports.add(r);
-//			}
-//			return reports;
-//		} catch (SQLException e) {
-//			e.printStackTrace();
-//			throw new DaoException("ReportDaoImpl.findAll error", e);
-//		} finally {
-//			releaseResources(s, rs);
-//		}
 	}
 
 
@@ -123,35 +85,6 @@ class ReportDaoImpl extends BasicDaoImpl implements ReportDao {
 				} // ~for
 			} // ~ doInTransactionWithoutResult
 		});
-
-//		PreparedStatement psRptHeader = null;
-//		PreparedStatement psRptDetail = null;
-//		try {
-//			connection.setAutoCommit(false);
-//			psRptHeader = connection.prepareStatement("INSERT INTO report VALUES (?, ?, ?, ?)");
-//			psRptHeader.setString(1, r.getId());
-//			psRptHeader.setString(2, r.getSubjectName());
-//			psRptHeader.setTimestamp(3, new Timestamp(r.getCreationDate().getTime()));
-//			psRptHeader.setString(4, r.getOwner());
-//			psRptHeader.execute();
-//
-//			psRptDetail = connection.prepareStatement("INSERT INTO report_line VALUES (?, ?, ?)");
-//			for (String category : r.getCategories()) {
-//				for (ToxicityRating tr : r.getRatings(category)) {
-//					psRptDetail.setString(1, r.getId());
-//					psRptDetail.setString(2, tr.getAllergen().getId());
-//					psRptDetail.setDouble(3, tr.getToxicity());
-//					psRptDetail.execute();
-//				}
-//			}
-//			connection.commit();
-//		} catch (SQLException e) {
-//			e.printStackTrace();
-//			throw new DaoException("ReportDaoImpl.createReport error", e);
-//		} finally {
-//			releaseResources(psRptHeader);
-//			releaseResources(psRptDetail);
-//		}
 	}
 
 	static class ReportRsExtractor implements ResultSetExtractor<Report> {
@@ -216,81 +149,12 @@ class ReportDaoImpl extends BasicDaoImpl implements ReportDao {
 		
 		return jdbcTemplate.query(sqlQuery, new Object[] {id}, new ReportRsExtractor());
 		
-//		PreparedStatement ps = null;
-//		ResultSet rs = null;
-//		try {
-////@formatter:off
-//			String sqlQuery = "SELECT " +
-//					" rpt_head.subject_name, " +
-//					" rpt_head.date_creation, " +
-//					" rpt_head.owner, " +
-//					" vega_user.full_name owner_full_name, " +
-//					" cat.e_name category_name, " +
-//					" al.e_name allergen_name, " +
-//					" rpt_detail.toxicity " +
-//					"FROM " +
-//					" report rpt_head " +
-//					"JOIN report_line rpt_detail ON  rpt_head.id = rpt_detail.id_report " +
-//					"JOIN allergen al ON  rpt_detail.id_allergen = al.id " +
-//					"JOIN category cat ON  al.id_category = cat.id " +
-//					"JOIN vega_user ON  rpt_head.owner = vega_user.user_name " +
-//					"WHERE  rpt_head.id = ? " +
-//					"ORDER BY cat.e_name,  allergen_name";
-////@formatter:on
-//			ps = connection.prepareStatement(sqlQuery);
-//			ps.setString(1, id);
-//			rs = ps.executeQuery();
-//			Report r = null;
-//			while (rs.next()) {
-//				if (r == null) {
-//					Timestamp ts = rs.getTimestamp(2);
-//					r = new Report(rs.getString(1), new java.util.Date(ts.getTime()), rs.getString(3));
-//					r.setOwnerFullName(rs.getString(4));
-//				}
-//				Category c = new Category(rs.getString("category_name"));
-//				Allergen a = new Allergen(rs.getString("allergen_name"));
-//				a.setCategory(c);
-//
-//				ToxicityRating tr = new ToxicityRating(a, rs.getDouble(7));
-//				r.addRating(tr);
-//			}
-//			return r;
-//		} catch (SQLException e) {
-//			e.printStackTrace();
-//			throw new DaoException("ReportDaoImpl.findById error", e);
-//		} finally {
-//			releaseResources(ps, rs);
-//		}
 	}
 
 	@Override
 	public Report getSummaryById(String id) throws DaoException {
 		String sqlQuery = "SELECT * FROM report WHERE id = ?";
 		return jdbcTemplate.queryForObject(sqlQuery, new Object[] { id }, new BasicReportRowMapper());
-
-//		PreparedStatement ps = null;
-//		ResultSet rs = null;
-//		try {
-//			ps = connection.prepareStatement("SELECT * FROM report WHERE id = ?");
-//			ps.setString(1, id);
-//			rs = ps.executeQuery();
-//			Report r = null;
-//			if (rs.next()) {
-//				String rptId = rs.getString(1);
-//				String subjectName = rs.getString(2);
-//				Timestamp ts = rs.getTimestamp(3);
-//				java.util.Date rptCreationDate = new Date(ts.getTime());
-//				String rptOwner = rs.getString(4);
-//				r = new Report(rptId, subjectName, rptCreationDate, rptOwner);
-//			}
-//			return r;
-//		} catch (SQLException e) {
-//			e.printStackTrace();
-//			throw new DaoException("ReportDaoImpl.getSummryById error", e);
-//		} finally {
-//			releaseResources(ps, rs);
-//		}
-
 	}
 
 
@@ -299,20 +163,6 @@ class ReportDaoImpl extends BasicDaoImpl implements ReportDao {
 	public void remove(String id) throws DaoException {
 		String sqlStatement = "DELETE FROM report WHERE id = ?";
 		jdbcTemplate.update(sqlStatement, id);
-
-//		PreparedStatement ps = null;
-//		ResultSet rs = null;
-//		try {
-//			ps = connection.prepareStatement("DELETE FROM report WHERE id = ?");
-//			ps.setString(1, id);
-//			ps.execute();
-//		} catch (SQLException e) {
-//			e.printStackTrace();
-//			throw new DaoException("ReportDaoImpl.remove error", e);
-//		} finally {
-//			releaseResources(ps, rs);
-//		}
-
 	}
 
 }
