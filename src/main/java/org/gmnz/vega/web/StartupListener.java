@@ -8,6 +8,7 @@ import javax.sql.DataSource;
 import org.gmnz.vega.repository.DaoFactory;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
+import org.springframework.transaction.PlatformTransactionManager;
 
 
 /**
@@ -36,7 +37,10 @@ public class StartupListener implements ServletContextListener {
 
 		springCtx = new ClassPathXmlApplicationContext("/applicationContext.xml");
 		DataSource ds = springCtx.getBean("dataSource", DataSource.class);
+		PlatformTransactionManager transactionManager = springCtx.getBean("transactionManager",
+				PlatformTransactionManager.class);
 		DaoFactory.setDataSource(ds);
+		DaoFactory.setTransactionManager(transactionManager);
 
 		System.out.printf("<<< contextInitialized%n");
 	}

@@ -3,20 +3,22 @@ package org.gmnz.vega.repository;
 
 import javax.sql.DataSource;
 
+import org.springframework.transaction.PlatformTransactionManager;
+
 
 public abstract class DaoFactory {
 
-	private static DaoFactory INSTANCE = new DaoFactory() {
-	};
+	private static DaoFactory INSTANCE = new DaoFactory() {};
 
 	private DataSource dataSource;
+
+	private PlatformTransactionManager transactionManager;
 
 //	private static final String ERR_CREATION = "unable to create the data access object";
 
 
 
-	private DaoFactory() {
-	}
+	private DaoFactory() {}
 
 
 
@@ -28,6 +30,12 @@ public abstract class DaoFactory {
 
 	public static void setDataSource(DataSource dataSource) {
 		INSTANCE.dataSource = dataSource;
+	}
+
+
+
+	public static void setTransactionManager(PlatformTransactionManager transactionManager) {
+		INSTANCE.transactionManager = transactionManager;
 	}
 
 
@@ -53,10 +61,9 @@ public abstract class DaoFactory {
 		ReportDaoImpl daoImpl = new ReportDaoImpl();
 //		injectConnection(daoImpl);
 		daoImpl.setDataSource(dataSource);
+		daoImpl.initTransactionTemplate(transactionManager);
 		return daoImpl;
 	}
-
-
 
 //	@Deprecated
 //	private void injectConnection(ConnectionOrientedDaoImpl dao) throws DaoCreationException {
