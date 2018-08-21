@@ -2,7 +2,6 @@ package org.gmnz.vega.repository;
 
 
 import javax.sql.DataSource;
-import java.sql.SQLException;
 
 
 public abstract class DaoFactory {
@@ -12,7 +11,7 @@ public abstract class DaoFactory {
 
 	private DataSource dataSource;
 
-	private static final String ERR_CREATION = "unable to create the data access object";
+//	private static final String ERR_CREATION = "unable to create the data access object";
 
 
 

@@ -1,16 +1,18 @@
 package org.gmnz.vega.repository;
 
 
+import java.sql.Date;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Timestamp;
+import java.util.Collection;
+
 import org.gmnz.vega.domain.Allergen;
 import org.gmnz.vega.domain.Category;
 import org.gmnz.vega.domain.Report;
 import org.gmnz.vega.domain.ToxicityRating;
 import org.springframework.jdbc.core.RowMapper;
-
-import java.sql.*;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
 
 
 class ReportDaoImpl extends BasicDaoImpl implements ReportDao {
