@@ -87,30 +87,6 @@ public class CategoryServiceImpl extends BasicServiceBean implements CategorySer
 		}
 	}
 
-//	@Override
-//	@Deprecated
-//	public void renameCategory(String oldName, String newCategoryName) throws VegaException {
-//		checkEntityRegistration(Category.class, oldName, true);
-//		checkEntityRegistration(Category.class, newCategoryName, false);
-//
-//		Iterator<Category> iterator = DummyRepository.getRegisteredCategories().iterator();
-//		while (iterator.hasNext()) {
-//			Category c = iterator.next();
-//			if (c.getName().equals(oldName)) {
-//				if (c.getAllergens().size() == 0) {
-//					DummyRepository.removeCategory(new Category(oldName));
-//					DummyRepository.addCategory(new Category(newCategoryName));
-//					break;
-//				} else {
-//					throw new VegaException(
-//							"renameCategory service error: a category must have no allergens associated in order to be renamed.");
-//				}
-//			}
-//		}
-//	}
-
-
-
 	@Override
 	public void changeCategoryName(String categoryId, String newCategoryName) throws VegaException {
 		checkEntityRegistration(Category.class, newCategoryName, false);
@@ -128,8 +104,6 @@ public class CategoryServiceImpl extends BasicServiceBean implements CategorySer
 		}
 
 	}
-
-
 
 	@Override
 	public void removeCategory(String id) throws VegaException {
