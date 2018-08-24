@@ -24,17 +24,9 @@ public class StartupListener implements ServletContextListener {
 	public void contextInitialized(ServletContextEvent sce) {
 		System.out.println(">>> contextInitialized");
 
-//		String jndiDataSource = sce.getServletContext().getInitParameter("jndi-datasource");
-//		System.out.printf("data source JNDI name: <%s>%n", jndiDataSource);
-//		try {
-//			Context initContext = new InitialContext();
-//			Context envContext = (Context) initContext.lookup("java:/comp/env");
-//			DataSource ds = (DataSource) envContext.lookup("jdbc/vegaDS");
-//			DaoFactory.setDataSource(ds);
-//		} catch (Exception e) {
-//			e.printStackTrace();
-//		}
+		// TODO il contesto Spring è per ora solo applicativo (non relazionato alla webapp)
 
+		// TODO la DaoFactory può diventare un bean specifico
 		springCtx = new ClassPathXmlApplicationContext("/applicationContext.xml");
 		DataSource ds = springCtx.getBean("dataSource", DataSource.class);
 		PlatformTransactionManager transactionManager = springCtx.getBean("transactionManager",

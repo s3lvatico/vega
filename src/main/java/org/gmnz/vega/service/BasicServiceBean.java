@@ -11,6 +11,8 @@ import org.gmnz.vega.repository.DaoFactory;
 
 class BasicServiceBean {
 
+	// TODO introduci la DaoFactory come campo protetto
+
 	protected void checkEntityRegistration(Class<?> clazz, String objectName, boolean mustBeInTheSystem)
 			throws VegaException {
 
@@ -71,7 +73,7 @@ class BasicServiceBean {
 	}
 
 
-
+	// TODO verifica perché potrebbe diventare deprecato
 	protected void finalizeDao(ConnectionOrientedDao dao) {
 		if (dao != null) {
 			dao.close();
