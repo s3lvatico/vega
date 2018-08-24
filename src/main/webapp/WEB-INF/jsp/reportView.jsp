@@ -15,6 +15,7 @@
 <input type="hidden" name="action" value="${reportBean.action}">
 <h4>Report Summary</h4>
 <p>Subject name : ${reportData.subjectName}</p>
+<p>Created by : ${reportData.owner}</p>
 <p>Creation date : ${reportData.creationDate}</p>
 <h4>Toxicity assessment</h4>
 <c:forEach var="reportCategory" items="${reportData.categories}">

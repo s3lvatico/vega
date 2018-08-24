@@ -45,6 +45,7 @@ class ViewHelperDetails extends ViewHelperBase {
 
 	private ViewReportData prepareReportData(Report r) {
 		ViewReportData reportData = new ViewReportData();
+		reportData.setOwner(r.getOwnerFullName());
 		reportData.setSubjectName(r.getSubjectName());
 		reportData.setCreationDate(r.getCreationDate());
 		for (String categoryName : r.getCategories()) {

@@ -9,6 +9,7 @@ import java.util.List;
 public class ViewReportData {
 
 	private String subjectName;
+	private String owner;
 	private Date creationDate;
 	private List<ViewReportCategory> categories;
 
@@ -28,6 +29,18 @@ public class ViewReportData {
 
 	public void setSubjectName(String subjectName) {
 		this.subjectName = subjectName;
+	}
+
+
+
+	public String getOwner() {
+		return owner;
+	}
+
+
+
+	public void setOwner(String owner) {
+		this.owner = owner;
 	}
 
 

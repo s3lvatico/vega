@@ -1,6 +1,15 @@
 package org.gmnz.vega.ui.web.report;
 
 
+import java.io.IOException;
+import java.util.Date;
+import java.util.Enumeration;
+
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 import org.gmnz.vega.Vega;
 import org.gmnz.vega.VegaException;
 import org.gmnz.vega.VegaImpl;
@@ -10,14 +19,6 @@ import org.gmnz.vega.domain.Report;
 import org.gmnz.vega.domain.ToxicityRating;
 import org.gmnz.vega.service.AllergenService;
 import org.gmnz.vega.ui.Action;
-
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
-import java.util.Date;
-import java.util.Enumeration;
 
 
 /**
@@ -55,7 +56,9 @@ public class ReportExecution extends HttpServlet {
 				case Action.CREATE:
 					String subjectName = req.getParameter("subjectName");
 					if (VegaUtil.stringNullOrEmpty(subjectName)) {
-						resp.sendError(HttpServletResponse.SC_BAD_REQUEST, "A subject must be specified");
+						String errorMessage = "The name of the subject must be specified";
+						req.setAttribute("errorMessage", errorMessage);
+						resp.sendError(HttpServletResponse.SC_BAD_REQUEST, errorMessage);
 						return;
 					}
 					createAndStoreReport(subjectName, req, resp);
