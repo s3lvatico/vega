@@ -4,10 +4,7 @@
         http://www.springframework.org/schema/beans/spring-beans.xsd"
 >
 
-	<!-- quasi obsoleto -->
-	<bean id="vega" class="org.gmnz.vega.VegaImpl"></bean>
-	<!-- [] -->
-
+	<bean id="vega" class="org.gmnz.vega.VegaImpl"/>
 
 	<bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
 		<property name="location" value="datasource.properties" />
@@ -22,6 +19,15 @@
 
 	<bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
 		<property name="dataSource" ref="dataSource" />
+	</bean>
+
+	<bean id="daoFactory" class="org.gmnz.vega.repository.DaoFactory">
+		<constructor-arg index="0" ref="dataSource"/>
+		<constructor-arg index="1" ref="transactionManager"/>
+	</bean>
+
+	<bean id="categoryService" class="org.gmnz.vega.service.CategoryServiceImpl" >
+		<constructor-arg ref="daoFactory"/>
 	</bean>
 
 </beans>

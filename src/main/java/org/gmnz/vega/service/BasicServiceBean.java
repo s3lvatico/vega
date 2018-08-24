@@ -13,6 +13,12 @@ class BasicServiceBean {
 
 	// TODO introduci la DaoFactory come campo protetto
 
+	protected DaoFactory daoFactory;
+
+	protected BasicServiceBean(DaoFactory daoFactory) {
+		this.daoFactory = daoFactory;
+	}
+
 	protected void checkEntityRegistration(Class<?> clazz, String objectName, boolean mustBeInTheSystem)
 			throws VegaException {
 
@@ -41,39 +47,48 @@ class BasicServiceBean {
 
 
 	private boolean checkForCategory(String categoryName) throws VegaException {
-		CategoryDao dao = null;
+
+//		CategoryDao dao = null;
 		try {
-			dao = DaoFactory.getInstance().createCategoryDao();
+			// dao = DaoFactory.getInstance().createCategoryDao();
+			CategoryDao dao = daoFactory.createCategoryDao();
 			return dao.isCategoryRegisteredByName(categoryName);
 		} catch (DaoException e) {
 			e.printStackTrace();
 			String errorMessage = String.format(
 					"unable to check the presence of the category [%s] - exception was thrown by data layer", categoryName);
 			throw new VegaException(errorMessage, e);
-		} finally {
+		}
+		/*
+		finally {
 			finalizeDao(dao);
 		}
+		*/
 	}
 
 
 
 	private boolean checkForAllergen(String allergenName) throws VegaException {
-		AllergenDao dao = null;
+	//		AllergenDao dao = null;
 		try {
-			dao = DaoFactory.getInstance().createAllergenDao();
+			// dao = DaoFactory.getInstance().createAllergenDao();
+			AllergenDao dao = daoFactory.createAllergenDao();
 			return dao.isAllergenRegisteredByName(allergenName);
 		} catch (DaoException e) {
 			e.printStackTrace();
 			String errorMessage = String.format(
 					"unable to check the presence of the allergen [%s] - exception was thrown by data layer", allergenName);
 			throw new VegaException(errorMessage, e);
-		} finally {
+		}
+		/*
+		finally {
 			finalizeDao(dao);
 		}
+		*/
 	}
 
 
-	// TODO verifica perché potrebbe diventare deprecato
+	@Deprecated
 	protected void finalizeDao(ConnectionOrientedDao dao) {
 		if (dao != null) {
 			dao.close();

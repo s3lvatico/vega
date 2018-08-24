@@ -28,19 +28,18 @@ class AllergenDaoImpl extends BasicDaoImpl implements AllergenDao {
 	}
 
 
-
 	@Override
 	public List<Allergen> findAll() throws DaoException {
 //@formatter:off
-		String sqlQuery = 	"SELECT allrg.id, allrg.e_name allergen_name, cat.e_name category_name "
-								+ " FROM category cat "
-								+ " JOIN allergen allrg ON allrg.id_category = cat.id "
-								+ " WHERE allrg.deleted = 0 "
-								+ " ORDER BY category_name ";
+		String sqlQuery =
+				  " SELECT allrg.id, allrg.e_name allergen_name, cat.e_name category_name "
+				+ " FROM category cat "
+				+ " JOIN allergen allrg ON allrg.id_category = cat.id "
+				+ " WHERE allrg.deleted = 0 "
+				+ " ORDER BY category_name ";
 //@formatter:on
 		return jdbcTemplate.query(sqlQuery, new AllergenRowMapper());
 	}
-
 
 
 	static class AllergenByIdRowMapper implements RowMapper<Allergen> {
@@ -56,7 +55,6 @@ class AllergenDaoImpl extends BasicDaoImpl implements AllergenDao {
 			return a;
 		}
 	}
-
 
 
 	@Override
@@ -76,7 +74,6 @@ class AllergenDaoImpl extends BasicDaoImpl implements AllergenDao {
 	}
 
 
-
 	@Override
 	public boolean isAllergenRegisteredByName(String name) throws DaoException {
 		String sqlStatement = "SELECT COUNT(*) FROM allergen WHERE e_name = ? AND deleted = '0'";
@@ -89,7 +86,6 @@ class AllergenDaoImpl extends BasicDaoImpl implements AllergenDao {
 	}
 
 
-
 	@Override
 	public void create(Allergen allergen) throws DaoException {
 		String sqlStatement = "INSERT  INTO  allergen VALUES (?, ?, 0, ?)";
@@ -98,14 +94,12 @@ class AllergenDaoImpl extends BasicDaoImpl implements AllergenDao {
 	}
 
 
-
 	@Override
 	public void update(Allergen allergen) throws DaoException {
 		String sqlStatement = "update allergen set e_name = ?, id_category = ? where id = ? and deleted = 0";
 		Object[] updateParams = {allergen.getName(), allergen.getCategory().getId(), allergen.getId()};
 		jdbcTemplate.update(sqlStatement, updateParams);
 	}
-
 
 
 	@Override

@@ -12,56 +12,74 @@ import org.gmnz.vega.repository.DaoFactory;
 
 /**
  * creato da simone in data 07/07/2018.
+ * 18.824: trasformato in bean spring
  */
 public class CategoryServiceImpl extends BasicServiceBean implements CategoryService {
 
+
+	public CategoryServiceImpl(DaoFactory daoFactory) {
+		super(daoFactory);
+	}
+
 	@Override
 	public List<Category> getAllCategories() throws VegaException {
-		CategoryDao dao = null;
+//		CategoryDao dao = null;
 		try {
-			dao = DaoFactory.getInstance().createCategoryDao();
+			// dao = DaoFactory.getInstance().createCategoryDao();
+			CategoryDao dao = daoFactory.createCategoryDao();
 			List<Category> categories = dao.findAll();
 			return categories;
 		} catch (DaoException e) {
 			e.printStackTrace();
 			throw new VegaException("getAllCategories service error", e);
-		} finally {
+		}
+		/*
+		finally {
 			finalizeDao(dao);
 		}
+		*/
 	}
 
 
 
 	@Override
 	public List<Category> getAllCategoriesWithAllergens() throws VegaException {
-		CategoryDao dao = null;
+		// CategoryDao dao = null;
 		try {
-			dao = DaoFactory.getInstance().createCategoryDao();
+			//dao = DaoFactory.getInstance().createCategoryDao();
+			CategoryDao dao = daoFactory.createCategoryDao();
 			List<Category> categories = dao.findAllWithAllergens();
 			return categories;
 		} catch (DaoException e) {
 			e.printStackTrace();
 			throw new VegaException("getAllCategoriesWithAllergens service error", e);
-		} finally {
+		}
+		/*
+		finally {
 			finalizeDao(dao);
 		}
+		*/
 	}
 
 
 
 	@Override
 	public Category getCategoryById(String id) throws VegaException {
-		CategoryDao dao = null;
+		// CategoryDao dao = null;
 		try {
-			dao = DaoFactory.getInstance().createCategoryDao();
+			// dao = DaoFactory.getInstance().createCategoryDao();
+			CategoryDao  dao = daoFactory.createCategoryDao();
 			Category c = dao.findById(id);
 			return c;
 		} catch (DaoException e) {
 			e.printStackTrace();
 			throw new VegaException("getCategoryById service error", e);
-		} finally {
+		}
+		/*
+		finally {
 			finalizeDao(dao);
 		}
+		*/
 	}
 
 
@@ -75,41 +93,50 @@ public class CategoryServiceImpl extends BasicServiceBean implements CategorySer
 			// no need to create anything
 			return;
 		}
-		CategoryDao dao = null;
+		// CategoryDao dao = null;
 		try {
-			dao = DaoFactory.getInstance().createCategoryDao();
+			// dao = DaoFactory.getInstance().createCategoryDao();
+			CategoryDao dao = daoFactory.createCategoryDao();
 			dao.create(name);
 		} catch (DaoException e) {
 			e.printStackTrace();
 			throw new VegaException("createCategory service error", e);
-		} finally {
+		}
+		/*
+		finally {
 			finalizeDao(dao);
 		}
+		*/
 	}
 
 	@Override
 	public void changeCategoryName(String categoryId, String newCategoryName) throws VegaException {
 		checkEntityRegistration(Category.class, newCategoryName, false);
-		CategoryDao dao = null;
+		// CategoryDao dao = null;
 		try {
 			Category c = new Category(newCategoryName);
 			c.setId(categoryId);
-			dao = DaoFactory.getInstance().createCategoryDao();
+			// CategoryDao  dao = DaoFactory.getInstance().createCategoryDao();
+			CategoryDao  dao = daoFactory.createCategoryDao();
 			dao.update(c);
 		} catch (DaoException e) {
 			e.printStackTrace();
 			throw new VegaException("changeCategoryName service error", e);
-		} finally {
+		}
+		/*
+		finally {
 			finalizeDao(dao);
 		}
+		 */
 
 	}
 
 	@Override
 	public void removeCategory(String id) throws VegaException {
-		CategoryDao dao = null;
+		// CategoryDao dao = null;
 		try {
-			dao = DaoFactory.getInstance().createCategoryDao();
+			// dao = DaoFactory.getInstance().createCategoryDao();
+			CategoryDao dao = daoFactory.createCategoryDao();
 			if (dao.countAllergens(id) == 0) {
 				dao.delete(id);
 			} else {
@@ -118,9 +145,12 @@ public class CategoryServiceImpl extends BasicServiceBean implements CategorySer
 		} catch (DaoException e) {
 			e.printStackTrace();
 			throw new VegaException("removeCategory service error", e);
-		} finally {
+		}
+		/*
+		finally {
 			finalizeDao(dao);
 		}
+		 */
 	}
 
 }

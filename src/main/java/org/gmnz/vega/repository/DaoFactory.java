@@ -5,31 +5,31 @@ import org.springframework.transaction.PlatformTransactionManager;
 
 import javax.sql.DataSource;
 
+/*
+	18.824 : modificato da singleton a pojo
+ */
+public /* abstract */ class DaoFactory {
 
-public abstract class DaoFactory {
-
-	// TODO questo può diventare un bean gestito da Spring
-
-	private static DaoFactory INSTANCE = new DaoFactory() {
-	};
-
+	// TODO valuta se si può trasformare in un AppContext aware e ottenere i dao come bean
 	private DataSource dataSource;
 
 	private PlatformTransactionManager transactionManager;
 
 
 
-	private DaoFactory() {
+	/* private */ DaoFactory(DataSource dataSource, PlatformTransactionManager platformTransactionManager) {
+		this.dataSource = dataSource;
+		this.transactionManager = platformTransactionManager;
 	}
 
 
-
+/*
 	public static DaoFactory getInstance() {
 		return INSTANCE;
 	}
+*/
 
-
-
+/*
 	public static void setDataSource(DataSource dataSource) {
 		INSTANCE.dataSource = dataSource;
 	}
@@ -39,7 +39,7 @@ public abstract class DaoFactory {
 	public static void setTransactionManager(PlatformTransactionManager transactionManager) {
 		INSTANCE.transactionManager = transactionManager;
 	}
-
+*/
 
 
 	public CategoryDao createCategoryDao() {

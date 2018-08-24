@@ -26,7 +26,6 @@ public class StartupListener implements ServletContextListener {
 
 		// TODO il contesto Spring è per ora solo applicativo (non relazionato alla webapp)
 
-		// TODO la DaoFactory può diventare un bean specifico
 		springCtx = new ClassPathXmlApplicationContext("/applicationContext.xml");
 		DataSource ds = springCtx.getBean("dataSource", DataSource.class);
 		PlatformTransactionManager transactionManager = springCtx.getBean("transactionManager",
