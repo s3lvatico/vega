@@ -104,8 +104,10 @@ public class CategoryServiceTest {
 		List<Category> categories = svc.getAllCategoriesWithAllergens();
 		int numCategories = categories.size();
 		int randomCategoryIndex = new Random().nextInt(numCategories);
-		String categoryName = categories.get(randomCategoryIndex).getName();
-		svc.createCategory(categoryName);
+		Category dupe = categories.get(randomCategoryIndex);
+		String categoryName = dupe.getName();
+		String dupeId = svc.createCategory(categoryName);
+		Assert.assertEquals(dupe.getId(), dupeId);
 	}
 
 
@@ -114,6 +116,10 @@ public class CategoryServiceTest {
 	public void createCategory() throws VegaException {
 		CategoryService svc = vega.getCategoryService();
 		String newCategoryId = svc.createCategory("sample");
+		Category actual = svc.getCategoryById(newCategoryId);
+		Assert.assertEquals(newCategoryId, actual.getId());
+
+		svc.deepRemove(newCategoryId);
 	}
 
 

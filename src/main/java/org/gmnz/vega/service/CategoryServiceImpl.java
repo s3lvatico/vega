@@ -75,16 +75,14 @@ public class CategoryServiceImpl extends BasicServiceBean implements CategorySer
 			throw new VegaException("null or empty category name");
 		}
 		try {
-			checkEntityRegistration(Category.class, name, false);
-		} catch (VegaException e) {
-			// it just tells me the category is in the system
-			// no need to create anything
-			// TODO attento, correggi
-			return null;
-		}
-		try {
 			CategoryDao dao = daoFactory.createCategoryDao();
-			return dao.create(name);
+			Category dupe = dao.findByName(name, false);
+			if (dupe != null) {
+				System.err.println("warning: category already exists for name \"" + name + "\"");
+				return dupe.getId();
+			} else {
+				return dao.create(name);
+			}
 		} catch (DaoException e) {
 			e.printStackTrace();
 			throw new VegaException("createCategory service error", e);
@@ -125,4 +123,20 @@ public class CategoryServiceImpl extends BasicServiceBean implements CategorySer
 		}
 	}
 
+
+
+	@Override
+	public void deepRemove(String id) throws VegaException {
+		if (VegaUtil.stringNullOrEmpty(id)) {
+			throw new VegaException("null or empty category id");
+		}
+		try {
+			CategoryDao dao = daoFactory.createCategoryDao();
+			dao.deepDelete(id);
+		} catch (DaoException e) {
+			e.printStackTrace();
+			throw new VegaException("removeCategory service error", e);
+		}
+
+	}
 }

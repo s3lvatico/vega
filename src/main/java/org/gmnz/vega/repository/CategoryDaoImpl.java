@@ -104,6 +104,22 @@ class CategoryDaoImpl extends BasicDaoImpl implements CategoryDao {
 
 
 	@Override
+	public Category findByName(String name, boolean deleted) throws DaoException {
+		String sqlQuery = "SELECT * FROM category WHERE e_name = ? AND deleted = ?";
+		try {
+			return jdbcTemplate.queryForObject(sqlQuery, new Object[]{name, deleted ? 1 : 0}, new CategoryRowMapper());
+		} catch (EmptyResultDataAccessException e) {
+			System.err.println("warning: no results");
+			return null;
+		} catch (DataAccessException e) {
+			e.printStackTrace();
+			throw new DaoException(getClass().getSimpleName() + ".findByName caught exception", e);
+		}
+	}
+
+
+
+	@Override
 	public boolean isCategoryRegisteredByName(String name) throws DaoException {
 		String sqlQuery = "SELECT COUNT(*) FROM category WHERE e_name = ? AND deleted = '0'";
 		int foundCategoriesWithName = jdbcTemplate.queryForObject(sqlQuery, Integer.class, name);
@@ -151,8 +167,15 @@ class CategoryDaoImpl extends BasicDaoImpl implements CategoryDao {
 
 	@Override
 	public void delete(String categoryId) throws DaoException {
-		String sqlStatement = "DELETE  FROM category WHERE id = ?";
+		String sqlStatement = "UPDATE category SET deleted = 1 WHERE id = ?";
 		jdbcTemplate.update(sqlStatement, categoryId);
 	}
 
+
+
+	@Override
+	public void deepDelete(String categoryId) throws DaoException {
+		String sqlStatement = "DELETE FROM category WHERE id = ?";
+		jdbcTemplate.update(sqlStatement, categoryId);
+	}
 }
