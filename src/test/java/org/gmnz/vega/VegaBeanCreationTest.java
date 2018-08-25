@@ -18,7 +18,7 @@ public class VegaBeanCreationTest {
 
 	@Test
 	public void createVegaBean() throws VegaException {
-		Vega v = VegaFactory.getInstance().createVega();
+		Vega v = VegaFactory.getFactory().buildVega();
 		System.out.println(v.getCategoryService().getAllCategories());
 		System.out.println("created vega : " + v);
 	}

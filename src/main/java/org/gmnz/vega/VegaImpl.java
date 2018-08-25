@@ -36,6 +36,7 @@ public class VegaImpl implements Vega, ApplicationContextAware {
 
 	@Override
 	public AllergenService getAllergenService() {
+		// TODO cambia
 		// return allergenService;
 		return null;
 	}
@@ -44,7 +45,8 @@ public class VegaImpl implements Vega, ApplicationContextAware {
 	@Override
 	public ReportService getReportService() {
 		// TODO cambia
-		return new ReportServiceImpl();
+//		return new ReportServiceImpl();
+		return null;
 	}
 
 	@Override
