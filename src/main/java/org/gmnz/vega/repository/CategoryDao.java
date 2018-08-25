@@ -20,7 +20,7 @@ public interface CategoryDao extends ConnectionOrientedDao {
 
 
 
-	void create(String name) throws DaoException;
+	String create(String name) throws DaoException;
 
 
 

@@ -3,6 +3,8 @@ package org.gmnz.vega.repository;
 
 import org.gmnz.vega.domain.Allergen;
 import org.gmnz.vega.domain.Category;
+import org.springframework.dao.DataAccessException;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.ResultSetExtractor;
 import org.springframework.jdbc.core.RowMapper;
 
@@ -86,9 +88,17 @@ class CategoryDaoImpl extends BasicDaoImpl implements CategoryDao {
 
 
 	@Override
-	public Category findById(String id) {
+	public Category findById(String id) throws DaoException {
 		String sqlQuery = "SELECT * FROM category WHERE id = ? AND deleted = 0";
-		return jdbcTemplate.queryForObject(sqlQuery, new Object[]{id}, new CategoryRowMapper());
+		try {
+			return jdbcTemplate.queryForObject(sqlQuery, new Object[]{id}, new CategoryRowMapper());
+		} catch (EmptyResultDataAccessException e) {
+			System.err.println("warning: no results");
+			return null;
+		} catch (DataAccessException e) {
+			e.printStackTrace();
+			throw new DaoException(getClass().getSimpleName() + ".findById caught exception", e);
+		}
 	}
 
 
@@ -116,8 +126,10 @@ class CategoryDaoImpl extends BasicDaoImpl implements CategoryDao {
 
 
 	@Override
-	public void create(String name) {
-		jdbcTemplate.update("INSERT INTO category VALUES(?, ?, '0')", UUID.randomUUID().toString(), name);
+	public String create(String name) {
+		String newId = UUID.randomUUID().toString();
+		jdbcTemplate.update("INSERT INTO category VALUES(?, ?, '0')", newId, name);
+		return newId;
 	}
 
 

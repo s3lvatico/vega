@@ -24,7 +24,7 @@ public interface CategoryService {
 
 
 
-	void createCategory(String name) throws VegaException;
+	String createCategory(String name) throws VegaException;
 
 
 

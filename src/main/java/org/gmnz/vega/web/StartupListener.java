@@ -6,6 +6,7 @@ import javax.servlet.ServletContextListener;
 import javax.sql.DataSource;
 
 import org.gmnz.vega.VegaFactory;
+import org.gmnz.vega.VegaSpringUtil;
 import org.gmnz.vega.repository.DaoFactory;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
@@ -25,16 +26,7 @@ public class StartupListener implements ServletContextListener {
 	public void contextInitialized(ServletContextEvent sce) {
 		System.out.println(">>> contextInitialized");
 
-		// TODO il contesto Spring è per ora solo applicativo (non relazionato alla webapp)
-
-		springCtx = new ClassPathXmlApplicationContext("/applicationContext.xml");
-//		DataSource ds = springCtx.getBean("dataSource", DataSource.class);
-//		PlatformTransactionManager transactionManager = springCtx.getBean("transactionManager",
-//				PlatformTransactionManager.class);
-//		DaoFactory.setDataSource(ds);
-//		DaoFactory.setTransactionManager(transactionManager);
-
-		VegaFactory.setApplicationContext(springCtx);
+		VegaSpringUtil.initSpring();
 
 		System.out.printf("<<< contextInitialized%n");
 	}
