@@ -124,6 +124,57 @@ public class CategoryServiceTest {
 
 
 
+	@Test(expected = VegaException.class)
+	public void changeCategoryNameNullId() throws VegaException {
+		CategoryService svc = vega.getCategoryService();
+		svc.changeCategoryName(null, "bohpe");
+	}
+
+
+
+	@Test(expected = VegaException.class)
+	public void changeCategoryNameNullName() throws VegaException {
+		CategoryService svc = vega.getCategoryService();
+		svc.changeCategoryName("cucu", null);
+	}
+
+
+
+	@Test
+	public void changeCategoryNameInvalidTarget() throws VegaException {
+
+		String srcCatName = "cat_source";
+		String tgtCatName = "cat_target";
+
+		CategoryService svc = vega.getCategoryService();
+		String srcCatId = svc.createCategory(srcCatName);
+		String tgtCatId = svc.createCategory(tgtCatName);
+
+		svc.changeCategoryName(srcCatId, tgtCatName);
+
+		Assert.fail("not yet implemented");
+	}
+
+
+
+	@Test
+	public void changeCategory() throws VegaException {
+		CategoryService svc = vega.getCategoryService();
+
+		String dummyCategoryName = "dummyCategory";
+		String newCategoryName = "dummyRenamedCategory";
+		String newCategoryId = svc.createCategory(dummyCategoryName);
+		svc.changeCategoryName(newCategoryId, newCategoryName);
+
+		Category actualCategory = svc.getCategoryById(newCategoryId);
+		Assert.assertEquals(newCategoryName, actualCategory.getName());
+
+		svc.deepRemove(newCategoryId);
+
+	}
+
+
+
 	@AfterClass
 	public static void afterClass() {
 		System.out.println("end of test");

@@ -94,6 +94,9 @@ public class CategoryServiceImpl extends BasicServiceBean implements CategorySer
 
 	@Override
 	public void changeCategoryName(String categoryId, String newCategoryName) throws VegaException {
+		if (VegaUtil.stringNullOrEmpty(categoryId) || VegaUtil.stringNullOrEmpty(newCategoryName)) {
+			throw new VegaException("target category id and new category name must be valid");
+		}
 		checkEntityRegistration(Category.class, newCategoryName, false);
 		try {
 			Category c = new Category(newCategoryName);
