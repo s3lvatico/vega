@@ -1,6 +1,8 @@
 package org.gmnz.vega.service;
 
 
+import java.util.List;
+
 import org.gmnz.vega.VegaException;
 import org.gmnz.vega.VegaUtil;
 import org.gmnz.vega.domain.Category;
@@ -8,15 +10,11 @@ import org.gmnz.vega.repository.CategoryDao;
 import org.gmnz.vega.repository.DaoException;
 import org.gmnz.vega.repository.DaoFactory;
 
-import java.util.List;
-
 
 /**
- * creato da simone in data 07/07/2018.
- * 18.824: trasformato in bean spring
+ * creato da simone in data 07/07/2018. 18.824: trasformato in bean spring
  */
 public class CategoryServiceImpl extends BasicServiceBean implements CategoryService {
-
 
 	public CategoryServiceImpl(DaoFactory daoFactory) {
 		super(daoFactory);
@@ -26,10 +24,9 @@ public class CategoryServiceImpl extends BasicServiceBean implements CategorySer
 
 	@Override
 	public List<Category> getAllCategories() throws VegaException {
+		CategoryDao dao = daoFactory.createCategoryDao();
 		try {
-			CategoryDao dao = daoFactory.createCategoryDao();
-			List<Category> categories = dao.findAll();
-			return categories;
+			return dao.findAll();
 		} catch (DaoException e) {
 			e.printStackTrace();
 			throw new VegaException("getAllCategories service error", e);
@@ -40,10 +37,9 @@ public class CategoryServiceImpl extends BasicServiceBean implements CategorySer
 
 	@Override
 	public List<Category> getAllCategoriesWithAllergens() throws VegaException {
+		CategoryDao dao = daoFactory.createCategoryDao();
 		try {
-			CategoryDao dao = daoFactory.createCategoryDao();
-			List<Category> categories = dao.findAllWithAllergens();
-			return categories;
+			return dao.findAllWithAllergens();
 		} catch (DaoException e) {
 			e.printStackTrace();
 			throw new VegaException("getAllCategoriesWithAllergens service error", e);
@@ -57,10 +53,9 @@ public class CategoryServiceImpl extends BasicServiceBean implements CategorySer
 		if (VegaUtil.stringNullOrEmpty(id)) {
 			throw new VegaException("invalid id specified (null or empty)");
 		}
+		CategoryDao dao = daoFactory.createCategoryDao();
 		try {
-			CategoryDao dao = daoFactory.createCategoryDao();
-			Category c = dao.findById(id);
-			return c;
+			return dao.findById(id);
 		} catch (DaoException e) {
 			e.printStackTrace();
 			throw new VegaException("getCategoryById service error", e);
@@ -74,8 +69,8 @@ public class CategoryServiceImpl extends BasicServiceBean implements CategorySer
 		if (VegaUtil.stringNullOrEmpty(name)) {
 			throw new VegaException("null or empty category name");
 		}
+		CategoryDao dao = daoFactory.createCategoryDao();
 		try {
-			CategoryDao dao = daoFactory.createCategoryDao();
 			Category dupe = dao.findByName(name, false);
 			if (dupe != null) {
 				System.err.println("warning: category already exists for name \"" + name + "\"");
@@ -87,7 +82,6 @@ public class CategoryServiceImpl extends BasicServiceBean implements CategorySer
 			e.printStackTrace();
 			throw new VegaException("createCategory service error", e);
 		}
-
 	}
 
 
@@ -98,10 +92,10 @@ public class CategoryServiceImpl extends BasicServiceBean implements CategorySer
 			throw new VegaException("target category id and new category name must be valid");
 		}
 		checkEntityRegistration(Category.class, newCategoryName, false);
+		Category c = new Category(newCategoryName);
+		c.setId(categoryId);
+		CategoryDao dao = daoFactory.createCategoryDao();
 		try {
-			Category c = new Category(newCategoryName);
-			c.setId(categoryId);
-			CategoryDao dao = daoFactory.createCategoryDao();
 			dao.update(c);
 		} catch (DaoException e) {
 			e.printStackTrace();
@@ -113,6 +107,9 @@ public class CategoryServiceImpl extends BasicServiceBean implements CategorySer
 
 	@Override
 	public void removeCategory(String id) throws VegaException {
+		if (VegaUtil.stringNullOrEmpty(id)) {
+			throw new VegaException("null or empty category id");
+		}
 		try {
 			CategoryDao dao = daoFactory.createCategoryDao();
 			if (dao.countAllergens(id) == 0) {
@@ -128,6 +125,7 @@ public class CategoryServiceImpl extends BasicServiceBean implements CategorySer
 
 
 
+	@Deprecated
 	@Override
 	public void deepRemove(String id) throws VegaException {
 		if (VegaUtil.stringNullOrEmpty(id)) {

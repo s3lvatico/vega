@@ -1,7 +1,10 @@
 package org.gmnz.vega.service;
 
 
+import java.util.List;
+
 import org.gmnz.vega.VegaException;
+import org.gmnz.vega.VegaUtil;
 import org.gmnz.vega.domain.Allergen;
 import org.gmnz.vega.domain.AllergenComparator;
 import org.gmnz.vega.domain.Category;
@@ -9,9 +12,6 @@ import org.gmnz.vega.repository.AllergenDao;
 import org.gmnz.vega.repository.CategoryDao;
 import org.gmnz.vega.repository.DaoException;
 import org.gmnz.vega.repository.DaoFactory;
-
-import java.util.ArrayList;
-import java.util.List;
 
 
 /**
@@ -23,22 +23,12 @@ public class AllergenServiceImpl extends BasicServiceBean implements AllergenSer
 		super(daoFactory);
 	}
 
+
+
 	@Override
 	public List<Allergen> getAllAllergens() throws VegaException {
-/*		AllergenDao dao = null;
+		AllergenDao dao = daoFactory.createAllergenDao();
 		try {
-			dao = DaoFactory.getInstance().createAllergenDao();
-			List<Allergen> allergens = dao.findAll();
-			allergens.sort(new AllergenComparator());
-			return allergens;
-		} catch (DaoException e) {
-			e.printStackTrace();
-			throw new VegaException("getAllAllergens service error", e);
-		} finally {
-			finalizeDao(dao);
-		}*/
-		try {
-			AllergenDao dao = daoFactory.createAllergenDao();
 			List<Allergen> allergens = dao.findAll();
 			allergens.sort(new AllergenComparator());
 			return allergens;
@@ -47,15 +37,18 @@ public class AllergenServiceImpl extends BasicServiceBean implements AllergenSer
 			throw new VegaException("getAllAllergens service error", e);
 		}
 		/*
-		finally {
-			finalizeDao(dao);
-		}
+		 * finally { finalizeDao(dao); }
 		 */
 	}
 
 
+
 	@Override
 	public void createAllergen(String newAllergenName, String categoryId) throws VegaException {
+		if (VegaUtil.stringNullOrEmpty(newAllergenName) || VegaUtil.stringNullOrEmpty(categoryId)) {
+			throw new VegaException("invalid allergen name or category id specified");
+		}
+
 		checkEntityRegistration(Allergen.class, newAllergenName, false);
 
 		AllergenDao allergenDao = null;
@@ -75,15 +68,10 @@ public class AllergenServiceImpl extends BasicServiceBean implements AllergenSer
 			allergenDao.create(a);
 		} catch (DaoException e) {
 			e.printStackTrace();
-			throw new VegaException("getAllAllergens service error", e);
+			throw new VegaException("createAllergen service error", e);
 		}
-		/*
-		finally {
-			finalizeDao(categoryDao);
-			finalizeDao(allergenDao);
-		}
-		 */
 	}
+
 
 
 	@Override
@@ -98,11 +86,10 @@ public class AllergenServiceImpl extends BasicServiceBean implements AllergenSer
 			throw new VegaException("getAllergenById service error", e);
 		}
 		/*
-		finally {
-			finalizeDao(dao);
-		}
+		 * finally { finalizeDao(dao); }
 		 */
 	}
+
 
 
 	@Override
@@ -126,12 +113,11 @@ public class AllergenServiceImpl extends BasicServiceBean implements AllergenSer
 				throw new VegaException("modifyAllergen service error", e);
 			}
 			/*
-			finally {
-				finalizeDao(dao);
-			}
+			 * finally { finalizeDao(dao); }
 			 */
 		}
 	}
+
 
 
 	@Override
@@ -145,9 +131,7 @@ public class AllergenServiceImpl extends BasicServiceBean implements AllergenSer
 			throw new VegaException("removeAllergen service error", e);
 		}
 		/*
-		finally {
-			finalizeDao(dao);
-		}
-		*/
+		 * finally { finalizeDao(dao); }
+		 */
 	}
 }

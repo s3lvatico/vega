@@ -1,13 +1,10 @@
 
-
-
 package org.gmnz.vega;
 
 
 import org.gmnz.vega.service.AllergenService;
 import org.gmnz.vega.service.CategoryService;
 import org.gmnz.vega.service.ReportService;
-import org.gmnz.vega.service.ReportServiceImpl;
 import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
@@ -23,11 +20,14 @@ public class VegaImpl implements Vega, ApplicationContextAware {
 
 	private ApplicationContext applicationContext;
 
+
+
 	public VegaImpl() {
 //		categoryService = new CategoryServiceImpl();
 //		allergenService = new AllergenServiceImpl();
 //		reportService = new ReportServiceImpl();
 	}
+
 
 
 	@Override
@@ -37,12 +37,14 @@ public class VegaImpl implements Vega, ApplicationContextAware {
 	}
 
 
+
 	@Override
 	public AllergenService getAllergenService() {
 		// TODO cambia
 		// return allergenService;
-		return null;
+		return applicationContext.getBean("allergenService", AllergenService.class);
 	}
+
 
 
 	@Override
@@ -51,6 +53,8 @@ public class VegaImpl implements Vega, ApplicationContextAware {
 //		return new ReportServiceImpl();
 		return null;
 	}
+
+
 
 	@Override
 	public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {

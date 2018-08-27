@@ -32,8 +32,7 @@ public class CategoryServiceTest {
 	@Test
 	public void getAllCategories() throws VegaException {
 		CategoryService svc = vega.getCategoryService();
-		List<Category> categories = svc.getAllCategories();
-		System.out.println(categories);
+		Assert.assertNotNull(svc.getAllCategories());
 	}
 
 
@@ -122,7 +121,7 @@ public class CategoryServiceTest {
 		Category actual = svc.getCategoryById(newCategoryId);
 		Assert.assertEquals(newCategoryId, actual.getId());
 
-		removeCategoryById(newCategoryId);
+		deleteCategoryById(newCategoryId);
 	}
 
 
@@ -156,11 +155,11 @@ public class CategoryServiceTest {
 		try {
 			svc.changeCategoryName(srcCatId, tgtCatName);
 		} catch (VegaException e) {
-			e.printStackTrace();
+			System.err.println("expected exception received -- " + e.getMessage());
 			return;
 		} finally {
-			removeCategoryById(srcCatId);
-			removeCategoryById(tgtCatId);
+			deleteCategoryById(srcCatId);
+			deleteCategoryById(tgtCatId);
 		}
 		Assert.fail("it was possible to change the name of a category to an already existing one");
 	}
@@ -179,19 +178,71 @@ public class CategoryServiceTest {
 		Category actualCategory = svc.getCategoryById(newCategoryId);
 		Assert.assertEquals(newCategoryName, actualCategory.getName());
 
-		removeCategoryById(newCategoryId);
+		deleteCategoryById(newCategoryId);
 
 	}
 
 
 
-	private void removeCategoryById(String id) {
+	@Test(expected = VegaException.class)
+	public void removeCategoryNullId() throws VegaException {
+		CategoryService svc = vega.getCategoryService();
+		svc.removeCategory(null);
+	}
+
+
+
+	@Test(expected = VegaException.class)
+	public void removeCategoryEmptyId() throws VegaException {
+		CategoryService svc = vega.getCategoryService();
+		svc.removeCategory("");
+	}
+
+
+
+	@Test
+	public void removeCategorySimple() throws VegaException {
+		CategoryService svc = vega.getCategoryService();
+		String dummyCategoryId = null;
+		try {
+			dummyCategoryId = svc.createCategory("dummyCategory");
+			svc.removeCategory(dummyCategoryId);
+
+			Category actual = svc.getCategoryById(dummyCategoryId);
+			Assert.assertNull(actual);
+		} finally {
+			if (dummyCategoryId != null) {
+				deleteCategoryById(dummyCategoryId);
+			}
+		}
+	}
+
+	// TODO scrivi il test per cancellare una categoria che contiene allergeni
+
+//	@Test(expected = VegaException.class)
+//	public void removeCategoryWithAllergens() throws VegaException {
+//		CategoryService svc = vega.getCategoryService();
+//		String dummyCategoryId = null;
+//		try {
+//			dummyCategoryId = svc.createCategory("dummyCategory");
+//			svc.removeCategory(dummyCategoryId);
+//
+//			Category actual = svc.getCategoryById(dummyCategoryId);
+//			Assert.assertNull(actual);
+//		} finally {
+//			if (dummyCategoryId != null) {
+//				deleteCategoryById(dummyCategoryId);
+//			}
+//		}
+//	}
+
+
+
+	private void deleteCategoryById(String id) {
 		ApplicationContext ctx = VegaSpringUtil.getSpringContext();
 		JdbcTemplate tpl = new JdbcTemplate(ctx.getBean("dataSource", DataSource.class));
 		tpl.update("DELETE FROM category WHERE id = ?", id);
 	}
-
-
 
 //	@AfterClass
 //	public static void afterClass() {

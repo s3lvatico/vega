@@ -30,4 +30,8 @@
 		<constructor-arg ref="daoFactory"/>
 	</bean>
 
+	<bean id="allergenService" class="org.gmnz.vega.service.AllergenServiceImpl" >
+		<constructor-arg ref="daoFactory"/>
+	</bean>
+
 </beans>

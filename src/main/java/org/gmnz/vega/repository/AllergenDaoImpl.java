@@ -1,14 +1,14 @@
 package org.gmnz.vega.repository;
 
 
-import org.gmnz.vega.domain.Allergen;
-import org.gmnz.vega.domain.Category;
-import org.springframework.jdbc.core.RowMapper;
-
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.UUID;
+
+import org.gmnz.vega.domain.Allergen;
+import org.gmnz.vega.domain.Category;
+import org.springframework.jdbc.core.RowMapper;
 
 
 class AllergenDaoImpl extends BasicDaoImpl implements AllergenDao {
@@ -36,7 +36,7 @@ class AllergenDaoImpl extends BasicDaoImpl implements AllergenDao {
 				+ " FROM category cat "
 				+ " JOIN allergen allrg ON allrg.id_category = cat.id "
 				+ " WHERE allrg.deleted = 0 "
-				+ " ORDER BY category_name ";
+				+ " ORDER BY category_name, allergen_name ";
 //@formatter:on
 		return jdbcTemplate.query(sqlQuery, new AllergenRowMapper());
 	}
