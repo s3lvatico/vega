@@ -1,15 +1,19 @@
 package org.gmnz.vega;
 
 
+import java.util.List;
+import java.util.Random;
+
+import javax.sql.DataSource;
+
 import org.gmnz.vega.domain.Category;
 import org.gmnz.vega.service.CategoryService;
 import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
-
-import java.util.List;
-import java.util.Random;
+import org.springframework.context.ApplicationContext;
+import org.springframework.jdbc.core.JdbcTemplate;
 
 
 public class CategoryServiceTest {
@@ -119,7 +123,7 @@ public class CategoryServiceTest {
 		Category actual = svc.getCategoryById(newCategoryId);
 		Assert.assertEquals(newCategoryId, actual.getId());
 
-		svc.deepRemove(newCategoryId);
+		removeCategoryById(newCategoryId);
 	}
 
 
@@ -150,9 +154,16 @@ public class CategoryServiceTest {
 		String srcCatId = svc.createCategory(srcCatName);
 		String tgtCatId = svc.createCategory(tgtCatName);
 
-		svc.changeCategoryName(srcCatId, tgtCatName);
-
-		Assert.fail("not yet implemented");
+		try {
+			svc.changeCategoryName(srcCatId, tgtCatName);
+		} catch (VegaException e) {
+			e.printStackTrace();
+			return;
+		} finally {
+			removeCategoryById(srcCatId);
+			removeCategoryById(tgtCatId);
+		}
+		Assert.fail("it was possible to change the name of a category to an already existing one");
 	}
 
 
@@ -169,8 +180,16 @@ public class CategoryServiceTest {
 		Category actualCategory = svc.getCategoryById(newCategoryId);
 		Assert.assertEquals(newCategoryName, actualCategory.getName());
 
-		svc.deepRemove(newCategoryId);
+		removeCategoryById(newCategoryId);
 
+	}
+
+
+
+	private void removeCategoryById(String id) {
+		ApplicationContext ctx = VegaSpringUtil.getSpringContext();
+		JdbcTemplate tpl = new JdbcTemplate(ctx.getBean("dataSource", DataSource.class));
+		tpl.update("DELETE FROM category WHERE id = ?", id);
 	}
 
 
