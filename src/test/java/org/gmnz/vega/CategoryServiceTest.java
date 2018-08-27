@@ -8,7 +8,6 @@ import javax.sql.DataSource;
 
 import org.gmnz.vega.domain.Category;
 import org.gmnz.vega.service.CategoryService;
-import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -194,8 +193,8 @@ public class CategoryServiceTest {
 
 
 
-	@AfterClass
-	public static void afterClass() {
-		System.out.println("end of test");
-	}
+//	@AfterClass
+//	public static void afterClass() {
+//		System.out.println("end of test");
+//	}
 }
