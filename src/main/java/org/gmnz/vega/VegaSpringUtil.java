@@ -10,8 +10,18 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
  */
 public class VegaSpringUtil {
 
+	private static ApplicationContext ctx;
+
+
+
 	public static void initSpring() {
-		ApplicationContext springCtx = new ClassPathXmlApplicationContext("/applicationContext.xml");
-		VegaFactory.setApplicationContext(springCtx);
+		ctx = new ClassPathXmlApplicationContext("/applicationContext.xml");
+		VegaFactory.setApplicationContext(ctx);
+	}
+
+
+
+	public static ApplicationContext getSpringContext() {
+		return ctx;
 	}
 }
