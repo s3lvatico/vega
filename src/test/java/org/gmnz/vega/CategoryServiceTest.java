@@ -14,7 +14,7 @@ import java.util.Random;
 
 public class CategoryServiceTest {
 
-	static Vega vega;
+	private static Vega vega;
 
 
 
