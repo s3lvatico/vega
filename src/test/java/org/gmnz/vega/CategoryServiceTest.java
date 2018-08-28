@@ -1,6 +1,11 @@
 package org.gmnz.vega;
 
 
+import java.util.List;
+import java.util.Random;
+
+import javax.sql.DataSource;
+
 import org.gmnz.vega.domain.Category;
 import org.gmnz.vega.service.AllergenService;
 import org.gmnz.vega.service.CategoryService;
@@ -9,10 +14,6 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 import org.springframework.context.ApplicationContext;
 import org.springframework.jdbc.core.JdbcTemplate;
-
-import javax.sql.DataSource;
-import java.util.List;
-import java.util.Random;
 
 
 public class CategoryServiceTest {
@@ -228,7 +229,7 @@ public class CategoryServiceTest {
 		String testAllergen2 = null;
 		try {
 			String categoryName = "non-empty-category";
-			nonEmptyCategoryId = categoryService.createCategory(nonEmptyCategoryId);
+			nonEmptyCategoryId = categoryService.createCategory(categoryName);
 			testAllergen1 = allergenService.createAllergen("test-a-1", nonEmptyCategoryId);
 			testAllergen2 = allergenService.createAllergen("test-a-2", nonEmptyCategoryId);
 
