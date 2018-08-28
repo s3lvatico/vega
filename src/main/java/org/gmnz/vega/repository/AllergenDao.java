@@ -1,12 +1,12 @@
 package org.gmnz.vega.repository;
 
 
-import org.gmnz.vega.domain.Allergen;
-
 import java.util.List;
 
+import org.gmnz.vega.domain.Allergen;
 
-public interface AllergenDao extends ConnectionOrientedDao {
+
+public interface AllergenDao /* extends ConnectionOrientedDao */ {
 
 	List<Allergen> findAll() throws DaoException;
 
