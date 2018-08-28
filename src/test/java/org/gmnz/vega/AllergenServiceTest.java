@@ -1,6 +1,10 @@
 package org.gmnz.vega;
 
 
+import java.util.List;
+
+import javax.sql.DataSource;
+
 import org.gmnz.vega.domain.Allergen;
 import org.gmnz.vega.service.AllergenService;
 import org.gmnz.vega.service.CategoryService;
@@ -8,9 +12,6 @@ import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.springframework.jdbc.core.JdbcTemplate;
-
-import javax.sql.DataSource;
-import java.util.List;
 
 
 public class AllergenServiceTest {
@@ -100,6 +101,29 @@ public class AllergenServiceTest {
 		} finally {
 			removeEntityById("allergen", dummyAllergenId);
 			removeEntityById("category", dummyCategoryId);
+		}
+	}
+
+
+
+	@Test
+	public void getAllergenById() throws VegaException {
+		AllergenService allergenService = vega.getAllergenService();
+		CategoryService categoryService = vega.getCategoryService();
+		String idCat = null;
+		String idAll = null;
+		try {
+			String dummyAllergenName = "dummyAllergenName";
+			String dummyCategoryName = "dummyCategoryName";
+			idCat = categoryService.createCategory(dummyCategoryName);
+			idAll = allergenService.createAllergen(dummyAllergenName, idCat);
+
+			Allergen actual = allergenService.getAllergenById(idAll);
+			Assert.assertNotNull(actual);
+			Assert.assertEquals(new Allergen(dummyAllergenName), actual);
+		} finally {
+			removeEntityById("allergen", idAll);
+			removeEntityById("category", idCat);
 		}
 	}
 
