@@ -1,6 +1,8 @@
 package org.gmnz.vega.service;
 
 
+import java.util.List;
+
 import org.gmnz.vega.VegaException;
 import org.gmnz.vega.VegaUtil;
 import org.gmnz.vega.domain.Allergen;
@@ -10,8 +12,6 @@ import org.gmnz.vega.repository.AllergenDao;
 import org.gmnz.vega.repository.CategoryDao;
 import org.gmnz.vega.repository.DaoException;
 import org.gmnz.vega.repository.DaoFactory;
-
-import java.util.List;
 
 
 /**
@@ -76,6 +76,9 @@ public class AllergenServiceImpl extends BasicServiceBean implements AllergenSer
 
 	@Override
 	public Allergen getAllergenById(String id) throws VegaException {
+		if (VegaUtil.stringNullOrEmpty(id)) {
+			throw new VegaException("null or empty allergen id ");
+		}
 		AllergenDao dao = null;
 		try {
 			dao = daoFactory.createAllergenDao();
