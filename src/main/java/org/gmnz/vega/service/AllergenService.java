@@ -13,7 +13,7 @@ public interface AllergenService {
 
 
 
-	void createAllergen(String newAllergenName, String categoryId) throws VegaException;
+	String createAllergen(String newAllergenName, String categoryId) throws VegaException;
 
 
 

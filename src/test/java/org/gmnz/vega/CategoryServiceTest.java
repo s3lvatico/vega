@@ -1,18 +1,18 @@
 package org.gmnz.vega;
 
 
-import java.util.List;
-import java.util.Random;
-
-import javax.sql.DataSource;
-
 import org.gmnz.vega.domain.Category;
+import org.gmnz.vega.service.AllergenService;
 import org.gmnz.vega.service.CategoryService;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.springframework.context.ApplicationContext;
 import org.springframework.jdbc.core.JdbcTemplate;
+
+import javax.sql.DataSource;
+import java.util.List;
+import java.util.Random;
 
 
 public class CategoryServiceTest {
@@ -217,24 +217,30 @@ public class CategoryServiceTest {
 		}
 	}
 
-	// TODO scrivi il test per cancellare una categoria che contiene allergeni
 
-//	@Test(expected = VegaException.class)
-//	public void removeCategoryWithAllergens() throws VegaException {
-//		CategoryService svc = vega.getCategoryService();
-//		String dummyCategoryId = null;
-//		try {
-//			dummyCategoryId = svc.createCategory("dummyCategory");
-//			svc.removeCategory(dummyCategoryId);
-//
-//			Category actual = svc.getCategoryById(dummyCategoryId);
-//			Assert.assertNull(actual);
-//		} finally {
-//			if (dummyCategoryId != null) {
-//				deleteCategoryById(dummyCategoryId);
-//			}
-//		}
-//	}
+
+	@Test(expected = VegaException.class)
+	public void removeCategoryWithAllergens() throws VegaException {
+		CategoryService categoryService = vega.getCategoryService();
+		AllergenService allergenService = vega.getAllergenService();
+		String nonEmptyCategoryId = null;
+		String testAllergen1 = null;
+		String testAllergen2 = null;
+		try {
+			String categoryName = "non-empty-category";
+			nonEmptyCategoryId = categoryService.createCategory(nonEmptyCategoryId);
+			testAllergen1 = allergenService.createAllergen("test-a-1", nonEmptyCategoryId);
+			testAllergen2 = allergenService.createAllergen("test-a-2", nonEmptyCategoryId);
+
+			categoryService.removeCategory(nonEmptyCategoryId);
+		} finally {
+			ApplicationContext ctx = VegaSpringUtil.getSpringContext();
+			JdbcTemplate tpl = new JdbcTemplate(ctx.getBean("dataSource", DataSource.class));
+			tpl.update("DELETE FROM allergen WHERE id = ?", testAllergen1);
+			tpl.update("DELETE FROM allergen WHERE id = ?", testAllergen2);
+			deleteCategoryById(nonEmptyCategoryId);
+		}
+	}
 
 
 
@@ -244,8 +250,4 @@ public class CategoryServiceTest {
 		tpl.update("DELETE FROM category WHERE id = ?", id);
 	}
 
-//	@AfterClass
-//	public static void afterClass() {
-//		System.out.println("end of test");
-//	}
 }

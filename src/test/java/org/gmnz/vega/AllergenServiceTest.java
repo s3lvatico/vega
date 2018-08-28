@@ -1,9 +1,16 @@
 package org.gmnz.vega;
 
 
+import org.gmnz.vega.domain.Allergen;
 import org.gmnz.vega.service.AllergenService;
+import org.gmnz.vega.service.CategoryService;
+import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import org.springframework.jdbc.core.JdbcTemplate;
+
+import javax.sql.DataSource;
+import java.util.List;
 
 
 public class AllergenServiceTest {
@@ -73,4 +80,37 @@ public class AllergenServiceTest {
 		}
 	}
 
+
+
+	@Test
+	public void createAllergen() throws VegaException {
+		CategoryService categoryService = vega.getCategoryService();
+		AllergenService allergenService = vega.getAllergenService();
+		String dummyAllergenId = null;
+		String dummyCategoryId = null;
+		try {
+			dummyCategoryId = categoryService.createCategory("dummyCategoryName");
+
+			String dummyAllergenName = "dummyAllergen";
+			dummyAllergenId = allergenService.createAllergen(dummyAllergenName, dummyCategoryId);
+
+			List<Allergen> allergens = allergenService.getAllAllergens();
+			Assert.assertTrue(allergens.contains(new Allergen(dummyAllergenName)));
+
+		} finally {
+			removeEntityById("allergen", dummyAllergenId);
+			removeEntityById("category", dummyCategoryId);
+		}
+	}
+
+
+
+	private void removeEntityById(String tableName, String id) {
+		String sqlQuery = String.format("DELETE FROM %s WHERE id = ?", tableName);
+		DataSource ds = VegaSpringUtil.getSpringContext().getBean("dataSource", DataSource.class);
+		JdbcTemplate tpl = new JdbcTemplate(ds);
+		if (!VegaUtil.stringNullOrEmpty(id)) {
+			tpl.update(sqlQuery, id);
+		}
+	}
 }

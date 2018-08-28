@@ -87,10 +87,12 @@ class AllergenDaoImpl extends BasicDaoImpl implements AllergenDao {
 
 
 	@Override
-	public void create(Allergen allergen) throws DaoException {
+	public String create(Allergen allergen) throws DaoException {
 		String sqlStatement = "INSERT  INTO  allergen VALUES (?, ?, 0, ?)";
-		Object[] params = {UUID.randomUUID().toString(), allergen.getName(), allergen.getCategory().getId()};
+		String allergenId = UUID.randomUUID().toString();
+		Object[] params = {allergenId, allergen.getName(), allergen.getCategory().getId()};
 		jdbcTemplate.update(sqlStatement, params);
+		return allergenId;
 	}
 
 

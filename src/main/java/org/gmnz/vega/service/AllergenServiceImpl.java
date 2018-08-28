@@ -1,8 +1,6 @@
 package org.gmnz.vega.service;
 
 
-import java.util.List;
-
 import org.gmnz.vega.VegaException;
 import org.gmnz.vega.VegaUtil;
 import org.gmnz.vega.domain.Allergen;
@@ -12,6 +10,8 @@ import org.gmnz.vega.repository.AllergenDao;
 import org.gmnz.vega.repository.CategoryDao;
 import org.gmnz.vega.repository.DaoException;
 import org.gmnz.vega.repository.DaoFactory;
+
+import java.util.List;
 
 
 /**
@@ -44,7 +44,7 @@ public class AllergenServiceImpl extends BasicServiceBean implements AllergenSer
 
 
 	@Override
-	public void createAllergen(String newAllergenName, String categoryId) throws VegaException {
+	public String createAllergen(String newAllergenName, String categoryId) throws VegaException {
 		if (VegaUtil.stringNullOrEmpty(newAllergenName) || VegaUtil.stringNullOrEmpty(categoryId)) {
 			throw new VegaException("invalid allergen name or category id specified");
 		}
@@ -65,7 +65,7 @@ public class AllergenServiceImpl extends BasicServiceBean implements AllergenSer
 			a.setCategory(targetCategory);
 
 			allergenDao = daoFactory.createAllergenDao();
-			allergenDao.create(a);
+			return allergenDao.create(a);
 		} catch (DaoException e) {
 			e.printStackTrace();
 			throw new VegaException("createAllergen service error", e);
@@ -112,9 +112,6 @@ public class AllergenServiceImpl extends BasicServiceBean implements AllergenSer
 			} catch (DaoException e) {
 				throw new VegaException("modifyAllergen service error", e);
 			}
-			/*
-			 * finally { finalizeDao(dao); }
-			 */
 		}
 	}
 
@@ -122,16 +119,11 @@ public class AllergenServiceImpl extends BasicServiceBean implements AllergenSer
 
 	@Override
 	public void removeAllergen(String id) throws VegaException {
-		// AllergenDao dao = null;
 		try {
-			AllergenDao dao = daoFactory.createAllergenDao();
-			dao.delete(id);
+			daoFactory.createAllergenDao().delete(id);
 		} catch (DaoException e) {
 			e.printStackTrace();
 			throw new VegaException("removeAllergen service error", e);
 		}
-		/*
-		 * finally { finalizeDao(dao); }
-		 */
 	}
 }

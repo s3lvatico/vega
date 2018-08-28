@@ -20,7 +20,7 @@ public interface AllergenDao extends ConnectionOrientedDao {
 
 
 
-	void create(Allergen allergen) throws DaoException;
+	String create(Allergen allergen) throws DaoException;
 
 
 
