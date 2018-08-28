@@ -3,14 +3,8 @@ package org.gmnz.vega.web;
 
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
-import javax.sql.DataSource;
 
-import org.gmnz.vega.VegaFactory;
 import org.gmnz.vega.VegaSpringUtil;
-import org.gmnz.vega.repository.DaoFactory;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
-import org.springframework.transaction.PlatformTransactionManager;
 
 
 /**
@@ -18,9 +12,7 @@ import org.springframework.transaction.PlatformTransactionManager;
  */
 public class StartupListener implements ServletContextListener {
 
-	private ApplicationContext springCtx;
-
-
+	// private ApplicationContext springCtx;
 
 	@Override
 	public void contextInitialized(ServletContextEvent sce) {
@@ -36,7 +28,7 @@ public class StartupListener implements ServletContextListener {
 	@Override
 	public void contextDestroyed(ServletContextEvent sce) {
 		System.out.printf(">>> contextDestroyed%n");
-		springCtx = null;
+		// springCtx = null;
 		System.out.printf("<<< contextDestroyed%n");
 	}
 }
