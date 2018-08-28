@@ -61,14 +61,14 @@ class AllergenDaoImpl extends BasicDaoImpl implements AllergenDao {
 	public Allergen findById(String id) throws DaoException {
 //formatter:off
 		String sqlQuery =
-				"select  " +
+				"SELECT  " +
 						"allergen.id allergen_id, " +
 						"allergen.e_name allergen_name, " +
 						"category.id category_id, " +
 						"category.e_name category_name " +
-						"from allergen " +
-						"join category on allergen.id_category = category.id and allergen.deleted = 0 " +
-						"where allergen.id = ? ";
+						"FROM allergen " +
+						"JOIN category ON allergen.id_category = category.id AND allergen.deleted = 0 " +
+						"WHERE allergen.id = ? ";
 //formatter:on
 		return jdbcTemplate.queryForObject(sqlQuery, new Object[]{id}, new AllergenByIdRowMapper());
 	}
@@ -98,7 +98,7 @@ class AllergenDaoImpl extends BasicDaoImpl implements AllergenDao {
 
 	@Override
 	public void update(Allergen allergen) throws DaoException {
-		String sqlStatement = "update allergen set e_name = ?, id_category = ? where id = ? and deleted = 0";
+		String sqlStatement = "UPDATE allergen SET e_name = ?, id_category = ? WHERE id = ? AND deleted = 0";
 		Object[] updateParams = {allergen.getName(), allergen.getCategory().getId(), allergen.getId()};
 		jdbcTemplate.update(sqlStatement, updateParams);
 	}
@@ -106,7 +106,7 @@ class AllergenDaoImpl extends BasicDaoImpl implements AllergenDao {
 
 	@Override
 	public void delete(String id) throws DaoException {
-		String sqlStatement = "update allergen set deleted = 1 where id = ?";
+		String sqlStatement = "UPDATE allergen SET deleted = 1 WHERE id = ?";
 		jdbcTemplate.update(sqlStatement, id);
 	}
 
