@@ -4,7 +4,7 @@ package org.gmnz.vega.service;
 import org.gmnz.vega.VegaException;
 import org.gmnz.vega.repository.AllergenDao;
 import org.gmnz.vega.repository.CategoryDao;
-import org.gmnz.vega.repository.ConnectionOrientedDao;
+//import org.gmnz.vega.repository.ConnectionOrientedDao;
 import org.gmnz.vega.repository.DaoException;
 import org.gmnz.vega.repository.DaoFactory;
 
@@ -88,11 +88,11 @@ class BasicServiceBean {
 	}
 
 
-	@Deprecated
-	protected void finalizeDao(ConnectionOrientedDao dao) {
-		if (dao != null) {
-			dao.close();
-		}
-	}
+//	@Deprecated
+//	protected void finalizeDao(ConnectionOrientedDao dao) {
+//		if (dao != null) {
+//			dao.close();
+//		}
+//	}
 
 }
