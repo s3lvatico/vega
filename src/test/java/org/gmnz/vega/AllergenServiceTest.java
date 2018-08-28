@@ -129,6 +129,20 @@ public class AllergenServiceTest {
 
 
 
+	@Test(expected = VegaException.class)
+	public void getAllergenByIdNull() throws VegaException {
+		vega.getAllergenService().getAllergenById(null);
+	}
+
+
+
+	@Test(expected = VegaException.class)
+	public void getAllergenByIdEmpty() throws VegaException {
+		vega.getAllergenService().getAllergenById("");
+	}
+
+
+
 	private void removeEntityById(String tableName, String id) {
 		String sqlQuery = String.format("DELETE FROM %s WHERE id = ?", tableName);
 		DataSource ds = VegaSpringUtil.getSpringContext().getBean("dataSource", DataSource.class);
