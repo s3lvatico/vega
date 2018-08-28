@@ -6,6 +6,7 @@ import java.util.List;
 import javax.sql.DataSource;
 
 import org.gmnz.vega.domain.Allergen;
+import org.gmnz.vega.domain.Category;
 import org.gmnz.vega.service.AllergenService;
 import org.gmnz.vega.service.CategoryService;
 import org.junit.Assert;
@@ -139,6 +140,69 @@ public class AllergenServiceTest {
 	@Test(expected = VegaException.class)
 	public void getAllergenByIdEmpty() throws VegaException {
 		vega.getAllergenService().getAllergenById("");
+	}
+
+
+
+	@Test
+	public void modifyAllergenSameCategory() throws VegaException {
+		AllergenService allergenService = vega.getAllergenService();
+		CategoryService categoryService = vega.getCategoryService();
+		String idCat = null;
+		String idAll = null;
+		try {
+			String dummyAllergenName = "dummyAllergenName";
+			String dummyCategoryName = "dummyCategoryName";
+			String dummyAllergenNewName = "newDummyAllergenName";
+
+			idCat = categoryService.createCategory(dummyCategoryName);
+			idAll = allergenService.createAllergen(dummyAllergenName, idCat);
+
+			Allergen source = allergenService.getAllergenById(idAll);
+
+			allergenService.modifyAllergen(source, dummyAllergenNewName, idCat);
+
+			Allergen actual = allergenService.getAllergenById(idAll);
+			Assert.assertEquals(source, actual);
+
+		} finally {
+			removeEntityById("allergen", idAll);
+			removeEntityById("category", idCat);
+		}
+	}
+
+
+
+	@Test
+	public void modifyAllergenChangeCategory() throws VegaException {
+		AllergenService allergenService = vega.getAllergenService();
+		CategoryService categoryService = vega.getCategoryService();
+		String idCat1 = null;
+		String idCat2 = null;
+		String idAll = null;
+		try {
+			String dummyAllergenName = "dummyAllergenName";
+			String dummyCategory1 = "d-source-category";
+			String dummyCategory2 = "d-dest-category";
+
+			idCat1 = categoryService.createCategory(dummyCategory1);
+			idCat2 = categoryService.createCategory(dummyCategory2);
+			idAll = allergenService.createAllergen(dummyAllergenName, idCat1);
+
+			Allergen source = allergenService.getAllergenById(idAll);
+
+			allergenService.changeCategory(source, idCat2);
+
+			Allergen actual = allergenService.getAllergenById(idAll);
+			Category targetCategory = categoryService.getCategoryById(idCat2);
+
+			Assert.assertEquals(targetCategory, actual.getCategory());
+
+		} finally {
+			removeEntityById("allergen", idAll);
+			removeEntityById("category", idCat1);
+			removeEntityById("category", idCat2);
+		}
 	}
 
 

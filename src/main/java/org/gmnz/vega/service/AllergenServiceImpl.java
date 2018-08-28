@@ -98,12 +98,12 @@ public class AllergenServiceImpl extends BasicServiceBean implements AllergenSer
 	@Override
 	public void modifyAllergen(Allergen source, String targetName, String targetCategoryId) throws VegaException {
 		boolean mustUpdateDb = false;
-		if (!source.getName().equals(targetName)) {
+		if (!VegaUtil.stringNullOrEmpty(targetName) && !source.getName().equals(targetName)) {
 			checkEntityRegistration(Allergen.class, targetName, false);
 			source.setName(targetName);
 			mustUpdateDb = true;
 		}
-		if (!source.getCategory().getId().equals(targetCategoryId)) {
+		if (!VegaUtil.stringNullOrEmpty(targetCategoryId) && !source.getCategory().getId().equals(targetCategoryId)) {
 			source.getCategory().setId(targetCategoryId);
 			mustUpdateDb = true;
 		}
@@ -120,6 +120,19 @@ public class AllergenServiceImpl extends BasicServiceBean implements AllergenSer
 
 
 
+	public void changeCategory(Allergen source, String targetCategoryId) throws VegaException {
+		modifyAllergen(source, null, targetCategoryId);
+	}
+
+
+
+	@Override
+	public void renameAllergen(Allergen source, String newName) throws VegaException {
+		modifyAllergen(source, newName, null);
+	}
+
+
+
 	@Override
 	public void removeAllergen(String id) throws VegaException {
 		try {
@@ -129,4 +142,5 @@ public class AllergenServiceImpl extends BasicServiceBean implements AllergenSer
 			throw new VegaException("removeAllergen service error", e);
 		}
 	}
+
 }
