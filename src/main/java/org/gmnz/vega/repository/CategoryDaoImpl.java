@@ -1,6 +1,12 @@
 package org.gmnz.vega.repository;
 
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.UUID;
+
 import org.gmnz.vega.domain.Allergen;
 import org.gmnz.vega.domain.Category;
 import org.springframework.dao.DataAccessException;
@@ -8,15 +14,8 @@ import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.ResultSetExtractor;
 import org.springframework.jdbc.core.RowMapper;
 
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
-
 
 class CategoryDaoImpl extends BasicDaoImpl implements CategoryDao {
-
 
 	static final class CategoryRowMapper implements RowMapper<Category> {
 
@@ -57,10 +56,7 @@ class CategoryDaoImpl extends BasicDaoImpl implements CategoryDao {
 		return jdbcTemplate.query(sqlQuery, new CategoryWithAllergensRsExtractor());
 	}
 
-
-
 	static class CategoryWithAllergensRsExtractor implements ResultSetExtractor<List<Category>> {
-
 
 		@Override
 		public List<Category> extractData(ResultSet rs) throws SQLException {
@@ -91,9 +87,9 @@ class CategoryDaoImpl extends BasicDaoImpl implements CategoryDao {
 	public Category findById(String id) throws DaoException {
 		String sqlQuery = "SELECT * FROM category WHERE id = ? AND deleted = 0";
 		try {
-			return jdbcTemplate.queryForObject(sqlQuery, new Object[]{id}, new CategoryRowMapper());
+			return jdbcTemplate.queryForObject(sqlQuery, new Object[] { id }, new CategoryRowMapper());
 		} catch (EmptyResultDataAccessException e) {
-			System.err.println("warning: no results");
+			System.err.println("warning: no category for id <" + id + ">");
 			return null;
 		} catch (DataAccessException e) {
 			e.printStackTrace();
@@ -107,7 +103,7 @@ class CategoryDaoImpl extends BasicDaoImpl implements CategoryDao {
 	public Category findByName(String name, boolean deleted) throws DaoException {
 		String sqlQuery = "SELECT * FROM category WHERE e_name = ? AND deleted = ?";
 		try {
-			return jdbcTemplate.queryForObject(sqlQuery, new Object[]{name, deleted ? 1 : 0}, new CategoryRowMapper());
+			return jdbcTemplate.queryForObject(sqlQuery, new Object[] { name, deleted ? 1 : 0 }, new CategoryRowMapper());
 		} catch (EmptyResultDataAccessException e) {
 			System.err.println("warning: no results");
 			return null;

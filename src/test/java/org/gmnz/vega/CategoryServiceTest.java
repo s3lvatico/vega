@@ -6,7 +6,6 @@ import java.util.Random;
 
 import javax.sql.DataSource;
 
-import org.gmnz.vega.domain.Allergen;
 import org.gmnz.vega.domain.Category;
 import org.gmnz.vega.service.AllergenService;
 import org.gmnz.vega.service.CategoryService;
