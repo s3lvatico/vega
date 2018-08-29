@@ -25,11 +25,11 @@ public interface AllergenService {
 
 
 
-	public void changeCategory(Allergen source, String targetCategoryId) throws VegaException;
+	void changeCategory(Allergen source, String targetCategoryId) throws VegaException;
 
 
 
-	public void renameAllergen(Allergen source, String newName) throws VegaException;
+	void renameAllergen(Allergen source, String newName) throws VegaException;
 
 
 

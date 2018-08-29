@@ -88,9 +88,6 @@ public class AllergenServiceImpl extends BasicServiceBean implements AllergenSer
 			e.printStackTrace();
 			throw new VegaException("getAllergenById service error", e);
 		}
-		/*
-		 * finally { finalizeDao(dao); }
-		 */
 	}
 
 

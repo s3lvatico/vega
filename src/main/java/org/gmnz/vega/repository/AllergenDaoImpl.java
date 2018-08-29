@@ -70,6 +70,7 @@ class AllergenDaoImpl extends BasicDaoImpl implements AllergenDao {
 						"JOIN category ON allergen.id_category = category.id AND allergen.deleted = 0 " +
 						"WHERE allergen.id = ? ";
 //formatter:on
+		// TODO gestisci il caso di risultati vuoti e torna null
 		return jdbcTemplate.queryForObject(sqlQuery, new Object[]{id}, new AllergenByIdRowMapper());
 	}
 

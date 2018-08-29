@@ -145,7 +145,7 @@ public class AllergenServiceTest {
 
 
 	@Test
-	public void modifyAllergenSameCategory() throws VegaException {
+	public void modifyAllergenChangeName() throws VegaException {
 		AllergenService allergenService = vega.getAllergenService();
 		CategoryService categoryService = vega.getCategoryService();
 		String idCat = null;
@@ -160,7 +160,7 @@ public class AllergenServiceTest {
 
 			Allergen source = allergenService.getAllergenById(idAll);
 
-			allergenService.modifyAllergen(source, dummyAllergenNewName, idCat);
+			allergenService.renameAllergen(source, dummyAllergenNewName);
 
 			Allergen actual = allergenService.getAllergenById(idAll);
 			Assert.assertEquals(source, actual);
@@ -205,6 +205,28 @@ public class AllergenServiceTest {
 		}
 	}
 
+
+	@Test public void removeAllergen() throws VegaException {
+		CategoryService categoryService = vega.getCategoryService();
+		AllergenService allergenService = vega.getAllergenService();
+
+		String testCategoryId = null;
+		String testAllergenId = null;
+		try {
+			testCategoryId = categoryService.createCategory("removeAllergenTestCategory");
+			testAllergenId = allergenService.createAllergen("removeAllergenTestAllergen", testCategoryId);
+
+			Assert.assertNotNull(allergenService.getAllergenById(testAllergenId));
+
+			allergenService.removeAllergen(testAllergenId);
+
+			Assert.assertNull(allergenService.getAllergenById(testAllergenId));
+		}
+		finally {
+			removeEntityById("allergen", testAllergenId);
+			removeEntityById("category", testCategoryId);
+		}
+	}
 
 
 	private void removeEntityById(String tableName, String id) {
