@@ -1,13 +1,14 @@
 package org.gmnz.vega.service;
 
 
-import java.util.Collection;
-
 import org.gmnz.vega.VegaException;
+import org.gmnz.vega.VegaUtil;
 import org.gmnz.vega.domain.Report;
 import org.gmnz.vega.repository.DaoException;
 import org.gmnz.vega.repository.DaoFactory;
 import org.gmnz.vega.repository.ReportDao;
+
+import java.util.Collection;
 
 
 /**
@@ -36,6 +37,9 @@ public class ReportServiceImpl extends BasicServiceBean implements ReportService
 
 	@Override
 	public Report getReportById(String id) throws VegaException {
+		if (VegaUtil.stringNullOrEmpty(id)) {
+			return null;
+		}
 		ReportDao dao = daoFactory.createReportDao();
 		try {
 			return dao.findById(id);
@@ -49,6 +53,9 @@ public class ReportServiceImpl extends BasicServiceBean implements ReportService
 
 	@Override
 	public Report getReportSummaryById(String id) throws VegaException {
+		if (VegaUtil.stringNullOrEmpty(id)) {
+			return null;
+		}
 		ReportDao dao = daoFactory.createReportDao();
 		try {
 			return dao.getSummaryById(id);

@@ -1,16 +1,15 @@
 package org.gmnz.vega;
 
 
-import java.util.Collection;
-import java.util.Date;
-
 import org.gmnz.vega.domain.Report;
-import org.gmnz.vega.domain.ReportBuildException;
 import org.gmnz.vega.domain.ReportBuilder;
 import org.gmnz.vega.service.ReportService;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
+
+import java.util.Collection;
+import java.util.Date;
 
 
 /**
@@ -47,7 +46,7 @@ public class ReportServiceTest {
 
 
 	@Test
-	public void createReport() throws ReportBuildException, VegaException {
+	public void createReport() throws VegaException {
 		ReportService reportService = vega.getReportService();
 		Report expected = ReportBuilder.getBuilder().subjectName("Test Subject 01").createdOn(new Date()).owner("gemini")
 				.build();
@@ -58,6 +57,61 @@ public class ReportServiceTest {
 		Assert.assertTrue(reports.contains(expected));
 
 		reportService.removeReport(expected.getId());
+	}
+
+
+
+	@Test
+	public void getReportById() throws VegaException {
+		ReportService reportService = vega.getReportService();
+		String expectedId = "";
+		try {
+			Report expected = ReportBuilder.getBuilder().subjectName("Test Subject 01").createdOn(new Date()).owner("gemini")
+					.build();
+			reportService.createReport(expected);
+
+			expectedId = expected.getId();
+
+			Report actual = reportService.getReportById(expectedId);
+
+			Assert.assertEquals(expected, actual);
+		} finally {
+			if (!VegaUtil.stringNullOrEmpty(expectedId)) {
+				reportService.removeReport(expectedId);
+			}
+		}
+	}
+
+
+
+	@Test
+	public void getReportByIdNull() throws VegaException {
+		ReportService reportService = vega.getReportService();
+		Assert.assertNull(reportService.getReportById(null));
+	}
+
+
+
+	@Test
+	public void getReportByIdWrong() throws VegaException {
+		ReportService reportService = vega.getReportService();
+		Assert.assertNull(reportService.getReportById("wronski"));
+	}
+
+
+
+	@Test
+	public void getReportSummaryByIdNull() throws VegaException {
+		ReportService reportService = vega.getReportService();
+		Assert.assertNull(reportService.getReportSummaryById(null));
+	}
+
+
+
+	@Test
+	public void getReportSummaryByIdWrong() throws VegaException {
+		ReportService reportService = vega.getReportService();
+		Assert.assertNull(reportService.getReportSummaryById("wronski"));
 	}
 
 }

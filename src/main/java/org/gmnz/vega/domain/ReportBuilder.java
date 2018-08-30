@@ -1,6 +1,7 @@
 package org.gmnz.vega.domain;
 
 
+import java.util.Calendar;
 import java.util.Date;
 
 
@@ -36,7 +37,25 @@ public class ReportBuilder {
 
 
 	public ReportBuilder createdOn(Date createdOn) {
-		this.createdOn = createdOn;
+/*
+Normalizza i millisecondi e li azzera.
+Mentre i database classici memorizzano i tipi timestamp e datetime con 6 cifre
+decimali per indicare le frazioni di secondo, MySql ne usa ZERO, per questioni
+di retrocompatibilità.
+
+Se si memorizza un long che rappresenta un timestamp, in questo modo, vengono
+semplicemente troncate le ultime tre cifre, che rappresentano la parte frazionaria
+dei secondi.
+
+Una soluzione è quella di intervenire sullo schema del db.
+Un'altra soluzione è la presente normalizzazione, che anche volendo usare altri
+tipi di db non lede la generalità
+ */
+		Calendar c = Calendar.getInstance();
+		c.setTime(createdOn);
+		c.set(Calendar.MILLISECOND, 0);
+		// this.createdOn = createdOn;
+		this.createdOn = c.getTime();
 		return this;
 	}
 
