@@ -1,9 +1,19 @@
 package org.gmnz.vega.repository;
 
 
+import java.sql.Date;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Timestamp;
+import java.util.Collection;
+
+import javax.sql.DataSource;
+
 import org.gmnz.vega.domain.Allergen;
 import org.gmnz.vega.domain.Category;
 import org.gmnz.vega.domain.Report;
+import org.gmnz.vega.domain.ReportBuildException;
+import org.gmnz.vega.domain.ReportBuilder;
 import org.gmnz.vega.domain.ToxicityRating;
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.ResultSetExtractor;
@@ -12,16 +22,8 @@ import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.TransactionStatus;
 import org.springframework.transaction.support.TransactionCallbackWithoutResult;
 
-import javax.sql.DataSource;
-import java.sql.Date;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Timestamp;
-import java.util.Collection;
-
 
 class ReportDaoImpl extends BasicDaoImpl implements ReportDao {
-
 
 	protected ReportDaoImpl(DataSource dataSource, PlatformTransactionManager transactionManager) {
 		super(dataSource, transactionManager);
@@ -50,11 +52,19 @@ class ReportDaoImpl extends BasicDaoImpl implements ReportDao {
 
 			@Override
 			public Report mapRow(ResultSet resultSet, int i) throws SQLException {
-				String id = resultSet.getString(1);
+//				String id = resultSet.getString(1);
 				String subjectName = resultSet.getString(2);
 				Date creationDate = resultSet.getDate(3);
 				String owner = resultSet.getString(4);
-				Report r = new Report(id, subjectName, creationDate, owner);
+				// Report r = new Report(id, subjectName, creationDate, owner);
+				ReportBuilder builder = ReportBuilder.getBuilder();
+				Report r = null;
+				try {
+					r = builder.subjectName(subjectName).createdOn(creationDate).owner(owner).build();
+				} catch (ReportBuildException e) {
+					e.printStackTrace();
+					throw new SQLException("could not build the Report object", e);
+				}
 				r.setOwnerFullName(resultSet.getString(5));
 				return r;
 			}
@@ -96,8 +106,6 @@ class ReportDaoImpl extends BasicDaoImpl implements ReportDao {
 		});
 	}
 
-
-
 	static class ReportRsExtractor implements ResultSetExtractor<Report> {
 
 		@Override
@@ -106,7 +114,16 @@ class ReportDaoImpl extends BasicDaoImpl implements ReportDao {
 			while (rs.next()) {
 				if (r == null) {
 					Timestamp ts = rs.getTimestamp(2);
-					r = new Report(rs.getString(1), new java.util.Date(ts.getTime()), rs.getString(3));
+					ReportBuilder builder = ReportBuilder.getBuilder();
+					builder.subjectName(rs.getString(1)).owner(rs.getString(3));
+					builder.createdOn(new java.util.Date(ts.getTime()));
+					// r = new Report(rs.getString(1), new java.util.Date(ts.getTime()),
+					// rs.getString(3));
+					try {
+						r = builder.build();
+					} catch (ReportBuildException e) {
+						throw new SQLException("could not build the Report object", e);
+					}
 					r.setOwnerFullName(rs.getString(4));
 				}
 				Category c = new Category(rs.getString("category_name"));
@@ -121,11 +138,6 @@ class ReportDaoImpl extends BasicDaoImpl implements ReportDao {
 
 	}
 
-
-
-
-
-
 	static class BasicReportRowMapper implements RowMapper<Report> {
 
 		@Override
@@ -135,7 +147,16 @@ class ReportDaoImpl extends BasicDaoImpl implements ReportDao {
 			Timestamp ts = resultSet.getTimestamp(3);
 			java.util.Date rptCreationDate = new Date(ts.getTime());
 			String rptOwner = resultSet.getString(4);
-			return new Report(rptId, subjectName, rptCreationDate, rptOwner);
+
+			ReportBuilder builder = ReportBuilder.getBuilder();
+			builder.subjectName(subjectName).createdOn(rptCreationDate).owner(rptOwner);
+			try {
+				// return new Report(rptId, subjectName, rptCreationDate, rptOwner);
+				return builder.build();
+			} catch (ReportBuildException e) {
+				throw new SQLException("could not build the Report object", e);
+			}
+
 		}
 
 	}
@@ -163,7 +184,7 @@ class ReportDaoImpl extends BasicDaoImpl implements ReportDao {
 				"ORDER BY cat.e_name, allergen_name";
 		//@formatter:on
 
-		return jdbcTemplate.query(sqlQuery, new Object[]{id}, new ReportRsExtractor());
+		return jdbcTemplate.query(sqlQuery, new Object[] { id }, new ReportRsExtractor());
 
 	}
 
@@ -172,15 +193,15 @@ class ReportDaoImpl extends BasicDaoImpl implements ReportDao {
 	@Override
 	public Report getSummaryById(String id) throws DaoException {
 		String sqlQuery = "SELECT * FROM report WHERE id = ?";
-		return jdbcTemplate.queryForObject(sqlQuery, new Object[]{id}, new BasicReportRowMapper());
+		return jdbcTemplate.queryForObject(sqlQuery, new Object[] { id }, new BasicReportRowMapper());
 	}
 
 
 
 	@Override
 	public void remove(String id) throws DaoException {
-		/* le righe di dettaglio del report sono eliminate dal
-		 * cascade sulla foreign key
+		/*
+		 * le righe di dettaglio del report sono eliminate dal cascade sulla foreign key
 		 */
 		String sqlStatement = "DELETE FROM report WHERE id = ?";
 		jdbcTemplate.update(sqlStatement, id);

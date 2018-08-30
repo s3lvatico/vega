@@ -16,6 +16,7 @@ import org.gmnz.vega.VegaImpl;
 import org.gmnz.vega.VegaUtil;
 import org.gmnz.vega.domain.Allergen;
 import org.gmnz.vega.domain.Report;
+import org.gmnz.vega.domain.ReportBuilder;
 import org.gmnz.vega.domain.ToxicityRating;
 import org.gmnz.vega.service.AllergenService;
 import org.gmnz.vega.ui.Action;
@@ -53,25 +54,25 @@ public class ReportExecution extends HttpServlet {
 	private void executeAction(String action, HttpServletRequest req, HttpServletResponse resp) throws IOException {
 		try {
 			switch (action) {
-				case Action.CREATE:
-					String subjectName = req.getParameter("subjectName");
-					if (VegaUtil.stringNullOrEmpty(subjectName)) {
-						String errorMessage = "The name of the subject must be specified";
-						req.setAttribute("errorMessage", errorMessage);
-						resp.sendError(HttpServletResponse.SC_BAD_REQUEST, errorMessage);
-						return;
-					}
-					createAndStoreReport(subjectName, req, resp);
-					break;
-				case Action.DELETE:
-					String reportId = req.getParameter("reportId");
-					if (!VegaUtil.stringNullOrEmpty(reportId)) {
-						vega.getReportService().removeReport(reportId);
-					}
-					break;
-				default:
-					resp.sendError(HttpServletResponse.SC_BAD_REQUEST, "invalid action specified");
+			case Action.CREATE:
+				String subjectName = req.getParameter("subjectName");
+				if (VegaUtil.stringNullOrEmpty(subjectName)) {
+					String errorMessage = "The name of the subject must be specified";
+					req.setAttribute("errorMessage", errorMessage);
+					resp.sendError(HttpServletResponse.SC_BAD_REQUEST, errorMessage);
 					return;
+				}
+				createAndStoreReport(subjectName, req, resp);
+				break;
+			case Action.DELETE:
+				String reportId = req.getParameter("reportId");
+				if (!VegaUtil.stringNullOrEmpty(reportId)) {
+					vega.getReportService().removeReport(reportId);
+				}
+				break;
+			default:
+				resp.sendError(HttpServletResponse.SC_BAD_REQUEST, "invalid action specified");
+				return;
 			}
 		} catch (VegaException ve) {
 			String errorMessage = String.format("exception thrown while executing action -- %s :: %s",
@@ -87,7 +88,9 @@ public class ReportExecution extends HttpServlet {
 	private void createAndStoreReport(String subjectName, HttpServletRequest req, HttpServletResponse resp)
 			throws VegaException {
 		String reportOwner = req.getRemoteUser();
-		Report r = new Report(subjectName, new Date(), reportOwner);
+		ReportBuilder builder = ReportBuilder.getBuilder();
+		builder.subjectName(subjectName).owner(reportOwner).createdOn(new Date());
+		Report r = builder.build();
 		AllergenService allergenService = vega.getAllergenService();
 		Enumeration<String> paramNames = req.getParameterNames();
 		String paramName;
@@ -98,7 +101,8 @@ public class ReportExecution extends HttpServlet {
 				allergenId = paramName.substring(3);
 				Allergen a = allergenService.getAllergenById(allergenId);
 				if (a == null) {
-					System.err.println("WARNING : no allergen found with id <" + allergenId + "> - no toxicity rating stored for this allergen");
+					System.err.println("WARNING : no allergen found with id <" + allergenId
+							+ "> - no toxicity rating stored for this allergen");
 					continue;
 				}
 				String strToxValue = req.getParameter(paramName);
