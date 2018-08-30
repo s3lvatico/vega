@@ -25,17 +25,17 @@ class BasicServiceBean {
 
 		boolean entityIsInTheSystem;
 		switch (clazz.getSimpleName()) {
-		case "Category":
-			entityIsInTheSystem = checkForCategory(objectName);
-			break;
-		case "Allergen":
-			entityIsInTheSystem = checkForAllergen(objectName);
-			break;
-		default:
-			StringBuilder sbError = new StringBuilder("anomalous condition occurred - ");
-			sbError.append(String.format("cannot determine whether the entity [%s / %s] is in the system or not",
-					objectName, clazz.getSimpleName()));
-			throw new VegaException(sbError.toString());
+			case "Category":
+				entityIsInTheSystem = checkForCategory(objectName);
+				break;
+			case "Allergen":
+				entityIsInTheSystem = checkForAllergen(objectName);
+				break;
+			default:
+				StringBuilder sbError = new StringBuilder("anomalous condition occurred - ");
+				sbError.append(String.format("cannot determine whether the entity [%s / %s] is in the system or not",
+						objectName, clazz.getSimpleName()));
+				throw new VegaException(sbError.toString());
 		}
 		if (mustBeInTheSystem ^ entityIsInTheSystem) {
 			String errorMessage = String.format("%s [%s] was%s expected to be in the system but it is%s.",
@@ -48,10 +48,7 @@ class BasicServiceBean {
 
 
 	private boolean checkForCategory(String categoryName) throws VegaException {
-
-//		CategoryDao dao = null;
 		try {
-			// dao = DaoFactory.getInstance().createCategoryDao();
 			CategoryDao dao = daoFactory.createCategoryDao();
 			return dao.isCategoryRegisteredByName(categoryName);
 		} catch (DaoException e) {
@@ -65,9 +62,7 @@ class BasicServiceBean {
 
 
 	private boolean checkForAllergen(String allergenName) throws VegaException {
-		// AllergenDao dao = null;
 		try {
-			// dao = DaoFactory.getInstance().createAllergenDao();
 			AllergenDao dao = daoFactory.createAllergenDao();
 			return dao.isAllergenRegisteredByName(allergenName);
 		} catch (DaoException e) {

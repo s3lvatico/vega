@@ -1,8 +1,6 @@
 package org.gmnz.vega.service;
 
 
-import java.util.List;
-
 import org.gmnz.vega.VegaException;
 import org.gmnz.vega.VegaUtil;
 import org.gmnz.vega.domain.Allergen;
@@ -12,6 +10,8 @@ import org.gmnz.vega.repository.AllergenDao;
 import org.gmnz.vega.repository.CategoryDao;
 import org.gmnz.vega.repository.DaoException;
 import org.gmnz.vega.repository.DaoFactory;
+
+import java.util.List;
 
 
 /**
@@ -132,11 +132,13 @@ public class AllergenServiceImpl extends BasicServiceBean implements AllergenSer
 
 	@Override
 	public void removeAllergen(String id) throws VegaException {
-		try {
-			daoFactory.createAllergenDao().delete(id);
-		} catch (DaoException e) {
-			e.printStackTrace();
-			throw new VegaException("removeAllergen service error", e);
+		if (!VegaUtil.stringNullOrEmpty(id)) {
+			try {
+				daoFactory.createAllergenDao().delete(id);
+			} catch (DaoException e) {
+				e.printStackTrace();
+				throw new VegaException("removeAllergen service error", e);
+			}
 		}
 	}
 

@@ -1,68 +1,70 @@
 package org.gmnz.vega.repository;
 
 
+import org.springframework.beans.BeansException;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.ApplicationContextAware;
 import org.springframework.transaction.PlatformTransactionManager;
 
 import javax.sql.DataSource;
 
+
 /*
 	18.824 : modificato da singleton a pojo
  */
-public /* abstract */ class DaoFactory {
+public /* abstract */ class DaoFactory implements ApplicationContextAware {
 
-	// TODO valuta se si può trasformare in un AppContext aware e ottenere i dao come bean
+	@Deprecated
 	private DataSource dataSource;
 
+	@Deprecated
 	private PlatformTransactionManager transactionManager;
 
+	private ApplicationContext applicationContext;
 
 
-	/* private */ DaoFactory(DataSource dataSource, PlatformTransactionManager platformTransactionManager) {
+
+	@Override
+	public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
+		this.applicationContext = applicationContext;
+	}
+
+
+/*
+	DaoFactory(DataSource dataSource, PlatformTransactionManager platformTransactionManager) {
 		this.dataSource = dataSource;
 		this.transactionManager = platformTransactionManager;
 	}
 
-
-/*
-	public static DaoFactory getInstance() {
-		return INSTANCE;
-	}
 */
 
-/*
-	public static void setDataSource(DataSource dataSource) {
-		INSTANCE.dataSource = dataSource;
-	}
-
-
-
-	public static void setTransactionManager(PlatformTransactionManager transactionManager) {
-		INSTANCE.transactionManager = transactionManager;
-	}
-*/
 
 
 	public CategoryDao createCategoryDao() {
-		CategoryDaoImpl daoImpl = new CategoryDaoImpl();
-		daoImpl.setDataSource(dataSource);
-		return daoImpl;
+//		CategoryDaoImpl daoImpl = new CategoryDaoImpl();
+//		daoImpl.setDataSource(dataSource);
+		return applicationContext.getBean("categoryDao", CategoryDao.class);
+		// return daoImpl;
 	}
 
 
 
 	public AllergenDao createAllergenDao() {
-		AllergenDaoImpl daoImpl = new AllergenDaoImpl();
-		daoImpl.setDataSource(dataSource);
-		return daoImpl;
+//		AllergenDaoImpl daoImpl = new AllergenDaoImpl();
+//		daoImpl.setDataSource(dataSource);
+//		return daoImpl;
+		return applicationContext.getBean("allergenDao", AllergenDao.class);
 	}
 
 
 
-	public ReportDao createReportDao() throws DaoCreationException {
-		ReportDaoImpl daoImpl = new ReportDaoImpl();
-		daoImpl.setDataSource(dataSource);
-		daoImpl.initTransactionTemplate(transactionManager);
-		return daoImpl;
+	public ReportDao createReportDao() {
+//		ReportDaoImpl daoImpl = new ReportDaoImpl();
+//		daoImpl.setDataSource(dataSource);
+//		daoImpl.initTransactionTemplate(transactionManager);
+//		return daoImpl;
+		return applicationContext.getBean("reportDao", ReportDao.class);
 	}
+
 
 }

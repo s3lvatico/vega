@@ -1,12 +1,6 @@
 package org.gmnz.vega.repository;
 
 
-import java.sql.Date;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Timestamp;
-import java.util.Collection;
-
 import org.gmnz.vega.domain.Allergen;
 import org.gmnz.vega.domain.Category;
 import org.gmnz.vega.domain.Report;
@@ -14,11 +8,26 @@ import org.gmnz.vega.domain.ToxicityRating;
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.ResultSetExtractor;
 import org.springframework.jdbc.core.RowMapper;
+import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.TransactionStatus;
 import org.springframework.transaction.support.TransactionCallbackWithoutResult;
 
+import javax.sql.DataSource;
+import java.sql.Date;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Timestamp;
+import java.util.Collection;
+
 
 class ReportDaoImpl extends BasicDaoImpl implements ReportDao {
+
+
+	protected ReportDaoImpl(DataSource dataSource, PlatformTransactionManager transactionManager) {
+		super(dataSource, transactionManager);
+	}
+
+
 
 	@Override
 	public Collection<Report> findAll() throws DaoException {
@@ -35,7 +44,7 @@ class ReportDaoImpl extends BasicDaoImpl implements ReportDao {
 								" JOIN vega_user owner  ON rpt.owner = owner.user_name " +
 								"ORDER BY " +
 								" subject_name, " +
-								" date_creation;";
+								" date_creation ";
 //@formatter:on
 		return jdbcTemplate.query(sqlQuery, new RowMapper<Report>() {
 
@@ -55,7 +64,7 @@ class ReportDaoImpl extends BasicDaoImpl implements ReportDao {
 
 
 	@Override
-	public void createReport(Report r) throws DaoException {
+	public void createReport(Report r) {
 		transactionTemplate.execute(new TransactionCallbackWithoutResult() {
 
 			@Override
@@ -87,6 +96,8 @@ class ReportDaoImpl extends BasicDaoImpl implements ReportDao {
 		});
 	}
 
+
+
 	static class ReportRsExtractor implements ResultSetExtractor<Report> {
 
 		@Override
@@ -107,12 +118,16 @@ class ReportDaoImpl extends BasicDaoImpl implements ReportDao {
 			} // ~while
 			return r;
 		}
+
 	}
 
 
 
+
+
+
 	static class BasicReportRowMapper implements RowMapper<Report> {
-	
+
 		@Override
 		public Report mapRow(ResultSet resultSet, int i) throws SQLException {
 			String rptId = resultSet.getString(1);
@@ -122,6 +137,7 @@ class ReportDaoImpl extends BasicDaoImpl implements ReportDao {
 			String rptOwner = resultSet.getString(4);
 			return new Report(rptId, subjectName, rptCreationDate, rptOwner);
 		}
+
 	}
 
 
@@ -139,28 +155,33 @@ class ReportDaoImpl extends BasicDaoImpl implements ReportDao {
 				" rpt_detail.toxicity " +
 				"FROM " +
 				" report rpt_head " +
-				"JOIN report_line rpt_detail ON  rpt_head.id = rpt_detail.id_report " +
-				"JOIN allergen al ON  rpt_detail.id_allergen = al.id " +
-				"JOIN category cat ON  al.id_category = cat.id " +
-				"JOIN vega_user ON  rpt_head.owner = vega_user.user_name " +
+				"JOIN report_line rpt_detail ON rpt_head.id = rpt_detail.id_report " +
+				"JOIN allergen al ON rpt_detail.id_allergen = al.id " +
+				"JOIN category cat ON al.id_category = cat.id " +
+				"JOIN vega_user ON rpt_head.owner = vega_user.user_name " +
 				"WHERE  rpt_head.id = ? " +
-				"ORDER BY cat.e_name,  allergen_name";
+				"ORDER BY cat.e_name, allergen_name";
 		//@formatter:on
-		
-		return jdbcTemplate.query(sqlQuery, new Object[] {id}, new ReportRsExtractor());
-		
+
+		return jdbcTemplate.query(sqlQuery, new Object[]{id}, new ReportRsExtractor());
+
 	}
+
+
 
 	@Override
 	public Report getSummaryById(String id) throws DaoException {
 		String sqlQuery = "SELECT * FROM report WHERE id = ?";
-		return jdbcTemplate.queryForObject(sqlQuery, new Object[] { id }, new BasicReportRowMapper());
+		return jdbcTemplate.queryForObject(sqlQuery, new Object[]{id}, new BasicReportRowMapper());
 	}
 
 
 
 	@Override
 	public void remove(String id) throws DaoException {
+		/* le righe di dettaglio del report sono eliminate dal
+		 * cascade sulla foreign key
+		 */
 		String sqlStatement = "DELETE FROM report WHERE id = ?";
 		jdbcTemplate.update(sqlStatement, id);
 	}

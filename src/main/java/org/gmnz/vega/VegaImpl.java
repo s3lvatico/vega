@@ -12,27 +12,11 @@ import org.springframework.context.ApplicationContextAware;
 
 public class VegaImpl implements Vega, ApplicationContextAware {
 
-	// private final CategoryService categoryService;
-
-	// private final AllergenService allergenService;
-
-	// private final ReportService reportService;
 
 	private ApplicationContext applicationContext;
 
-
-
-	public VegaImpl() {
-//		categoryService = new CategoryServiceImpl();
-//		allergenService = new AllergenServiceImpl();
-//		reportService = new ReportServiceImpl();
-	}
-
-
-
 	@Override
 	public CategoryService getCategoryService() {
-		// return categoryService;
 		return applicationContext.getBean("categoryService", CategoryService.class);
 	}
 
@@ -40,8 +24,6 @@ public class VegaImpl implements Vega, ApplicationContextAware {
 
 	@Override
 	public AllergenService getAllergenService() {
-		// TODO cambia
-		// return allergenService;
 		return applicationContext.getBean("allergenService", AllergenService.class);
 	}
 
@@ -49,9 +31,7 @@ public class VegaImpl implements Vega, ApplicationContextAware {
 
 	@Override
 	public ReportService getReportService() {
-		// TODO cambia
-//		return new ReportServiceImpl();
-		return null;
+		return applicationContext.getBean(ReportService.class);
 	}
 
 

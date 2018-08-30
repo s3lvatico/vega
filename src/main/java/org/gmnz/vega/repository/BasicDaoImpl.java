@@ -1,18 +1,17 @@
 package org.gmnz.vega.repository;
 
 
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
-
-import javax.sql.DataSource;
-
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.support.TransactionTemplate;
 
+import javax.sql.DataSource;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 
-class BasicDaoImpl extends ConnectionOrientedDaoImpl {
+
+class BasicDaoImpl /* extends ConnectionOrientedDaoImpl */ {
 
 	protected JdbcTemplate jdbcTemplate;
 
@@ -38,6 +37,13 @@ class BasicDaoImpl extends ConnectionOrientedDaoImpl {
 
 
 
+	protected BasicDaoImpl(DataSource dataSource, PlatformTransactionManager transactionManager) {
+		jdbcTemplate = new JdbcTemplate(dataSource);
+		transactionTemplate = new TransactionTemplate(transactionManager);
+	}
+
+
+/*
 	protected void setDataSource(DataSource ds) {
 		this.jdbcTemplate = new JdbcTemplate(ds);
 	}
@@ -47,4 +53,6 @@ class BasicDaoImpl extends ConnectionOrientedDaoImpl {
 	protected void initTransactionTemplate(PlatformTransactionManager transactionManager) {
 		transactionTemplate = new TransactionTemplate(transactionManager);
 	}
+	*/
+
 }

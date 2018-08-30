@@ -36,13 +36,4 @@ public interface CategoryService {
 
 
 
-	/**
-	 * @deprecated è sbagliato introdurre metodi da usare solo per scopi di test in
-	 *             un'interfaccia applicativa
-	 * @param id id della categoria da rimuovere
-	 * @throws VegaException se qualcosa va storto
-	 */
-	@Deprecated
-	void deepRemove(String id) throws VegaException;
-
 }

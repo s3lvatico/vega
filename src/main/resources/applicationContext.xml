@@ -1,37 +1,59 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://www.springframework.org/schema/beans
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
         http://www.springframework.org/schema/beans/spring-beans.xsd"
 >
 
-	<bean id="vega" class="org.gmnz.vega.VegaImpl"/>
+   <bean id="vega" class="org.gmnz.vega.VegaImpl"/>
 
-	<bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
-		<property name="location" value="datasource.properties" />
-	</bean>
+   <bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+      <property name="location" value="datasource.properties"/>
+   </bean>
 
-	<bean id="dataSource" class="org.apache.commons.dbcp2.BasicDataSource" destroy-method="close">
-		<property name="driverClassName" value="${dataSource.driverClassName}" />
-		<property name="url" value="${dataSource.url}" />
-		<property name="username" value="${dataSource.username}" />
-		<property name="password" value="${dataSource.password}" />
-	</bean>
+   <bean id="dataSource" class="org.apache.commons.dbcp2.BasicDataSource" destroy-method="close">
+      <property name="driverClassName" value="${dataSource.driverClassName}"/>
+      <property name="url" value="${dataSource.url}"/>
+      <property name="username" value="${dataSource.username}"/>
+      <property name="password" value="${dataSource.password}"/>
+   </bean>
 
-	<bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
-		<property name="dataSource" ref="dataSource" />
-	</bean>
+   <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+      <property name="dataSource" ref="dataSource"/>
+   </bean>
 
-	<bean id="daoFactory" class="org.gmnz.vega.repository.DaoFactory">
-		<constructor-arg index="0" ref="dataSource"/>
-		<constructor-arg index="1" ref="transactionManager"/>
-	</bean>
+   <bean id="daoFactory" class="org.gmnz.vega.repository.DaoFactory">
+      <!--
+      <constructor-arg index="0" ref="dataSource"/>
+      <constructor-arg index="1" ref="transactionManager"/>
+      -->
+   </bean>
 
-	<bean id="categoryService" class="org.gmnz.vega.service.CategoryServiceImpl" >
-		<constructor-arg ref="daoFactory"/>
-	</bean>
+   <bean id="categoryDao" class="org.gmnz.vega.repository.CategoryDaoImpl">
+      <constructor-arg name="dataSource" ref="dataSource"/>
+      <constructor-arg name="transactionManager" ref="transactionManager"/>
+   </bean>
 
-	<bean id="allergenService" class="org.gmnz.vega.service.AllergenServiceImpl" >
-		<constructor-arg ref="daoFactory"/>
-	</bean>
+   <bean id="allergenDao" class="org.gmnz.vega.repository.AllergenDaoImpl">
+      <constructor-arg name="dataSource" ref="dataSource"/>
+      <constructor-arg name="transactionManager" ref="transactionManager"/>
+   </bean>
+
+   <bean id="reportDao" class="org.gmnz.vega.repository.ReportDaoImpl">
+      <constructor-arg name="dataSource" ref="dataSource"/>
+      <constructor-arg name="transactionManager" ref="transactionManager"/>
+   </bean>
+
+
+   <bean id="categoryService" class="org.gmnz.vega.service.CategoryServiceImpl">
+      <constructor-arg ref="daoFactory"/>
+   </bean>
+
+   <bean id="allergenService" class="org.gmnz.vega.service.AllergenServiceImpl">
+      <constructor-arg ref="daoFactory"/>
+   </bean>
+
+   <bean id="reportService" class="org.gmnz.vega.service.ReportServiceImpl">
+      <constructor-arg ref="daoFactory"/>
+   </bean>
 
 </beans>
