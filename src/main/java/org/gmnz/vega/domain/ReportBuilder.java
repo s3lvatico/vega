@@ -6,14 +6,6 @@ import java.util.Date;
 
 public class ReportBuilder {
 
-	/*
-	 * non devono essere nulli
-	 * 
-	 * - id [mah, discutibile] - nome soggetto - data creazione - owner
-	 */
-
-	// private String id;
-
 	private String subjectName;
 
 	private Date createdOn;
@@ -23,7 +15,6 @@ public class ReportBuilder {
 
 
 	private ReportBuilder() {
-		// this.id = null;
 		this.subjectName = null;
 		this.createdOn = null;
 		this.owner = null;
