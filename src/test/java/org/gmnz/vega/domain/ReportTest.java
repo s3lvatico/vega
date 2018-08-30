@@ -1,9 +1,11 @@
 package org.gmnz.vega.domain;
 
+
+import java.util.Date;
+
 import org.junit.Before;
 import org.junit.Test;
 
-import java.util.Date;
 
 public class ReportTest {
 
@@ -17,7 +19,10 @@ public class ReportTest {
 	private Allergen olioDiOliva;
 	private Allergen strutto;
 
-	@Before public void buildData() {
+
+
+	@Before
+	public void buildData() {
 		cereali = new Category("Cereali");
 
 		avena = new Allergen("Avena");
@@ -25,8 +30,10 @@ public class ReportTest {
 		orzo = new Allergen("Orzo");
 		patate = new Allergen("Patate");
 
-		cereali.addAllergen(avena); cereali.addAllergen(farina); cereali.addAllergen(orzo); cereali.addAllergen(patate);
-
+		cereali.addAllergen(avena);
+		cereali.addAllergen(farina);
+		cereali.addAllergen(orzo);
+		cereali.addAllergen(patate);
 
 		condimenti = new Category("Condimenti");
 
@@ -34,13 +41,17 @@ public class ReportTest {
 		olioDiOliva = new Allergen("Olio di oliva");
 		strutto = new Allergen("Strutto");
 
-		condimenti.addAllergen(lievitoDiBirra); condimenti.addAllergen(olioDiOliva); condimenti.addAllergen(strutto);
+		condimenti.addAllergen(lievitoDiBirra);
+		condimenti.addAllergen(olioDiOliva);
+		condimenti.addAllergen(strutto);
 	}
 
-	@Test public void creaReport() {
+
+
+	@Test
+	public void creaReport() {
 		Report report = new Report("Simone", new Date(), "gemini");
 		System.out.println(report);
-
 
 		ToxicityRating v = new ToxicityRating(avena, 0.8d);
 		report.addRating(v);
@@ -66,6 +77,49 @@ public class ReportTest {
 		report.addRating(v);
 
 		System.out.println(report);
+	}
 
+
+
+	@Test
+	public void reportBuilder() throws ReportBuildException {
+		System.out.println("builder test");
+		try {
+			ReportBuilder.getBuilder().build();
+		} catch (ReportBuildException e) {
+			System.err.println("all nulls - exception ok");
+		}
+		try {
+			ReportBuilder.getBuilder().owner("nazzo").build();
+		} catch (ReportBuildException e) {
+			System.err.println("owner , null, null - exception ok");
+		}
+		try {
+			ReportBuilder.getBuilder().createdOn(new Date()).build();
+		} catch (ReportBuildException e) {
+			System.err.println("null, date, null - exception ok");
+		}
+		try {
+			ReportBuilder.getBuilder().owner("nazzo").createdOn(new Date()).build();
+		} catch (ReportBuildException e) {
+			System.err.println("owner, date, null - exception ok");
+		}
+		try {
+			ReportBuilder.getBuilder().subjectName("subj").build();
+		} catch (ReportBuildException e) {
+			System.err.println("null, null, subject - exception ok");
+		}
+		try {
+			ReportBuilder.getBuilder().subjectName("subj").owner("nazzo").build();
+		} catch (ReportBuildException e) {
+			System.err.println("owner, null, subject - exception ok");
+		}
+		try {
+			ReportBuilder.getBuilder().createdOn(new Date()).owner("nazzo").build();
+		} catch (ReportBuildException e) {
+			System.err.println("null, date, subject - exception ok");
+		}
+		ReportBuilder.getBuilder().subjectName("theSubject").createdOn(new Date()).owner("nazzo").build();
+		System.out.println("end builder test");
 	}
 }
