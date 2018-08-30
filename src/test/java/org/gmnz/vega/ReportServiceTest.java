@@ -8,6 +8,7 @@ import org.gmnz.vega.domain.Report;
 import org.gmnz.vega.domain.ReportBuildException;
 import org.gmnz.vega.domain.ReportBuilder;
 import org.gmnz.vega.service.ReportService;
+import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
@@ -46,10 +47,17 @@ public class ReportServiceTest {
 
 
 	@Test
-	public void createReportNullValues() throws ReportBuildException, VegaException {
+	public void createReport() throws ReportBuildException, VegaException {
 		ReportService reportService = vega.getReportService();
-		Report r = ReportBuilder.getBuilder().createdOn(new Date()).owner("nazzo").build();
-		reportService.createReport(r);
+		Report expected = ReportBuilder.getBuilder().subjectName("Test Subject 01").createdOn(new Date()).owner("gemini")
+				.build();
+		reportService.createReport(expected);
+
+		Collection<Report> reports = reportService.getStoredReports();
+
+		Assert.assertTrue(reports.contains(expected));
+
+		reportService.removeReport(expected.getId());
 	}
 
 }

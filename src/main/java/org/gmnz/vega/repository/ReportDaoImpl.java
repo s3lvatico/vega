@@ -54,7 +54,7 @@ class ReportDaoImpl extends BasicDaoImpl implements ReportDao {
 			public Report mapRow(ResultSet resultSet, int i) throws SQLException {
 //				String id = resultSet.getString(1);
 				String subjectName = resultSet.getString(2);
-				Date creationDate = resultSet.getDate(3);
+				Timestamp creationDate = resultSet.getTimestamp(3);
 				String owner = resultSet.getString(4);
 				// Report r = new Report(id, subjectName, creationDate, owner);
 				ReportBuilder builder = ReportBuilder.getBuilder();
@@ -142,7 +142,7 @@ class ReportDaoImpl extends BasicDaoImpl implements ReportDao {
 
 		@Override
 		public Report mapRow(ResultSet resultSet, int i) throws SQLException {
-			String rptId = resultSet.getString(1);
+			// String rptId = resultSet.getString(1);
 			String subjectName = resultSet.getString(2);
 			Timestamp ts = resultSet.getTimestamp(3);
 			java.util.Date rptCreationDate = new Date(ts.getTime());

@@ -1,14 +1,13 @@
 package org.gmnz.vega.service;
 
 
+import java.util.Collection;
+
 import org.gmnz.vega.VegaException;
-import org.gmnz.vega.VegaUtil;
 import org.gmnz.vega.domain.Report;
 import org.gmnz.vega.repository.DaoException;
 import org.gmnz.vega.repository.DaoFactory;
 import org.gmnz.vega.repository.ReportDao;
-
-import java.util.Collection;
 
 
 /**
@@ -64,7 +63,6 @@ public class ReportServiceImpl extends BasicServiceBean implements ReportService
 	@Override
 	public void createReport(Report report) throws VegaException {
 		if (report != null) {
-			checkForNulls(report);
 			ReportDao dao = daoFactory.createReportDao();
 			try {
 				dao.createReport(report);
@@ -75,18 +73,6 @@ public class ReportServiceImpl extends BasicServiceBean implements ReportService
 		} else {
 			System.err.println("warning: null report specified");
 		}
-	}
-
-
-
-	private void checkForNulls(Report r) throws VegaException {
-		if (
-				VegaUtil.stringNullOrEmpty(r.getId())
-						|| VegaUtil.stringNullOrEmpty(r.getSubjectName())
-						|| r.getCreationDate() == null
-						|| VegaUtil.stringNullOrEmpty(r.getOwner())
-		)
-			throw new VegaException("Report attributes cannot be null or empty");
 	}
 
 
