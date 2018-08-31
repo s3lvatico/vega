@@ -12,8 +12,6 @@ import org.gmnz.vega.VegaSpringUtil;
  */
 public class StartupListener implements ServletContextListener {
 
-	// private ApplicationContext springCtx;
-
 	@Override
 	public void contextInitialized(ServletContextEvent sce) {
 		System.out.println(">>> contextInitialized");
@@ -28,7 +26,6 @@ public class StartupListener implements ServletContextListener {
 	@Override
 	public void contextDestroyed(ServletContextEvent sce) {
 		System.out.printf(">>> contextDestroyed%n");
-		// springCtx = null;
 		System.out.printf("<<< contextDestroyed%n");
 	}
 }

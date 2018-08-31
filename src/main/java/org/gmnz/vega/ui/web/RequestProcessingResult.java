@@ -1,6 +1,5 @@
 package org.gmnz.vega.ui.web;
 
-
 public class RequestProcessingResult {
 
 	int statusCode;

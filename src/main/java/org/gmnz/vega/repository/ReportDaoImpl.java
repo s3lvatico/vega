@@ -54,11 +54,9 @@ class ReportDaoImpl extends BasicDaoImpl implements ReportDao {
 
 			@Override
 			public Report mapRow(ResultSet resultSet, int i) throws SQLException {
-//				String id = resultSet.getString(1);
 				String subjectName = resultSet.getString(2);
 				Timestamp creationDate = resultSet.getTimestamp(3);
 				String owner = resultSet.getString(4);
-				// Report r = new Report(id, subjectName, creationDate, owner);
 				ReportBuilder builder = ReportBuilder.getBuilder();
 				Report r = null;
 				try {
@@ -119,8 +117,6 @@ class ReportDaoImpl extends BasicDaoImpl implements ReportDao {
 					ReportBuilder builder = ReportBuilder.getBuilder();
 					builder.subjectName(rs.getString(1)).owner(rs.getString(3));
 					builder.createdOn(new java.util.Date(ts.getTime()));
-					// r = new Report(rs.getString(1), new java.util.Date(ts.getTime()),
-					// rs.getString(3));
 					try {
 						r = builder.build();
 					} catch (ReportBuildException e) {
@@ -129,11 +125,11 @@ class ReportDaoImpl extends BasicDaoImpl implements ReportDao {
 					r.setOwnerFullName(rs.getString(4));
 				}
 /*
-potrei trovarmi di fronte a un report degenere (senza dati di tossicità)
-
-per questo è stata modificata la query usando i left join, ma a causa di ciò
-occorre gestire i valori nulli delle colonne relative ai dati del report
-*/
+ * potrei trovarmi di fronte a un report degenere (senza dati di tossicità)
+ * 
+ * per questo è stata modificata la query usando i left join, ma a causa di ciò
+ * occorre gestire i valori nulli delle colonne relative ai dati del report
+ */
 				if (!VegaUtil.stringNullOrEmpty(rs.getString("category_name"))) {
 					Category c = new Category(rs.getString("category_name"));
 					Allergen a = new Allergen(rs.getString("allergen_name"));
@@ -152,7 +148,6 @@ occorre gestire i valori nulli delle colonne relative ai dati del report
 
 		@Override
 		public Report mapRow(ResultSet resultSet, int i) throws SQLException {
-			// String rptId = resultSet.getString(1);
 			String subjectName = resultSet.getString(2);
 			Timestamp ts = resultSet.getTimestamp(3);
 			java.util.Date rptCreationDate = new Date(ts.getTime());
@@ -161,14 +156,11 @@ occorre gestire i valori nulli delle colonne relative ai dati del report
 			ReportBuilder builder = ReportBuilder.getBuilder();
 			builder.subjectName(subjectName).createdOn(rptCreationDate).owner(rptOwner);
 			try {
-				// return new Report(rptId, subjectName, rptCreationDate, rptOwner);
 				return builder.build();
 			} catch (ReportBuildException e) {
 				throw new SQLException("could not build the Report object", e);
 			}
-
 		}
-
 	}
 
 
@@ -204,9 +196,8 @@ occorre gestire i valori nulli delle colonne relative ai dati del report
 	public Report getSummaryById(String id) throws DaoException {
 		String sqlQuery = "SELECT * FROM report WHERE id = ?";
 		try {
-			return jdbcTemplate.queryForObject(sqlQuery, new Object[]{id}, new BasicReportRowMapper());
-		}
-		catch (EmptyResultDataAccessException e) {
+			return jdbcTemplate.queryForObject(sqlQuery, new Object[] { id }, new BasicReportRowMapper());
+		} catch (EmptyResultDataAccessException e) {
 			return null;
 		}
 	}

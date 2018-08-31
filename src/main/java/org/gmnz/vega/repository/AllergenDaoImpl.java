@@ -6,6 +6,8 @@ import java.sql.SQLException;
 import java.util.List;
 import java.util.UUID;
 
+import javax.sql.DataSource;
+
 import org.gmnz.vega.domain.Allergen;
 import org.gmnz.vega.domain.Category;
 import org.springframework.dao.DataAccessException;
@@ -13,16 +15,12 @@ import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.transaction.PlatformTransactionManager;
 
-import javax.sql.DataSource;
-
 
 class AllergenDaoImpl extends BasicDaoImpl implements AllergenDao {
 
 	protected AllergenDaoImpl(DataSource dataSource, PlatformTransactionManager transactionManager) {
 		super(dataSource, transactionManager);
 	}
-
-
 
 	static final class AllergenRowMapper implements RowMapper<Allergen> {
 

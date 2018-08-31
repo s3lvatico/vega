@@ -123,21 +123,4 @@ public class CategoryServiceImpl extends BasicServiceBean implements CategorySer
 		}
 	}
 
-
-
-//	@Deprecated
-//	@Override
-//	public void deepRemove(String id) throws VegaException {
-//		if (VegaUtil.stringNullOrEmpty(id)) {
-//			throw new VegaException("null or empty category id");
-//		}
-//		try {
-//			CategoryDao dao = daoFactory.createCategoryDao();
-//			dao.deepDelete(id);
-//		} catch (DaoException e) {
-//			e.printStackTrace();
-//			throw new VegaException("removeCategory service error", e);
-//		}
-//	}
-
 }

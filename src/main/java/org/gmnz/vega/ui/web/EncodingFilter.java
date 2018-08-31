@@ -13,14 +13,12 @@ import javax.servlet.ServletResponse;
 
 public class EncodingFilter implements Filter {
 
-//	private String defaultEncoding;
 	private String targetEncoding;
 
 
 
 	@Override
 	public void init(FilterConfig filterConfig) {
-//		defaultEncoding = filterConfig.getInitParameter("defaultEncoding");
 		targetEncoding = filterConfig.getInitParameter("targetEncoding");
 	}
 

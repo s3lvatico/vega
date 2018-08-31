@@ -1,6 +1,14 @@
 package org.gmnz.vega.repository;
 
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.UUID;
+
+import javax.sql.DataSource;
+
 import org.gmnz.vega.domain.Allergen;
 import org.gmnz.vega.domain.Category;
 import org.springframework.dao.DataAccessException;
@@ -9,21 +17,12 @@ import org.springframework.jdbc.core.ResultSetExtractor;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.transaction.PlatformTransactionManager;
 
-import javax.sql.DataSource;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
-
 
 class CategoryDaoImpl extends BasicDaoImpl implements CategoryDao {
 
 	protected CategoryDaoImpl(DataSource dataSource, PlatformTransactionManager transactionManager) {
 		super(dataSource, transactionManager);
 	}
-
-
 
 	static final class CategoryRowMapper implements RowMapper<Category> {
 
@@ -64,8 +63,6 @@ class CategoryDaoImpl extends BasicDaoImpl implements CategoryDao {
 		return jdbcTemplate.query(sqlQuery, new CategoryWithAllergensRsExtractor());
 	}
 
-
-
 	static class CategoryWithAllergensRsExtractor implements ResultSetExtractor<List<Category>> {
 
 		@Override
@@ -97,7 +94,7 @@ class CategoryDaoImpl extends BasicDaoImpl implements CategoryDao {
 	public Category findById(String id) throws DaoException {
 		String sqlQuery = "SELECT * FROM category WHERE id = ? AND deleted = 0";
 		try {
-			return jdbcTemplate.queryForObject(sqlQuery, new Object[]{id}, new CategoryRowMapper());
+			return jdbcTemplate.queryForObject(sqlQuery, new Object[] { id }, new CategoryRowMapper());
 		} catch (EmptyResultDataAccessException e) {
 			System.err.println("warning: no category for id <" + id + ">");
 			return null;
@@ -113,7 +110,7 @@ class CategoryDaoImpl extends BasicDaoImpl implements CategoryDao {
 	public Category findByName(String name, boolean deleted) throws DaoException {
 		String sqlQuery = "SELECT * FROM category WHERE e_name = ? AND deleted = ?";
 		try {
-			return jdbcTemplate.queryForObject(sqlQuery, new Object[]{name, deleted ? 1 : 0}, new CategoryRowMapper());
+			return jdbcTemplate.queryForObject(sqlQuery, new Object[] { name, deleted ? 1 : 0 }, new CategoryRowMapper());
 		} catch (EmptyResultDataAccessException e) {
 			System.err.println("warning: no results");
 			return null;
@@ -134,15 +131,6 @@ class CategoryDaoImpl extends BasicDaoImpl implements CategoryDao {
 		} else {
 			return foundCategoriesWithName == 1;
 		}
-	}
-
-
-
-	@Override
-	public boolean isCategoryRegisteredById(String categoryId) {
-		String sqlQuery = "SELECT COUNT(*) FROM category WHERE id = ? AND deleted = '0'";
-		int foundCategoriesWithId = jdbcTemplate.queryForObject(sqlQuery, Integer.class, categoryId);
-		return foundCategoriesWithId == 1;
 	}
 
 
@@ -177,11 +165,4 @@ class CategoryDaoImpl extends BasicDaoImpl implements CategoryDao {
 		jdbcTemplate.update(sqlStatement, categoryId);
 	}
 
-
-
-	@Override
-	public void deepDelete(String categoryId) throws DaoException {
-		String sqlStatement = "DELETE FROM category WHERE id = ?";
-		jdbcTemplate.update(sqlStatement, categoryId);
-	}
 }

@@ -12,8 +12,9 @@ import org.springframework.context.ApplicationContextAware;
 
 public class VegaImpl implements Vega, ApplicationContextAware {
 
-
 	private ApplicationContext applicationContext;
+
+
 
 	@Override
 	public CategoryService getCategoryService() {

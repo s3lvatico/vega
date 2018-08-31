@@ -34,19 +34,10 @@ public class Report {
 		this.createdOn = createdOn;
 		this.owner = owner;
 		reportData = new LinkedHashMap<>();
-		// System.out.println(this.createdOn.getTime());
 		id = VegaUtil.getSha256Digest(this.subjectName, this.createdOn);
 	}
 
 
-
-//	public Report(String id, String subjectName, Date creationDate, String owner) {
-//		this.id = id;
-//		this.subjectName = subjectName;
-//		this.createdOn = creationDate;
-//		this.owner = owner;
-//		reportData = new LinkedHashMap<>();
-//	}
 
 	public void addRating(ToxicityRating rating) {
 		String categoryName = rating.getAllergen().getCategory().getName();

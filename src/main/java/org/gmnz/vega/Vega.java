@@ -10,8 +10,6 @@ public interface Vega {
 
 //	void assignAllergenToCategory(String allergenName, String categoryName);
 
-
-
 	CategoryService getCategoryService();
 
 

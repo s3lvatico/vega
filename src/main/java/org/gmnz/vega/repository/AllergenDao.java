@@ -6,7 +6,7 @@ import java.util.List;
 import org.gmnz.vega.domain.Allergen;
 
 
-public interface AllergenDao /* extends ConnectionOrientedDao */ {
+public interface AllergenDao {
 
 	List<Allergen> findAll() throws DaoException;
 

@@ -1,12 +1,13 @@
 package org.gmnz.vega.ui.web.allergen;
 
 
-import org.gmnz.vega.ui.web.BaseControllerServlet;
+import java.io.IOException;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
+
+import org.gmnz.vega.ui.web.BaseControllerServlet;
 
 
 public class AllergenController extends BaseControllerServlet {

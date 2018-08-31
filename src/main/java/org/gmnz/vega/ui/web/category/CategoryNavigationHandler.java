@@ -59,8 +59,6 @@ class CategoryNavigationHandler {
 	RequestProcessingResult handleRequest(String section, HttpServletRequest req, HttpServletResponse resp) {
 		CategoryManagementBean mgmtBean = navigationMap.get(section);
 		if (mgmtBean != null) {
-//			WebApplicationContext wCtx = WebApplicationContextUtils.getRequiredWebApplicationContext(req.getServletContext());
-//			vega = wCtx.getBean("vega", Vega.class);
 			vega = new VegaImpl(); // TODO inietta un'istanza di Vega vera e propria
 			return handleAction(mgmtBean, req, resp);
 		} else {

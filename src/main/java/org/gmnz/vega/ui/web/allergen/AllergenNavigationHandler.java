@@ -1,6 +1,13 @@
 package org.gmnz.vega.ui.web.allergen;
 
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 import org.gmnz.vega.Vega;
 import org.gmnz.vega.VegaException;
 import org.gmnz.vega.VegaImpl;
@@ -10,12 +17,6 @@ import org.gmnz.vega.domain.Category;
 import org.gmnz.vega.service.AllergenService;
 import org.gmnz.vega.ui.Action;
 import org.gmnz.vega.ui.web.RequestProcessingResult;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 
 class AllergenNavigationHandler {
@@ -70,56 +71,57 @@ class AllergenNavigationHandler {
 
 
 	private RequestProcessingResult handleAction(AllergenManagementBean mgmtBean, HttpServletRequest req,
-																HttpServletResponse resp) {
+			HttpServletResponse resp) {
 		AllergenService allergenService = vega.getAllergenService();
 		String paramAllergenId = req.getParameter("allergenId");
 		switch (mgmtBean.getAction()) {
-			case Action.GET_ALL:
-				try {
-					List<Allergen> allergens = allergenService.getAllAllergens();
-					req.setAttribute("allergens", allergens);
-					req.setAttribute("managementEnabled", req.isUserInRole("v-admin"));
-					return RequestProcessingResult.OK(mgmtBean.getViewName());
-				} catch (VegaException e) {
-					e.printStackTrace();
-					return RequestProcessingResult.INTERNAL_SERVER_ERROR("error while retrieving allergens");
-				}
-			case Action.CREATE:
-				// recupero le categorie
-				RequestProcessingResult injectCategoriesError = injectCategories(req);
-				if (injectCategoriesError != null) {
-					return RequestProcessingResult.INTERNAL_SERVER_ERROR("error while retrieving categories");
-				}
-				mgmtBean.setAllergen(new Allergen(""));
-				req.setAttribute("allergenBean", mgmtBean);
+		case Action.GET_ALL:
+			try {
+				List<Allergen> allergens = allergenService.getAllAllergens();
+				req.setAttribute("allergens", allergens);
+				req.setAttribute("managementEnabled", req.isUserInRole("v-admin"));
 				return RequestProcessingResult.OK(mgmtBean.getViewName());
-			case Action.MODIFY:
-				if (injectAllergen(mgmtBean, paramAllergenId) != null) {
-					return RequestProcessingResult.INTERNAL_SERVER_ERROR("error while retrieving allergen from id " + paramAllergenId);
-				}
-				// salva in sessione l'allergene iniziale
-				req.getSession().setAttribute("allergen", mgmtBean.getAllergen());
+			} catch (VegaException e) {
+				e.printStackTrace();
+				return RequestProcessingResult.INTERNAL_SERVER_ERROR("error while retrieving allergens");
+			}
+		case Action.CREATE:
+			// recupero le categorie
+			RequestProcessingResult injectCategoriesError = injectCategories(req);
+			if (injectCategoriesError != null) {
+				return RequestProcessingResult.INTERNAL_SERVER_ERROR("error while retrieving categories");
+			}
+			mgmtBean.setAllergen(new Allergen(""));
+			req.setAttribute("allergenBean", mgmtBean);
+			return RequestProcessingResult.OK(mgmtBean.getViewName());
+		case Action.MODIFY:
+			if (injectAllergen(mgmtBean, paramAllergenId) != null) {
+				return RequestProcessingResult
+						.INTERNAL_SERVER_ERROR("error while retrieving allergen from id " + paramAllergenId);
+			}
+			// salva in sessione l'allergene iniziale
+			req.getSession().setAttribute("allergen", mgmtBean.getAllergen());
 
-				// recupero categorie
-				if (injectCategories(req) != null) {
-					return RequestProcessingResult.INTERNAL_SERVER_ERROR("error while retrieving categories");
-				}
-				// categoria iniziale dell'allergene
-				req.setAttribute("initialAllergenCategoryName", mgmtBean.getAllergen().getCategory().getName());
-				req.setAttribute("allergenBean", mgmtBean);
-				return RequestProcessingResult.OK(mgmtBean.getViewName());
-			case Action.DELETE:
-				if (VegaUtil.stringNullOrEmpty(paramAllergenId)) {
-					return RequestProcessingResult.BAD_REQUEST("no allergen id specified");
-				}
-				RequestProcessingResult rpr = injectAllergen(mgmtBean, paramAllergenId);
-				if (rpr != null) {
-					return rpr;
-				}
-				req.setAttribute("allergenBean", mgmtBean);
-				return RequestProcessingResult.OK(mgmtBean.getViewName());
-			default:
-				return RequestProcessingResult.BAD_REQUEST("unrecognized request");
+			// recupero categorie
+			if (injectCategories(req) != null) {
+				return RequestProcessingResult.INTERNAL_SERVER_ERROR("error while retrieving categories");
+			}
+			// categoria iniziale dell'allergene
+			req.setAttribute("initialAllergenCategoryName", mgmtBean.getAllergen().getCategory().getName());
+			req.setAttribute("allergenBean", mgmtBean);
+			return RequestProcessingResult.OK(mgmtBean.getViewName());
+		case Action.DELETE:
+			if (VegaUtil.stringNullOrEmpty(paramAllergenId)) {
+				return RequestProcessingResult.BAD_REQUEST("no allergen id specified");
+			}
+			RequestProcessingResult rpr = injectAllergen(mgmtBean, paramAllergenId);
+			if (rpr != null) {
+				return rpr;
+			}
+			req.setAttribute("allergenBean", mgmtBean);
+			return RequestProcessingResult.OK(mgmtBean.getViewName());
+		default:
+			return RequestProcessingResult.BAD_REQUEST("unrecognized request");
 		}
 	}
 

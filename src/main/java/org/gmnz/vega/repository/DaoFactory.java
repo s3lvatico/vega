@@ -6,16 +6,7 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 
 
-/*
-	18.824 : modificato da singleton a pojo
- */
-public /* abstract */ class DaoFactory implements ApplicationContextAware {
-
-	/*
-	 * @Deprecated private DataSource dataSource;
-	 * 
-	 * @Deprecated private PlatformTransactionManager transactionManager;
-	 */
+public class DaoFactory implements ApplicationContextAware {
 
 	private ApplicationContext applicationContext;
 
@@ -26,38 +17,21 @@ public /* abstract */ class DaoFactory implements ApplicationContextAware {
 		this.applicationContext = applicationContext;
 	}
 
-/*
- * DaoFactory(DataSource dataSource, PlatformTransactionManager
- * platformTransactionManager) { this.dataSource = dataSource;
- * this.transactionManager = platformTransactionManager; }
- * 
- */
-
 
 
 	public CategoryDao createCategoryDao() {
-//		CategoryDaoImpl daoImpl = new CategoryDaoImpl();
-//		daoImpl.setDataSource(dataSource);
 		return applicationContext.getBean("categoryDao", CategoryDao.class);
-		// return daoImpl;
 	}
 
 
 
 	public AllergenDao createAllergenDao() {
-//		AllergenDaoImpl daoImpl = new AllergenDaoImpl();
-//		daoImpl.setDataSource(dataSource);
-//		return daoImpl;
 		return applicationContext.getBean("allergenDao", AllergenDao.class);
 	}
 
 
 
 	public ReportDao createReportDao() {
-//		ReportDaoImpl daoImpl = new ReportDaoImpl();
-//		daoImpl.setDataSource(dataSource);
-//		daoImpl.initTransactionTemplate(transactionManager);
-//		return daoImpl;
 		return applicationContext.getBean("reportDao", ReportDao.class);
 	}
 

@@ -34,6 +34,4 @@ public interface CategoryService {
 
 	void removeCategory(String id) throws VegaException;
 
-
-
 }

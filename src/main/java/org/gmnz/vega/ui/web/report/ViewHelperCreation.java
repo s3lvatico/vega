@@ -12,8 +12,7 @@ import org.gmnz.vega.domain.Category;
 class ViewHelperCreation extends ViewHelperBase {
 
 	@Override
-	protected RequestProcessingOutcome processRequest(HttpServletRequest req, 
-			ReportManagementBean rmb) {
+	protected RequestProcessingOutcome processRequest(HttpServletRequest req, ReportManagementBean rmb) {
 		RequestProcessingOutcome rpo = new RequestProcessingOutcome();
 		try {
 			List<Category> categories = vega.getCategoryService().getAllCategoriesWithAllergens();

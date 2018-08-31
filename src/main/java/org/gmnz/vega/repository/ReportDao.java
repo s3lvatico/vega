@@ -1,9 +1,9 @@
 package org.gmnz.vega.repository;
 
 
-import org.gmnz.vega.domain.Report;
-
 import java.util.Collection;
+
+import org.gmnz.vega.domain.Report;
 
 
 public interface ReportDao /* extends ConnectionOrientedDao */ {
