@@ -4,9 +4,6 @@ package org.gmnz.vega.repository;
 import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
-import org.springframework.transaction.PlatformTransactionManager;
-
-import javax.sql.DataSource;
 
 
 /*
@@ -14,11 +11,11 @@ import javax.sql.DataSource;
  */
 public /* abstract */ class DaoFactory implements ApplicationContextAware {
 
-	@Deprecated
-	private DataSource dataSource;
-
-	@Deprecated
-	private PlatformTransactionManager transactionManager;
+	/*
+	 * @Deprecated private DataSource dataSource;
+	 * 
+	 * @Deprecated private PlatformTransactionManager transactionManager;
+	 */
 
 	private ApplicationContext applicationContext;
 
@@ -29,14 +26,12 @@ public /* abstract */ class DaoFactory implements ApplicationContextAware {
 		this.applicationContext = applicationContext;
 	}
 
-
 /*
-	DaoFactory(DataSource dataSource, PlatformTransactionManager platformTransactionManager) {
-		this.dataSource = dataSource;
-		this.transactionManager = platformTransactionManager;
-	}
-
-*/
+ * DaoFactory(DataSource dataSource, PlatformTransactionManager
+ * platformTransactionManager) { this.dataSource = dataSource;
+ * this.transactionManager = platformTransactionManager; }
+ * 
+ */
 
 
 
@@ -65,6 +60,5 @@ public /* abstract */ class DaoFactory implements ApplicationContextAware {
 //		return daoImpl;
 		return applicationContext.getBean("reportDao", ReportDao.class);
 	}
-
 
 }
