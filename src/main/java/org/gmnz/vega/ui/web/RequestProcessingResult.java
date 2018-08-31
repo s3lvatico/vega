@@ -34,6 +34,12 @@ public class RequestProcessingResult {
 
 
 
+	public static RequestProcessingResult NOT_FOUND(String message) {
+		return new RequestProcessingResult(404, message);
+	}
+
+
+
 	public static RequestProcessingResult INTERNAL_SERVER_ERROR(String message) {
 		return new RequestProcessingResult(500, message);
 	}

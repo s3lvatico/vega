@@ -21,8 +21,17 @@ public class BaseControllerServlet extends HttpServlet {
 	@Override
 	protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		requestedSection = findRequestedSection(req);
+		// invoca il metodo corretto doGet(), doPost(), ...
 		super.service(req, resp);
 		dispatchToView(req, resp);
+	}
+
+
+
+	private String findRequestedSection(HttpServletRequest req) {
+		String requestUrl = req.getRequestURL().toString();
+		int i = requestUrl.lastIndexOf('/');
+		return requestUrl.substring(i + 1);
 	}
 
 
@@ -40,14 +49,6 @@ public class BaseControllerServlet extends HttpServlet {
 			resp.sendError(statusCode, requestProcessingResult.getErrorMessage());
 			return;
 		}
-	}
-
-
-
-	private String findRequestedSection(HttpServletRequest req) {
-		String requestUrl = req.getRequestURL().toString();
-		int i = requestUrl.lastIndexOf('/');
-		return requestUrl.substring(i + 1);
 	}
 
 }
