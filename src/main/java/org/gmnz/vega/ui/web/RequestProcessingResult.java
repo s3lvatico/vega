@@ -1,5 +1,6 @@
 package org.gmnz.vega.ui.web;
 
+
 public class RequestProcessingResult {
 
 	int statusCode;
@@ -8,7 +9,7 @@ public class RequestProcessingResult {
 
 
 
-	 RequestProcessingResult(int statusCode, String viewName, String errorMessage) {
+	RequestProcessingResult(int statusCode, String viewName, String errorMessage) {
 		this.statusCode = statusCode;
 		this.viewName = viewName;
 		this.errorMessage = errorMessage;
@@ -24,6 +25,12 @@ public class RequestProcessingResult {
 
 	public static RequestProcessingResult OK(String viewName) {
 		return new RequestProcessingResult(200, viewName, null);
+	}
+
+
+
+	public static RequestProcessingResult OK() {
+		return new RequestProcessingResult(200, null, null);
 	}
 
 

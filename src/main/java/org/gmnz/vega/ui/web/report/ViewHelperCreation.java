@@ -7,23 +7,32 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.gmnz.vega.VegaException;
 import org.gmnz.vega.domain.Category;
+import org.gmnz.vega.ui.web.RequestProcessingResult;
 
 
 class ViewHelperCreation extends ViewHelperBase {
 
 	@Override
-	protected RequestProcessingOutcome processRequest(HttpServletRequest req, ReportManagementBean rmb) {
-		RequestProcessingOutcome rpo = new RequestProcessingOutcome();
+	protected RequestProcessingResult processRequest(HttpServletRequest req, ReportManagementBean rmb) {
+		// RequestProcessingResult rpr = new RequestProcessingResult()
+//		int statusCode;
+//		String errorMessage;
 		try {
 			List<Category> categories = vega.getCategoryService().getAllCategoriesWithAllergens();
 			req.setAttribute("categories", categories);
-			rpo.statusCode = 200;
+			// rpo.statusCode = 200;
+//			statusCode = 200;
+			return RequestProcessingResult.OK();
 		} catch (VegaException e) {
 			e.printStackTrace();
-			rpo.statusCode = 500;
-			rpo.errorMessage = "error while retrieving categories";
+			return RequestProcessingResult.INTERNAL_SERVER_ERROR("error while retrieving categories");
+//			statusCode = 500;
+//			errorMessage = "error while retrieving categories";
+//			rpo.statusCode = 500;
+//			rpo.errorMessage = "error while retrieving categories";
 		}
-		return rpo;
+		//return rpo;
+
 	}
 
 }

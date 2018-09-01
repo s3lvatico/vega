@@ -1,10 +1,11 @@
 package org.gmnz.vega.ui.web.report;
 
 
-import javax.servlet.http.HttpServletRequest;
-
 import org.gmnz.vega.Vega;
-import org.gmnz.vega.VegaImpl;
+import org.gmnz.vega.VegaFactory;
+import org.gmnz.vega.ui.web.RequestProcessingResult;
+
+import javax.servlet.http.HttpServletRequest;
 
 
 abstract class ViewHelperBase {
@@ -14,10 +15,11 @@ abstract class ViewHelperBase {
 
 
 	ViewHelperBase() {
-		vega = new VegaImpl();
+		vega = VegaFactory.getFactory().buildVega();
 	}
 
 
 
-	protected abstract RequestProcessingOutcome processRequest(HttpServletRequest req, ReportManagementBean rmb);
+	protected abstract RequestProcessingResult processRequest(HttpServletRequest req, ReportManagementBean rmb);
+
 }

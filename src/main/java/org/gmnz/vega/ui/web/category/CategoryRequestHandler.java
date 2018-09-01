@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.gmnz.vega.Vega;
 import org.gmnz.vega.VegaException;
+import org.gmnz.vega.VegaFactory;
 import org.gmnz.vega.VegaImpl;
 import org.gmnz.vega.domain.Category;
 import org.gmnz.vega.service.CategoryService;
@@ -20,10 +21,6 @@ import org.gmnz.vega.ui.web.RequestProcessingResult;
 class CategoryRequestHandler {
 
 	private Map<String, CategoryManagementBean> navigationMap;
-
-	private Vega vega;
-
-
 
 	CategoryRequestHandler() {
 		navigationMap = new HashMap<>();
@@ -59,7 +56,6 @@ class CategoryRequestHandler {
 	RequestProcessingResult handleRequest(String section, HttpServletRequest req, HttpServletResponse resp) {
 		CategoryManagementBean mgmtBean = navigationMap.get(section);
 		if (mgmtBean != null) {
-			vega = new VegaImpl(); // TODO inietta un'istanza di Vega vera e propria
 			return handleAction(mgmtBean, req, resp);
 		} else {
 			return new RequestProcessingResult(HttpServletResponse.SC_NOT_FOUND, "unknown section requested");
@@ -70,6 +66,7 @@ class CategoryRequestHandler {
 
 	private RequestProcessingResult handleAction(CategoryManagementBean mgmtBean, HttpServletRequest req,
 			HttpServletResponse resp) {
+		Vega vega = VegaFactory.getFactory().buildVega();
 		CategoryService categoryService = vega.getCategoryService();
 		switch (mgmtBean.getAction()) {
 		case Action.GET_ALL:

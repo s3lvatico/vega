@@ -9,25 +9,28 @@ import javax.servlet.http.HttpServletResponse;
 import org.gmnz.vega.VegaException;
 import org.gmnz.vega.domain.Report;
 import org.gmnz.vega.service.ReportService;
+import org.gmnz.vega.ui.web.RequestProcessingResult;
 
 
 class ViewHelperGetAll extends ViewHelperBase {
 
 	@Override
-	protected RequestProcessingOutcome processRequest(HttpServletRequest req, ReportManagementBean rmb) {
-		RequestProcessingOutcome rpo = new RequestProcessingOutcome();
+	protected RequestProcessingResult processRequest(HttpServletRequest req, ReportManagementBean rmb) {
+//		RequestProcessingOutcome rpo = new RequestProcessingOutcome();
 		ReportService reportService = vega.getReportService();
 		Collection<Report> storedReports = null;
 		try {
 			storedReports = reportService.getStoredReports();
 			req.setAttribute("reports", storedReports);
-			rpo.statusCode = HttpServletResponse.SC_OK;
+			return RequestProcessingResult.OK();
+//			rpo.statusCode = HttpServletResponse.SC_OK;
 		} catch (VegaException e) {
 			e.printStackTrace();
-			rpo.statusCode = HttpServletResponse.SC_INTERNAL_SERVER_ERROR;
-			rpo.errorMessage = "error while retrieving stored reports";
+			return RequestProcessingResult.INTERNAL_SERVER_ERROR("error while retrieving stored reports");
+//			rpo.statusCode = HttpServletResponse.SC_INTERNAL_SERVER_ERROR;
+//			rpo.errorMessage = "error while retrieving stored reports";
 		}
-		return rpo;
+//		return rpo;
 	}
 
 }

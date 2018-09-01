@@ -1,7 +1,6 @@
 package org.gmnz.vega.ui.web.allergen;
 
 
-import org.gmnz.vega.Vega;
 import org.gmnz.vega.VegaException;
 import org.gmnz.vega.VegaUtil;
 import org.gmnz.vega.domain.Allergen;
@@ -17,8 +16,6 @@ import java.io.IOException;
 public class AllergenExecution extends ExecutionServlet {
 
 	private static final long serialVersionUID = -4187200629703344994L;
-
-	private Vega vega;
 
 
 

@@ -8,10 +8,7 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.gmnz.vega.Vega;
-import org.gmnz.vega.VegaException;
-import org.gmnz.vega.VegaImpl;
-import org.gmnz.vega.VegaUtil;
+import org.gmnz.vega.*;
 import org.gmnz.vega.domain.Allergen;
 import org.gmnz.vega.domain.Category;
 import org.gmnz.vega.service.AllergenService;
@@ -24,8 +21,6 @@ class AllergenRequestHandler {
 	private Map<String, AllergenManagementBean> navigationMap;
 
 	private Vega vega;
-
-
 
 	public AllergenRequestHandler() {
 		navigationMap = new HashMap<>();
@@ -54,7 +49,7 @@ class AllergenRequestHandler {
 		mgmtBean.setAction(Action.DELETE);
 		navigationMap.put("delete", mgmtBean);
 
-		vega = new VegaImpl();
+		vega = VegaFactory.getFactory().buildVega();
 	}
 
 

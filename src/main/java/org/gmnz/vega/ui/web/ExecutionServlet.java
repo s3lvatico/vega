@@ -2,7 +2,7 @@ package org.gmnz.vega.ui.web;
 
 
 import org.gmnz.vega.Vega;
-import org.gmnz.vega.VegaImpl;
+import org.gmnz.vega.VegaFactory;
 import org.gmnz.vega.VegaUtil;
 
 import javax.servlet.ServletException;
@@ -25,7 +25,7 @@ public abstract class ExecutionServlet extends HttpServlet {
 
 	@Override
 	public void init() {
-		vega = new VegaImpl();
+		vega = VegaFactory.getFactory().buildVega();
 	}
 
 

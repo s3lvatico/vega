@@ -1,8 +1,8 @@
 <%@ page import="org.gmnz.vega.Vega" %>
-<%@ page import="org.gmnz.vega.VegaImpl" %>
+<%@ page import="org.gmnz.vega.VegaFactory" %>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1" %>
 <%@ page errorPage="WEB-INF/jsp/showError.jsp" %>
-<% Vega vega = new VegaImpl();%>
+<% Vega vega = VegaFactory.getFactory().buildVega(); %>
 <!DOCTYPE html>
 <html>
 <head>
