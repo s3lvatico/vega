@@ -19,7 +19,7 @@ import org.gmnz.vega.ui.Action;
 import org.gmnz.vega.ui.web.RequestProcessingResult;
 
 
-class AllergenNavigationHandler {
+class AllergenRequestHandler {
 
 	private Map<String, AllergenManagementBean> navigationMap;
 
@@ -27,7 +27,7 @@ class AllergenNavigationHandler {
 
 
 
-	public AllergenNavigationHandler() {
+	public AllergenRequestHandler() {
 		navigationMap = new HashMap<>();
 
 		AllergenManagementBean mgmtBean = new AllergenManagementBean();

@@ -14,13 +14,13 @@ public class ReportController extends BaseControllerServlet {
 
 	private static final long serialVersionUID = -8297293947108342649L;
 
-	private ReportNavigationHandler navigationHandler;
+	private ReportRequestHandler requestHandler;
 
 
 
 	@Override
 	public void init() {
-		navigationHandler = new ReportNavigationHandler();
+		requestHandler = new ReportRequestHandler();
 	}
 
 
@@ -40,7 +40,7 @@ public class ReportController extends BaseControllerServlet {
 
 
 	private void processRequest(HttpServletRequest req, HttpServletResponse resp) {
-		requestProcessingResult = navigationHandler.handleRequest(requestedSection, req, resp);
+		requestProcessingResult = requestHandler.handleRequest(requestedSection, req, resp);
 	}
 
 }

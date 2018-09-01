@@ -14,13 +14,13 @@ public class AllergenController extends BaseControllerServlet {
 
 	private static final long serialVersionUID = 4409051097972758443L;
 
-	private AllergenNavigationHandler navigationHandler;
+	private AllergenRequestHandler requestHandler;
 
 
 
 	@Override
 	public void init() {
-		navigationHandler = new AllergenNavigationHandler();
+		requestHandler = new AllergenRequestHandler();
 	}
 
 
@@ -40,7 +40,7 @@ public class AllergenController extends BaseControllerServlet {
 
 
 	private void processRequest(HttpServletRequest req, HttpServletResponse resp) {
-		requestProcessingResult = navigationHandler.handleRequest(requestedSection, req, resp);
+		requestProcessingResult = requestHandler.handleRequest(requestedSection, req, resp);
 	}
 
 }

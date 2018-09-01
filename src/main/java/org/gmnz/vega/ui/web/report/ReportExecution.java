@@ -20,38 +20,20 @@ import org.gmnz.vega.domain.ReportBuilder;
 import org.gmnz.vega.domain.ToxicityRating;
 import org.gmnz.vega.service.AllergenService;
 import org.gmnz.vega.ui.Action;
+import org.gmnz.vega.ui.web.ExecutionServlet;
 
 
 /**
  * creato da simone in data 12/07/2018.
  */
-public class ReportExecution extends HttpServlet {
+public class ReportExecution extends ExecutionServlet {
 
 	private static final long serialVersionUID = -9021626655309704727L;
 
-	private Vega vega;
 
 
 
-	@Override
-	public void init() {
-		vega = new VegaImpl();
-	}
-
-
-
-	@Override
-	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		String action = req.getParameter("action");
-		if (action == null || action.isEmpty()) {
-			throw new ServletException("no action specified");
-		}
-		executeAction(action, req, resp);
-	}
-
-
-
-	private void executeAction(String action, HttpServletRequest req, HttpServletResponse resp) throws IOException {
+	protected void executeAction(String action, HttpServletRequest req, HttpServletResponse resp) throws IOException {
 		try {
 			switch (action) {
 			case Action.CREATE:

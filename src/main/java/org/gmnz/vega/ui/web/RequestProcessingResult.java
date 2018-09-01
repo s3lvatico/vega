@@ -8,7 +8,7 @@ public class RequestProcessingResult {
 
 
 
-	public RequestProcessingResult(int statusCode, String viewName, String errorMessage) {
+	 RequestProcessingResult(int statusCode, String viewName, String errorMessage) {
 		this.statusCode = statusCode;
 		this.viewName = viewName;
 		this.errorMessage = errorMessage;

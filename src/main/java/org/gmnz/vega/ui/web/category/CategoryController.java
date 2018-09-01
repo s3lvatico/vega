@@ -14,13 +14,13 @@ public class CategoryController extends BaseControllerServlet {
 
 	private static final long serialVersionUID = 4531766441007641102L;
 
-	private CategoryNavigationHandler navigationHandler;
+	private CategoryRequestHandler requestHandler;
 
 
 
 	@Override
 	public void init() {
-		navigationHandler = new CategoryNavigationHandler();
+		requestHandler = new CategoryRequestHandler();
 	}
 
 
@@ -40,7 +40,7 @@ public class CategoryController extends BaseControllerServlet {
 
 
 	private void processRequest(HttpServletRequest req, HttpServletResponse resp) {
-		requestProcessingResult = navigationHandler.handleRequest(requestedSection, req, resp);
+		requestProcessingResult = requestHandler.handleRequest(requestedSection, req, resp);
 	}
 
 }
