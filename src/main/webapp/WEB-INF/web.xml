@@ -14,7 +14,7 @@
 		<filter-name>EncodingFilter</filter-name>
 		<filter-class>org.gmnz.vega.ui.web.EncodingFilter</filter-class>
 		<init-param>
-			<description>al momento non utilizzato</description>
+			<description>parametro al momento non utilizzato</description>
 			<param-name>defaultEncoding</param-name>
 			<param-value>8859_1</param-value>
 		</init-param>
@@ -43,6 +43,7 @@
 
 	<!-- [] -->
 
+	
 	<resource-ref>
 		<description>DB Connection</description>
 		<res-ref-name>jdbc/vegaDS</res-ref-name>

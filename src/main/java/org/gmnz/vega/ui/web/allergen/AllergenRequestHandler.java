@@ -59,7 +59,7 @@ class AllergenRequestHandler {
 		if (mgmtBean != null) {
 			return handleAction(mgmtBean, req, resp);
 		} else {
-			return new RequestProcessingResult(HttpServletResponse.SC_NOT_FOUND, "unknown section requested");
+			return RequestProcessingResult.NOT_FOUND("unknown section requested");
 		}
 	}
 
@@ -128,8 +128,7 @@ class AllergenRequestHandler {
 			request.setAttribute("categories", categories);
 		} catch (VegaException e) {
 			e.printStackTrace();
-			return new RequestProcessingResult(HttpServletResponse.SC_INTERNAL_SERVER_ERROR,
-					"error while retrieving categories");
+			return RequestProcessingResult.INTERNAL_SERVER_ERROR("error while retrieving categories");
 		}
 		return null;
 	}
@@ -141,15 +140,13 @@ class AllergenRequestHandler {
 			// recupero allergene
 			Allergen targetAllergen = vega.getAllergenService().getAllergenById(allergenId);
 			if (targetAllergen == null) {
-				return new RequestProcessingResult(HttpServletResponse.SC_INTERNAL_SERVER_ERROR,
-						"no allergen found with id " + allergenId);
+				return RequestProcessingResult.INTERNAL_SERVER_ERROR("no allergen found with id " + allergenId);
 			}
 			mgmtBean.setAllergen(targetAllergen);
 			return null;
 		} catch (VegaException e) {
 			e.printStackTrace();
-			return new RequestProcessingResult(HttpServletResponse.SC_INTERNAL_SERVER_ERROR,
-					"error while retrieving allergen");
+			return RequestProcessingResult.INTERNAL_SERVER_ERROR("error while retrieving allergen");
 		}
 	}
 }

@@ -58,7 +58,7 @@ class CategoryRequestHandler {
 		if (mgmtBean != null) {
 			return handleAction(mgmtBean, req, resp);
 		} else {
-			return new RequestProcessingResult(HttpServletResponse.SC_NOT_FOUND, "unknown section requested");
+			return RequestProcessingResult.NOT_FOUND("unknown section requested");
 		}
 	}
 
