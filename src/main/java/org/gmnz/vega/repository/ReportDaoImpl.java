@@ -1,10 +1,7 @@
 package org.gmnz.vega.repository;
 
 
-import org.gmnz.vega.domain.Allergen;
-import org.gmnz.vega.domain.Category;
-import org.gmnz.vega.domain.Report;
-import org.gmnz.vega.domain.ToxicityRating;
+import org.gmnz.vega.domain.*;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -32,22 +29,23 @@ class ReportDaoImpl extends BasicDaoImpl implements ReportDao {
 									" join vega_user owner  on rpt.owner = owner.user_name " +
 									"order by " +
 									" subject_name, " +
-									" date_creation;";
+									" date_creation ";
 //@formatter:on
-			// rs = s.executeQuery("SELECT * FROM report ORDER BY subject_name, date_creation");
 			rs = s.executeQuery(sqlQuery);
 			List<Report> reports = new ArrayList<>();
 			while (rs.next()) {
-				String id = rs.getString(1);
+				// String id = rs.getString(1);
 				String subjectName = rs.getString(2);
-				Date creationDate = rs.getDate(3);
+				Timestamp creationDate = rs.getTimestamp(3);
 				String owner = rs.getString(4);
-				Report r = new Report(id, subjectName, creationDate, owner);
+				ReportBuilder builder = ReportBuilder.getBuilder();
+				builder.subjectName(subjectName).createdOn(creationDate).owner(owner);
+				Report r = builder.build();
 				r.setOwnerFullName(rs.getString(5));
 				reports.add(r);
 			}
 			return reports;
-		} catch (SQLException e) {
+		} catch (SQLException | ReportBuildException e) {
 			e.printStackTrace();
 			throw new DaoException("ReportDaoImpl.findAll error", e);
 		} finally {
@@ -107,10 +105,10 @@ class ReportDaoImpl extends BasicDaoImpl implements ReportDao {
 					" rpt_detail.toxicity " +
 					"from " +
 					" report rpt_head " +
-					"join report_line rpt_detail on  rpt_head.id = rpt_detail.id_report " +
-					"join allergen al on  rpt_detail.id_allergen = al.id " +
-					"join category cat on  al.id_category = cat.id " +
-					"join vega_user on  rpt_head.owner = vega_user.user_name " +
+					"left join report_line rpt_detail on  rpt_head.id = rpt_detail.id_report " +
+					"left join allergen al on  rpt_detail.id_allergen = al.id " +
+					"left join category cat on  al.id_category = cat.id " +
+					"left join vega_user on  rpt_head.owner = vega_user.user_name " +
 					"where  rpt_head.id = ? " +
 					"order by cat.e_name,  allergen_name";
 //@formatter:off
@@ -121,7 +119,11 @@ class ReportDaoImpl extends BasicDaoImpl implements ReportDao {
 			while (rs.next()) {
 				if (r == null) {
 					Timestamp ts = rs.getTimestamp(2);
-					r = new Report(rs.getString(1), new java.util.Date(ts.getTime()), rs.getString(3));
+					String subjectName = rs.getString(1);
+					String owner = rs.getString(3);
+
+					ReportBuilder builder = ReportBuilder.getBuilder();
+					r = builder.subjectName(subjectName).createdOn(ts).owner(owner).build();
 					r.setOwnerFullName(rs.getString(4));
 				}
 				Category c = new Category(rs.getString("category_name"));
@@ -132,7 +134,7 @@ class ReportDaoImpl extends BasicDaoImpl implements ReportDao {
 				r.addRating(tr);
 			}
 			return r;
-		} catch (SQLException e) {
+		} catch (SQLException | ReportBuildException e) {
 			e.printStackTrace();
 			throw new DaoException("ReportDaoImpl.findById error", e);
 		} finally {
@@ -152,15 +154,18 @@ class ReportDaoImpl extends BasicDaoImpl implements ReportDao {
 			rs = ps.executeQuery();
 			Report r = null;
 			if (rs.next()) {
-				String rptId = rs.getString(1);
+				// String rptId = rs.getString(1);
 				String subjectName = rs.getString(2);
 				Timestamp ts = rs.getTimestamp(3);
 				java.util.Date rptCreationDate = new Date(ts.getTime());
-				String rptOwner = rs.getString(4);
-				r = new Report(rptId, subjectName, rptCreationDate, rptOwner);
+				String owner = rs.getString(4);
+
+				ReportBuilder builder = ReportBuilder.getBuilder();
+				builder.subjectName(subjectName).createdOn(ts).owner(owner);
+				r = builder.build();
 			}
 			return r;
-		} catch (SQLException e) {
+		} catch (SQLException | ReportBuildException e) {
 			e.printStackTrace();
 			throw new DaoException("ReportDaoImpl.getSummryById error", e);
 		} finally {

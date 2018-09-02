@@ -63,19 +63,18 @@ public class Allergen {
 		return getName().equals(allergen.getName());
 	}
 
-	
-
-
-	@Override
-	public int hashCode() {
-		return name.hashCode();
-	}
-
 
 
 	@Override
 	public String toString() {
 		return "Allergen{" + "name='" + getName() + "\', " + "category='" + getCategory().getName() + '\'' + '}';
+	}
+
+
+
+	@Override
+	public int hashCode() {
+		return name.hashCode();
 	}
 
 }

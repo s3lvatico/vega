@@ -7,6 +7,7 @@ import org.gmnz.vega.VegaImpl;
 import org.gmnz.vega.VegaUtil;
 import org.gmnz.vega.domain.Allergen;
 import org.gmnz.vega.domain.Report;
+import org.gmnz.vega.domain.ReportBuilder;
 import org.gmnz.vega.domain.ToxicityRating;
 import org.gmnz.vega.service.AllergenService;
 import org.gmnz.vega.ui.Action;
@@ -83,8 +84,11 @@ public class ReportExecution extends HttpServlet {
 
 	private void createAndStoreReport(String subjectName, HttpServletRequest req, HttpServletResponse resp)
 			throws VegaException {
-		String reportOwner = req.getRemoteUser();
-		Report r = new Report(subjectName, new Date(), reportOwner);
+		String owner = req.getRemoteUser();
+
+		ReportBuilder builder = ReportBuilder.getBuilder();
+		builder.subjectName(subjectName).owner(owner).createdOn(new Date());
+		Report r = builder.build();
 		AllergenService allergenService = vega.getAllergenService();
 		Enumeration<String> paramNames = req.getParameterNames();
 		String paramName;
