@@ -1,20 +1,19 @@
 package org.gmnz.vega.ui.web.report;
 
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
 import org.gmnz.vega.VegaException;
 import org.gmnz.vega.VegaUtil;
 import org.gmnz.vega.domain.Report;
 import org.gmnz.vega.ui.web.RequestProcessingResult;
+
+import javax.servlet.http.HttpServletRequest;
 
 
 class ViewHelperDeletion extends ViewHelperBase {
 
 	@Override
 	protected RequestProcessingResult processRequest(HttpServletRequest req, ReportManagementBean rmb) {
-		RequestProcessingOutcome outcome = new RequestProcessingOutcome();
+//		RequestProcessingOutcome outcome = new RequestProcessingOutcome();
 		String reportId = req.getParameter("reportId");
 		if (VegaUtil.stringNullOrEmpty(reportId)) {
 			return RequestProcessingResult.BAD_REQUEST("no report id specified");
