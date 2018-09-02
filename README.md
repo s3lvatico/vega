@@ -13,6 +13,13 @@ Qui ci sarà il classico meccanismo dei DAO la cui implementazione userà l'API 
 
 ROADMAP: Data layer in jdbc semplice, sicurezza basic o con mini-db lato server, frontend jsf/facelets, primefaces o equivalente, zkoss?
 
+### Feature matrix
+
+|branch|front end|back end |persistence|sicurezza|
+|----|----:|----:|----:|----:|
+|yabu|jsp|servlet/custom|jdbc|su db - pw criptate|
+|geki|jsp|servlet/custom + spring|spring-jdbc| ---&gt; yabu |
+
 ### altre note
 
 Sembra che sia necessaria la presenza del driver jdbc nella lib di tomcat
