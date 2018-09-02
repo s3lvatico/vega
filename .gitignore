@@ -1,6 +1,7 @@
 # intellij idea support files
 .idea/**
 *.iml
+out/**
 
 # eclipse generated files
 .classpath
