@@ -1,4 +1,4 @@
-package org.gmnz.vega.web;
+package org.gmnz.vega.web.controller;
 
 
 import java.io.IOException;

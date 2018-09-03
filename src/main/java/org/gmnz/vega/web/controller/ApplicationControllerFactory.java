@@ -1,4 +1,4 @@
-package org.gmnz.vega.web;
+package org.gmnz.vega.web.controller;
 
 /**
  * creato da simone in data 03/09/2018.

@@ -1,4 +1,4 @@
-package org.gmnz.vega.web;
+package org.gmnz.vega.web.context;
 
 
 import javax.servlet.http.HttpServletRequest;
