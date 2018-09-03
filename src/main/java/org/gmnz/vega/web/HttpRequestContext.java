@@ -1,11 +1,12 @@
 package org.gmnz.vega.web;
 
 
-import org.gmnz.vega.VegaUtil;
-
-import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
 import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
+
+import org.gmnz.vega.VegaUtil;
 
 
 /**
@@ -20,6 +21,8 @@ class HttpRequestContext implements RequestContext {
 	HttpRequestContext(HttpServletRequest request) {
 		values = new HashMap<>();
 	}
+
+
 
 	private void init(HttpServletRequest request) {
 		// TODO trasferisci parametri ed attributi nella mappa
