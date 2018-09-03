@@ -15,7 +15,7 @@ class HttpRequestContextFactory extends RequestContextFactory {
 
 	@Override
 	public RequestContext createContext(HttpServletRequest req) {
-		return new HttpRequestContext(req);
+		return new VegaHttpRequestContext(req);
 	}
 
 }

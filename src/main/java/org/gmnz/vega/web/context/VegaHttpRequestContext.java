@@ -12,15 +12,19 @@ import javax.servlet.http.HttpSession;
 /**
  * creato da simone in data 03/09/2018.
  */
-class HttpRequestContext implements RequestContext {
+class VegaHttpRequestContext implements RequestContext {
+
+	private static final String CMD_NAME_PREFIX = "/app/";
 
 	private final Map<String, String> parameters;
 	private final Map<String, Object> attributes;
 	private final Map<String, Object> sessionStorage;
 
+	private String commandName;
 
 
-	HttpRequestContext(HttpServletRequest request) {
+
+	VegaHttpRequestContext(HttpServletRequest request) {
 		parameters = new HashMap<>();
 		attributes = new HashMap<>();
 		sessionStorage = new HashMap<>();
@@ -60,6 +64,17 @@ class HttpRequestContext implements RequestContext {
 				sessionStorage.put(attributeName, attributeValue);
 			}
 		}
+		String requestUri = request.getRequestURI();
+		String cmdBlock = requestUri.substring(requestUri.indexOf(CMD_NAME_PREFIX) + CMD_NAME_PREFIX.length());
+
+		boolean isFile = cmdBlock.endsWith(".jsp");
+		if (isFile) {
+			commandName = "get.file";
+			parameters.put("command.name", "get.file");
+			parameters.put("target.file", cmdBlock);
+		} else {
+			// TODO vedi un po' di fare altro
+		}
 	}
 
 
@@ -81,6 +96,13 @@ class HttpRequestContext implements RequestContext {
 	@Override
 	public Object getFromSession(String name) {
 		return sessionStorage.get(name);
+	}
+
+
+
+	@Override
+	public String getCommandName() {
+		return commandName;
 	}
 
 }

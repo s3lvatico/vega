@@ -54,6 +54,16 @@
 		<location>/WEB-INF/jsp/showError.jsp</location>
 	</error-page>
 
+	<servlet>
+		<servlet-name>VegaFrontController</servlet-name>
+		<servlet-class>org.gmnz.vega.web.controller.FrontController</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>VegaFrontController</servlet-name>
+		<url-pattern>/app/*</url-pattern>
+	</servlet-mapping>
+
+
 <!--
 	<servlet>
 		<servlet-name>CategoryController</servlet-name>
