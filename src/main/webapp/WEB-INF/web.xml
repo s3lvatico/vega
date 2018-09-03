@@ -54,7 +54,7 @@
 		<location>/WEB-INF/jsp/showError.jsp</location>
 	</error-page>
 
-
+<!--
 	<servlet>
 		<servlet-name>CategoryController</servlet-name>
 		<servlet-class>org.gmnz.vega.ui.web.category.CategoryController</servlet-class>
@@ -114,6 +114,7 @@
 		<url-pattern>/app/report/do/*</url-pattern>
 	</servlet-mapping>
 
+-->
 
 	<!-- sicurezza -->
 	<login-config>
