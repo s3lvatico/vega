@@ -12,13 +12,6 @@ public abstract class CommandFactory {
 
 
 
-	public Command createCommand(String commandName) {
-		return new Command() {
-			@Override
-			public void execute() {
-				// TODO fare
-			}
-		};
-	}
+	abstract public Command createCommand(String commandName) ;
 
 }

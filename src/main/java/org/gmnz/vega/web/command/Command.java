@@ -6,7 +6,7 @@ package org.gmnz.vega.web.command;
  */
 public interface Command {
 
-	// TODO verosimilmente NON restituirà void
+	// TODO verosimilmente NON restituirà void... o forse sì!
 	void execute();
 
 }
