@@ -1,12 +1,21 @@
 package org.gmnz.vega.repository;
 
 
-import org.gmnz.vega.domain.*;
-
-import java.sql.*;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+
+import org.gmnz.vega.domain.Allergen;
+import org.gmnz.vega.domain.Category;
+import org.gmnz.vega.domain.Report;
+import org.gmnz.vega.domain.ReportBuildException;
+import org.gmnz.vega.domain.ReportBuilder;
+import org.gmnz.vega.domain.ToxicityRating;
 
 
 class ReportDaoImpl extends BasicDaoImpl implements ReportDao {
@@ -157,7 +166,7 @@ class ReportDaoImpl extends BasicDaoImpl implements ReportDao {
 				// String rptId = rs.getString(1);
 				String subjectName = rs.getString(2);
 				Timestamp ts = rs.getTimestamp(3);
-				java.util.Date rptCreationDate = new Date(ts.getTime());
+//				java.util.Date rptCreationDate = new Date(ts.getTime());
 				String owner = rs.getString(4);
 
 				ReportBuilder builder = ReportBuilder.getBuilder();
