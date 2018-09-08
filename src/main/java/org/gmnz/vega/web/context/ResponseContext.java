@@ -1,6 +1,7 @@
 package org.gmnz.vega.web.context;
 
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 
@@ -9,6 +10,14 @@ import javax.servlet.http.HttpServletResponse;
  */
 public interface ResponseContext {
 
+	int getOutcome();
+
+	void setRequest(HttpServletRequest request);
+
 	void setResponse(HttpServletResponse response);
+
+	void setParameter(String name, String value);
+
+	void setAttribute(String name, Object value);
 
 }

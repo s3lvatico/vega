@@ -1,6 +1,8 @@
 package org.gmnz.vega.web.controller;
 
 
+import org.gmnz.vega.web.command.Command;
+import org.gmnz.vega.web.command.CommandFactory;
 import org.gmnz.vega.web.context.RequestContext;
 import org.gmnz.vega.web.context.ResponseContext;
 
@@ -16,7 +18,10 @@ class WebApplicationController implements ApplicationController {
 		inietta nel comando i parametri
 		esegui il comando
 		 */
-		return null;
+		CommandFactory commandFactory = CommandFactory.getFactory();
+		Command command = commandFactory.createCommand(requestContext);
+
+		return command.execute();
 	}
 
 

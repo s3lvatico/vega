@@ -40,8 +40,7 @@ public class FrontController extends HttpServlet {
 			throws ServletException, IOException {
 		ApplicationControllerFactory acFactory = ApplicationControllerFactory.getFactory();
 		ApplicationController appController = acFactory.createApplicationController(req);
-		// TODO vedi se è necessario init dell'appController
-		
+
 		RequestContextFactory requestContextFactory = RequestContextFactory.getFactory();
 		RequestContext requestContext = requestContextFactory.createContext(req);
 
@@ -49,8 +48,6 @@ public class FrontController extends HttpServlet {
 		responseContext.setResponse(resp);
 		
 		appController.handleResponse(requestContext, responseContext);
-		
-		// TODO vedi se è necessario il destroy dell'appController
 	}
 
 }

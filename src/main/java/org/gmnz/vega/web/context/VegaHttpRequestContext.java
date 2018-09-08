@@ -1,17 +1,19 @@
 package org.gmnz.vega.web.context;
 
 
-import java.util.Enumeration;
-import java.util.HashMap;
-import java.util.Map;
+import org.gmnz.vega.web.command.VegaCommand;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.util.Enumeration;
+import java.util.HashMap;
+import java.util.Map;
 
 
 /**
  * creato da simone in data 03/09/2018.
  */
+@SuppressWarnings("Duplicates")
 class VegaHttpRequestContext implements RequestContext {
 
 	private static final String CMD_NAME_PREFIX = "/app/";
@@ -69,12 +71,19 @@ class VegaHttpRequestContext implements RequestContext {
 
 		boolean isFile = cmdBlock.endsWith(".jsp");
 		if (isFile) {
-			commandName = "get.file";
-			parameters.put("command.name", "get.file");
-			parameters.put("target.file", cmdBlock);
+			commandName = VegaCommand.GET_FILE;
+			parameters.put(VegaCommand.CMD_NAME, commandName);
+			parameters.put(VegaCommand.TARGET_FILE, cmdBlock);
 		} else {
 			// TODO vedi un po' di fare altro
 		}
+	}
+
+
+
+	@Override
+	public void setRequest(HttpServletRequest request) {
+		attributes.put(RequestContext.ORIGINAL_REQUEST, request);
 	}
 
 
