@@ -1,17 +1,17 @@
 package org.gmnz.vega.web.context;
 
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import java.util.HashMap;
 import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 
 /**
  * creato da simone in data 08/09/2018.
  */
 class VegaHttpResponseContext implements ResponseContext {
-
 
 	private final Map<String, String> parameters;
 	private final Map<String, Object> attributes;
@@ -34,14 +34,14 @@ class VegaHttpResponseContext implements ResponseContext {
 
 	@Override
 	public void setRequest(HttpServletRequest request) {
-		attributes.put("request", request);
+		attributes.put(ResponseContext.ORIGINAL_REQUEST, request);
 	}
 
 
 
 	@Override
 	public void setResponse(HttpServletResponse response) {
-		attributes.put("response", response);
+		attributes.put(ResponseContext.ORIGINAL_RESPONSE, response);
 	}
 
 
@@ -56,6 +56,20 @@ class VegaHttpResponseContext implements ResponseContext {
 	@Override
 	public void setAttribute(String name, Object value) {
 		attributes.put(name, value);
+	}
+
+
+
+	@Override
+	public String getParameter(String name) {
+		return parameters.get(name);
+	}
+
+
+
+	@Override
+	public Object getAttribute(String name) {
+		return attributes.get(name);
 	}
 
 }

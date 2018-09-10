@@ -1,12 +1,12 @@
 package org.gmnz.vega.web.command;
 
 
-import org.gmnz.vega.web.context.RequestContext;
-
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
 import java.util.Map;
+
+import org.gmnz.vega.web.context.RequestContext;
 
 
 /**
@@ -21,16 +21,20 @@ class VegaCommandFactory extends CommandFactory {
 	}
 
 	/*
-	nell'oggetto Command devono essere trasferiti tutti i parametri necessari ad eseguire il comando
+	 * nell'oggetto Command devono essere trasferiti tutti i parametri necessari ad
+	 * eseguire il comando
 	 */
 
 
 
 	@Override
 	public Command createCommand(RequestContext requestContext) {
+		String commandName = requestContext.getCommandName();
+		System.out.format("[%s.createCommand()] commandName : %s%n", getClass().getName(), commandName);
 		Class<? extends AbstractVegaCommand> commandClass = commandsMap.get(requestContext.getCommandName());
 		try {
-			final Constructor<? extends AbstractVegaCommand> commandClassConstructor = commandClass.getConstructor(RequestContext.class);
+			final Constructor<? extends AbstractVegaCommand> commandClassConstructor = commandClass
+					.getConstructor(RequestContext.class);
 			return commandClassConstructor.newInstance(requestContext);
 		} catch (NoSuchMethodException | InstantiationException | IllegalAccessException | InvocationTargetException e) {
 			e.printStackTrace();

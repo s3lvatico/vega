@@ -10,14 +10,35 @@ import javax.servlet.http.HttpServletResponse;
  */
 public interface ResponseContext {
 
+	String ORIGINAL_REQUEST = "original.request";
+	String ORIGINAL_RESPONSE = "original.response";
+
+
+
 	int getOutcome();
+
+
 
 	void setRequest(HttpServletRequest request);
 
+
+
 	void setResponse(HttpServletResponse response);
+
+
 
 	void setParameter(String name, String value);
 
+
+
 	void setAttribute(String name, Object value);
+
+
+
+	String getParameter(String name);
+
+
+
+	Object getAttribute(String name);
 
 }

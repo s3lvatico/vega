@@ -1,13 +1,14 @@
 package org.gmnz.vega.web.context;
 
 
-import org.gmnz.vega.web.command.VegaCommand;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
+import org.gmnz.vega.web.command.VegaCommand;
 
 
 /**
@@ -36,6 +37,7 @@ class VegaHttpRequestContext implements RequestContext {
 
 
 	private void init(HttpServletRequest request) {
+
 		fillParametersMap(request);
 
 		fillAttributesMap(request);

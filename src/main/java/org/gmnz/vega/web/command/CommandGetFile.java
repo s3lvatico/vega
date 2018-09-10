@@ -14,7 +14,7 @@ class CommandGetFile extends AbstractVegaCommand {
 
 
 
-	CommandGetFile(RequestContext requestContext) {
+	public CommandGetFile(RequestContext requestContext) {
 		super(requestContext);
 	}
 
