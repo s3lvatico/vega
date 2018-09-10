@@ -36,6 +36,28 @@ class VegaHttpRequestContext implements RequestContext {
 
 
 	private void init(HttpServletRequest request) {
+		fillParametersMap(request);
+
+		fillAttributesMap(request);
+
+		fillSessionMap(request.getSession());
+
+		String requestUri = request.getRequestURI();
+		String cmdBlock = requestUri.substring(requestUri.indexOf(CMD_NAME_PREFIX) + CMD_NAME_PREFIX.length());
+
+		boolean isFile = checkForFile(cmdBlock);
+		if (isFile) {
+			commandName = VegaCommand.GET_FILE;
+			parameters.put(VegaCommand.CMD_NAME, commandName);
+			parameters.put(VegaCommand.TARGET_FILE, cmdBlock);
+		} else {
+			// TODO determina il comando nelle altre condizioni
+		}
+	}
+
+
+
+	private void fillParametersMap(HttpServletRequest request) {
 		Map<String, String[]> parameterMap = request.getParameterMap();
 		for (String paramName : parameterMap.keySet()) {
 			String[] paramValues = parameterMap.get(paramName);
@@ -48,6 +70,11 @@ class VegaHttpRequestContext implements RequestContext {
 				parameters.put(paramName, paramValues[0]);
 			}
 		}
+	}
+
+
+
+	private void fillAttributesMap(HttpServletRequest request) {
 		Enumeration<String> attributeNames = request.getAttributeNames();
 		while (attributeNames.hasMoreElements()) {
 			String attributeName = attributeNames.nextElement();
@@ -56,9 +83,12 @@ class VegaHttpRequestContext implements RequestContext {
 				attributes.put(attributeName, attributeValue);
 			}
 		}
+	}
 
-		attributeNames = request.getSession().getAttributeNames();
-		HttpSession session = request.getSession();
+
+
+	private void fillSessionMap(HttpSession session) {
+		Enumeration<String> attributeNames = session.getAttributeNames();
 		while (attributeNames.hasMoreElements()) {
 			String attributeName = attributeNames.nextElement();
 			Object attributeValue = session.getAttribute(attributeName);
@@ -66,17 +96,12 @@ class VegaHttpRequestContext implements RequestContext {
 				sessionStorage.put(attributeName, attributeValue);
 			}
 		}
-		String requestUri = request.getRequestURI();
-		String cmdBlock = requestUri.substring(requestUri.indexOf(CMD_NAME_PREFIX) + CMD_NAME_PREFIX.length());
+	}
 
-		boolean isFile = cmdBlock.endsWith(".jsp");
-		if (isFile) {
-			commandName = VegaCommand.GET_FILE;
-			parameters.put(VegaCommand.CMD_NAME, commandName);
-			parameters.put(VegaCommand.TARGET_FILE, cmdBlock);
-		} else {
-			// TODO vedi un po' di fare altro
-		}
+
+
+	private boolean checkForFile(String requestUri) {
+		return requestUri.endsWith(".jsp");
 	}
 
 
