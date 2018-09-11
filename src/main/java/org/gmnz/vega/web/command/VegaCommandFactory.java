@@ -1,12 +1,12 @@
 package org.gmnz.vega.web.command;
 
 
+import org.gmnz.vega.web.context.RequestContext;
+
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
 import java.util.Map;
-
-import org.gmnz.vega.web.context.RequestContext;
 
 
 /**
@@ -19,12 +19,6 @@ class VegaCommandFactory extends CommandFactory {
 	static {
 		commandsMap.put(VegaCommand.GET_FILE, CommandGetFile.class);
 	}
-
-	/*
-	 * nell'oggetto Command devono essere trasferiti tutti i parametri necessari ad
-	 * eseguire il comando
-	 */
-
 
 
 	@Override

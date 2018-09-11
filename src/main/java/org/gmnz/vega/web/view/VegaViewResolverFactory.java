@@ -32,11 +32,6 @@ class VegaViewResolverFactory extends ViewResolverFactory {
 	@Override
 	public ViewResolver createViewResolver() {
 		Class<? extends ViewResolver> viewResolverClass = viewResolversMap.get(requestContext.getCommandName());
-//		try {
-//			//return viewResolverClass.newInstance();
-//		} catch (InstantiationException | IllegalAccessException e) {
-//			e.printStackTrace();
-//		}
 
 		try {
 			final Constructor<? extends ViewResolver> constructor = viewResolverClass.getConstructor(RequestContext.class, ResponseContext.class);

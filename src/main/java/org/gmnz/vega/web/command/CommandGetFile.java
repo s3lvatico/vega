@@ -7,7 +7,11 @@ import org.gmnz.vega.web.context.ResponseContext;
 
 /**
  * creato da simone in data 08/09/2018.
+ *
+ * @deprecated non ha senso usarlo poiché il front controller deve gestire
+ * richieste che rappresentano comandi specifici, come se fosse una api rest
  */
+@Deprecated
 class CommandGetFile extends AbstractVegaCommand {
 
 	private String targetFile;
@@ -17,24 +21,6 @@ class CommandGetFile extends AbstractVegaCommand {
 	public CommandGetFile(RequestContext requestContext) {
 		super(requestContext);
 	}
-
-/*
-questo è il più semplice
-
-a priori non posso sapere se il file esiste oppure no (potrei andarlo a cercare,
-ma me ne frego a questo livello).
-
-Il risultato sarà sempre positivo (outcome interno sempre 200).
-Come sapere dove andare? Parametro del nome noto, del tipo "viewName" ... che
-per semplicità, se ho capito bene il modo
-di ragionare, sarà un handle diretto.
-*/
-
-/*
-Se ragiono per package, la particolare specializzazione del response context non
-dovrebbe essere direttamente costruibile, perciò va fatta una nuova factory
-apposita per questi oggetti
- */
 
 
 

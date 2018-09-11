@@ -52,6 +52,7 @@ class VegaHttpRequestContext implements RequestContext {
 		String cmdBlock = requestUri.substring(requestUri.indexOf(CMD_NAME_PREFIX) + CMD_NAME_PREFIX.length());
 
 
+		// TODO controlla perché questa andrà tolta
 		boolean isFile = checkForFile(cmdBlock);
 		if (isFile) {
 			commandName = VegaCommand.GET_FILE;
@@ -112,11 +113,6 @@ class VegaHttpRequestContext implements RequestContext {
 	private boolean checkForFile(String requestUri) {
 		return requestUri.endsWith(".jsp");
 	}
-
-
-//	@Override
-//	public void setRequest(HttpServletRequest request) { attributes.put(RequestContext.ORIGINAL_REQUEST, request); 	}
-
 
 
 	@Override

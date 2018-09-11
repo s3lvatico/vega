@@ -9,7 +9,8 @@ import javax.servlet.http.HttpServletRequest;
  */
 class HttpRequestContextFactory extends RequestContextFactory {
 
-	HttpRequestContextFactory() {}
+	HttpRequestContextFactory() {
+	}
 
 
 
