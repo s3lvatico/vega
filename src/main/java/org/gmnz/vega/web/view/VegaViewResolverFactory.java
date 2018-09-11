@@ -2,6 +2,7 @@ package org.gmnz.vega.web.view;
 
 
 import org.gmnz.vega.web.command.VegaCommand;
+import org.gmnz.vega.web.context.ContextObject;
 import org.gmnz.vega.web.context.RequestContext;
 import org.gmnz.vega.web.context.ResponseContext;
 
@@ -23,7 +24,7 @@ class VegaViewResolverFactory extends ViewResolverFactory {
 	}
 
 
-	protected VegaViewResolverFactory(RequestContext requestContext, ResponseContext responseContext) {
+	protected VegaViewResolverFactory(RequestContext requestContext, ContextObject responseContext) {
 		super(requestContext, responseContext);
 	}
 

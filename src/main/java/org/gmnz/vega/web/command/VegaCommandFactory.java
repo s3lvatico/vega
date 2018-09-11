@@ -1,12 +1,12 @@
 package org.gmnz.vega.web.command;
 
 
-import org.gmnz.vega.web.context.RequestContext;
-
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
 import java.util.Map;
+
+import org.gmnz.vega.web.context.RequestContext;
 
 
 /**
@@ -21,6 +21,7 @@ class VegaCommandFactory extends CommandFactory {
 	}
 
 
+
 	@Override
 	public Command createCommand(RequestContext requestContext) {
 		String commandName = requestContext.getCommandName();
@@ -32,6 +33,10 @@ class VegaCommandFactory extends CommandFactory {
 			return commandClassConstructor.newInstance(requestContext);
 		} catch (NoSuchMethodException | InstantiationException | IllegalAccessException | InvocationTargetException e) {
 			e.printStackTrace();
+		} catch (RuntimeException e) {
+			// perlopiù questa è una NPE, e salta fuori quando non c'è una mappatura tra nome e comando
+			requestContext.seta
+			CommandShowError cse = new CommandShowError(requestContext);
 		}
 		return null;
 	}

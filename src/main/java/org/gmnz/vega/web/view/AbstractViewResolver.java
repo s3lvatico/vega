@@ -1,6 +1,7 @@
 package org.gmnz.vega.web.view;
 
 
+import org.gmnz.vega.web.context.ContextObject;
 import org.gmnz.vega.web.context.RequestContext;
 import org.gmnz.vega.web.context.ResponseContext;
 
@@ -23,7 +24,7 @@ public abstract class AbstractViewResolver implements ViewResolver {
 
 
 
-	public AbstractViewResolver(RequestContext requestContext, ResponseContext responseContext) {
+	public AbstractViewResolver(RequestContext requestContext, ContextObject responseContext) {
 		request = (HttpServletRequest) requestContext.getAttribute(RequestContext.ORIGINAL_REQUEST);
 		servletContext = (ServletContext) requestContext.getAttribute(RequestContext.SERVLET_CONTEXT);
 		response = (HttpServletResponse) responseContext.getAttribute(ResponseContext.ORIGINAL_RESPONSE);

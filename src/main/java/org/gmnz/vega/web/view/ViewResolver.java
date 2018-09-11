@@ -5,8 +5,8 @@ import java.io.IOException;
 
 import javax.servlet.ServletException;
 
+import org.gmnz.vega.web.context.ContextObject;
 import org.gmnz.vega.web.context.RequestContext;
-import org.gmnz.vega.web.context.ResponseContext;
 
 
 /**
@@ -14,7 +14,7 @@ import org.gmnz.vega.web.context.ResponseContext;
  */
 public interface ViewResolver {
 
-	void resolveToView(RequestContext requestContext, ResponseContext responseContext)
+	void resolveToView(RequestContext requestContext, ContextObject responseContext)
 			throws ServletException, IOException;
 
 }

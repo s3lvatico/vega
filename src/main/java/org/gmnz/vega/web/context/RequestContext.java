@@ -1,23 +1,21 @@
 package org.gmnz.vega.web.context;
 
-
 /**
  * creato da simone in data 03/09/2018.
  */
 public interface RequestContext {
 
-	String ORIGINAL_REQUEST = "original.request";
-	String SERVLET_CONTEXT = "servlet.context";
+	String ORIGINAL_REQUEST = "requestcontext.original.request";
+	String SERVLET_CONTEXT = "requestcontext.servlet.context";
 
-	// void setRequest(HttpServletRequest request);
+	String STATUS_CODE = "requestcontext.status.code";
 
-	String getParameter(String name);
+	String ERROR_MESSAGE = "requestcontext.error.message";
 
-
-	Object getAttribute(String name);
 
 
 	public Object getFromSession(String name);
+
 
 
 	String getCommandName();

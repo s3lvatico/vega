@@ -1,26 +1,24 @@
 package org.gmnz.vega.web.context;
 
 
-import org.gmnz.vega.web.command.VegaCommand;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
+import org.gmnz.vega.web.command.VegaCommand;
 
 
 /**
  * creato da simone in data 03/09/2018.
  */
 @SuppressWarnings("Duplicates")
-class VegaHttpRequestContext implements RequestContext {
-
+class VegaHttpRequestContext extends AbstractContextObject implements RequestContext {
 
 	private static final String CMD_NAME_PREFIX = "/app/";
 
-	private final Map<String, String> parameters;
-	private final Map<String, Object> attributes;
 	private final Map<String, Object> sessionStorage;
 
 	private String commandName;
@@ -28,8 +26,6 @@ class VegaHttpRequestContext implements RequestContext {
 
 
 	VegaHttpRequestContext(HttpServletRequest request) {
-		parameters = new HashMap<>();
-		attributes = new HashMap<>();
 		sessionStorage = new HashMap<>();
 		init(request);
 	}
@@ -37,30 +33,16 @@ class VegaHttpRequestContext implements RequestContext {
 
 
 	private void init(HttpServletRequest request) {
-
 		fillParametersMap(request);
-
 		fillAttributesMap(request);
-
 		fillSessionMap(request.getSession());
 
-		String contextPath = request.getContextPath();
 		String requestUri = request.getRequestURI();
-
-		String filePath = requestUri.substring(requestUri.indexOf(contextPath) + contextPath.length());
-
 		String cmdBlock = requestUri.substring(requestUri.indexOf(CMD_NAME_PREFIX) + CMD_NAME_PREFIX.length());
 
+		commandName = cmdBlock.replace('/', '.');
+		setParameter(VegaCommand.CMD_NAME, commandName);
 
-		// TODO controlla perché questa andrà tolta
-		boolean isFile = checkForFile(cmdBlock);
-		if (isFile) {
-			commandName = VegaCommand.GET_FILE;
-			parameters.put(VegaCommand.CMD_NAME, commandName);
-			parameters.put(VegaCommand.TARGET_FILE, "/WEB-INF/jsp/" + cmdBlock);
-		} else {
-			// TODO determina il comando nelle altre condizioni
-		}
 	}
 
 
@@ -75,7 +57,7 @@ class VegaHttpRequestContext implements RequestContext {
 							"WARNING: parameter [%s] has more than one value - only the first value will be stored%n",
 							paramName);
 				}
-				parameters.put(paramName, paramValues[0]);
+				setParameter(paramName, paramValues[0]);
 			}
 		}
 	}
@@ -88,11 +70,11 @@ class VegaHttpRequestContext implements RequestContext {
 			String attributeName = attributeNames.nextElement();
 			Object attributeValue = request.getAttribute(attributeName);
 			if (attributeValue != null) {
-				attributes.put(attributeName, attributeValue);
+				setAttribute(attributeName, attributeValue);
 			}
 		}
-		attributes.put(RequestContext.ORIGINAL_REQUEST, request);
-		attributes.put(RequestContext.SERVLET_CONTEXT, request.getServletContext());
+		setAttribute(RequestContext.ORIGINAL_REQUEST, request);
+		setAttribute(RequestContext.SERVLET_CONTEXT, request.getServletContext());
 	}
 
 
@@ -108,11 +90,6 @@ class VegaHttpRequestContext implements RequestContext {
 		}
 	}
 
-
-
-	private boolean checkForFile(String requestUri) {
-		return requestUri.endsWith(".jsp");
-	}
 
 
 	@Override

@@ -7,6 +7,7 @@ import javax.servlet.ServletException;
 
 import org.gmnz.vega.web.command.Command;
 import org.gmnz.vega.web.command.CommandFactory;
+import org.gmnz.vega.web.context.ContextObject;
 import org.gmnz.vega.web.context.RequestContext;
 import org.gmnz.vega.web.context.ResponseContext;
 import org.gmnz.vega.web.view.ViewResolver;
@@ -26,7 +27,7 @@ class WebApplicationController implements ApplicationController {
 
 
 	@Override
-	public void handleResponse(RequestContext requestContext, ResponseContext responseContext)
+	public void handleResponse(RequestContext requestContext, ContextObject responseContext)
 			throws ServletException, IOException {
 
 		ViewResolverFactory viewResolverFactory = ViewResolverFactory.getFactory(requestContext, responseContext);

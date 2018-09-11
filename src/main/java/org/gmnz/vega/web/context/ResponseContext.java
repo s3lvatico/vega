@@ -8,10 +8,14 @@ import javax.servlet.http.HttpServletResponse;
 /**
  * creato da simone in data 03/09/2018.
  */
-public interface ResponseContext {
+public interface ResponseContext extends ContextObject {
 
-	String ORIGINAL_REQUEST = "original.request";
-	String ORIGINAL_RESPONSE = "original.response";
+	String ORIGINAL_REQUEST = "responsecontext.original.request";
+	String ORIGINAL_RESPONSE = "responsecontext.original.response";
+
+	String OUTCOME = "responsecontext.processing.outcome";
+
+	String ERROR_MESSAGE = "responsecontext.error.message";
 
 
 
@@ -24,21 +28,5 @@ public interface ResponseContext {
 
 
 	void setResponse(HttpServletResponse response);
-
-
-
-	void setParameter(String name, String value);
-
-
-
-	void setAttribute(String name, Object value);
-
-
-
-	String getParameter(String name);
-
-
-
-	Object getAttribute(String name);
 
 }

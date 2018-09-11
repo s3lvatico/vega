@@ -21,13 +21,14 @@ class VegaHttpResponseContext implements ResponseContext {
 	VegaHttpResponseContext() {
 		parameters = new HashMap<>();
 		attributes = new HashMap<>();
+		attributes.put(OUTCOME, 200);
 	}
 
 
 
 	@Override
 	public int getOutcome() {
-		return (Integer) attributes.get("OUTCOME");
+		return (Integer) attributes.get(ResponseContext.OUTCOME);
 	}
 
 

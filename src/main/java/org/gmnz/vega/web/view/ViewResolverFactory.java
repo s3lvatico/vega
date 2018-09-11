@@ -1,8 +1,8 @@
 package org.gmnz.vega.web.view;
 
 
+import org.gmnz.vega.web.context.ContextObject;
 import org.gmnz.vega.web.context.RequestContext;
-import org.gmnz.vega.web.context.ResponseContext;
 
 
 /**
@@ -11,17 +11,17 @@ import org.gmnz.vega.web.context.ResponseContext;
 public abstract class ViewResolverFactory {
 
 	protected RequestContext requestContext;
-	protected ResponseContext responseContext;
+	protected ContextObject responseContext;
 
 
 
-	public static ViewResolverFactory getFactory(RequestContext requestContext, ResponseContext responseContext) {
+	public static ViewResolverFactory getFactory(RequestContext requestContext, ContextObject responseContext) {
 		return new VegaViewResolverFactory(requestContext, responseContext);
 	}
 
 
 
-	protected ViewResolverFactory(RequestContext requestContext, ResponseContext responseContext) {
+	protected ViewResolverFactory(RequestContext requestContext, ContextObject responseContext) {
 		this.requestContext = requestContext;
 		this.responseContext = responseContext;
 	}

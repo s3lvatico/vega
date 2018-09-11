@@ -2,8 +2,8 @@ package org.gmnz.vega.web.view;
 
 
 import org.gmnz.vega.web.command.VegaCommand;
+import org.gmnz.vega.web.context.ContextObject;
 import org.gmnz.vega.web.context.RequestContext;
-import org.gmnz.vega.web.context.ResponseContext;
 
 import javax.servlet.ServletException;
 import java.io.IOException;
@@ -22,14 +22,14 @@ import java.io.IOException;
 @Deprecated
 class VrGetFile extends AbstractViewResolver {
 
-	public VrGetFile(RequestContext requestContext, ResponseContext responseContext) {
+	public VrGetFile(RequestContext requestContext, ContextObject responseContext) {
 		super(requestContext, responseContext);
 	}
 
 
 
 	@Override
-	public void resolveToView(RequestContext requestContext, ResponseContext responseContext)
+	public void resolveToView(RequestContext requestContext, ContextObject responseContext)
 			throws ServletException, IOException {
 
 		String targetFile = requestContext.getParameter(VegaCommand.TARGET_FILE);
