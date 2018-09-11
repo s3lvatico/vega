@@ -17,7 +17,10 @@ class VegaCommandFactory extends CommandFactory {
 	private static Map<String, Class<? extends AbstractVegaCommand>> commandsMap = new HashMap<>();
 
 	static {
+		// TODO sostituisci CommandGetFile con gli altri comandi veri
 		commandsMap.put(VegaCommand.GET_FILE, CommandGetFile.class);
+		// TODO category.getAll
+		// e gli altri
 	}
 
 
@@ -33,12 +36,18 @@ class VegaCommandFactory extends CommandFactory {
 			return commandClassConstructor.newInstance(requestContext);
 		} catch (NoSuchMethodException | InstantiationException | IllegalAccessException | InvocationTargetException e) {
 			e.printStackTrace();
+			String errorMessage = String.format("Error while creating command [%s]", commandName);
+			requestContext.setAttribute(RequestContext.STATUS_CODE, 503);
+			requestContext.setParameter(RequestContext.ERROR_MESSAGE, errorMessage);
+			return new CommandShowError(requestContext);
 		} catch (RuntimeException e) {
-			// perlopiù questa è una NPE, e salta fuori quando non c'è una mappatura tra nome e comando
-			requestContext.seta
-			CommandShowError cse = new CommandShowError(requestContext);
+			// perlopiù questa è una NPE, e salta fuori quando non c'è una mappatura tra
+			// nome e comando
+			String errorMessage = String.format("Unknown command specified [%s]", commandName);
+			requestContext.setAttribute(RequestContext.STATUS_CODE, 404);
+			requestContext.setParameter(RequestContext.ERROR_MESSAGE, errorMessage);
+			return new CommandShowError(requestContext);
 		}
-		return null;
 	}
 
 }
