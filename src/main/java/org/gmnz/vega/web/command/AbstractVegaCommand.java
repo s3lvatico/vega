@@ -14,7 +14,7 @@ abstract class AbstractVegaCommand implements Command {
 	protected ResponseContext responseContext;
 
 
-	AbstractVegaCommand(RequestContext requestContext) {
+	public AbstractVegaCommand(RequestContext requestContext) {
 		responseContext = ResponseContextFactory.getFactory().createResponseContext();
 		initialize(requestContext);
 	}

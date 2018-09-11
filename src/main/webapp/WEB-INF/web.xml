@@ -60,7 +60,9 @@
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>VegaFrontController</servlet-name>
-		<url-pattern>/app/*</url-pattern>
+		<url-pattern>/app/category/*</url-pattern>
+		<url-pattern>/app/allergen/*</url-pattern>
+		<url-pattern>/app/report/*</url-pattern>
 	</servlet-mapping>
 
 

@@ -10,8 +10,9 @@ import javax.servlet.http.HttpServletRequest;
 public interface RequestContext {
 
 	String ORIGINAL_REQUEST = "original.request";
+	String SERVLET_CONTEXT = "servlet.context";
 
-	void setRequest(HttpServletRequest request);
+	// void setRequest(HttpServletRequest request);
 
 	String getParameter(String name);
 

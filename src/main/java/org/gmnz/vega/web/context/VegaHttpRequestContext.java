@@ -1,14 +1,13 @@
 package org.gmnz.vega.web.context;
 
 
-import java.util.Enumeration;
-import java.util.HashMap;
-import java.util.Map;
+import org.gmnz.vega.web.command.VegaCommand;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-
-import org.gmnz.vega.web.command.VegaCommand;
+import java.util.Enumeration;
+import java.util.HashMap;
+import java.util.Map;
 
 
 /**
@@ -16,6 +15,7 @@ import org.gmnz.vega.web.command.VegaCommand;
  */
 @SuppressWarnings("Duplicates")
 class VegaHttpRequestContext implements RequestContext {
+
 
 	private static final String CMD_NAME_PREFIX = "/app/";
 
@@ -44,14 +44,19 @@ class VegaHttpRequestContext implements RequestContext {
 
 		fillSessionMap(request.getSession());
 
+		String contextPath = request.getContextPath();
 		String requestUri = request.getRequestURI();
+
+		String filePath = requestUri.substring(requestUri.indexOf(contextPath) + contextPath.length());
+
 		String cmdBlock = requestUri.substring(requestUri.indexOf(CMD_NAME_PREFIX) + CMD_NAME_PREFIX.length());
+
 
 		boolean isFile = checkForFile(cmdBlock);
 		if (isFile) {
 			commandName = VegaCommand.GET_FILE;
 			parameters.put(VegaCommand.CMD_NAME, commandName);
-			parameters.put(VegaCommand.TARGET_FILE, cmdBlock);
+			parameters.put(VegaCommand.TARGET_FILE, "/WEB-INF/jsp/" + cmdBlock);
 		} else {
 			// TODO determina il comando nelle altre condizioni
 		}
@@ -85,6 +90,8 @@ class VegaHttpRequestContext implements RequestContext {
 				attributes.put(attributeName, attributeValue);
 			}
 		}
+		attributes.put(RequestContext.ORIGINAL_REQUEST, request);
+		attributes.put(RequestContext.SERVLET_CONTEXT, request.getServletContext());
 	}
 
 
@@ -107,11 +114,8 @@ class VegaHttpRequestContext implements RequestContext {
 	}
 
 
-
-	@Override
-	public void setRequest(HttpServletRequest request) {
-		attributes.put(RequestContext.ORIGINAL_REQUEST, request);
-	}
+//	@Override
+//	public void setRequest(HttpServletRequest request) { attributes.put(RequestContext.ORIGINAL_REQUEST, request); 	}
 
 
 

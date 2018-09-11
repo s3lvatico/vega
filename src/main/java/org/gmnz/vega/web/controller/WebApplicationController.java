@@ -17,11 +17,6 @@ class WebApplicationController implements ApplicationController {
 
 	@Override
 	public ResponseContext handleRequest(RequestContext requestContext) {
-		// TODO Auto-generated method stub
-		/*
-		 * chiama la command factory crea il comando sulla base del nome (sta nel
-		 * requestContext) inietta nel comando i parametri esegui il comando
-		 */
 		CommandFactory commandFactory = CommandFactory.getFactory();
 		Command command = commandFactory.createCommand(requestContext);
 
