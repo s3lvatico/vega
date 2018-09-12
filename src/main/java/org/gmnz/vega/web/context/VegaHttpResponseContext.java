@@ -35,4 +35,7 @@ class VegaHttpResponseContext extends AbstractContextObject implements ResponseC
 		setAttribute(ResponseContext.ORIGINAL_RESPONSE, response);
 	}
 
+
+
+
 }

@@ -1,6 +1,5 @@
 package org.gmnz.vega.web.command;
 
-
 /**
  * creato da simone in data 08/09/2018.
  */
@@ -20,4 +19,9 @@ public interface VegaCommand {
 	@Deprecated
 	String TARGET_FILE = "target.file";
 
+	interface Category {
+
+		String GET_ALL = "category.getAll";
+		
+	}
 }

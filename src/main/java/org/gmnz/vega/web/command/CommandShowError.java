@@ -4,6 +4,7 @@ package org.gmnz.vega.web.command;
 import org.gmnz.vega.web.context.RequestContext;
 import org.gmnz.vega.web.context.ResponseContext;
 
+// TODO l'outcome va assolutamente gestito in fase di risoluzione della view
 
 class CommandShowError extends AbstractVegaCommand {
 
@@ -15,16 +16,14 @@ class CommandShowError extends AbstractVegaCommand {
 
 	@Override
 	protected void initialize(RequestContext requestContext) {
-		responseContext.setAttribute(ResponseContext.OUTCOME, requestContext.getAttribute(RequestContext.STATUS_CODE));
-		responseContext.setParameter(ResponseContext.ERROR_MESSAGE,
+		model.setAttribute(ResponseContext.OUTCOME, requestContext.getAttribute(RequestContext.STATUS_CODE));
+		model.setParameter(ResponseContext.ERROR_MESSAGE,
 				requestContext.getParameter(RequestContext.ERROR_MESSAGE));
 	}
 
 
 
 	@Override
-	public ResponseContext execute() {
-		return responseContext;
-	}
+	protected void process() {}
 
 }

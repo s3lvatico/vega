@@ -2,6 +2,14 @@ package org.gmnz.vega.web.context;
 
 public interface ContextObject {
 
+	String[] getParameterNames();
+
+
+
+	String[] getAttributeNames();
+
+
+
 	String getParameter(String name);
 
 

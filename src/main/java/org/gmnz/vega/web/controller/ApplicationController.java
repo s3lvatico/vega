@@ -5,7 +5,6 @@ import java.io.IOException;
 
 import javax.servlet.ServletException;
 
-import org.gmnz.vega.web.context.ContextObject;
 import org.gmnz.vega.web.context.RequestContext;
 import org.gmnz.vega.web.context.ResponseContext;
 
@@ -21,7 +20,7 @@ public interface ApplicationController {
 
 
 	// view management
-	void handleResponse(RequestContext requestContext, ContextObject responseContext)
+	void handleResponse(RequestContext requestContext, ResponseContext responseContext)
 			throws ServletException, IOException;
 
 }

@@ -1,15 +1,14 @@
 package org.gmnz.vega.web.view;
 
 
-import org.gmnz.vega.web.command.VegaCommand;
-import org.gmnz.vega.web.context.ContextObject;
-import org.gmnz.vega.web.context.RequestContext;
-import org.gmnz.vega.web.context.ResponseContext;
-
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
 import java.util.Map;
+
+import org.gmnz.vega.web.command.VegaCommand;
+import org.gmnz.vega.web.context.RequestContext;
+import org.gmnz.vega.web.context.ResponseContext;
 
 
 /**
@@ -21,10 +20,12 @@ class VegaViewResolverFactory extends ViewResolverFactory {
 
 	static {
 		viewResolversMap.put(VegaCommand.GET_FILE, VrGetFile.class);
+		viewResolversMap.put(VegaCommand.Category.GET_ALL, VrCategoryGetAll.class);
 	}
 
 
-	protected VegaViewResolverFactory(RequestContext requestContext, ContextObject responseContext) {
+
+	protected VegaViewResolverFactory(RequestContext requestContext, ResponseContext responseContext) {
 		super(requestContext, responseContext);
 	}
 
@@ -33,14 +34,16 @@ class VegaViewResolverFactory extends ViewResolverFactory {
 	@Override
 	public ViewResolver createViewResolver() {
 		Class<? extends ViewResolver> viewResolverClass = viewResolversMap.get(requestContext.getCommandName());
-
+		// TODO l'outcome nel response context va assolutamente gestito in fase di
+		// risoluzione della view
 		try {
-			final Constructor<? extends ViewResolver> constructor = viewResolverClass.getConstructor(RequestContext.class, ResponseContext.class);
+			final Constructor<? extends ViewResolver> constructor = viewResolverClass.getConstructor(RequestContext.class,
+					ResponseContext.class);
 			return constructor.newInstance(requestContext, responseContext);
 		} catch (NoSuchMethodException | InstantiationException | IllegalAccessException | InvocationTargetException e) {
 			e.printStackTrace();
 		}
-
+		// TODO
 		return null;
 	}
 

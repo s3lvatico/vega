@@ -45,4 +45,18 @@ abstract class AbstractContextObject implements ContextObject {
 		attributes.put(name, value);
 	}
 
+
+
+	@Override
+	public String[] getParameterNames() {
+		return parameters.keySet().toArray(new String[] {});
+	}
+
+
+
+	@Override
+	public String[] getAttributeNames() {
+		return attributes.keySet().toArray(new String[] {});
+	}
+
 }

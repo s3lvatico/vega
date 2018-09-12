@@ -19,7 +19,10 @@ class VegaCommandFactory extends CommandFactory {
 	static {
 		// TODO sostituisci CommandGetFile con gli altri comandi veri
 		commandsMap.put(VegaCommand.GET_FILE, CommandGetFile.class);
-		// TODO category.getAll
+		commandsMap.put(VegaCommand.Category.GET_ALL, CmdCategoryGetAll.class);
+		
+		// TODO verifica il caso di classi inesistenti!
+		
 		// e gli altri
 	}
 
@@ -41,6 +44,9 @@ class VegaCommandFactory extends CommandFactory {
 			requestContext.setParameter(RequestContext.ERROR_MESSAGE, errorMessage);
 			return new CommandShowError(requestContext);
 		} catch (RuntimeException e) {
+			
+			e.printStackTrace();
+			
 			// perlopiù questa è una NPE, e salta fuori quando non c'è una mappatura tra
 			// nome e comando
 			String errorMessage = String.format("Unknown command specified [%s]", commandName);
