@@ -33,9 +33,11 @@ class VegaViewResolverFactory extends ViewResolverFactory {
 
 	@Override
 	public ViewResolver createViewResolver() {
+		int outcome = (Integer) requestContext.getAttribute(RequestContext.STATUS_CODE);
+		// outcome == 200 cerchiamo una view adeguata
+		// altrimenti errore d'ufficio
+		// TODO fare
 		Class<? extends ViewResolver> viewResolverClass = viewResolversMap.get(requestContext.getCommandName());
-		// TODO l'outcome nel response context va assolutamente gestito in fase di
-		// risoluzione della view
 		try {
 			final Constructor<? extends ViewResolver> constructor = viewResolverClass.getConstructor(RequestContext.class,
 					ResponseContext.class);
@@ -43,7 +45,6 @@ class VegaViewResolverFactory extends ViewResolverFactory {
 		} catch (NoSuchMethodException | InstantiationException | IllegalAccessException | InvocationTargetException e) {
 			e.printStackTrace();
 		}
-		// TODO
 		return null;
 	}
 

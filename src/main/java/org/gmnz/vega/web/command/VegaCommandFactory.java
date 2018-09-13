@@ -33,6 +33,7 @@ class VegaCommandFactory extends CommandFactory {
 		String commandName = requestContext.getCommandName();
 		System.out.format("[%s.createCommand()] commandName : %s%n", getClass().getName(), commandName);
 		Class<? extends AbstractVegaCommand> commandClass = commandsMap.get(requestContext.getCommandName());
+		// TODO a questo livello la classe può essere nulla
 		try {
 			final Constructor<? extends AbstractVegaCommand> commandClassConstructor = commandClass
 					.getConstructor(RequestContext.class);
