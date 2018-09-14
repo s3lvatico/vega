@@ -5,18 +5,10 @@ package org.gmnz.vega.web.context;
  */
 public interface RequestContext extends ContextObject {
 
-	String ORIGINAL_REQUEST = "requestcontext.original.request";
-	String SERVLET_CONTEXT = "requestcontext.servlet.context";
 
-	String STATUS_CODE = "requestcontext.status.code";
+	Object getSessionAttribute(String name);
 
-	String ERROR_MESSAGE = "requestcontext.error.message";
-
-
-
-	public Object getFromSession(String name);
-
-
+	void setSessionAttribute(String name, Object value);
 
 	String getCommandName();
 

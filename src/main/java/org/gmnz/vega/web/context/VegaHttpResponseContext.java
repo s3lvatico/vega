@@ -11,28 +11,29 @@ import javax.servlet.http.HttpServletResponse;
 class VegaHttpResponseContext extends AbstractContextObject implements ResponseContext {
 
 	VegaHttpResponseContext() {
-		setAttribute(OUTCOME, 200);
+		setAttribute(ContextProperty.STATUS_CODE, 200);
+		setAttribute(ContextProperty.OUTCOME, "SUCCESS");
 	}
 
 
 
 	@Override
-	public int getOutcome() {
-		return (Integer) getAttribute(ResponseContext.OUTCOME);
+	public int getStatusCode() {
+		return (Integer) getAttribute(ContextProperty.STATUS_CODE);
 	}
 
 
 
 	@Override
 	public void setRequest(HttpServletRequest request) {
-		setAttribute(ResponseContext.ORIGINAL_REQUEST, request);
+		setAttribute(ContextProperty.ORIGINAL_REQUEST, request);
 	}
 
 
 
 	@Override
 	public void setResponse(HttpServletResponse response) {
-		setAttribute(ResponseContext.ORIGINAL_RESPONSE, response);
+		setAttribute(ContextProperty.ORIGINAL_RESPONSE, response);
 	}
 
 

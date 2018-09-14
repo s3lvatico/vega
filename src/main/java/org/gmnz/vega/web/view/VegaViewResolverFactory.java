@@ -7,6 +7,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.gmnz.vega.web.command.VegaCommand;
+import org.gmnz.vega.web.context.ContextProperty;
 import org.gmnz.vega.web.context.RequestContext;
 import org.gmnz.vega.web.context.ResponseContext;
 
@@ -33,10 +34,9 @@ class VegaViewResolverFactory extends ViewResolverFactory {
 
 	@Override
 	public ViewResolver createViewResolver() {
-		int outcome = (Integer) requestContext.getAttribute(RequestContext.STATUS_CODE);
-		// outcome == 200 cerchiamo una view adeguata
+		// int outcome = (Integer) requestContext.getAttribute(ContextProperty.STATUS_CODE);
+		// outcome == 200 cerco una view adeguata
 		// altrimenti errore d'ufficio
-		// TODO fare
 		Class<? extends ViewResolver> viewResolverClass = viewResolversMap.get(requestContext.getCommandName());
 		try {
 			final Constructor<? extends ViewResolver> constructor = viewResolverClass.getConstructor(RequestContext.class,

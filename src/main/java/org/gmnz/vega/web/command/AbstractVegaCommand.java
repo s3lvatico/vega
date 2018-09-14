@@ -1,11 +1,14 @@
 package org.gmnz.vega.web.command;
 
 
-import javax.servlet.http.HttpServletRequest;
-
+import org.gmnz.vega.web.context.ContextProperty;
 import org.gmnz.vega.web.context.RequestContext;
 import org.gmnz.vega.web.context.ResponseContext;
 import org.gmnz.vega.web.context.ResponseContextFactory;
+
+import javax.servlet.http.HttpServletRequest;
+import java.io.PrintWriter;
+import java.io.StringWriter;
 
 
 /**
@@ -15,32 +18,88 @@ abstract class AbstractVegaCommand implements Command {
 
 	protected ResponseContext model;
 
+	private String commandName;
+
+
 
 
 	public AbstractVegaCommand(RequestContext requestContext) {
+
 		model = ResponseContextFactory.getFactory().createResponseContext();
-		HttpServletRequest httpRequest = (HttpServletRequest) requestContext.getAttribute(RequestContext.ORIGINAL_REQUEST);
-		model.setAttribute("contextRoot", httpRequest.getContextPath());
+		model.setAttribute(ContextProperty.COMMAND_NAME, requestContext.getCommandName());
+		this.commandName = requestContext.getCommandName();
+		HttpServletRequest httpRequest = (HttpServletRequest) requestContext.getAttribute(ContextProperty.ORIGINAL_REQUEST);
+		model.setAttribute(ContextProperty.CONTEXT_ROOT, httpRequest.getContextPath());
 		initialize(requestContext);
 	}
 
 
 
+
+	static Command ERROR(RequestContext requestContext, String outcome, int errorCode, String errorMessage, Throwable t) {
+
+		return new AbstractVegaCommand(requestContext) {
+			@Override
+			protected void initialize(RequestContext requestContext) {
+
+			}
+
+
+
+
+			@Override
+			protected void process() {
+
+				markForError(outcome, errorCode, errorMessage, t);
+
+			}
+		};
+	}
+
+
+
+
+	protected String getCommandName() {
+
+		return commandName;
+	}
+
+
+
+
 	@Override
 	public final ResponseContext execute() {
+
 		process();
 		return model;
 	}
 
 
 
-	protected abstract void initialize(RequestContext requestContext);
 
+	protected abstract void initialize(RequestContext requestContext);
 
 
 	/**
 	 * esegue il comando e popola adeguatamente il {@link #model}
 	 */
 	protected abstract void process();
+
+
+
+
+	protected void markForError(String outcome, int errorCode, String errorMessage, Throwable t) {
+
+		model.setAttribute(ContextProperty.OUTCOME, outcome);
+		model.setAttribute(ContextProperty.STATUS_CODE, errorCode);
+		model.setAttribute(ContextProperty.ERROR_MESSAGE, errorMessage);
+		if (t != null) {
+			StringWriter sw = new StringWriter();
+			PrintWriter pw = new PrintWriter(sw);
+			t.printStackTrace(pw);
+			model.setAttribute(ContextProperty.THROWABLE_CLASS_NAME, t.getClass().getName());
+			model.setAttribute(ContextProperty.STACK_TRACE, sw.toString());
+		}
+	}
 
 }

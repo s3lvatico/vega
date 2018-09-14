@@ -1,12 +1,12 @@
 package org.gmnz.vega.web.command;
 
 
+import org.gmnz.vega.web.context.RequestContext;
+
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
 import java.util.Map;
-
-import org.gmnz.vega.web.context.RequestContext;
 
 
 /**
@@ -19,41 +19,39 @@ class VegaCommandFactory extends CommandFactory {
 	static {
 		// TODO sostituisci CommandGetFile con gli altri comandi veri
 		commandsMap.put(VegaCommand.GET_FILE, CommandGetFile.class);
+		// ----
 		commandsMap.put(VegaCommand.Category.GET_ALL, CmdCategoryGetAll.class);
-		
-		// TODO verifica il caso di classi inesistenti!
-		
 		// e gli altri
 	}
 
 
-
 	@Override
 	public Command createCommand(RequestContext requestContext) {
+
 		String commandName = requestContext.getCommandName();
+		// TODO sostituire con il log
 		System.out.format("[%s.createCommand()] commandName : %s%n", getClass().getName(), commandName);
+		// --
 		Class<? extends AbstractVegaCommand> commandClass = commandsMap.get(requestContext.getCommandName());
-		// TODO a questo livello la classe può essere nulla
 		try {
 			final Constructor<? extends AbstractVegaCommand> commandClassConstructor = commandClass
 					.getConstructor(RequestContext.class);
 			return commandClassConstructor.newInstance(requestContext);
-		} catch (NoSuchMethodException | InstantiationException | IllegalAccessException | InvocationTargetException e) {
+		}
+		catch (NoSuchMethodException | InstantiationException | IllegalAccessException | InvocationTargetException e) {
 			e.printStackTrace();
 			String errorMessage = String.format("Error while creating command [%s]", commandName);
-			requestContext.setAttribute(RequestContext.STATUS_CODE, 503);
-			requestContext.setParameter(RequestContext.ERROR_MESSAGE, errorMessage);
-			return new CommandShowError(requestContext);
-		} catch (RuntimeException e) {
-			
-			e.printStackTrace();
-			
-			// perlopiù questa è una NPE, e salta fuori quando non c'è una mappatura tra
-			// nome e comando
+			return AbstractVegaCommand.ERROR(requestContext, "COMMAND_CONSTRUCTION_ERROR", 500, errorMessage, e);
+		}
+		catch (NullPointerException npe) {
+			npe.printStackTrace();
 			String errorMessage = String.format("Unknown command specified [%s]", commandName);
-			requestContext.setAttribute(RequestContext.STATUS_CODE, 404);
-			requestContext.setParameter(RequestContext.ERROR_MESSAGE, errorMessage);
-			return new CommandShowError(requestContext);
+			return AbstractVegaCommand.ERROR(requestContext, "UNKNOWN_COMMAND", 400, errorMessage, npe);
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+			String errorMessage = String.format("Error in building command [%s]", commandName);
+			return AbstractVegaCommand.ERROR(requestContext, "COMMAND_CREATION_ERROR", 500, errorMessage, e);
 		}
 	}
 

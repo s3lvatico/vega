@@ -22,6 +22,7 @@ public class CategoryServiceImpl extends BasicServiceBean implements CategorySer
 			dao = DaoFactory.getInstance().createCategoryDao();
 			List<Category> categories = dao.findAll();
 			return categories;
+			// throw new VegaException("solo un'eccezione di prova");
 		} catch (DaoException e) {
 			e.printStackTrace();
 			throw new VegaException("getAllCategories service error", e);

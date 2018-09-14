@@ -1,14 +1,13 @@
 package org.gmnz.vega.web.context;
 
 
-import java.util.Enumeration;
-import java.util.HashMap;
-import java.util.Map;
+import org.gmnz.vega.web.command.VegaCommand;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-
-import org.gmnz.vega.web.command.VegaCommand;
+import java.util.Enumeration;
+import java.util.HashMap;
+import java.util.Map;
 
 
 /**
@@ -25,10 +24,12 @@ class VegaHttpRequestContext extends AbstractContextObject implements RequestCon
 
 
 
+
 	VegaHttpRequestContext(HttpServletRequest request) {
 		sessionStorage = new HashMap<>();
 		init(request);
 	}
+
 
 
 
@@ -47,20 +48,24 @@ class VegaHttpRequestContext extends AbstractContextObject implements RequestCon
 
 
 
+
 	private void fillParametersMap(HttpServletRequest request) {
 		Map<String, String[]> parameterMap = request.getParameterMap();
 		for (String paramName : parameterMap.keySet()) {
 			String[] paramValues = parameterMap.get(paramName);
 			if (paramValues != null) {
 				if (paramValues.length != 1) {
+					// TODO sostituire con il logger
 					System.err.format(
 							"WARNING: parameter [%s] has more than one value - only the first value will be stored%n",
 							paramName);
+					// ----
 				}
 				setParameter(paramName, paramValues[0]);
 			}
 		}
 	}
+
 
 
 
@@ -73,9 +78,10 @@ class VegaHttpRequestContext extends AbstractContextObject implements RequestCon
 				setAttribute(attributeName, attributeValue);
 			}
 		}
-		setAttribute(RequestContext.ORIGINAL_REQUEST, request);
-		setAttribute(RequestContext.SERVLET_CONTEXT, request.getServletContext());
+		setAttribute(ContextProperty.ORIGINAL_REQUEST, request);
+		setAttribute(ContextProperty.SERVLET_CONTEXT, request.getServletContext());
 	}
+
 
 
 
@@ -92,10 +98,12 @@ class VegaHttpRequestContext extends AbstractContextObject implements RequestCon
 
 
 
+
 	@Override
 	public String getParameter(String name) {
 		return parameters.get(name);
 	}
+
 
 
 
@@ -106,10 +114,20 @@ class VegaHttpRequestContext extends AbstractContextObject implements RequestCon
 
 
 
+
 	@Override
-	public Object getFromSession(String name) {
+	public Object getSessionAttribute(String name) {
 		return sessionStorage.get(name);
 	}
+
+
+
+
+	@Override
+	public void setSessionAttribute(String name, Object value) {
+		sessionStorage.put(name, value);
+	}
+
 
 
 

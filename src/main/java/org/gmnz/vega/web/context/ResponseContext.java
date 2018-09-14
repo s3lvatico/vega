@@ -10,16 +10,9 @@ import javax.servlet.http.HttpServletResponse;
  */
 public interface ResponseContext extends ContextObject {
 
-	String ORIGINAL_REQUEST = "responsecontext.original.request";
-	String ORIGINAL_RESPONSE = "responsecontext.original.response";
-
-	String OUTCOME = "responsecontext.processing.outcome";
-
-	String ERROR_MESSAGE = "responsecontext.error.message";
 
 
-
-	int getOutcome();
+	int getStatusCode();
 
 
 
