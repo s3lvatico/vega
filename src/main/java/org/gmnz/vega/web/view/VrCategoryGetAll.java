@@ -19,13 +19,11 @@ public class VrCategoryGetAll extends AbstractViewResolver {
 
 
 
-
 	@Override
 	public void resolveToView(RequestContext requestContext, ResponseContext responseContext)
 			throws ServletException, IOException {
 
-		String viewName = responseContext.getStatusCode() == 200 ? targetViewName : "showError";
-		String target = String.format(FMT_JSP_ENV, viewName);
+		String target = String.format(FMT_JSP_ENV, targetViewName);
 		forward(target);
 
 	}
