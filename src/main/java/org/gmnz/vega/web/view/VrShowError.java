@@ -25,9 +25,8 @@ public class VrShowError extends AbstractViewResolver {
 
 
 	@Override
-	public void resolveToView(RequestContext requestContext, ResponseContext responseContext) throws ServletException, IOException {
-		String target = String.format(FMT_JSP_ENV, ERROR_VIEW_NAME);
-		forward(target);
+	protected String setViewName() {
+		return "showError";
 	}
 
 }

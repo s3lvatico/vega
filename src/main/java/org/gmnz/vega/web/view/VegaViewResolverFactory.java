@@ -19,8 +19,9 @@ class VegaViewResolverFactory extends ViewResolverFactory {
 	private static Map<String, Class<? extends ViewResolver>> viewResolversMap = new HashMap<>();
 
 	static {
-		viewResolversMap.put(VegaCommand.GET_FILE, VrGetFile.class);
 		viewResolversMap.put(VegaCommand.Category.GET_ALL, VrCategoryGetAll.class);
+		viewResolversMap.put(VegaCommand.Category.CREATE, VrCategoryCreate.class);
+		viewResolversMap.put(VegaCommand.Category.EXECUTE_CREATE, VrCategoryGetAll.class);
 	}
 
 

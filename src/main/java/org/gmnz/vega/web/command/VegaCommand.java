@@ -21,7 +21,12 @@ public interface VegaCommand {
 
 	interface Category {
 
+		String EXECUTE = "category.do.";
 		String GET_ALL = "category.getAll";
-		
+		String CREATE = "category.create";
+		String EXECUTE_CREATE = EXECUTE + CREATE;
+		String CREATE_EXEC = "category.create.execute";
+
+
 	}
 }

@@ -21,6 +21,7 @@ public class CategoryManagementBean {
 
 	public CategoryManagementBean() {
 		categoryName = "";
+		category = new Category("");
 	}
 
 

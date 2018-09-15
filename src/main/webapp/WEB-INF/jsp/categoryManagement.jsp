@@ -8,12 +8,14 @@
 <body>
 <jsp:include page="/WEB-INF/jsp/header.jsp"/>
 <h2>Categories</h2>
-<h3>${catBean.operationLabel}</h3>
+<h3>${categoryBean.operationLabel}</h3>
 <p>Category name: </p>
-<form method="POST" action="<%=request.getContextPath()%>/app/category/do">
-   <input type="text" name="categoryName" value="${catBean.category.name}" title="categoryName"/>
-   <input type="hidden" name="categoryId" value="${catBean.category.id}"/>
-   <input type="hidden" name="action" value="${catBean.action}"/>
+<form method="POST" action="<%=request.getContextPath()%>/app/category/do/${categoryBean.action}">
+   <input type="text" name="categoryName" value="${categoryBean.category.name}" title="categoryName"/>
+   <input type="hidden" name="categoryId" value="${categoryBean.category.id}"/>
+    <!--
+   <input type="hidden" name="action" value="${categoryBean.action}"/>
+   -->
    <input type="submit" value="Confirm"/>
 </form>
 <jsp:include page="/WEB-INF/jsp/footer.jsp"/>

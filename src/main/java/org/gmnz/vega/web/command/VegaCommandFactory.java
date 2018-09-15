@@ -17,11 +17,9 @@ class VegaCommandFactory extends CommandFactory {
 	private static Map<String, Class<? extends AbstractVegaCommand>> commandsMap = new HashMap<>();
 
 	static {
-		// TODO sostituisci CommandGetFile con gli altri comandi veri
-		commandsMap.put(VegaCommand.GET_FILE, CommandGetFile.class);
-		// ----
 		commandsMap.put(VegaCommand.Category.GET_ALL, CmdCategoryGetAll.class);
-		// e gli altri
+		commandsMap.put(VegaCommand.Category.CREATE, CmdCategoryCreate.class);
+		commandsMap.put(VegaCommand.Category.EXECUTE_CREATE, CmdCategoryCreateExec.class);
 	}
 
 
