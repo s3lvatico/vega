@@ -5,6 +5,7 @@ url mappato su comando /app/category/create:
 - definire nell'interfaccia VegaCommand (o sue contenute) la costante stringa
   relativa al comando
 - creare nuova classe che estende AbstractVegaCommand:
+  - visibilità di package, costruttore pubblico
   - campi:
     - eventuali riferimenti a interfacce di application service
     # nel mio caso proprio l'interfaccia Vega e una sua implementazione
@@ -23,6 +24,7 @@ url mappato su comando /app/category/create:
 - VegaCommandFactory.commandsMap inserisci mappatura tra nome comando e classe
   del nuovo comando
 - crea nuova specializzazione di AbstractViewResolver:
+  - nel costruttore se NON vuoi fare un forward, specifica isForward = false
   - nel metodo setViewName() restituisci il nome della vista da raggiungere
   - nel caso di gestioni particolari della vista, fare override di
     AbstractViewResolver.resolveToView()

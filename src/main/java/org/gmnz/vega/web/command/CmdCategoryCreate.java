@@ -8,7 +8,7 @@ import org.gmnz.vega.web.context.RequestContext;
 /**
  * creato da simone in data 15/09/2018.
  */
-public class CmdCategoryCreate extends AbstractVegaCommand {
+class CmdCategoryCreate extends AbstractVegaCommand {
 
 	public CmdCategoryCreate(RequestContext requestContext) {
 		super(requestContext);

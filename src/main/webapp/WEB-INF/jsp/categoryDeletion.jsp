@@ -8,13 +8,15 @@
 <body>
 <jsp:include page="/WEB-INF/jsp/header.jsp"/>
 <h2>Categories</h2>
-<h3>${catBean.operationLabel}</h3>
+<h3>${categoryBean.operationLabel}</h3>
 <p>Please confirm the deletion:</p>
-<p>Category name: ${catBean.category.name}</p>
-<form method="POST" action="${contextRoot}/app/category/do">
+<p>Category name: ${categoryBean.category.name}</p>
+<form method="POST" action="${contextRoot}/app/category/do/${categoryBean.action}">
     <input type="submit" value="delete it"/>
-    <input type="hidden" name="categoryId" value="${catBean.category.id}"/>
-    <input type="hidden" name="action" value="${catBean.action}"/>
+    <input type="hidden" name="categoryId" value="${categoryBean.category.id}"/>
+    <!--
+    <input type="hidden" name="action" value="${categoryBean.action}"/>
+    -->
 </form>
 <p>
     Or <a href="${contextRoot}/app/mainMenu.jsp">go back to the main page</a>

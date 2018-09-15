@@ -10,15 +10,15 @@ import org.gmnz.vega.web.context.RequestContext;
 /**
  * creato da simone in data 15/09/2018.
  */
-class CmdCategoryCreateExec extends AbstractVegaCommand {
+class CmdCategoryDeleteExec extends AbstractVegaCommand {
 
 	private Vega vega;
 
-	private String newCategoryName;
+	private String categoryId;
 
 
 
-	public CmdCategoryCreateExec(RequestContext requestContext) {
+	public CmdCategoryDeleteExec(RequestContext requestContext) {
 		super(requestContext);
 	}
 
@@ -26,7 +26,7 @@ class CmdCategoryCreateExec extends AbstractVegaCommand {
 
 	@Override
 	protected String setCommandName() {
-		return VegaCommand.Category.EXECUTE_CREATE;
+		return VegaCommand.Category.EXECUTE_DELETE;
 	}
 
 
@@ -34,15 +34,14 @@ class CmdCategoryCreateExec extends AbstractVegaCommand {
 	@Override
 	protected void initialize(RequestContext requestContext) {
 		vega = new VegaImpl();
-		newCategoryName = requestContext.getParameter("categoryName");
-
+		categoryId = requestContext.getParameter("categoryId");
 	}
 
 
 
 	@Override
 	protected void process() throws VegaException {
-		vega.getCategoryService().createCategory(newCategoryName);
+		vega.getCategoryService().removeCategory(categoryId);
 	}
 
 }

@@ -24,6 +24,8 @@ public abstract class AbstractViewResolver implements ViewResolver {
 	private HttpServletResponse response;
 	private ServletContext servletContext;
 
+	protected boolean isForward = true;
+
 
 
 	public AbstractViewResolver(RequestContext requestContext, ResponseContext responseContext) {
@@ -52,8 +54,13 @@ public abstract class AbstractViewResolver implements ViewResolver {
 
 
 	public void resolveToView(RequestContext requestContext, ResponseContext responseContext) throws ServletException, IOException {
-		String target = String.format(FMT_JSP_ENV, targetViewName);
-		forward(target);
+		if (isForward) {
+			String target = String.format(FMT_JSP_ENV, targetViewName);
+			forward(target);
+		}
+		else {
+			response.sendRedirect(request.getContextPath() + targetViewName);
+		}
 	}
 
 }

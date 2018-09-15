@@ -21,7 +21,9 @@ class VegaViewResolverFactory extends ViewResolverFactory {
 	static {
 		viewResolversMap.put(VegaCommand.Category.GET_ALL, VrCategoryGetAll.class);
 		viewResolversMap.put(VegaCommand.Category.CREATE, VrCategoryCreate.class);
-		viewResolversMap.put(VegaCommand.Category.EXECUTE_CREATE, VrCategoryGetAll.class);
+		viewResolversMap.put(VegaCommand.Category.EXECUTE_CREATE, VrCategoryCreateExec.class);
+		viewResolversMap.put(VegaCommand.Category.DELETE, VrCategoryDelete.class);
+		viewResolversMap.put(VegaCommand.Category.EXECUTE_DELETE, VrCategoryDeleteExec.class);
 	}
 
 
