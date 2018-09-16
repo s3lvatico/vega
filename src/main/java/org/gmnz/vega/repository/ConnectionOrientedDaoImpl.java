@@ -16,7 +16,8 @@ class ConnectionOrientedDaoImpl implements ConnectionOrientedDao {
 			try {
 				connection.close();
 				connection = null;
-			} catch (SQLException e) { /* ignored */ }
+			}
+			catch (SQLException e) { /* ignored */ }
 		}
 	}
 

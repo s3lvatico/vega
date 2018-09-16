@@ -19,10 +19,12 @@ public class VegaUtil {
 
 
 	public static String normalizeString(String s) {
-		if (s == null)
+		if (s == null) {
 			return "";
-		else
+		}
+		else {
 			return s.trim();
+		}
 	}
 
 
@@ -30,7 +32,8 @@ public class VegaUtil {
 	public static MessageDigest createMessageDigest() {
 		try {
 			return MessageDigest.getInstance("SHA-256");
-		} catch (NoSuchAlgorithmException e) {
+		}
+		catch (NoSuchAlgorithmException e) {
 			e.printStackTrace();
 			return null;
 		}

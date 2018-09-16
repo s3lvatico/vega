@@ -45,10 +45,12 @@ class ReportDaoImpl extends BasicDaoImpl implements ReportDao {
 				reports.add(r);
 			}
 			return reports;
-		} catch (SQLException | ReportBuildException e) {
+		}
+		catch (SQLException | ReportBuildException e) {
 			e.printStackTrace();
 			throw new DaoException("ReportDaoImpl.findAll error", e);
-		} finally {
+		}
+		finally {
 			releaseResources(s, rs);
 		}
 	}
@@ -78,10 +80,12 @@ class ReportDaoImpl extends BasicDaoImpl implements ReportDao {
 				}
 			}
 			connection.commit();
-		} catch (SQLException e) {
+		}
+		catch (SQLException e) {
 			e.printStackTrace();
 			throw new DaoException("ReportDaoImpl.createReport error", e);
-		} finally {
+		}
+		finally {
 			releaseResources(psRptHeader);
 			releaseResources(psRptDetail);
 		}

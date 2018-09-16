@@ -62,7 +62,8 @@ class AllergenNavigationHandler {
 		AllergenManagementBean mgmtBean = navigationMap.get(section);
 		if (mgmtBean != null) {
 			return handleAction(mgmtBean, req, resp);
-		} else {
+		}
+		else {
 			return new RequestProcessingResult(HttpServletResponse.SC_NOT_FOUND, "unknown section requested");
 		}
 	}
@@ -80,7 +81,8 @@ class AllergenNavigationHandler {
 					req.setAttribute("allergens", allergens);
 					req.setAttribute("managementEnabled", req.isUserInRole("v-admin"));
 					return RequestProcessingResult.OK(mgmtBean.getViewName());
-				} catch (VegaException e) {
+				}
+				catch (VegaException e) {
 					e.printStackTrace();
 					return RequestProcessingResult.INTERNAL_SERVER_ERROR("error while retrieving allergens");
 				}
@@ -129,7 +131,8 @@ class AllergenNavigationHandler {
 		try {
 			List<Category> categories = vega.getCategoryService().getAllCategories();
 			request.setAttribute("categories", categories);
-		} catch (VegaException e) {
+		}
+		catch (VegaException e) {
 			e.printStackTrace();
 			return new RequestProcessingResult(HttpServletResponse.SC_INTERNAL_SERVER_ERROR,
 					"error while retrieving categories");
@@ -149,10 +152,12 @@ class AllergenNavigationHandler {
 			}
 			mgmtBean.setAllergen(targetAllergen);
 			return null;
-		} catch (VegaException e) {
+		}
+		catch (VegaException e) {
 			e.printStackTrace();
 			return new RequestProcessingResult(HttpServletResponse.SC_INTERNAL_SERVER_ERROR,
 					"error while retrieving allergen");
 		}
 	}
+
 }

@@ -71,7 +71,8 @@ public class ReportExecution extends HttpServlet {
 					resp.sendError(HttpServletResponse.SC_BAD_REQUEST, "invalid action specified");
 					return;
 			}
-		} catch (VegaException ve) {
+		}
+		catch (VegaException ve) {
 			String errorMessage = String.format("exception thrown while executing action -- %s :: %s",
 					ve.getClass().getName(), ve.getMessage());
 			resp.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, errorMessage);
@@ -110,4 +111,5 @@ public class ReportExecution extends HttpServlet {
 		}
 		vega.getReportService().createReport(r);
 	}
+
 }

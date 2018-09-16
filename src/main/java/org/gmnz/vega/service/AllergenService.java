@@ -12,17 +12,13 @@ public interface AllergenService {
 	List<Allergen> getAllAllergens() throws VegaException;
 
 
-
 	void createAllergen(String newAllergenName, String categoryId) throws VegaException;
-
 
 
 	Allergen getAllergenById(String id) throws VegaException;
 
 
-
 	void modifyAllergen(Allergen source, String targetName, String targetCategoryId) throws VegaException;
-
 
 
 	void removeAllergen(String id) throws VegaException;

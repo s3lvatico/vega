@@ -1,16 +1,9 @@
 package org.gmnz.vega.domain;
 
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Date;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
-import java.util.Set;
-
 import org.gmnz.vega.VegaUtil;
+
+import java.util.*;
 
 
 public class Report {
@@ -108,10 +101,12 @@ public class Report {
 
 	@Override
 	public boolean equals(Object o) {
-		if (this == o)
+		if (this == o) {
 			return true;
-		if (o == null || getClass() != o.getClass())
+		}
+		if (o == null || getClass() != o.getClass()) {
 			return false;
+		}
 		Report report = (Report) o;
 		return Objects.equals(id, report.id);
 	}

@@ -11,21 +11,16 @@ public interface AllergenDao extends ConnectionOrientedDao {
 	List<Allergen> findAll() throws DaoException;
 
 
-
 	Allergen findById(String id) throws DaoException;
-
 
 
 	boolean isAllergenRegisteredByName(String name) throws DaoException;
 
 
-
 	void create(Allergen allergen) throws DaoException;
 
 
-
 	void update(Allergen allergen) throws DaoException;
-
 
 
 	void delete(String id) throws DaoException;

@@ -53,4 +53,5 @@ public class ViewReportData {
 	public void setCategories(List<ViewReportCategory> categories) {
 		this.categories = categories;
 	}
+
 }

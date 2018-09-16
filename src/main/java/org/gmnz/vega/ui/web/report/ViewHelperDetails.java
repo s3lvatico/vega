@@ -1,9 +1,6 @@
 package org.gmnz.vega.ui.web.report;
 
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
 import org.gmnz.vega.VegaException;
 import org.gmnz.vega.VegaUtil;
 import org.gmnz.vega.domain.Report;
@@ -11,6 +8,9 @@ import org.gmnz.vega.domain.ToxicityRating;
 import org.gmnz.vega.ui.web.report.view.ViewReportCategory;
 import org.gmnz.vega.ui.web.report.view.ViewReportData;
 import org.gmnz.vega.ui.web.report.view.ViewReportToxicityAssessment;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 
 class ViewHelperDetails extends ViewHelperBase {
@@ -30,7 +30,8 @@ class ViewHelperDetails extends ViewHelperBase {
 
 			ViewReportData viewReportData = prepareReportData(r);
 			req.setAttribute("reportData", viewReportData);
-		} catch (VegaException e) {
+		}
+		catch (VegaException e) {
 			e.printStackTrace();
 			outcome.statusCode = HttpServletResponse.SC_INTERNAL_SERVER_ERROR;
 			outcome.errorMessage = "error while retrieving report";

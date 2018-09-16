@@ -22,10 +22,12 @@ public class ReportServiceImpl extends BasicServiceBean implements ReportService
 			dao = DaoFactory.getInstance().createReportDao();
 			Collection<Report> reports = dao.findAll();
 			return reports;
-		} catch (DaoException e) {
+		}
+		catch (DaoException e) {
 			e.printStackTrace();
 			throw new VegaException("getStoredReports data access error", e);
-		} finally {
+		}
+		finally {
 			finalizeDao(dao);
 		}
 	}
@@ -38,10 +40,12 @@ public class ReportServiceImpl extends BasicServiceBean implements ReportService
 		try {
 			dao = DaoFactory.getInstance().createReportDao();
 			return dao.findById(id);
-		} catch (DaoException e) {
+		}
+		catch (DaoException e) {
 			e.printStackTrace();
 			throw new VegaException("getReportById service error", e);
-		} finally {
+		}
+		finally {
 			finalizeDao(dao);
 		}
 	}
@@ -54,10 +58,12 @@ public class ReportServiceImpl extends BasicServiceBean implements ReportService
 		try {
 			dao = DaoFactory.getInstance().createReportDao();
 			return dao.getSummaryById(id);
-		} catch (DaoException e) {
+		}
+		catch (DaoException e) {
 			e.printStackTrace();
 			throw new VegaException("getReportSummaryById service error", e);
-		} finally {
+		}
+		finally {
 			finalizeDao(dao);
 		}
 	}
@@ -70,10 +76,12 @@ public class ReportServiceImpl extends BasicServiceBean implements ReportService
 		try {
 			dao = DaoFactory.getInstance().createReportDao();
 			dao.createReport(report);
-		} catch (DaoException e) {
+		}
+		catch (DaoException e) {
 			e.printStackTrace();
 			throw new VegaException("createReport service error", e);
-		} finally {
+		}
+		finally {
 			finalizeDao(dao);
 		}
 	}
@@ -86,11 +94,14 @@ public class ReportServiceImpl extends BasicServiceBean implements ReportService
 		try {
 			dao = DaoFactory.getInstance().createReportDao();
 			dao.remove(id);
-		} catch (DaoException e) {
+		}
+		catch (DaoException e) {
 			e.printStackTrace();
 			throw new VegaException("removeReport service error", e);
-		} finally {
+		}
+		finally {
 			finalizeDao(dao);
 		}
 	}
+
 }
