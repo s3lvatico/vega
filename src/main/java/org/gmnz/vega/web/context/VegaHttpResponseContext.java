@@ -3,6 +3,8 @@ package org.gmnz.vega.web.context;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.HashMap;
+import java.util.Map;
 
 
 /**
@@ -10,7 +12,12 @@ import javax.servlet.http.HttpServletResponse;
  */
 class VegaHttpResponseContext extends AbstractContextObject implements ResponseContext {
 
+	private Map<String, Object> sessionStorage;
+
+
+
 	VegaHttpResponseContext() {
+		sessionStorage = new HashMap<>();
 		setAttribute(ContextProperty.STATUS_CODE, 200);
 		setAttribute(ContextProperty.OUTCOME, "SUCCESS");
 	}
@@ -25,14 +32,6 @@ class VegaHttpResponseContext extends AbstractContextObject implements ResponseC
 
 
 	@Override
-	public void storeInSession(String name, Object value) {
-		HttpServletRequest hsr = (HttpServletRequest) getAttribute(ContextProperty.ORIGINAL_REQUEST);
-		hsr.getSession().setAttribute(name, value);
-	}
-
-
-
-	@Override
 	public void setRequest(HttpServletRequest request) {
 		setAttribute(ContextProperty.ORIGINAL_REQUEST, request);
 	}
@@ -42,6 +41,27 @@ class VegaHttpResponseContext extends AbstractContextObject implements ResponseC
 	@Override
 	public void setResponse(HttpServletResponse response) {
 		setAttribute(ContextProperty.ORIGINAL_RESPONSE, response);
+	}
+
+
+
+	@Override
+	public void setSessionAttribute(String name, Object value) {
+		sessionStorage.put(name, value);
+	}
+
+
+
+	@Override
+	public Object getSessionAttribute(String name) {
+		return sessionStorage.get(name);
+	}
+
+
+
+	@Override
+	public String[] getSessionAttributeNames() {
+		return sessionStorage.keySet().toArray(new String[]{});
 	}
 
 

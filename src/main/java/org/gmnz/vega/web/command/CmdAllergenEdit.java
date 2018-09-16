@@ -2,16 +2,12 @@ package org.gmnz.vega.web.command;
 
 
 import org.gmnz.vega.Vega;
-import org.gmnz.vega.VegaException;
 import org.gmnz.vega.VegaImpl;
 import org.gmnz.vega.domain.Allergen;
 import org.gmnz.vega.domain.Category;
-import org.gmnz.vega.ui.web.RequestProcessingResult;
 import org.gmnz.vega.ui.web.allergen.AllergenManagementBean;
 import org.gmnz.vega.web.context.RequestContext;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
 
@@ -59,7 +55,7 @@ class CmdAllergenEdit extends AbstractVegaCommand {
 		amb.setAllergen(targetAllergen);
 
 		// salva in sessione l'allergene iniziale
-		model.storeInSession("allergen", amb.getAllergen());
+		model.setSessionAttribute("allergen", targetAllergen);
 
 		// recupero categorie
 		List<Category> categories = vega.getCategoryService().getAllCategories();

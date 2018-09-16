@@ -26,6 +26,11 @@ abstract class AbstractVegaCommand implements Command {
 
 	protected abstract void initialize(RequestContext requestContext);
 
+	/**
+	 * esegue il comando e popola adeguatamente il {@link #model}
+	 */
+	protected abstract void process() throws Exception;
+
 
 
 	public AbstractVegaCommand(RequestContext requestContext) {
@@ -34,7 +39,7 @@ abstract class AbstractVegaCommand implements Command {
 		this.commandName = requestContext.getCommandName();
 		HttpServletRequest httpRequest = (HttpServletRequest) requestContext.getAttribute(ContextProperty.ORIGINAL_REQUEST);
 		model.setAttribute(ContextProperty.CONTEXT_ROOT, httpRequest.getContextPath());
-		model.setAttribute(ContextProperty.COMMAND_NAME, setCommandName());
+		// model.setAttribute(ContextProperty.COMMAND_NAME, setCommandName());
 		initialize(requestContext);
 	}
 
@@ -85,13 +90,6 @@ abstract class AbstractVegaCommand implements Command {
 		}
 		return model;
 	}
-
-
-
-	/**
-	 * esegue il comando e popola adeguatamente il {@link #model}
-	 */
-	protected abstract void process() throws Exception;
 
 
 

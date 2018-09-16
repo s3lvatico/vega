@@ -10,6 +10,7 @@ import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
 
@@ -37,6 +38,10 @@ public abstract class AbstractViewResolver implements ViewResolver {
 
 		for (String attributeName : responseContext.getAttributeNames()) {
 			request.setAttribute(attributeName, responseContext.getAttribute(attributeName));
+		}
+		HttpSession session = request.getSession();
+		for (String sessionAttribute : responseContext.getSessionAttributeNames()) {
+			session.setAttribute(sessionAttribute, responseContext.getSessionAttribute(sessionAttribute));
 		}
 	}
 
