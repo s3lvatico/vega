@@ -25,6 +25,14 @@ class VegaHttpResponseContext extends AbstractContextObject implements ResponseC
 
 
 	@Override
+	public void storeInSession(String name, Object value) {
+		HttpServletRequest hsr = (HttpServletRequest) getAttribute(ContextProperty.ORIGINAL_REQUEST);
+		hsr.getSession().setAttribute(name, value);
+	}
+
+
+
+	@Override
 	public void setRequest(HttpServletRequest request) {
 		setAttribute(ContextProperty.ORIGINAL_REQUEST, request);
 	}

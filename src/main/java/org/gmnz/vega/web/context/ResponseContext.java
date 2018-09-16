@@ -14,6 +14,9 @@ public interface ResponseContext extends ContextObject {
 	int getStatusCode();
 
 
+	void storeInSession(String name, Object value);
+
+
 	void setRequest(HttpServletRequest request);
 
 
