@@ -3,6 +3,8 @@ package org.gmnz.vega.web.command;
 
 import org.gmnz.vega.Vega;
 import org.gmnz.vega.VegaImpl;
+import org.gmnz.vega.VegaUtil;
+import org.gmnz.vega.domain.Allergen;
 import org.gmnz.vega.web.context.RequestContext;
 
 
@@ -12,9 +14,10 @@ import org.gmnz.vega.web.context.RequestContext;
 // TODO completare
 public class CmdAllergenEditExecute extends AbstractVegaCommand {
 
-	String categoryName;
+	String allergenName;
 	String categoryId;
 
+	Allergen originalAllergen;
 	Vega vega;
 
 
@@ -27,7 +30,7 @@ public class CmdAllergenEditExecute extends AbstractVegaCommand {
 
 	@Override
 	protected String setCommandName() {
-		return VegaCommand.Category.EXECUTE_EDIT;
+		return VegaCommand.Allergen.EXECUTE_EDIT;
 	}
 
 
@@ -36,14 +39,21 @@ public class CmdAllergenEditExecute extends AbstractVegaCommand {
 	protected void initialize(RequestContext requestContext) {
 		vega = new VegaImpl();
 		categoryId = requestContext.getParameter("categoryId");
-		categoryName = requestContext.getParameter("categoryName");
+		allergenName = requestContext.getParameter("allergenName");
+		originalAllergen = (Allergen) requestContext.getSessionAttribute("allergen");
 	}
 
 
 
 	@Override
 	protected void process() throws Exception {
-		vega.getCategoryService().changeCategoryName(categoryId, categoryName);
+		if (originalAllergen == null) {
+			throw new Exception("no original allergen stored in session");
+		}
+		if (VegaUtil.stringNullOrEmpty(allergenName) || VegaUtil.stringNullOrEmpty(categoryId)) {
+			throw new Exception("empty values for parameters are not allowed");
+		}
+		vega.getAllergenService().modifyAllergen(originalAllergen, allergenName, categoryId);
 	}
 
 }

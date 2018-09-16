@@ -15,8 +15,8 @@
     <p>
         Allergen name:
         <input type="text" name="allergenName" value="${allergenBean.allergen.name}" title="allergenName"/>
-        <input type="hidden" name="action" value="${allergenBean.action}"/>
         <!--
+        <input type="hidden" name="action" value="${allergenBean.action}"/>
         <input type="hidden" name="allergenId" value="${allergenBean.allergen.id}"/>
         -->
     </p>
