@@ -1,6 +1,9 @@
 package org.gmnz.vega.repository;
 
 
+import org.gmnz.vega.domain.Allergen;
+import org.gmnz.vega.domain.Category;
+
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -8,9 +11,6 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
-
-import org.gmnz.vega.domain.Allergen;
-import org.gmnz.vega.domain.Category;
 
 
 class CategoryDaoImpl extends BasicDaoImpl implements CategoryDao {
@@ -31,10 +31,12 @@ class CategoryDaoImpl extends BasicDaoImpl implements CategoryDao {
 				categories.add(c);
 			}
 			return categories;
-		} catch (SQLException e) {
+		}
+		catch (SQLException e) {
 			e.printStackTrace();
 			throw new DaoException("CategoryDaoImpl.findAll error", e);
-		} finally {
+		}
+		finally {
 			releaseResources(s, rs);
 		}
 	}
@@ -63,10 +65,12 @@ class CategoryDaoImpl extends BasicDaoImpl implements CategoryDao {
 			rs = s.executeQuery(sqlQuery);
 			List<Category> categories = buildCategoriesList(rs);
 			return categories;
-		} catch (SQLException e) {
+		}
+		catch (SQLException e) {
 			e.printStackTrace();
 			throw new DaoException("CategoryDaoImpl.findAllWithAllergens error", e);
-		} finally {
+		}
+		finally {
 			releaseResources(s, rs);
 		}
 	}
@@ -112,10 +116,12 @@ class CategoryDaoImpl extends BasicDaoImpl implements CategoryDao {
 				c.setId(rs.getString(1));
 			}
 			return c;
-		} catch (SQLException e) {
+		}
+		catch (SQLException e) {
 			e.printStackTrace();
 			throw new DaoException("CategoryDaoImpl.findById error", e);
-		} finally {
+		}
+		finally {
 			releaseResources(s, rs);
 		}
 	}
@@ -133,10 +139,12 @@ class CategoryDaoImpl extends BasicDaoImpl implements CategoryDao {
 			rs.next(); // deve esser fatto per forza
 			int countValue = rs.getInt(1);
 			return countValue == 1;
-		} catch (SQLException e) {
+		}
+		catch (SQLException e) {
 			e.printStackTrace();
 			throw new DaoException("CategoryDaoImpl.isCategoryRegisteredByName error", e);
-		} finally {
+		}
+		finally {
 			releaseResources(ps, rs);
 		}
 	}
@@ -154,14 +162,15 @@ class CategoryDaoImpl extends BasicDaoImpl implements CategoryDao {
 			rs.next(); // deve esser fatto per forza
 			int countValue = rs.getInt(1);
 			return countValue == 1;
-		} catch (SQLException e) {
+		}
+		catch (SQLException e) {
 			e.printStackTrace();
 			throw new DaoException("CategoryDaoImpl.isCategoryRegisteredById error", e);
-		} finally {
+		}
+		finally {
 			releaseResources(ps, rs);
 		}
 	}
-
 
 
 //	@Deprecated
@@ -171,6 +180,8 @@ class CategoryDaoImpl extends BasicDaoImpl implements CategoryDao {
 //		return null;
 //	}
 
+
+
 	@Override
 	public void create(String name) throws DaoException {
 		PreparedStatement s = null;
@@ -179,10 +190,12 @@ class CategoryDaoImpl extends BasicDaoImpl implements CategoryDao {
 			s.setString(1, UUID.randomUUID().toString());
 			s.setString(2, name);
 			s.executeUpdate();
-		} catch (SQLException e) {
+		}
+		catch (SQLException e) {
 			e.printStackTrace();
 			throw new DaoException("CategoryDaoImpl.create error", e);
-		} finally {
+		}
+		finally {
 			releaseResources(s);
 		}
 	}
@@ -197,10 +210,12 @@ class CategoryDaoImpl extends BasicDaoImpl implements CategoryDao {
 			s.setString(1, category.getName());
 			s.setString(2, category.getId());
 			s.executeUpdate();
-		} catch (SQLException e) {
+		}
+		catch (SQLException e) {
 			e.printStackTrace();
 			throw new DaoException("CategoryDaoImpl.update error", e);
-		} finally {
+		}
+		finally {
 			releaseResources(s);
 		}
 	}
@@ -212,40 +227,38 @@ class CategoryDaoImpl extends BasicDaoImpl implements CategoryDao {
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 		try {
-			ps = connection.prepareStatement("SELECT COUNT(*) FROM allergen WHERE id_category = ?");
+			ps = connection.prepareStatement("SELECT COUNT(*) FROM allergen WHERE id_category = ? AND deleted = 0");
 			ps.setString(1, categoryId);
 			rs = ps.executeQuery();
 			rs.next(); // deve esser fatto per forza
 			int countValue = rs.getInt(1);
 			return countValue;
-		} catch (SQLException e) {
+		}
+		catch (SQLException e) {
 			e.printStackTrace();
 			throw new DaoException("CategoryDaoImpl.countAllergens error", e);
-		} finally {
+		}
+		finally {
 			releaseResources(ps, rs);
 		}
 	}
 
 
 
-//	@Deprecated
-//	@Override
-//	public void updateRename(String oldName, String newName) throws DaoException {
-//		//
-//
-//	}
-
 	@Override
 	public void delete(String categoryId) throws DaoException {
 		PreparedStatement s = null;
 		try {
-			s = connection.prepareStatement("DELETE  FROM category WHERE id = ?");
+			//s = connection.prepareStatement("DELETE  FROM category WHERE id = ?");
+			s = connection.prepareStatement("UPDATE category SET deleted = 1 WHERE id = ?");
 			s.setString(1, categoryId);
 			s.executeUpdate();
-		} catch (SQLException e) {
+		}
+		catch (SQLException e) {
 			e.printStackTrace();
 			throw new DaoException("CategoryDaoImpl.delete error", e);
-		} finally {
+		}
+		finally {
 			releaseResources(s);
 		}
 	}
