@@ -39,4 +39,5 @@ public class ViewReportCategory {
 	public void setToxData(List<ViewReportToxicityAssessment> toxData) {
 		this.toxData = toxData;
 	}
+
 }

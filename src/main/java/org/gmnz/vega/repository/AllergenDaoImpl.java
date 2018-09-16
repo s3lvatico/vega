@@ -1,6 +1,9 @@
 package org.gmnz.vega.repository;
 
 
+import org.gmnz.vega.domain.Allergen;
+import org.gmnz.vega.domain.Category;
+
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -8,9 +11,6 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
-
-import org.gmnz.vega.domain.Allergen;
-import org.gmnz.vega.domain.Category;
 
 
 class AllergenDaoImpl extends BasicDaoImpl implements AllergenDao {
@@ -35,10 +35,12 @@ class AllergenDaoImpl extends BasicDaoImpl implements AllergenDao {
 				allergens.add(a);
 			}
 			return allergens;
-		} catch (SQLException e) {
+		}
+		catch (SQLException e) {
 			e.printStackTrace();
 			throw new DaoException("AllergenDaoImpl.findAll error", e);
-		} finally {
+		}
+		finally {
 			releaseResources(s, rs);
 		}
 	}
@@ -66,10 +68,12 @@ class AllergenDaoImpl extends BasicDaoImpl implements AllergenDao {
 				a.setCategory(c);
 			}
 			return a;
-		} catch (SQLException e) {
+		}
+		catch (SQLException e) {
 			e.printStackTrace();
 			throw new DaoException("AllergenDaoImpl.findById error", e);
-		} finally {
+		}
+		finally {
 			releaseResources(s, rs);
 		}
 	}
@@ -87,10 +91,12 @@ class AllergenDaoImpl extends BasicDaoImpl implements AllergenDao {
 			rs.next(); // deve esser fatto per forza
 			int countValue = rs.getInt(1);
 			return countValue == 1;
-		} catch (SQLException e) {
+		}
+		catch (SQLException e) {
 			e.printStackTrace();
 			throw new DaoException("AllergenDaoImpl.isAllergenRegisteredByName error", e);
-		} finally {
+		}
+		finally {
 			releaseResources(ps, rs);
 		}
 	}
@@ -106,10 +112,12 @@ class AllergenDaoImpl extends BasicDaoImpl implements AllergenDao {
 			s.setString(2, allergen.getName());
 			s.setString(3, allergen.getCategory().getId());
 			s.executeUpdate();
-		} catch (SQLException e) {
+		}
+		catch (SQLException e) {
 			e.printStackTrace();
 			throw new DaoException("AllergenDaoImpl.create error", e);
-		} finally {
+		}
+		finally {
 			releaseResources(s);
 		}
 	}
@@ -126,10 +134,12 @@ class AllergenDaoImpl extends BasicDaoImpl implements AllergenDao {
 			s.setString(2, allergen.getCategory().getId());
 			s.setString(3, allergen.getId());
 			s.executeUpdate();
-		} catch (SQLException e) {
+		}
+		catch (SQLException e) {
 			e.printStackTrace();
 			throw new DaoException("AllergenDaoImpl.update error", e);
-		} finally {
+		}
+		finally {
 			releaseResources(s);
 		}
 	}
@@ -143,10 +153,12 @@ class AllergenDaoImpl extends BasicDaoImpl implements AllergenDao {
 			s = connection.prepareStatement("update allergen set deleted = 1 where id = ?");
 			s.setString(1, id);
 			s.executeUpdate();
-		} catch (SQLException e) {
+		}
+		catch (SQLException e) {
 			e.printStackTrace();
 			throw new DaoException("AllergenDaoImpl.delete error", e);
-		} finally {
+		}
+		finally {
 			releaseResources(s);
 		}
 	}

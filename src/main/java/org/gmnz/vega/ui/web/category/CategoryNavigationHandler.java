@@ -60,7 +60,8 @@ class CategoryNavigationHandler {
 		CategoryManagementBean mgmtBean = navigationMap.get(section);
 		if (mgmtBean != null) {
 			return handleAction(mgmtBean, req, resp);
-		} else {
+		}
+		else {
 			return new RequestProcessingResult(HttpServletResponse.SC_NOT_FOUND, "unknown section requested");
 		}
 	}
@@ -77,7 +78,8 @@ class CategoryNavigationHandler {
 					req.setAttribute("categories", categories);
 					req.setAttribute("managementEnabled", req.isUserInRole("v-admin"));
 					return RequestProcessingResult.OK(mgmtBean.getViewName());
-				} catch (VegaException e) {
+				}
+				catch (VegaException e) {
 					e.printStackTrace();
 					return RequestProcessingResult.INTERNAL_SERVER_ERROR("error while retrieving categories");
 				}
@@ -88,7 +90,8 @@ class CategoryNavigationHandler {
 				try {
 					Category c = categoryService.getCategoryById(categoryId);
 					mgmtBean.setCategory(c);
-				} catch (VegaException e) {
+				}
+				catch (VegaException e) {
 					e.printStackTrace();
 					String errorMessage = String.format("error while retrieving category with id [%s]", categoryId);
 					return RequestProcessingResult.INTERNAL_SERVER_ERROR(errorMessage);
@@ -103,4 +106,5 @@ class CategoryNavigationHandler {
 				return RequestProcessingResult.BAD_REQUEST("unrecognized request");
 		}
 	}
+
 }

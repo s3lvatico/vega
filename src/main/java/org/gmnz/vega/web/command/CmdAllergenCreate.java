@@ -6,7 +6,6 @@ import org.gmnz.vega.VegaException;
 import org.gmnz.vega.VegaImpl;
 import org.gmnz.vega.domain.Category;
 import org.gmnz.vega.ui.web.allergen.AllergenManagementBean;
-import org.gmnz.vega.ui.web.category.CategoryManagementBean;
 import org.gmnz.vega.web.context.RequestContext;
 
 import java.util.List;
@@ -18,6 +17,8 @@ import java.util.List;
 class CmdAllergenCreate extends AbstractVegaCommand {
 
 	private Vega vega;
+
+
 
 	public CmdAllergenCreate(RequestContext requestContext) {
 		super(requestContext);

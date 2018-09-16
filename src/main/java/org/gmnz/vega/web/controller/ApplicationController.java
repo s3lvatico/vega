@@ -1,12 +1,11 @@
 package org.gmnz.vega.web.controller;
 
 
-import java.io.IOException;
-
-import javax.servlet.ServletException;
-
 import org.gmnz.vega.web.context.RequestContext;
 import org.gmnz.vega.web.context.ResponseContext;
+
+import javax.servlet.ServletException;
+import java.io.IOException;
 
 
 /**
@@ -16,7 +15,6 @@ public interface ApplicationController {
 
 	// action management
 	ResponseContext handleRequest(RequestContext requestContext);
-
 
 
 	// view management

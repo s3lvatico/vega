@@ -37,6 +37,4 @@ class VegaHttpResponseContext extends AbstractContextObject implements ResponseC
 	}
 
 
-
-
 }

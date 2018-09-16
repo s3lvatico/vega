@@ -173,14 +173,6 @@ class CategoryDaoImpl extends BasicDaoImpl implements CategoryDao {
 	}
 
 
-//	@Deprecated
-//	@Override
-//	public Category findByName(String name) throws DaoException {
-//		//
-//		return null;
-//	}
-
-
 
 	@Override
 	public void create(String name) throws DaoException {

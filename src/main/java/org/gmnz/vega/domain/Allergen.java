@@ -1,5 +1,6 @@
 package org.gmnz.vega.domain;
 
+
 public class Allergen {
 
 	private String id;
@@ -53,10 +54,12 @@ public class Allergen {
 
 	@Override
 	public boolean equals(Object o) {
-		if (this == o)
+		if (this == o) {
 			return true;
-		if (o == null || getClass() != o.getClass())
+		}
+		if (o == null || getClass() != o.getClass()) {
 			return false;
+		}
 
 		Allergen allergen = (Allergen) o;
 

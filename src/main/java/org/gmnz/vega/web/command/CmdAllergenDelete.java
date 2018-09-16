@@ -4,11 +4,8 @@ package org.gmnz.vega.web.command;
 import org.gmnz.vega.Vega;
 import org.gmnz.vega.VegaImpl;
 import org.gmnz.vega.domain.Allergen;
-import org.gmnz.vega.ui.web.RequestProcessingResult;
 import org.gmnz.vega.ui.web.allergen.AllergenManagementBean;
 import org.gmnz.vega.web.context.RequestContext;
-
-import javax.servlet.http.HttpServletResponse;
 
 
 /**

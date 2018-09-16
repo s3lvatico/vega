@@ -1,14 +1,13 @@
 package org.gmnz.vega.ui.web.report;
 
 
-import java.util.Collection;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
 import org.gmnz.vega.VegaException;
 import org.gmnz.vega.domain.Report;
 import org.gmnz.vega.service.ReportService;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.util.Collection;
 
 
 class ViewHelperGetAll extends ViewHelperBase {
@@ -22,7 +21,8 @@ class ViewHelperGetAll extends ViewHelperBase {
 			storedReports = reportService.getStoredReports();
 			req.setAttribute("reports", storedReports);
 			rpo.statusCode = HttpServletResponse.SC_OK;
-		} catch (VegaException e) {
+		}
+		catch (VegaException e) {
 			e.printStackTrace();
 			rpo.statusCode = HttpServletResponse.SC_INTERNAL_SERVER_ERROR;
 			rpo.errorMessage = "error while retrieving stored reports";

@@ -16,4 +16,5 @@ public abstract class RequestContextFactory {
 
 
 	abstract public RequestContext createContext(HttpServletRequest req);
+
 }

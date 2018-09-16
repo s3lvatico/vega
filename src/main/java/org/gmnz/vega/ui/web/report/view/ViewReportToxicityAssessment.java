@@ -1,5 +1,6 @@
 package org.gmnz.vega.ui.web.report.view;
 
+
 public class ViewReportToxicityAssessment {
 
 	String allergenName;
@@ -28,4 +29,5 @@ public class ViewReportToxicityAssessment {
 	public void setToxicityRating(Double toxicityRating) {
 		this.toxicityRating = toxicityRating;
 	}
+
 }

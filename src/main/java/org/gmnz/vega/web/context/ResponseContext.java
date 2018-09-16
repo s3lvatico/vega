@@ -11,13 +11,10 @@ import javax.servlet.http.HttpServletResponse;
 public interface ResponseContext extends ContextObject {
 
 
-
 	int getStatusCode();
 
 
-
 	void setRequest(HttpServletRequest request);
-
 
 
 	void setResponse(HttpServletResponse response);

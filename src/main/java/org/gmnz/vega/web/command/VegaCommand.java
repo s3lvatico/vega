@@ -39,6 +39,11 @@ public interface VegaCommand {
 
 	}
 
+
+
+
+
+
 	interface Allergen {
 
 		String GET_ALL = "allergen.getAll";

@@ -49,14 +49,14 @@ abstract class AbstractContextObject implements ContextObject {
 
 	@Override
 	public String[] getParameterNames() {
-		return parameters.keySet().toArray(new String[] {});
+		return parameters.keySet().toArray(new String[]{});
 	}
 
 
 
 	@Override
 	public String[] getAttributeNames() {
-		return attributes.keySet().toArray(new String[] {});
+		return attributes.keySet().toArray(new String[]{});
 	}
 
 }

@@ -15,6 +15,6 @@ public abstract class CommandFactory {
 
 
 
-	abstract public Command createCommand(RequestContext requestContext) ;
+	abstract public Command createCommand(RequestContext requestContext);
 
 }

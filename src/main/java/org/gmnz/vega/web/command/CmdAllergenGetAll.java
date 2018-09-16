@@ -4,7 +4,6 @@ package org.gmnz.vega.web.command;
 import org.gmnz.vega.Vega;
 import org.gmnz.vega.VegaImpl;
 import org.gmnz.vega.domain.Allergen;
-import org.gmnz.vega.domain.Category;
 import org.gmnz.vega.web.context.ContextProperty;
 import org.gmnz.vega.web.context.RequestContext;
 

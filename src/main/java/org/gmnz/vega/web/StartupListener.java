@@ -1,13 +1,13 @@
 package org.gmnz.vega.web;
 
 
+import org.gmnz.vega.repository.DaoFactory;
+
 import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
 import javax.sql.DataSource;
-
-import org.gmnz.vega.repository.DaoFactory;
 
 
 /**
@@ -25,7 +25,8 @@ public class StartupListener implements ServletContextListener {
 			Context envContext = (Context) initContext.lookup("java:/comp/env");
 			DataSource ds = (DataSource) envContext.lookup("jdbc/vegaDS");
 			DaoFactory.setDataSource(ds);
-		} catch (Exception e) {
+		}
+		catch (Exception e) {
 			e.printStackTrace();
 		}
 		System.out.printf("<<< contextInitialized%n");
@@ -38,4 +39,5 @@ public class StartupListener implements ServletContextListener {
 		System.out.printf(">>> contextDestroyed%n");
 		System.out.printf("<<< contextDestroyed%n");
 	}
+
 }

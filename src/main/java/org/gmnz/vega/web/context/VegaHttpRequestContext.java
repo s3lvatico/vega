@@ -24,12 +24,10 @@ class VegaHttpRequestContext extends AbstractContextObject implements RequestCon
 
 
 
-
 	VegaHttpRequestContext(HttpServletRequest request) {
 		sessionStorage = new HashMap<>();
 		init(request);
 	}
-
 
 
 
@@ -45,7 +43,6 @@ class VegaHttpRequestContext extends AbstractContextObject implements RequestCon
 		setParameter(VegaCommand.CMD_NAME, commandName);
 
 	}
-
 
 
 
@@ -68,7 +65,6 @@ class VegaHttpRequestContext extends AbstractContextObject implements RequestCon
 
 
 
-
 	private void fillAttributesMap(HttpServletRequest request) {
 		Enumeration<String> attributeNames = request.getAttributeNames();
 		while (attributeNames.hasMoreElements()) {
@@ -81,7 +77,6 @@ class VegaHttpRequestContext extends AbstractContextObject implements RequestCon
 		setAttribute(ContextProperty.ORIGINAL_REQUEST, request);
 		setAttribute(ContextProperty.SERVLET_CONTEXT, request.getServletContext());
 	}
-
 
 
 
@@ -98,12 +93,10 @@ class VegaHttpRequestContext extends AbstractContextObject implements RequestCon
 
 
 
-
 	@Override
 	public String getParameter(String name) {
 		return parameters.get(name);
 	}
-
 
 
 
@@ -114,7 +107,6 @@ class VegaHttpRequestContext extends AbstractContextObject implements RequestCon
 
 
 
-
 	@Override
 	public Object getSessionAttribute(String name) {
 		return sessionStorage.get(name);
@@ -122,12 +114,10 @@ class VegaHttpRequestContext extends AbstractContextObject implements RequestCon
 
 
 
-
 	@Override
 	public void setSessionAttribute(String name, Object value) {
 		sessionStorage.put(name, value);
 	}
-
 
 
 

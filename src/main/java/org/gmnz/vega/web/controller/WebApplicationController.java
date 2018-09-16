@@ -1,16 +1,15 @@
 package org.gmnz.vega.web.controller;
 
 
-import java.io.IOException;
-
-import javax.servlet.ServletException;
-
 import org.gmnz.vega.web.command.Command;
 import org.gmnz.vega.web.command.CommandFactory;
 import org.gmnz.vega.web.context.RequestContext;
 import org.gmnz.vega.web.context.ResponseContext;
 import org.gmnz.vega.web.view.ViewResolver;
 import org.gmnz.vega.web.view.ViewResolverFactory;
+
+import javax.servlet.ServletException;
+import java.io.IOException;
 
 
 class WebApplicationController implements ApplicationController {

@@ -4,9 +4,6 @@ package org.gmnz.vega.web.view;
 import org.gmnz.vega.web.context.RequestContext;
 import org.gmnz.vega.web.context.ResponseContext;
 
-import javax.servlet.ServletException;
-import java.io.IOException;
-
 
 /**
  * creato da simone in data 15/09/2018.

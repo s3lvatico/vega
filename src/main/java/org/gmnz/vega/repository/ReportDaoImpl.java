@@ -1,21 +1,12 @@
 package org.gmnz.vega.repository;
 
 
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
-import java.sql.Timestamp;
+import org.gmnz.vega.domain.*;
+
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
-
-import org.gmnz.vega.domain.Allergen;
-import org.gmnz.vega.domain.Category;
-import org.gmnz.vega.domain.Report;
-import org.gmnz.vega.domain.ReportBuildException;
-import org.gmnz.vega.domain.ReportBuilder;
-import org.gmnz.vega.domain.ToxicityRating;
 
 
 class ReportDaoImpl extends BasicDaoImpl implements ReportDao {
@@ -54,10 +45,12 @@ class ReportDaoImpl extends BasicDaoImpl implements ReportDao {
 				reports.add(r);
 			}
 			return reports;
-		} catch (SQLException | ReportBuildException e) {
+		}
+		catch (SQLException | ReportBuildException e) {
 			e.printStackTrace();
 			throw new DaoException("ReportDaoImpl.findAll error", e);
-		} finally {
+		}
+		finally {
 			releaseResources(s, rs);
 		}
 	}
@@ -87,10 +80,12 @@ class ReportDaoImpl extends BasicDaoImpl implements ReportDao {
 				}
 			}
 			connection.commit();
-		} catch (SQLException e) {
+		}
+		catch (SQLException e) {
 			e.printStackTrace();
 			throw new DaoException("ReportDaoImpl.createReport error", e);
-		} finally {
+		}
+		finally {
 			releaseResources(psRptHeader);
 			releaseResources(psRptDetail);
 		}
