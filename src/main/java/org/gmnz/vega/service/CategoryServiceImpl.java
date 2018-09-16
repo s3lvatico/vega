@@ -75,6 +75,9 @@ public class CategoryServiceImpl extends BasicServiceBean implements CategorySer
 
 	@Override
 	public void createCategory(String name) throws VegaException {
+		if (VegaUtil.stringNullOrEmpty(name)) {
+			throw new VegaException("The new category must have a non empty name");
+		}
 		try {
 			checkEntityRegistration(Category.class, name, false);
 		}

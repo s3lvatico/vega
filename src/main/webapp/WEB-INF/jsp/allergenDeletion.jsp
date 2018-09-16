@@ -12,10 +12,12 @@
 <p>
     Allergen name: ${allergenBean.allergen.name}
 </p>
-<form method="POST" action="${contextRoot}/app/allergen/do">
+<form method="POST" action="${contextRoot}/app/allergen/do/${allergenBean.action}">
     <input type="submit" value="delete it"/>
     <input type="hidden" name="allergenId" value="${allergenBean.allergen.id}"/>
+    <!--
     <input type="hidden" name="action" value="${allergenBean.action}"/>
+    -->
 </form>
 <p>
     Or <a href="${contextRoot}/app/mainMenu.jsp">go back to the main page</a>
