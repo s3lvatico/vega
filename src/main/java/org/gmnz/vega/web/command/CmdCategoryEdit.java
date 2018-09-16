@@ -11,10 +11,12 @@ import org.gmnz.vega.web.context.RequestContext;
 /**
  * creato da simone in data 16/09/2018.
  */
- class CmdCategoryEdit extends AbstractVegaCommand {
+class CmdCategoryEdit extends AbstractVegaCommand {
 
 	private Vega vega;
 	private String categoryId;
+
+
 
 	public CmdCategoryEdit(RequestContext requestContext) {
 		super(requestContext);
@@ -39,7 +41,7 @@ import org.gmnz.vega.web.context.RequestContext;
 
 	@Override
 	protected void process() throws Exception {
-		Category category =  vega.getCategoryService().getCategoryById(categoryId);
+		Category category = vega.getCategoryService().getCategoryById(categoryId);
 		CategoryManagementBean cmb = new CategoryManagementBean();
 		cmb.setOperationLabel("Change category name");
 		cmb.setCategory(category);

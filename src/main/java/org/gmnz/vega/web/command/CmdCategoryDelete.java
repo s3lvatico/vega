@@ -41,7 +41,7 @@ class CmdCategoryDelete extends AbstractVegaCommand {
 
 	@Override
 	protected void process() throws Exception {
-		Category category =  vega.getCategoryService().getCategoryById(categoryId);
+		Category category = vega.getCategoryService().getCategoryById(categoryId);
 		CategoryManagementBean cmb = new CategoryManagementBean();
 		cmb.setOperationLabel("Category deletion");
 		cmb.setCategory(category);

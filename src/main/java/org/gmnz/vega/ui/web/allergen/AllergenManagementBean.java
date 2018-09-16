@@ -16,6 +16,12 @@ public class AllergenManagementBean {
 
 
 
+	public AllergenManagementBean() {
+		allergen = new Allergen("");
+	}
+
+
+
 	public Allergen getAllergen() {
 		return allergen;
 	}
