@@ -26,12 +26,16 @@
         <tr>
             <c:if test="${managementEnabled}">
                 <td>
+
+                    <!-- EDIT -->
                     <form method="POST" action="${contextRoot}/app/allergen/edit">
                         <input type="hidden" name="allergenId" value="${allergen.id}"/>
                         <input type="submit" value="E"/>
                     </form>
                 </td>
                 <td>
+
+                    <!-- DELETE -->
                     <form method="POST" action="${contextRoot}/app/allergen/delete">
                         <input type="hidden" name="allergenId" value="${allergen.id}"/>
                         <input type="submit" value="D"/>
@@ -50,6 +54,8 @@
 
         <h3>Operations</h3>
         <p>Create new allergen:</p>
+
+        <!-- CREATE -->
         <form method="POST" action="${contextRoot}/app/allergen/create">
             <input type="submit" value="create new allergen">
         </form>
