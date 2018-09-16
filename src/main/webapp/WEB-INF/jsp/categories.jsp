@@ -22,14 +22,18 @@
             <c:if test="${managementEnabled}">
                 <td>
                     <form method="GET" action="${contextRoot}/app/category/edit">
+
                         <!--  edit -->
+
                         <input type="hidden" name="categoryId" value="${category.id}">
                         <input type="submit" value="E">
                     </form>
                 </td>
                 <td>
                     <form method="POST" action="${contextRoot}/app/category/delete">
+
                         <!--  delete -->
+
                         <input type="hidden" name="categoryId" value="${category.id}">
                         <input type="submit" value="D">
                     </form>
@@ -45,6 +49,9 @@
     <c:when test="${managementEnabled}">
         <h3>Operations</h3>
         <p>Create new category:</p>
+
+        <!-- create -->
+
         <form method="POST" action="${contextRoot}/app/category/create">
             <input type="submit" value="create new category">
         </form>

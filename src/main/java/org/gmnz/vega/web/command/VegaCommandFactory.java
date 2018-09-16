@@ -22,6 +22,8 @@ class VegaCommandFactory extends CommandFactory {
 		commandsMap.put(VegaCommand.Category.EXECUTE_CREATE, CmdCategoryCreateExec.class);
 		commandsMap.put(VegaCommand.Category.DELETE, CmdCategoryDelete.class);
 		commandsMap.put(VegaCommand.Category.EXECUTE_DELETE, CmdCategoryDeleteExec.class);
+		commandsMap.put(VegaCommand.Category.EDIT, CmdCategoryEdit.class);
+		commandsMap.put(VegaCommand.Category.EXECUTE_EDIT, CmdCategoryEditExecute.class);
 	}
 
 

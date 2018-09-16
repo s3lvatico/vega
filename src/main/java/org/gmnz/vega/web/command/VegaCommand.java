@@ -31,9 +31,10 @@ public interface VegaCommand {
 		String GET_ALL = "category.getAll";
 		String CREATE = "category.create";
 		String DELETE = "category.delete";
+		String EDIT = "category.edit";
 		String EXECUTE_CREATE = EXECUTE + CREATE;
 		String EXECUTE_DELETE = EXECUTE + DELETE;
-
+		String EXECUTE_EDIT = EXECUTE + EDIT;
 
 	}
 

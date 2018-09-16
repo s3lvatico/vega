@@ -8,6 +8,7 @@ import org.gmnz.vega.web.context.ResponseContext;
 /**
  * creato da simone in data 15/09/2018.
  */
+@Deprecated
 public class VrCategoryCreateExec extends AbstractViewResolver {
 
 	public VrCategoryCreateExec(RequestContext requestContext, ResponseContext responseContext) {

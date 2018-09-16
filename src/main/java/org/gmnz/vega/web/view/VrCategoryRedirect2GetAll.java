@@ -6,12 +6,11 @@ import org.gmnz.vega.web.context.ResponseContext;
 
 
 /**
- * creato da simone in data 15/09/2018.
+ * creato da simone in data 16/09/2018.
  */
-@Deprecated
-public class VrCategoryDeleteExec extends AbstractViewResolver {
+class VrCategoryRedirect2GetAll extends AbstractViewResolver {
 
-	public VrCategoryDeleteExec(RequestContext requestContext, ResponseContext responseContext) {
+	public VrCategoryRedirect2GetAll(RequestContext requestContext, ResponseContext responseContext) {
 		super(requestContext, responseContext);
 		isForward = false;
 	}
