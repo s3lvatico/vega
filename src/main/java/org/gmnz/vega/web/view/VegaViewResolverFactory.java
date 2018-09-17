@@ -1,14 +1,14 @@
 package org.gmnz.vega.web.view;
 
 
-import org.gmnz.vega.web.command.VegaCommand;
-import org.gmnz.vega.web.context.RequestContext;
-import org.gmnz.vega.web.context.ResponseContext;
-
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
 import java.util.Map;
+
+import org.gmnz.vega.web.command.VegaCommand;
+import org.gmnz.vega.web.context.RequestContext;
+import org.gmnz.vega.web.context.ResponseContext;
 
 
 /**
@@ -34,7 +34,11 @@ class VegaViewResolverFactory extends ViewResolverFactory {
 		viewResolversMap.put(VegaCommand.Allergen.EXECUTE_DELETE, VrAllergenRedirect2GetAll.class);
 		viewResolversMap.put(VegaCommand.Allergen.EDIT, VrAllergenEdit.class);
 		viewResolversMap.put(VegaCommand.Allergen.EXECUTE_EDIT, VrAllergenRedirect2GetAll.class);
+
+		viewResolversMap.put(VegaCommand.Report.GET_ALL, VrReportGetAll.class);
+
 	}
+
 
 
 	protected VegaViewResolverFactory(RequestContext requestContext, ResponseContext responseContext) {
@@ -51,13 +55,11 @@ class VegaViewResolverFactory extends ViewResolverFactory {
 				final Constructor<? extends ViewResolver> constructor = viewResolverClass.getConstructor(RequestContext.class,
 						ResponseContext.class);
 				return constructor.newInstance(requestContext, responseContext);
-			}
-			catch (NoSuchMethodException | InstantiationException | IllegalAccessException | InvocationTargetException e) {
+			} catch (NoSuchMethodException | InstantiationException | IllegalAccessException | InvocationTargetException e) {
 				e.printStackTrace();
 				return null; // TODO incompleto
 			}
-		}
-		else {
+		} else {
 			return new VrShowError(requestContext, responseContext);
 		}
 	}
