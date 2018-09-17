@@ -12,7 +12,9 @@
 <jsp:include page="/WEB-INF/jsp/header.jsp"/>
 <h2>Report</h2>
 <h3>${reportBean.operationLabel}</h3>
+<!-- 
 <input type="hidden" name="action" value="${reportBean.action}">
+ -->
 <h4>Report Summary</h4>
 <p>Subject name : ${reportData.subjectName}</p>
 <p>Creation date : ${reportData.creationDate}</p>
