@@ -1,17 +1,10 @@
-<%@ page import="org.gmnz.vega.VegaUtil" %><%--
-  Created by IntelliJ IDEA.
-  User: simone
-  Date: 30/06/2018
-  Time: 14:09
-  To change this template use File | Settings | File Templates.
---%>
-<%@ page contentType="text/html;charset=UTF-8" %>
+<%@ page import="org.gmnz.vega.VegaUtil" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%
     String contextRoot = request.getContextPath();
     request.setAttribute("userIsLogged", !VegaUtil.stringNullOrEmpty(request.getRemoteUser()));
 %>
-<html>
+<html lang="en">
 <head>
     <meta charset="utf-8">
 </head>
