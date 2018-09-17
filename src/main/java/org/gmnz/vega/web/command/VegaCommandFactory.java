@@ -48,9 +48,7 @@ class VegaCommandFactory extends CommandFactory {
 	public Command createCommand(RequestContext requestContext) {
 
 		String commandName = requestContext.getCommandName();
-		// TODO sostituire con il log
-		System.out.format("[%s.createCommand()] commandName : %s%n", getClass().getName(), commandName);
-		// --
+		// System.out.format("[%s.createCommand()] commandName : %s%n", getClass().getName(), commandName);
 		Class<? extends AbstractVegaCommand> commandClass = commandsMap.get(requestContext.getCommandName());
 		try {
 			final Constructor<? extends AbstractVegaCommand> commandClassConstructor = commandClass
