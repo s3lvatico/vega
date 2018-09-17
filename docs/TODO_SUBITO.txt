@@ -1,0 +1,9 @@
+Modificare lo schema del db nel modo seguente
+
+ALTER TABLE vega.report_line MODIFY COLUMN toxicity decimal(5,2) NOT NULL;
+
+E' necessario perché se si inserisce una riga di dettaglio di report con un
+valore di tossicità pari esattamente a 100, viene generato un errore per
+troncamento del dato. La definizione originale della colonna è del tipo
+decimal(4,2), e come tale non può "ospitare" correttamente il valore 100.
+
