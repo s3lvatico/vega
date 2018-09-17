@@ -15,7 +15,7 @@ class VrReportViewDetails extends AbstractViewResolver {
 
 	@Override
 	protected String setViewName() {
-		return "viewDetails";
+		return "reportView";
 	}
 
 }

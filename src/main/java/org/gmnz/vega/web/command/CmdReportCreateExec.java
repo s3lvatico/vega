@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import org.gmnz.vega.Vega;
 import org.gmnz.vega.VegaException;
 import org.gmnz.vega.VegaImpl;
+import org.gmnz.vega.VegaUtil;
 import org.gmnz.vega.domain.Allergen;
 import org.gmnz.vega.domain.Report;
 import org.gmnz.vega.domain.ReportBuilder;
@@ -63,6 +64,11 @@ class CmdReportCreateExec extends AbstractVegaCommand {
 
 	@Override
 	protected void process() throws VegaException {
+
+		if (VegaUtil.stringNullOrEmpty(subjectName)) {
+			throw new VegaException("the name of the subject is mandatory");
+		}
+
 		ReportBuilder builder = ReportBuilder.getBuilder();
 
 		builder.subjectName(subjectName).owner(reportOwner).createdOn(new Date());

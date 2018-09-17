@@ -48,6 +48,9 @@ class CmdReportViewDetails extends AbstractVegaCommand {
 		ReportManagementBean rmb = new ReportManagementBean();
 		rmb.setOperationLabel("Report details");
 		Report r = vega.getReportService().getReportById(reportId);
+		if (r == null) {
+			throw new Exception(String.format("no report found for id [%s]", reportId));
+		}
 		ViewReportData viewReportData = prepareReportData(r);
 		model.setAttribute("reportData", viewReportData);
 	}
