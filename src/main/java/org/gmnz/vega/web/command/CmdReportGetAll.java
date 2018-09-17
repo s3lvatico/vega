@@ -26,7 +26,7 @@ class CmdReportGetAll extends AbstractVegaCommand {
 
 	@Override
 	protected String setCommandName() {
-		return VegaCommand.Category.GET_ALL;
+		return VegaCommand.Report.GET_ALL;
 	}
 
 

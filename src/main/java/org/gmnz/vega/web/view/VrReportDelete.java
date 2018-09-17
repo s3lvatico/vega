@@ -5,9 +5,12 @@ import org.gmnz.vega.web.context.RequestContext;
 import org.gmnz.vega.web.context.ResponseContext;
 
 
-class VrAllergenGetAll extends AbstractViewResolver {
+/**
+ * creato da simone in data 15/09/2018.
+ */
+class VrReportDelete extends AbstractViewResolver {
 
-	public VrAllergenGetAll(RequestContext requestContext, ResponseContext responseContext) {
+	public VrReportDelete(RequestContext requestContext, ResponseContext responseContext) {
 		super(requestContext, responseContext);
 	}
 
@@ -15,8 +18,7 @@ class VrAllergenGetAll extends AbstractViewResolver {
 
 	@Override
 	protected String setViewName() {
-		return "allergens";
+		return "reportDeletion";
 	}
-
 
 }

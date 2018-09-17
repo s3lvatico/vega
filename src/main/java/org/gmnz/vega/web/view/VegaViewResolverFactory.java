@@ -36,7 +36,11 @@ class VegaViewResolverFactory extends ViewResolverFactory {
 		viewResolversMap.put(VegaCommand.Allergen.EXECUTE_EDIT, VrAllergenRedirect2GetAll.class);
 
 		viewResolversMap.put(VegaCommand.Report.GET_ALL, VrReportGetAll.class);
-
+		viewResolversMap.put(VegaCommand.Report.CREATE, VrReportCreate.class);
+		viewResolversMap.put(VegaCommand.Report.EXECUTE_CREATE, VrReportRedirect2GetAll.class);
+		viewResolversMap.put(VegaCommand.Report.VIEW_DETAILS, VrReportRedirect2GetAll.class);
+		viewResolversMap.put(VegaCommand.Report.DELETE, VrReportDelete.class);
+		viewResolversMap.put(VegaCommand.Report.EXECUTE_DELETE, VrReportRedirect2GetAll.class);
 	}
 
 

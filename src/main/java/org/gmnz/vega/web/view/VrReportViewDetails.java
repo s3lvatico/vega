@@ -5,9 +5,9 @@ import org.gmnz.vega.web.context.RequestContext;
 import org.gmnz.vega.web.context.ResponseContext;
 
 
-class VrCategoryGetAll extends AbstractViewResolver {
+class VrReportViewDetails extends AbstractViewResolver {
 
-	public VrCategoryGetAll(RequestContext requestContext, ResponseContext responseContext) {
+	public VrReportViewDetails(RequestContext requestContext, ResponseContext responseContext) {
 		super(requestContext, responseContext);
 	}
 
@@ -15,8 +15,7 @@ class VrCategoryGetAll extends AbstractViewResolver {
 
 	@Override
 	protected String setViewName() {
-		return "categories";
+		return "viewDetails";
 	}
-
 
 }

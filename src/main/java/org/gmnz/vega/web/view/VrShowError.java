@@ -8,7 +8,7 @@ import org.gmnz.vega.web.context.ResponseContext;
 /**
  * creato da simone in data 15/09/2018.
  */
-public class VrShowError extends AbstractViewResolver {
+class VrShowError extends AbstractViewResolver {
 
 	private static final String ERROR_VIEW_NAME = "showError";
 

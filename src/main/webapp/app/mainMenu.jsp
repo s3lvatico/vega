@@ -10,7 +10,6 @@
 <body>
 	<jsp:include page="/WEB-INF/jsp/header.jsp" />
 	<h2>Main menu</h2>
-	<img src="../img/apple.png"/> Questa è solo una prova su un'immagine
 	<ul>
 		<li><a href="<%=contextRoot%>/app/category/getAll">Categories</a></li>
 		<li><a href="<%=contextRoot%>/app/allergen/getAll">Allergens</a></li>

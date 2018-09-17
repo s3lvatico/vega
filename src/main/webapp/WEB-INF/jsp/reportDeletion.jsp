@@ -15,10 +15,12 @@
     <li>Creation date: ${creationDate}</li>
 </ul>
 
-<form method="POST" action="${contextRoot}/app/report/do" >
+<form method="POST" action="${contextRoot}/app/report/do/${reportBean.action}" >
     <input type="submit" value="delete it"/>
     <input type="hidden" name="reportId" value="${reportId}"/>
+    <!-- 
     <input type="hidden" name="action" value="${reportBean.action}"/>
+     -->
 </form>
 <p>
     Or <a href="${contextRoot}/app/mainMenu.jsp">go back to the main page</a>

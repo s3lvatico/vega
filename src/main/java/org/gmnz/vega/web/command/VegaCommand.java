@@ -52,6 +52,7 @@ public interface VegaCommand {
 		String GET_ALL = "report.getAll";
 		String CREATE = "report.create";
 		String DELETE = "report.delete";
+		String VIEW_DETAILS = "report.viewDetails";
 
 		String EXECUTE = "report.do.";
 		String EXECUTE_CREATE = EXECUTE + CREATE;
