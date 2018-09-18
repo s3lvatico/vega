@@ -6,13 +6,15 @@
 		username="sandbox_user" password="sandbox_password" 
 		timeBetweenEvictionRunsMillis="300000" removeAbandonedOnBorrow="true" removeAbandonedOnMaintenance="true"
 		removeAbandonedTimeout="60" logAbandoned="true" />
+		
 	<Realm className="org.apache.catalina.realm.JDBCRealm" 
 		driverName="com.mysql.cj.jdbc.Driver"
 		connectionURL="jdbc:mysql://localhost/vega?user=sandbox_user&amp;password=sandbox_password&amp;useLegacyDatetimeCode=false&amp;serverTimezone=Europe/Rome&amp;useSSL=false&amp;allowPublicKeyRetrieval=true"
 		userTable="vega_user" userNameCol="user_name" userCredCol="user_password" 
 		userRoleTable="vega_role" roleNameCol="role_name"
 	>
-		<CredentialHandler className="org.apache.catalina.realm.MessageDigestCredentialHandler"
-			algorithm="sha-256" />
+	
+		<CredentialHandler className="org.apache.catalina.realm.MessageDigestCredentialHandler" algorithm="sha-256" />
+		
 	</Realm>
 </Context>

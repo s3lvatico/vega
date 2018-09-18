@@ -12,6 +12,8 @@
 
 <h1>Gmnz's Vega</h1>
 <hr/>
+<ul>
+</ul>
 <h6>
     <a href="<%= contextRoot %>/app/mainMenu.jsp">Index</a>
     <a href="<%= contextRoot %>/app/category/getAll">Categories</a>
