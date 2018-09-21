@@ -1,5 +1,6 @@
 package org.gmnz.vega.web.command;
 
+
 /**
  * creato da simone in data 08/09/2018.
  */
@@ -19,6 +20,11 @@ public interface VegaCommand {
 	@Deprecated
 	String TARGET_FILE = "target.file";
 
+
+
+
+
+
 	interface Category {
 
 		String GET_ALL = "category.getAll";
@@ -32,6 +38,11 @@ public interface VegaCommand {
 		String EXECUTE_EDIT = EXECUTE + EDIT;
 
 	}
+
+
+
+
+
 
 	interface Allergen {
 
@@ -47,6 +58,11 @@ public interface VegaCommand {
 
 	}
 
+
+
+
+
+
 	interface Report {
 
 		String GET_ALL = "report.getAll";
@@ -57,6 +73,25 @@ public interface VegaCommand {
 		String EXECUTE = "report.do.";
 		String EXECUTE_CREATE = EXECUTE + CREATE;
 		String EXECUTE_DELETE = EXECUTE + DELETE;
+
+	}
+
+
+
+
+
+
+	interface User {
+
+		String GET_ALL = "users.getAll";
+		String CREATE = "users.create";
+		String DELETE = "users.delete";
+		String EDIT = "users.edit";
+
+		String EXECUTE = "users.do.";
+		String EXECUTE_CREATE = EXECUTE + CREATE;
+		String EXECUTE_DELETE = EXECUTE + DELETE;
+		String EXECUTE_EDIT = EXECUTE + EDIT;
 
 	}
 

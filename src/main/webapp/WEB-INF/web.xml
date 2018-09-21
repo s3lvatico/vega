@@ -63,6 +63,7 @@
 		<url-pattern>/app/category/*</url-pattern>
 		<url-pattern>/app/allergen/*</url-pattern>
 		<url-pattern>/app/report/*</url-pattern>
+		<url-pattern>/app/users/*</url-pattern>
 	</servlet-mapping>
 
 

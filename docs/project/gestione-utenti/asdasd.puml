@@ -1,5 +1,12 @@
 @startuml
-testdot
+node n0 [
+    nodino
+    ---
+    riga2
+    ===
+    riga 3
+]
+
 @enduml
 
 
