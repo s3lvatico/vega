@@ -1,12 +1,12 @@
 package org.gmnz.vega.web.command;
 
 
+import org.gmnz.vega.web.context.RequestContext;
+
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
 import java.util.Map;
-
-import org.gmnz.vega.web.context.RequestContext;
 
 
 /**
@@ -40,8 +40,10 @@ class VegaCommandFactory extends CommandFactory {
 		commandsMap.put(VegaCommand.Report.DELETE, CmdReportDelete.class);
 		commandsMap.put(VegaCommand.Report.EXECUTE_DELETE, CmdReportDeleteExec.class);
 
+		commandsMap.put(VegaCommand.User.GET_ALL, CmdUserGetAll.class);
+		commandsMap.put(VegaCommand.User.EDIT, CmdAllergenEdit.class);
+		commandsMap.put(VegaCommand.User.EXECUTE_EDIT, CmdAllergenEditExecute.class);
 	}
-
 
 
 	@Override
@@ -54,15 +56,18 @@ class VegaCommandFactory extends CommandFactory {
 			final Constructor<? extends AbstractVegaCommand> commandClassConstructor = commandClass
 					.getConstructor(RequestContext.class);
 			return commandClassConstructor.newInstance(requestContext);
-		} catch (NoSuchMethodException | InstantiationException | IllegalAccessException | InvocationTargetException e) {
+		}
+		catch (NoSuchMethodException | InstantiationException | IllegalAccessException | InvocationTargetException e) {
 			e.printStackTrace();
 			String errorMessage = String.format("Error while creating command [%s]", commandName);
 			return AbstractVegaCommand.ERROR(requestContext, "COMMAND_CONSTRUCTION_ERROR", 500, errorMessage, e);
-		} catch (NullPointerException npe) {
+		}
+		catch (NullPointerException npe) {
 			npe.printStackTrace();
 			String errorMessage = String.format("Unknown command specified [%s]", commandName);
 			return AbstractVegaCommand.ERROR(requestContext, "UNKNOWN_COMMAND", 400, errorMessage, npe);
-		} catch (Exception e) {
+		}
+		catch (Exception e) {
 			e.printStackTrace();
 			String errorMessage = String.format("Error in building command [%s]", commandName);
 			return AbstractVegaCommand.ERROR(requestContext, "COMMAND_CREATION_ERROR", 500, errorMessage, e);

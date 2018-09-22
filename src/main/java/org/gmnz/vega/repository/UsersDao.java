@@ -1,7 +1,6 @@
 package org.gmnz.vega.repository;
 
 
-import org.gmnz.vega.domain.Category;
 import org.gmnz.vega.domain.User;
 
 import java.util.List;
@@ -17,4 +16,11 @@ group by u.user_name
 	 */
 
 	List<User> findAll() throws DaoException;
+
+
+	User findById(String userId) throws DaoException;
+
+
+	List<String> findAllRoles() throws DaoException;
+
 }

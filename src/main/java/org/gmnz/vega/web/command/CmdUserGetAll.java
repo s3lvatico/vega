@@ -3,12 +3,10 @@ package org.gmnz.vega.web.command;
 
 import org.gmnz.vega.Vega;
 import org.gmnz.vega.VegaImpl;
-import org.gmnz.vega.domain.Report;
-import org.gmnz.vega.web.context.ContextProperty;
+import org.gmnz.vega.domain.User;
 import org.gmnz.vega.web.context.RequestContext;
 
-import javax.servlet.http.HttpServletRequest;
-import java.util.Collection;
+import java.util.List;
 
 
 class CmdUserGetAll extends AbstractVegaCommand {
@@ -39,8 +37,8 @@ class CmdUserGetAll extends AbstractVegaCommand {
 
 	@Override
 	protected void process() throws Exception {
-		Collection<Report> reports = vega.getReportService().getStoredReports();
-		model.setAttribute("users", reports);
+		List<User> users = vega.getUserService().getAllUsers();
+		model.setAttribute("users", users);
 	}
 
 }

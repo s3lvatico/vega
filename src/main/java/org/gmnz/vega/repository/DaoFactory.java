@@ -57,6 +57,14 @@ public abstract class DaoFactory {
 
 
 
+	public UsersDao createUsersDao() throws DaoCreationException {
+		UsersDaoImpl daoImpl = new UsersDaoImpl();
+		injectConnection(daoImpl);
+		return daoImpl;
+	}
+
+
+
 	private void injectConnection(ConnectionOrientedDaoImpl dao) throws DaoCreationException {
 		try {
 			dao.connection = dataSource.getConnection();

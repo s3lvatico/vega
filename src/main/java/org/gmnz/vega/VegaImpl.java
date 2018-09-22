@@ -12,12 +12,15 @@ public class VegaImpl implements Vega {
 
 	private final ReportService reportService;
 
+	private final UserService userService;
+
 
 
 	public VegaImpl() {
 		categoryService = new CategoryServiceImpl();
 		allergenService = new AllergenServiceImpl();
 		reportService = new ReportServiceImpl();
+		userService = new UserServiceImpl();
 	}
 
 
@@ -39,6 +42,13 @@ public class VegaImpl implements Vega {
 	@Override
 	public ReportService getReportService() {
 		return reportService;
+	}
+
+
+
+	@Override
+	public UserService getUserService() {
+		return userService;
 	}
 
 

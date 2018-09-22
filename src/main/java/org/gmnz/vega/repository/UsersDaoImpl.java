@@ -54,4 +54,18 @@ class UsersDaoImpl extends BasicDaoImpl implements UsersDao {
 	}
 
 
+
+	@Override
+	public User findById(String userId) throws DaoException {
+		return null;
+	}
+
+
+
+	@Override
+	public List<String> findAllRoles() throws DaoException {
+		return null;
+	}
+
+
 }

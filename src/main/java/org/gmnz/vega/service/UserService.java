@@ -2,7 +2,7 @@ package org.gmnz.vega.service;
 
 
 import org.gmnz.vega.VegaException;
-import org.gmnz.vega.domain.Category;
+import org.gmnz.vega.domain.User;
 
 import java.util.List;
 
@@ -12,7 +12,7 @@ import java.util.List;
  */
 public interface UserService {
 
-	List<Category> getAllUsers() throws VegaException;
+	List<User> getAllUsers() throws VegaException;
 
 	/*
 

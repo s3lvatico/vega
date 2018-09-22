@@ -13,17 +13,8 @@
 <h2>Users</h2>
 <h3>Registered in the system</h3>
 
-<!--
-id utente
-nome
-ruoli
-
-pulsante modifica
-pulsante elimina
--->
-
 <table>
-	<table>
+	<table border="1">
 		<thead>
 		<tr>
 			<th>user id</th>
@@ -35,20 +26,20 @@ pulsante elimina
 		<tbody>
 		<c:forEach var="user" items="${users}">
 			<tr>
-				<td>${user.id}</td>
+				<td>${user.userId}</td>
 				<td>${user.fullName}</td>
-				<td>${user.rolesList}</td>
+				<td>${user.roles}</td>
 				<td>
 					<!-- edit -->
 					<form method="post" action="${contextRoot}/app/users/edit">
-						<input type="hidden" name="userId" value="${user.id}">
+						<input type="hidden" name="userId" value="${user.userId}">
 						<input type="submit" value="E">
 					</form>
 				</td>
 				<td>
 					<!-- delete -->
 					<form method="post" action="${contextRoot}/app/users/delete">
-						<input type="hidden" name="userId" value="${user.id}">
+						<input type="hidden" name="userId" value="${user.userId}">
 						<input type="submit" value="D">
 					</form>
 				</td>
