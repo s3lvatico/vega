@@ -13,25 +13,38 @@
 	<h2>Users</h2>
 	<h3>Modify user information</h3>
 
-	<form method="POST" action="${contextRoot}/app/users/do/${commandName}">
-		<input type="hidden" name="userId" value="${user.userId}">
+	<form method="POST" action="${contextRoot}/app/users/do/${commandName}">		
 		<p>User id : ${user.userId}</p>
-		<p>Full name : ${user.fullName}</p>
 		<p>
-			New password <input type="password" name="newPassword">
+			Full name : <input type="text" name="userFullName" value="${user.fullName}">
 		</p>
-		<p>
-			Confirm new password <input type="password" name="newPasswordConf">
-		</p>
-		<p>User roles</p>
-		<table>
-			<c:forEach var="role" items="${userRoles}">
+		<fieldset>
+			<legend>Password modification</legend>
+			<table>
 				<tr>
-					<td><input type="checkbox" name="${role.name}" <c:if test="${role.selected}">checked</c:if>></td>
-					<td>${role.name}</td>
+					<td>New password</td>
+					<td><input type="password" name="newPassword"></td>
 				</tr>
-			</c:forEach>
-		</table>
+				<tr>
+					<td>Confirm new password</td>
+					<td><input type="password" name="newPasswordConf"></td>
+				</tr>
+			</table>
+		</fieldset>
+		<fieldset>
+			<legend>User Roles</legend>
+			<table>
+				<c:forEach var="role" items="${userRoles}">
+					<tr>
+						<td><input type="checkbox" name="${role.name}" <c:if test="${role.selected}">checked</c:if>></td>
+						<td>${role.name}</td>
+					</tr>
+				</c:forEach>
+			</table>
+		</fieldset>
+		<p>
+			<input type="submit" value="Confirm">
+		</p>
 	</form>
 	<%@include file="/WEB-INF/jsp/footer.jsp"%>
 </body>

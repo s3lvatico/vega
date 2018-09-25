@@ -1,10 +1,15 @@
 package org.gmnz.vega.web.command;
 
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.gmnz.vega.Vega;
 import org.gmnz.vega.VegaImpl;
 import org.gmnz.vega.domain.User;
+import org.gmnz.vega.service.UserService;
 import org.gmnz.vega.web.context.RequestContext;
+import org.gmnz.vega.web.view.UserRolesBean;
 
 
 /**
@@ -40,8 +45,18 @@ class CmdUsersEdit extends AbstractVegaCommand {
 
 	@Override
 	protected void process() throws Exception {
-		User user = vega.getUserService().getUserById(userId);
-		model.setAttribute("user", cmb);
+		UserService userService = vega.getUserService();
+		User user = userService.getUserById(userId);
+		List<String> roles = userService.getAllRoles();
+
+		List<UserRolesBean> userRoles = new ArrayList<>();
+
+		for (String role : roles) {
+			userRoles.add(new UserRolesBean(role, user.getRoles().contains(role)));
+		}
+		model.setSessionAttribute("user", user);
+		model.setSessionAttribute("roles", roles);
+		model.setAttribute("userRoles", userRoles);
 	}
 
 }

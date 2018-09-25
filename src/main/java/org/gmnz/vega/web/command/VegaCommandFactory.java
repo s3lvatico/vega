@@ -1,12 +1,12 @@
 package org.gmnz.vega.web.command;
 
 
-import org.gmnz.vega.web.context.RequestContext;
-
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
 import java.util.Map;
+
+import org.gmnz.vega.web.context.RequestContext;
 
 
 /**
@@ -41,8 +41,8 @@ class VegaCommandFactory extends CommandFactory {
 		commandsMap.put(VegaCommand.Report.EXECUTE_DELETE, CmdReportDeleteExec.class);
 
 		commandsMap.put(VegaCommand.User.GET_ALL, CmdUserGetAll.class);
-		commandsMap.put(VegaCommand.User.EDIT, CmdAllergenEdit.class);
-		commandsMap.put(VegaCommand.User.EXECUTE_EDIT, CmdAllergenEditExecute.class);
+		commandsMap.put(VegaCommand.User.EDIT, CmdUsersEdit.class);
+		commandsMap.put(VegaCommand.User.EXECUTE_EDIT, CmdUsersEditExecute.class);
 	}
 
 
