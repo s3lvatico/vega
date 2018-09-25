@@ -3,9 +3,7 @@ package org.gmnz.vega.web.command;
 
 import org.gmnz.vega.Vega;
 import org.gmnz.vega.VegaImpl;
-import org.gmnz.vega.domain.Category;
 import org.gmnz.vega.domain.User;
-import org.gmnz.vega.ui.web.category.CategoryManagementBean;
 import org.gmnz.vega.web.context.RequestContext;
 
 
@@ -43,8 +41,7 @@ class CmdUsersEdit extends AbstractVegaCommand {
 	@Override
 	protected void process() throws Exception {
 		User user = vega.getUserService().getUserById(userId);
-
-		model.setAttribute("categoryBean", cmb);
+		model.setAttribute("user", cmb);
 	}
 
 }
