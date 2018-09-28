@@ -92,21 +92,6 @@ class VegaHttpRequestContext extends AbstractContextObject implements RequestCon
 	}
 
 
-
-	@Override
-	public String getParameter(String name) {
-		return parameters.get(name);
-	}
-
-
-
-	@Override
-	public Object getAttribute(String name) {
-		return attributes.get(name);
-	}
-
-
-
 	@Override
 	public Object getSessionAttribute(String name) {
 		return sessionStorage.get(name);

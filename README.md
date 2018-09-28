@@ -1,25 +1,15 @@
 # vega
 
-## branch "yabu" (ex JSP-JDBC)
+## branch "jamian"
 
-Riprendo da dove ero arrivato con la parte jsp, in cui sostanzialmente non c'era persistenza.
-In questo branch aggiungo la persistenza dei dati tramite jdbc.
-
-Il supporto dell'application server è limitato alla disponibiliàdi un oggetto DataSource reperibile via JNDI. Il nome jndi cella risorsa sarà fornito in un parametro di avviamento dell'applicazione.
-
-Ho fatto uno schema di massima del db qui: https://goo.gl/YQyU7d
-
-Qui ci sarà il classico meccanismo dei DAO la cui implementazione userà l'API classica JDBC
-
-ROADMAP: Data layer in jdbc semplice, sicurezza basic o con mini-db lato server, frontend jsf/facelets, primefaces o equivalente, zkoss?
+Riprende da Misty e modifica il front-end usando bootstrap 4
 
 ### Feature matrix
 
 |branch|front end|back end |persistence|sicurezza|
 |----|----:|----:|----:|----:|
-|yabu|jsp|servlet/custom|jdbc|su db - pw criptate|
-|geki|jsp|servlet/custom + spring|spring-jdbc| ---&gt; yabu |
+|yabu|jsp|servlet / custom|jdbc|su db - pw criptate|
+|misty|jsp|servlet / pattern|--&gt; yabu|--&gt; yabu|
+|jamian|jsp + bootstrap|servlet / custom|--&gt; misty |--&gt; misty|
+|geki|jsp|servlet / custom + spring|spring-jdbc| --&gt; yabu |
 
-### altre note
-
-Sembra che sia necessaria la presenza del driver jdbc nella lib di tomcat

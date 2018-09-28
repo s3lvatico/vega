@@ -1,6 +1,8 @@
 package org.gmnz.vega.web.context;
 
 
+import org.gmnz.vega.VegaUtil;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -21,7 +23,7 @@ abstract class AbstractContextObject implements ContextObject {
 
 	@Override
 	public String getParameter(String name) {
-		return parameters.get(name);
+		return VegaUtil.normalizeString(parameters.get(name));
 	}
 
 

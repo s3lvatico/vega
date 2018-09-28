@@ -47,12 +47,25 @@ public class VegaUtil {
 		MessageDigest md = createMessageDigest();
 		md.update(s1.getBytes());
 		byte[] digest = md.digest(s2.getBytes());
+		return stringify(digest);
+	}
 
-		StringBuilder sbDigest = new StringBuilder();
-		for (byte b : digest) {
-			sbDigest.append(String.format("%02x", (b & 0xff)));
+
+
+	public static String getSha256Digest(String s) {
+		MessageDigest md = createMessageDigest();
+		byte[] digest = md.digest(s.getBytes());
+		return stringify(digest);
+	}
+
+
+
+	private static String stringify(byte[] bytes) {
+		StringBuilder sb = new StringBuilder();
+		for (byte b : bytes) {
+			sb.append(String.format("%02x", (b & 0xff)));
 		}
-		return sbDigest.toString();
+		return sb.toString();
 	}
 
 

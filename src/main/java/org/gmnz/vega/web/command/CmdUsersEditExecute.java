@@ -1,15 +1,15 @@
 package org.gmnz.vega.web.command;
 
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
 import org.gmnz.vega.Vega;
 import org.gmnz.vega.VegaImpl;
 import org.gmnz.vega.VegaUtil;
 import org.gmnz.vega.domain.User;
 import org.gmnz.vega.web.context.RequestContext;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 
 /**
@@ -46,8 +46,8 @@ class CmdUsersEditExecute extends AbstractVegaCommand {
 		vega = new VegaImpl();
 		targetUser = (User) requestContext.getSessionAttribute("user");
 		userFullName = requestContext.getParameter("userFullName");
-		newPassword = VegaUtil.normalizeString(requestContext.getParameter("newPassword"));
-		newPasswordConf = VegaUtil.normalizeString(requestContext.getParameter("newPasswordConf"));
+		newPassword = requestContext.getParameter("newPassword"));
+		newPasswordConf = requestContext.getParameter("newPasswordConf"));
 		List<String> roles = (List<String>) requestContext.getSessionAttribute("roles");
 		for (String role : roles) {
 			boolean roleIsSelected = !VegaUtil.stringNullOrEmpty(requestContext.getParameter(role));
@@ -59,20 +59,30 @@ class CmdUsersEditExecute extends AbstractVegaCommand {
 
 	@Override
 	protected void process() throws Exception {
-		if (VegaUtil.stringNullOrEmpty(userFullName)) {
+		if (userFullName.isEmpty()) {
 			throw new Exception("invalid input for the user full name");
 		}
-		validatePasswordChange();
+		boolean passwordChangeRequested = validatePasswordChange();
 		validateSelectedRoles();
+
+
 
 		// TODO passati questi test puoi aggiornare l'utente chiamando il service layer
 	}
 
 
 
-	private void validatePasswordChange() throws Exception {
-		if (!(VegaUtil.stringNullOrEmpty(newPassword) || newPasswordConf.equals(newPassword))) {
-			throw new Exception("password confirmation check failed");
+	private boolean validatePasswordChange() throws Exception {
+		if (!newPassword.isEmpty()) {
+			if (newPasswordConf.equals(newPassword)) {
+				return true;
+			}
+			else {
+				throw new Exception("password confirmation check failed");
+			}
+		}
+		else {
+			return false;
 		}
 	}
 

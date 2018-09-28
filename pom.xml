@@ -6,7 +6,7 @@
 
 	<groupId>org.gmnz</groupId>
 	<artifactId>vega</artifactId>
-	<version>1.0-misty</version>
+	<version>1.0-jamian</version>
 	<packaging>war</packaging>
 
 	<properties>
