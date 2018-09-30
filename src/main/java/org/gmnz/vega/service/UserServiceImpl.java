@@ -63,4 +63,18 @@ public class UserServiceImpl extends BasicServiceBean implements UserService {
 		}
 	}
 
+
+
+	@Override
+	public void updateUser(User user) throws VegaException {
+
+	}
+
+
+
+	@Override
+	public void updateUser(User user, String password) throws VegaException {
+
+	}
+
 }

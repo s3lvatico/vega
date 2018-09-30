@@ -46,8 +46,8 @@ class CmdUsersEditExecute extends AbstractVegaCommand {
 		vega = new VegaImpl();
 		targetUser = (User) requestContext.getSessionAttribute("user");
 		userFullName = requestContext.getParameter("userFullName");
-		newPassword = requestContext.getParameter("newPassword"));
-		newPasswordConf = requestContext.getParameter("newPasswordConf"));
+		newPassword = requestContext.getParameter("newPassword");
+		newPasswordConf = requestContext.getParameter("newPasswordConf");
 		List<String> roles = (List<String>) requestContext.getSessionAttribute("roles");
 		for (String role : roles) {
 			boolean roleIsSelected = !VegaUtil.stringNullOrEmpty(requestContext.getParameter(role));

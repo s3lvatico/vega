@@ -1,6 +1,9 @@
 package org.gmnz.vega.repository;
 
 
+import org.gmnz.vega.VegaUtil;
+import org.gmnz.vega.domain.User;
+
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -9,33 +12,43 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import org.gmnz.vega.domain.User;
-
 
 class UsersDaoImpl extends BasicDaoImpl implements UsersDao {
 
 //@formatter:off
 
 	private static final String SQL_FIND_ALL =
-			" select u.user_name, u.full_name, group_concat(r.role_name SEPARATOR ',') " +
+			" select u.user_name, u.full_name, group_concat(r.role_name) " +
 			" from vega_user u join vega_role r on u.user_name = r.user_name " +
-			" group by u.user_name" ;
+			" group by u.user_name, u.FULL_NAME ";
 
 	private static final String SQL_FIND_BY_ID =
 			"select " + 
 			"	u.user_name, " + 
 			"	u.full_name, " + 
-			"	group_concat(r.role_name separator ',') " + 
+			"	group_concat(r.role_name) " +
 			"from " + 
 			"	vega_user u " + 
 			"join vega_role r on " + 
 			"	u.user_name = r.user_name " + 
 			"where u.user_name = ? " + 
 			"group by " + 
-			"	u.user_name ";
+			"	u.user_name,u.full_name ";
 	
 	private static final String SQL_FIND_ROLES = 
-			"select distinct vr.role_name from vega_role vr";
+			"select distinct role_name from vega_role ";
+
+	private static final String SQL_UPDATE_USER =
+			"update vega_user set full_name = ? where user_name = ?";
+
+	private static final String SQL_UPDATE_USER_W_PASSWORD =
+			"update vega_user set full_name = ?, user_password = ? where user_name = ?";
+
+	private static final String SQL_CLEAR_USER_ROLES =
+			"delete from vega_role where user_name = ?";
+
+	private static final String SQL_INSERT_USER_ROLES =
+			"insert into vega_role values (?, ?)";
 //@formatter:on
 
 
@@ -59,10 +72,12 @@ class UsersDaoImpl extends BasicDaoImpl implements UsersDao {
 				users.add(u);
 			}
 			return users;
-		} catch (SQLException e) {
+		}
+		catch (SQLException e) {
 			e.printStackTrace();
 			throw new DaoException("UsersDaoImpl.findAll error", e);
-		} finally {
+		}
+		finally {
 			releaseResources(s, rs);
 		}
 	}
@@ -90,10 +105,12 @@ class UsersDaoImpl extends BasicDaoImpl implements UsersDao {
 				u.setRoles(Arrays.asList(roles.split(",")));
 			}
 			return u;
-		} catch (SQLException e) {
+		}
+		catch (SQLException e) {
 			e.printStackTrace();
 			throw new DaoException("UsersDaoImpl.findById error", e);
-		} finally {
+		}
+		finally {
 			releaseResources(s, rs);
 		}
 	}
@@ -112,11 +129,58 @@ class UsersDaoImpl extends BasicDaoImpl implements UsersDao {
 				roles.add(rs.getString(1));
 			}
 			return roles;
-		} catch (SQLException e) {
+		}
+		catch (SQLException e) {
 			e.printStackTrace();
 			throw new DaoException("UsersDaoImpl.findAllRoles error", e);
-		} finally {
+		}
+		finally {
 			releaseResources(s, rs);
+		}
+	}
+
+
+
+	public void updateUser(User user, String password) throws DaoException {
+		PreparedStatement s = null;
+		try {
+			connection.setAutoCommit(false);
+
+
+			if (VegaUtil.stringNullOrEmpty(password)) {
+				s = connection.prepareStatement(SQL_UPDATE_USER);
+				s.setString(1, user.getFullName());
+				s.setString(2, user.getUserId());
+				s.executeUpdate();
+			}
+			else {
+				s = connection.prepareStatement(SQL_UPDATE_USER_W_PASSWORD);
+				s.setString(1, user.getFullName());
+				String hashedPassword = VegaUtil.getSha256Digest(password);
+				s.setString(2, hashedPassword);
+				s.setString(3, user.getUserId());
+				s.executeUpdate();
+			}
+
+			s = connection.prepareStatement(SQL_CLEAR_USER_ROLES);
+			s.setString(1, user.getUserId());
+			s.executeUpdate();
+
+			s = connection.prepareStatement(SQL_INSERT_USER_ROLES);
+			for (String role : user.getRoles()) {
+				s.setString(1, role);
+				s.setString(2, user.getUserId());
+				s.executeUpdate();
+			}
+
+			connection.commit();
+		}
+		catch (SQLException e) {
+			e.printStackTrace();
+			throw new DaoException("UsersDaoImpl.updateUser error", e);
+		}
+		finally {
+			releaseResources(s);
 		}
 	}
 
