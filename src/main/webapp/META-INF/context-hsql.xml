@@ -1,0 +1,20 @@
+<Context>
+
+	<Resource name="jdbc/vegaDS" auth="Container"
+		type="javax.sql.DataSource" maxTotal="100" maxIdle="30" maxWaitMillis="10000"
+		driverClassName="org.hsqldb.jdbc.JDBCDriver"
+		url="jdbc:hsqldb:hsql://localhost:9001/vega"
+		username="SA" password=""
+		timeBetweenEvictionRunsMillis="300000" removeAbandonedOnBorrow="true" removeAbandonedOnMaintenance="true"
+		removeAbandonedTimeout="60" logAbandoned="true" />
+
+	<Realm className="org.apache.catalina.realm.JDBCRealm"
+		driverName="org.hsqldb.jdbc.JDBCDriver"
+		connectionURL="jdbc:hsqldb:hsql://localhost:9001/vega;user=SA"
+		userTable="vega_user" userNameCol="user_name" userCredCol="user_password"
+		userRoleTable="vega_role" roleNameCol="role_name"
+	>
+		<CredentialHandler className="org.apache.catalina.realm.MessageDigestCredentialHandler" algorithm="sha-256" />
+	</Realm>
+
+</Context>
