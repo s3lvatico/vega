@@ -1,9 +1,9 @@
 package org.gmnz.vega.repository;
 
 
-import java.util.List;
-
 import org.gmnz.vega.domain.User;
+
+import java.util.List;
 
 
 public interface UsersDao extends ConnectionOrientedDao {
@@ -15,5 +15,8 @@ public interface UsersDao extends ConnectionOrientedDao {
 
 
 	List<String> findAllRoles() throws DaoException;
+
+
+	void updateUser(User user, String password) throws DaoException;
 
 }
