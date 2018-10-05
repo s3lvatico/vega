@@ -11,25 +11,21 @@
 <body>
 <h1>Gmnz's Vega</h1>
 <hr/>
-<div class="container-fluid">
-	<div class="row">
-		<div class="col-md-6">
-			<nav class="nav">
-				<a class="nav-link" href="<%= contextRoot %>/app/mainMenu.jsp">Index</a>
-				<a class="nav-link" href="<%= contextRoot %>/app/category/getAll">Categories</a>
-				<a class="nav-link" href="<%= contextRoot %>/app/allergen/getAll">Allergens</a>
-				<a class="nav-link" href="<%= contextRoot %>/app/report/getAll">Reports</a>
-			</nav>
-		</div>
-		<div class="col-md-6">
-			<c:if test="${userIsLogged}">
-				<span>logged in as [<%= request.getRemoteUser() + "] - " %> <a href="<%= contextRoot %>/logout.jsp">Log out</a></span>
-			</c:if>
-		</div>
-	</div>
-</div> <!-- container -->
-
+<h6>
+	<a href="${webAppRoot}/app/mainMenu.jsp">Index</a>
+	<a href="${webAppRoot}/app/category/getAll">Categories</a>
+	<a href="${webAppRoot}/app/allergen/getAll">Allergens</a>
+	<a href="${webAppRoot}/app/report/getAll">Reports</a>
+	<c:if test="${userManagementEnabled}">
+		<a href="${webAppRoot}/app/users/getAll">Users Management</a>
+	</c:if>
+	<c:if test="${userIsLogged}">
+		<%= " |  logged in as [" + request.getRemoteUser() + "] - " %> <a href="${webAppRoot}/logout.jsp">Log out</a>
+	</c:if>
+</h6>
 <hr/>
 
 </body>
 </html>
+
+
