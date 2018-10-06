@@ -66,6 +66,7 @@ public class UserServiceImpl extends BasicServiceBean implements UserService {
 		}
 	}
 
+	// TODO metodo che controlla che esista sempre almeno un v-admin
 
 
 	@Override

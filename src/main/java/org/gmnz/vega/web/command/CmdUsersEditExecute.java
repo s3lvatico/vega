@@ -7,6 +7,7 @@ import org.gmnz.vega.domain.User;
 import org.gmnz.vega.service.UserService;
 import org.gmnz.vega.web.context.RequestContext;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -91,6 +92,16 @@ class CmdUsersEditExecute extends AbstractVegaCommand {
 			throw new Exception("invalid input for the user full name");
 		}
 		validateSelectedRoles();
+
+		targetUser.setFullName(userFullName);
+		List<String> userNewRoles = new ArrayList<>();
+		for (String role : selectedRoles.keySet()) {
+			if (selectedRoles.get(role)) {
+				userNewRoles.add(role);
+			}
+		}
+		targetUser.setRoles(userNewRoles);
+
 		boolean passwordChangeRequested = validatePasswordChange();
 
 		if (passwordChangeRequested) {
