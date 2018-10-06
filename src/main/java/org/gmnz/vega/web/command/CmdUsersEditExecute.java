@@ -1,10 +1,10 @@
 package org.gmnz.vega.web.command;
 
 
-import org.gmnz.vega.Vega;
 import org.gmnz.vega.VegaImpl;
 import org.gmnz.vega.VegaUtil;
 import org.gmnz.vega.domain.User;
+import org.gmnz.vega.service.UserService;
 import org.gmnz.vega.web.context.RequestContext;
 
 import java.util.HashMap;
@@ -17,7 +17,7 @@ import java.util.Map;
  */
 class CmdUsersEditExecute extends AbstractVegaCommand {
 
-	Vega vega;
+	UserService userService;
 	User targetUser;
 	String userFullName;
 	String newPassword;
@@ -42,7 +42,7 @@ class CmdUsersEditExecute extends AbstractVegaCommand {
 	@SuppressWarnings("unchecked")
 	@Override
 	protected void initialize(RequestContext requestContext) {
-		vega = new VegaImpl();
+		userService = new VegaImpl().getUserService();
 		selectedRoles = new HashMap<>();
 		targetUser = (User) requestContext.getSessionAttribute("user");
 		userFullName = requestContext.getParameter("userFullName");
@@ -53,20 +53,6 @@ class CmdUsersEditExecute extends AbstractVegaCommand {
 			boolean roleIsSelected = !VegaUtil.stringNullOrEmpty(requestContext.getParameter(role));
 			selectedRoles.put(role, roleIsSelected);
 		}
-	}
-
-
-
-	@Override
-	protected void process() throws Exception {
-		if (userFullName.isEmpty()) {
-			throw new Exception("invalid input for the user full name");
-		}
-		boolean passwordChangeRequested = validatePasswordChange();
-		validateSelectedRoles();
-
-
-		// TODO passati questi test puoi aggiornare l'utente chiamando il service layer
 	}
 
 
@@ -96,5 +82,24 @@ class CmdUsersEditExecute extends AbstractVegaCommand {
 			throw new Exception("user must have at least one role");
 		}
 	}
+
+
+
+	@Override
+	protected void process() throws Exception {
+		if (userFullName.isEmpty()) {
+			throw new Exception("invalid input for the user full name");
+		}
+		validateSelectedRoles();
+		boolean passwordChangeRequested = validatePasswordChange();
+
+		if (passwordChangeRequested) {
+			userService.updateUser(targetUser, newPassword);
+		}
+		else {
+			userService.updateUser(targetUser);
+		}
+	}
+
 
 }

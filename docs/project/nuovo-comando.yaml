@@ -1,0 +1,31 @@
+# faccio un esempio con la creazione di una nuova categoria
+
+url mappato su comando /app/category/create:
+- comando: category.create
+- definire nell'interfaccia VegaCommand (o sue contenute) la costante stringa
+  relativa al comando
+- creare nuova classe che estende AbstractVegaCommand:
+  - visibilità di package, costruttore pubblico
+  - campi:
+    - eventuali riferimenti a interfacce di application service
+    # nel mio caso proprio l'interfaccia Vega e una sua implementazione
+  - ctor:
+    - [NO, lo fa nel setCommandName()] imposta nel modello il nome del comando
+  - AbstractVegaCommand.initialize:
+    - concretizza il riferimento all'application service
+    - inietta nel model eventuali informazioni ricavabili dalla richiesta
+      http (parametri di get/post o altre informazioni desumibili)
+  - AbstractVegaCommand.process:
+    - eseguire le chiamate all'application service
+    - memorizzare risultati come attributi del model
+    - eventualmente, preparare nel model gli attributi che la view si aspetta
+    di trovare
+    # controlla la view per avere un'idea di ciò che serve
+- VegaCommandFactory.commandsMap inserisci mappatura tra nome comando e classe
+  del nuovo comando
+- crea nuova specializzazione di AbstractViewResolver:
+  - nel costruttore se NON vuoi fare un forward, specifica isForward = false
+  - nel metodo setViewName() restituisci il nome della vista da raggiungere
+  - nel caso di gestioni particolari della vista, fare override di
+    AbstractViewResolver.resolveToView()
+- VegaViewResolverFactory.viewResolversMap inserisci mappatura

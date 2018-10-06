@@ -1,0 +1,14 @@
+Come gestisco le richieste http
+-------------------------------
+
+Considera una qualche servlet che ho mappato su un certo pattern di url.
+La base di tutta l'infrastruttura di gestione delle richieste è la classe
+BaseViewResolverServlet, che è di fatto una servlet. Da essa ereditano ad oggi
+le due classi controller per categorie e allergeni.
+
+BaseViewResolverServlet.service
+    Ho aggiunto degli intercettatori fittizi prima e dopo la chiamata effettiva
+    ai vari metodi doGet e doPost.
+    L'oggetto da cui tutto dipende strettamente è il RequestProcessingResult,
+    che verrà poi usato dal metodo dispatchToView() per capire come gestire
+    definitivamente la richiesta.

@@ -1,0 +1,35 @@
+# come voglio organizzare i report
+
+pagina dei report
+    elenco dei report
+        dati visualizzati:
+            soggetto
+            data record
+        comandi:
+            visualizza --> [3]
+        comandi opzionali:
+            esporta in pdf (lasciamo a release successiva)
+            elimina --> [3]
+    crea nuovo report --> [1]
+
+[1] controller per creazione report
+    --> [2]
+
+[2] pagina di creazione del report
+    input [nome soggetto]
+    visualizzazione data odierna
+    elenco allergeni ordinati per categoria
+    in ogni riga di allergene:
+        nome allergene
+        slider per intolleranza
+            opzionale:
+                campo di testo con valore
+                aggiornamento dinamico alla modifica dello slider
+    pulsanti:
+        salva --> [3]
+        annulla --> [4]
+
+[3] esecutore comandi report
+    operazioni:
+        salva report nel repository
+        visualizza report
