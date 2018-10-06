@@ -13,7 +13,7 @@
 <body>
 <h2>Welcome to Vega</h2>
 <p>
-    Access the <a href="<%=application.getContextPath()%>/app/mainMenu.jsp">main application</a> page.
+    Access the <a href="<%=application.getContextPath()%>/app/mainMenu">main application</a> page.
 </p>
 <h3>System status</h3>
 <h4>Current:</h4>

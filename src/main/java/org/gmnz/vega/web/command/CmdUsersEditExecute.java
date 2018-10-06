@@ -28,7 +28,6 @@ class CmdUsersEditExecute extends AbstractVegaCommand {
 
 	public CmdUsersEditExecute(RequestContext requestContext) {
 		super(requestContext);
-		selectedRoles = new HashMap<>();
 	}
 
 
@@ -44,6 +43,7 @@ class CmdUsersEditExecute extends AbstractVegaCommand {
 	@Override
 	protected void initialize(RequestContext requestContext) {
 		vega = new VegaImpl();
+		selectedRoles = new HashMap<>();
 		targetUser = (User) requestContext.getSessionAttribute("user");
 		userFullName = requestContext.getParameter("userFullName");
 		newPassword = requestContext.getParameter("newPassword");
@@ -64,7 +64,6 @@ class CmdUsersEditExecute extends AbstractVegaCommand {
 		}
 		boolean passwordChangeRequested = validatePasswordChange();
 		validateSelectedRoles();
-
 
 
 		// TODO passati questi test puoi aggiornare l'utente chiamando il service layer

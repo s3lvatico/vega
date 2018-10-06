@@ -35,7 +35,6 @@ class CmdCategoryCreateExec extends AbstractVegaCommand {
 	protected void initialize(RequestContext requestContext) {
 		vega = new VegaImpl();
 		newCategoryName = requestContext.getParameter("categoryName");
-
 	}
 
 

@@ -1,6 +1,7 @@
 package org.gmnz.vega.web.command;
 
 
+import org.gmnz.vega.VegaUtil;
 import org.gmnz.vega.web.context.ContextProperty;
 import org.gmnz.vega.web.context.RequestContext;
 import org.gmnz.vega.web.context.ResponseContext;
@@ -39,7 +40,8 @@ abstract class AbstractVegaCommand implements Command {
 		this.commandName = requestContext.getCommandName();
 		HttpServletRequest httpRequest = (HttpServletRequest) requestContext.getAttribute(ContextProperty.ORIGINAL_REQUEST);
 		model.setAttribute(ContextProperty.CONTEXT_ROOT, httpRequest.getContextPath());
-		// model.setAttribute(ContextProperty.COMMAND_NAME, setCommandName());
+		boolean userIsLogged = !VegaUtil.stringNullOrEmpty(httpRequest.getRemoteUser());
+		model.setAttribute(ContextProperty.USER_IS_LOGGED, userIsLogged);
 		initialize(requestContext);
 	}
 

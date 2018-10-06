@@ -23,7 +23,7 @@ public class StartupListener implements ServletContextListener {
 		try {
 			Context initContext = new InitialContext();
 			Context envContext = (Context) initContext.lookup("java:/comp/env");
-			DataSource ds = (DataSource) envContext.lookup("jdbc/vegaDS");
+			DataSource ds = (DataSource) envContext.lookup(jndiDataSource);
 			DaoFactory.setDataSource(ds);
 		}
 		catch (Exception e) {
@@ -31,6 +31,7 @@ public class StartupListener implements ServletContextListener {
 		}
 		System.out.printf("<<< contextInitialized%n");
 	}
+
 
 
 

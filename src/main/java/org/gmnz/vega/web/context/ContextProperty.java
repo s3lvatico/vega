@@ -23,4 +23,6 @@ public interface ContextProperty {
 
 	String CONTEXT_ROOT = "contextRoot";
 
+	String USER_IS_LOGGED = "userIsLogged";
+
 }

@@ -30,13 +30,13 @@
 				<td>
 					<form method="GET" action="${contextRoot}/app/category/edit">
 						<!--  edit -->
-						<input type="hidden" name="categoryId" value="${category.id}"> <input type="submit" value="Edit" class="btn btn-primary">
+						<input type="hidden" name="categoryId" value="${category.id}"> <input type="submit" value="Edit" >
 					</form>
 				</td>
 				<td>
 					<form method="POST" action="${contextRoot}/app/category/delete">
 						<!--  delete -->
-						<input type="hidden" name="categoryId" value="${category.id}"> <input type="submit" value="Delete" class="btn btn-warning">
+						<input type="hidden" name="categoryId" value="${category.id}"> <input type="submit" value="Delete">
 					</form>
 				</td>
 			</c:if>
