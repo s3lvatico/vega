@@ -88,6 +88,7 @@
       </web-resource-collection>
       <auth-constraint>
          <role-name>v-user</role-name>
+         <role-name>v-admin</role-name>
       </auth-constraint>
    </security-constraint>
 
