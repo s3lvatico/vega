@@ -20,6 +20,7 @@
 	</p>
 	<fieldset>
 		<legend>Password modification</legend>
+		<div>Leave fields blank if you do not want to change this user's password</div>
 		<table>
 			<tr>
 				<td>New password</td>
@@ -33,6 +34,9 @@
 	</fieldset>
 	<fieldset>
 		<legend>User Roles</legend>
+		<div>Check all that apply.</div>
+		<div><em>Caution</em>: every user must have at least one role; also, there must always be
+		at least one user with the "v-admin" role.</div>
 		<table>
 			<c:forEach var="role" items="${userRoles}">
 				<tr>
