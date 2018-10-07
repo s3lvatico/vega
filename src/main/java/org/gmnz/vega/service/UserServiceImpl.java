@@ -89,19 +89,7 @@ public class UserServiceImpl extends BasicServiceBean implements UserService {
 
 	@Override
 	public void updateUser(User user) throws VegaException {
-		UsersDao dao = null;
-		try {
-			dao = DaoFactory.getInstance().createUsersDao();
-			checkRolesConsistency(user, dao);
-			dao.updateUser(user, null);
-		}
-		catch (DaoException e) {
-			e.printStackTrace();
-			throw new VegaException("updateUser service error", e);
-		}
-		finally {
-			finalizeDao(dao);
-		}
+		updateUser(user, null);
 	}
 
 

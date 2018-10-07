@@ -80,6 +80,8 @@ class UsersDaoImpl extends BasicDaoImpl implements UsersDao {
 		}
 	}
 
+
+
 	public Set<String> findRolesForUsersOtherThan(String userName) throws DaoException {
 		PreparedStatement s = null;
 		ResultSet rs = null;
@@ -101,6 +103,7 @@ class UsersDaoImpl extends BasicDaoImpl implements UsersDao {
 			releaseResources(s, rs);
 		}
 	}
+
 
 
 	@Override
@@ -164,27 +167,24 @@ class UsersDaoImpl extends BasicDaoImpl implements UsersDao {
 		PreparedStatement s = null;
 		try {
 			connection.setAutoCommit(false);
-
-
-			if (VegaUtil.stringNullOrEmpty(password)) {
+			boolean shouldUpdatePassword = !VegaUtil.stringNullOrEmpty(password);
+			if (shouldUpdatePassword) {
+				String hashedPassword = VegaUtil.getSha256Digest(password);
+				s = connection.prepareStatement(SQL_UPDATE_USER_W_PASSWORD);
+				s.setString(1, user.getFullName());
+				s.setString(2, hashedPassword);
+				s.setString(3, user.getUserId());
+			}
+			else {
 				s = connection.prepareStatement(SQL_UPDATE_USER);
 				s.setString(1, user.getFullName());
 				s.setString(2, user.getUserId());
-				s.executeUpdate();
 			}
-			else {
-				s = connection.prepareStatement(SQL_UPDATE_USER_W_PASSWORD);
-				s.setString(1, user.getFullName());
-				String hashedPassword = VegaUtil.getSha256Digest(password);
-				s.setString(2, hashedPassword);
-				s.setString(3, user.getUserId());
-				s.executeUpdate();
-			}
+			s.executeUpdate();
 
 			s = connection.prepareStatement(SQL_CLEAR_USER_ROLES);
 			s.setString(1, user.getUserId());
 			s.executeUpdate();
-
 			s = connection.prepareStatement(SQL_INSERT_USER_ROLES);
 			for (String role : user.getRoles()) {
 				s.setString(1, role);

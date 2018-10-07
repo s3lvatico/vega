@@ -9,3 +9,7 @@ out/**
 .settings
 .tern-project
 target/
+
+# hsqldb temporary files
+/db/vegadb.lck
+/db/vegadb.log
