@@ -8,9 +8,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 
 
 class UsersDaoImpl extends BasicDaoImpl implements UsersDao {
@@ -82,6 +80,27 @@ class UsersDaoImpl extends BasicDaoImpl implements UsersDao {
 		}
 	}
 
+	public Set<String> findRolesForUsersOtherThan(String userName) throws DaoException {
+		PreparedStatement s = null;
+		ResultSet rs = null;
+		try {
+			s = connection.prepareStatement("SELECT ROLE_NAME from VEGA_ROLE where USER_NAME <> ?");
+			s.setString(1, userName);
+			rs = s.executeQuery();
+			HashSet<String> otherRoles = new HashSet<>();
+			if (rs.next()) {
+				otherRoles.add(rs.getString(1));
+			}
+			return otherRoles;
+		}
+		catch (SQLException e) {
+			e.printStackTrace();
+			throw new DaoException("UsersDaoImpl.findRolesForUsersOtherThan error", e);
+		}
+		finally {
+			releaseResources(s, rs);
+		}
+	}
 
 
 	@Override

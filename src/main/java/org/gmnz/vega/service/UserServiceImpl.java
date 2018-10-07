@@ -8,6 +8,7 @@ import org.gmnz.vega.repository.DaoFactory;
 import org.gmnz.vega.repository.UsersDao;
 
 import java.util.List;
+import java.util.Set;
 
 
 public class UserServiceImpl extends BasicServiceBean implements UserService {
@@ -66,7 +67,24 @@ public class UserServiceImpl extends BasicServiceBean implements UserService {
 		}
 	}
 
-	// TODO metodo che controlla che esista sempre almeno un v-admin
+
+
+	private void checkRolesConsistency(User user, UsersDao dao) throws VegaException {
+		try {
+			Set<String> otherRoles = dao.findRolesForUsersOtherThan(user.getUserId());
+			boolean otherAdminsPresent = otherRoles.contains("v-admin");
+			boolean userIsAdmin = user.getRoles().contains("v-admin");
+			if (!userIsAdmin && !otherAdminsPresent) {
+				throw new VegaException("Control must be mantained. There must always be a Lich King.");
+			}
+		}
+		catch (DaoException e) {
+			e.printStackTrace();
+			throw new VegaException("checkRolesConsistency service error", e);
+		}
+
+	}
+
 
 
 	@Override
@@ -74,6 +92,7 @@ public class UserServiceImpl extends BasicServiceBean implements UserService {
 		UsersDao dao = null;
 		try {
 			dao = DaoFactory.getInstance().createUsersDao();
+			checkRolesConsistency(user, dao);
 			dao.updateUser(user, null);
 		}
 		catch (DaoException e) {
@@ -92,6 +111,7 @@ public class UserServiceImpl extends BasicServiceBean implements UserService {
 		UsersDao dao = null;
 		try {
 			dao = DaoFactory.getInstance().createUsersDao();
+			checkRolesConsistency(user, dao);
 			dao.updateUser(user, password);
 		}
 		catch (DaoException e) {
