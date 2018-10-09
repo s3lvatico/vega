@@ -18,7 +18,7 @@ class VrUsersEdit extends AbstractViewResolver {
 
 	@Override
 	protected String setViewName() {
-		return "editUser";
+		return "userEdit";
 	}
 
 }
