@@ -1,15 +1,16 @@
 package org.gmnz.vega.web.command;
 
 
+import java.io.PrintWriter;
+import java.io.StringWriter;
+
+import javax.servlet.http.HttpServletRequest;
+
 import org.gmnz.vega.VegaUtil;
 import org.gmnz.vega.web.context.ContextProperty;
 import org.gmnz.vega.web.context.RequestContext;
 import org.gmnz.vega.web.context.ResponseContext;
 import org.gmnz.vega.web.context.ResponseContextFactory;
-
-import javax.servlet.http.HttpServletRequest;
-import java.io.PrintWriter;
-import java.io.StringWriter;
 
 
 /**
@@ -46,37 +47,25 @@ abstract class AbstractVegaCommand implements Command {
 	}
 
 
-
+//@formatter:off
 	static Command ERROR(RequestContext requestContext, String outcome, int errorCode, String errorMessage, Throwable t) {
 
 		return new AbstractVegaCommand(requestContext) {
 
 			@Override
-			protected String setCommandName() {
-				return "erroneous.command";
-			}
-
-
+			protected String setCommandName() { return "erroneous.command"; }
 
 			@Override
-			protected void initialize(RequestContext requestContext) {
-
-			}
-
-
+			protected void initialize(RequestContext requestContext) { }
 
 			@Override
-			protected void process() {
-				markForError(outcome, errorCode, errorMessage, t);
-			}
+			protected void process() { markForError(outcome, errorCode, errorMessage, t); }
 		};
 	}
+//@formatter:on
 
 
-
-	protected String getCommandName() {
-		return commandName;
-	}
+	protected String getCommandName() { return commandName; }
 
 
 
