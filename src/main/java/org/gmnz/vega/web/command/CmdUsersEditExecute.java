@@ -1,27 +1,29 @@
 package org.gmnz.vega.web.command;
 
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.Set;
-
 import org.gmnz.vega.VegaImpl;
+import org.gmnz.vega.VegaUtil;
+import org.gmnz.vega.domain.User;
 import org.gmnz.vega.service.UserService;
 import org.gmnz.vega.web.context.RequestContext;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 
 /**
- * creato da simone in data 10/10/2018.
+ * creato da simone in data 25/09/2018.
  */
 class CmdUsersEditExecute extends AbstractVegaCommand {
 
-	String userId;
-	String userFullName;
-	String password;
-	String passwordConfirmation;
-	ArrayList<String> roles;
-
-	UserService userService;
+	private UserService userService;
+	private User targetUser;
+	private String userFullName;
+	private String newPassword;
+	private String newPasswordConf;
+	private Map<String, Boolean> selectedRoles;
 
 
 
@@ -33,7 +35,7 @@ class CmdUsersEditExecute extends AbstractVegaCommand {
 
 	@Override
 	protected String setCommandName() {
-		return VegaCommand.User.EXECUTE_CREATE;
+		return VegaCommand.User.EXECUTE_EDIT;
 	}
 
 
@@ -41,73 +43,74 @@ class CmdUsersEditExecute extends AbstractVegaCommand {
 	@SuppressWarnings("unchecked")
 	@Override
 	protected void initialize(RequestContext requestContext) {
-		userId = requestContext.getParameter("userId");
-		userFullName = requestContext.getParameter("userFullName");
-		password = requestContext.getParameter("password");
-		passwordConfirmation = requestContext.getParameter("passwordConfirmation");
-		roles = new ArrayList<>();
-		for (String paramName : requestContext.getParameterNames()) {
-			if (paramName.startsWith("role-")) {
-				roles.add(requestContext.getParameter(paramName));
-			}
-		}
 		userService = new VegaImpl().getUserService();
+		selectedRoles = new HashMap<>();
+		targetUser = (User) requestContext.getSessionAttribute("user");
+		userFullName = requestContext.getParameter("userFullName");
+		newPassword = requestContext.getParameter("newPassword");
+		newPasswordConf = requestContext.getParameter("newPasswordConf");
+		List<String> roles = (List<String>) requestContext.getSessionAttribute("roles");
+		for (String role : roles) {
+			boolean roleIsSelected = !VegaUtil.stringNullOrEmpty(requestContext.getParameter(role));
+			selectedRoles.put(role, roleIsSelected);
+		}
 	}
 
 
 
-	private ValidationResult validateInput() {
-		HashSet<String> errorMessages = new HashSet<>();
-		if (userId.isEmpty()) {
-			errorMessages.add("userId is mandatory");
-		}
-		if (userFullName.isEmpty()) {
-			errorMessages.add("userFullName is mandatory");
-		}
-		if (password.isEmpty()) {
-			errorMessages.add("a password muse be specified");
-		} else {
-			if (!passwordConfirmation.equals(password)) {
-				errorMessages.add("password confirmation failed");
+	private boolean validatePasswordChange() throws Exception {
+		if (!newPassword.isEmpty()) {
+			if (newPasswordConf.equals(newPassword)) {
+				return true;
+			}
+			else {
+				throw new Exception("password confirmation check failed");
 			}
 		}
-		if (roles.isEmpty()) {
-			errorMessages.add("the new user must have at least one role");
+		else {
+			return false;
 		}
-
-		return buildValidationResult(errorMessages);
 	}
 
 
 
-	private ValidationResult buildValidationResult(Set<String> errors) {
-		ValidationResult vr = new ValidationResult();
-		vr.ok = errors.isEmpty();
-		if (!errors.isEmpty()) {
-			StringBuilder sbErrors = new StringBuilder();
-			int n = errors.size() - 1;
-			int j = 0;
-			for (String err : errors) {
-				sbErrors.append(err);
-				if (j < n) {
-					sbErrors.append(" | ");
-				}
-				j++;
-			}
+	private void validateSelectedRoles() throws Exception {
+		boolean result = false;
+		for (Boolean roleIsSelected : selectedRoles.values()) {
+			result |= roleIsSelected;
 		}
-		return vr;
+		if (!result) {
+			throw new Exception("user must have at least one role");
+		}
 	}
 
 
 
 	@Override
 	protected void process() throws Exception {
-		ValidationResult vr = validateInput();
-		if (vr.ok) {
-			// TODO crea utente
-		} else {
-			throw new Exception("Input validation failed : " + vr.errors);
+		if (userFullName.isEmpty()) {
+			throw new Exception("invalid input for the user full name");
+		}
+		validateSelectedRoles();
+
+		targetUser.setFullName(userFullName);
+		List<String> userNewRoles = new ArrayList<>();
+		for (String role : selectedRoles.keySet()) {
+			if (selectedRoles.get(role)) {
+				userNewRoles.add(role);
+			}
+		}
+		targetUser.setRoles(userNewRoles);
+
+		boolean passwordChangeRequested = validatePasswordChange();
+
+		if (passwordChangeRequested) {
+			userService.updateUser(targetUser, newPassword);
+		}
+		else {
+			userService.updateUser(targetUser);
 		}
 	}
+
 
 }

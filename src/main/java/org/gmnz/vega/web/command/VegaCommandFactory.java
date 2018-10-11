@@ -43,6 +43,8 @@ class VegaCommandFactory extends CommandFactory {
 		commandsMap.put(VegaCommand.User.GET_ALL, CmdUserGetAll.class);
 		commandsMap.put(VegaCommand.User.EDIT, CmdUsersEdit.class);
 		commandsMap.put(VegaCommand.User.EXECUTE_EDIT, CmdUsersEditExecute.class);
+		commandsMap.put(VegaCommand.User.CREATE, CmdUsersCreate.class);
+		commandsMap.put(VegaCommand.User.EXECUTE_CREATE, CmdUsersCreateExecute.class);
 	}
 
 
