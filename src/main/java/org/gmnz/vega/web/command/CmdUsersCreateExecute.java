@@ -38,7 +38,6 @@ class CmdUsersCreateExecute extends AbstractVegaCommand {
 
 
 
-	@SuppressWarnings("unchecked")
 	@Override
 	protected void initialize(RequestContext requestContext) {
 		userId = requestContext.getParameter("userId");
@@ -47,8 +46,8 @@ class CmdUsersCreateExecute extends AbstractVegaCommand {
 		passwordConfirmation = requestContext.getParameter("passwordConfirmation");
 		roles = new ArrayList<>();
 		for (String paramName : requestContext.getParameterNames()) {
-			if (paramName.startsWith("role-")) {
-				roles.add(requestContext.getParameter(paramName));
+			if (paramName.startsWith("role-")) {				
+				roles.add(paramName.substring(5));
 			}
 		}
 		userService = new VegaImpl().getUserService();
@@ -65,7 +64,7 @@ class CmdUsersCreateExecute extends AbstractVegaCommand {
 			errorMessages.add("userFullName is mandatory");
 		}
 		if (password.isEmpty()) {
-			errorMessages.add("a password muse be specified");
+			errorMessages.add("a password must be specified");
 		} else {
 			if (!passwordConfirmation.equals(password)) {
 				errorMessages.add("password confirmation failed");
@@ -94,6 +93,7 @@ class CmdUsersCreateExecute extends AbstractVegaCommand {
 				}
 				j++;
 			}
+			vr.errors = sbErrors.toString();
 		}
 		return vr;
 	}
@@ -104,7 +104,7 @@ class CmdUsersCreateExecute extends AbstractVegaCommand {
 	protected void process() throws Exception {
 		ValidationResult vr = validateInput();
 		if (vr.ok) {
-			// TODO crea utente
+			userService.createUser(userId, userFullName, password, new HashSet<>(roles));
 		} else {
 			throw new Exception("Input validation failed : " + vr.errors);
 		}

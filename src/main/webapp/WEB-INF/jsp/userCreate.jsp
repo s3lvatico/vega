@@ -29,11 +29,11 @@
 			<table>
 				<tr>
 					<td><label for="newPassword">Password</label></td>
-					<td><input type="password" id="newPassword" name="newPassword"></td>
+					<td><input type="password" id="newPassword" name="password"></td>
 				</tr>
 				<tr>
 					<td><label for="newPasswordConf">Confirm password</label></td>
-					<td><input type="password" id="newPasswordConf" name="newPasswordConf"></td>
+					<td><input type="password" id="newPasswordConf" name="passwordConfirmation"></td>
 				</tr>
 			</table>
 		</fieldset>
