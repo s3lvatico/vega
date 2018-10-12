@@ -1,19 +1,14 @@
 package org.gmnz.vega.repository;
 
 
+import org.gmnz.vega.VegaUtil;
+import org.gmnz.vega.domain.User;
+
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
-
-import org.gmnz.vega.VegaUtil;
-import org.gmnz.vega.domain.User;
+import java.util.*;
 
 
 class UsersDaoImpl extends BasicDaoImpl implements UsersDao {
@@ -78,10 +73,12 @@ class UsersDaoImpl extends BasicDaoImpl implements UsersDao {
 				users.add(u);
 			}
 			return users;
-		} catch (SQLException e) {
+		}
+		catch (SQLException e) {
 			e.printStackTrace();
 			throw new DaoException("UsersDaoImpl.findAll error", e);
-		} finally {
+		}
+		finally {
 			releaseResources(s, rs);
 		}
 	}
@@ -100,11 +97,39 @@ class UsersDaoImpl extends BasicDaoImpl implements UsersDao {
 				otherRoles.add(rs.getString(1));
 			}
 			return otherRoles;
-		} catch (SQLException e) {
+		}
+		catch (SQLException e) {
 			e.printStackTrace();
 			throw new DaoException("UsersDaoImpl.findRolesForUsersOtherThan error", e);
-		} finally {
+		}
+		finally {
 			releaseResources(s, rs);
+		}
+	}
+
+
+
+	@Override
+	public void deleteUser(String userId) throws DaoException {
+		PreparedStatement s = null;
+		try {
+			connection.setAutoCommit(false);
+			s = connection.prepareStatement("delete from VEGA_USER where USER_NAME = ?");
+			s.setString(1, userId);
+			s.executeUpdate();
+
+			s = connection.prepareStatement("delete from VEGA_ROLE where USER_NAME = ?");
+			s.setString(1, userId);
+			s.executeUpdate();
+
+			connection.commit();
+		}
+		catch (SQLException e) {
+			e.printStackTrace();
+			throw new DaoException("UsersDaoImpl.deleteUser error", e);
+		}
+		finally {
+			releaseResources(s);
 		}
 	}
 
@@ -131,10 +156,12 @@ class UsersDaoImpl extends BasicDaoImpl implements UsersDao {
 				u.setRoles(Arrays.asList(roles.split(",")));
 			}
 			return u;
-		} catch (SQLException e) {
+		}
+		catch (SQLException e) {
 			e.printStackTrace();
 			throw new DaoException("UsersDaoImpl.findById error", e);
-		} finally {
+		}
+		finally {
 			releaseResources(s, rs);
 		}
 	}
@@ -153,10 +180,12 @@ class UsersDaoImpl extends BasicDaoImpl implements UsersDao {
 				roles.add(rs.getString(1));
 			}
 			return roles;
-		} catch (SQLException e) {
+		}
+		catch (SQLException e) {
 			e.printStackTrace();
 			throw new DaoException("UsersDaoImpl.findAllRoles error", e);
-		} finally {
+		}
+		finally {
 			releaseResources(s, rs);
 		}
 	}
@@ -175,7 +204,8 @@ class UsersDaoImpl extends BasicDaoImpl implements UsersDao {
 				s.setString(1, user.getFullName());
 				s.setString(2, hashedPassword);
 				s.setString(3, user.getUserId());
-			} else {
+			}
+			else {
 				s = connection.prepareStatement(SQL_UPDATE_USER);
 				s.setString(1, user.getFullName());
 				s.setString(2, user.getUserId());
@@ -193,10 +223,12 @@ class UsersDaoImpl extends BasicDaoImpl implements UsersDao {
 			}
 
 			connection.commit();
-		} catch (SQLException e) {
+		}
+		catch (SQLException e) {
 			e.printStackTrace();
 			throw new DaoException("UsersDaoImpl.updateUser error", e);
-		} finally {
+		}
+		finally {
 			releaseResources(s);
 		}
 	}
@@ -224,10 +256,12 @@ class UsersDaoImpl extends BasicDaoImpl implements UsersDao {
 			}
 
 			connection.commit();
-		} catch (SQLException e) {
+		}
+		catch (SQLException e) {
 			e.printStackTrace();
 			throw new DaoException("UsersDaoImpl.createUser error", e);
-		} finally {
+		}
+		finally {
 			releaseResources(s);
 		}
 	}

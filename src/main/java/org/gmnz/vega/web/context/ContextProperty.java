@@ -25,4 +25,6 @@ public interface ContextProperty {
 
 	String USER_IS_LOGGED = "userIsLogged";
 
+	String CURRENT_USER = "currentUser";
+
 }

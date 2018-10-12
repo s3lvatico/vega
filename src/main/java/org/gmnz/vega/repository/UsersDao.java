@@ -22,4 +22,6 @@ public interface UsersDao extends ConnectionOrientedDao {
 
 	Set<String> findRolesForUsersOtherThan(String userName) throws DaoException;
 
+	void deleteUser(String userId) throws DaoException;
+
 }

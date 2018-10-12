@@ -158,12 +158,9 @@ class ReportDaoImpl extends BasicDaoImpl implements ReportDao {
 			rs = ps.executeQuery();
 			Report r = null;
 			if (rs.next()) {
-				// String rptId = rs.getString(1);
 				String subjectName = rs.getString(2);
 				Timestamp ts = rs.getTimestamp(3);
-//				java.util.Date rptCreationDate = new Date(ts.getTime());
 				String owner = rs.getString(4);
-
 				ReportBuilder builder = ReportBuilder.getBuilder();
 				builder.subjectName(subjectName).createdOn(ts).owner(owner);
 				r = builder.build();
@@ -192,6 +189,27 @@ class ReportDaoImpl extends BasicDaoImpl implements ReportDao {
 			throw new DaoException("ReportDaoImpl.remove error", e);
 		} finally {
 			releaseResources(ps, rs);
+		}
+	}
+
+
+
+	@Override
+	public void removeByOwnerId(String ownerId) throws DaoException {
+		PreparedStatement ps = null;
+		try {
+			ps = connection.prepareStatement("DELETE FROM report WHERE owner = ?");
+			ps.setString(1, ownerId);
+			ps.execute();
+			/*
+			non dovrebbe essere necessario eliminare anche le righe di dettaglio
+			perché la FK ha il cascade on delete
+			 */
+		} catch (SQLException e) {
+			e.printStackTrace();
+			throw new DaoException("ReportDaoImpl.removeByOwnerId error", e);
+		} finally {
+			releaseResources(ps);
 		}
 	}
 
