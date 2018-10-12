@@ -21,9 +21,13 @@ class AllergenDaoImpl extends BasicDaoImpl implements AllergenDao {
 		ResultSet rs = null;
 		try {
 			s = connection.createStatement();
-			rs = s.executeQuery("SELECT allrg.id, allrg.e_name allergen_name, cat.e_name category_name \n"
-					+ " FROM category cat\n" + " JOIN allergen allrg ON allrg.id_category = cat.id\n"
-					+ " WHERE allrg.deleted = 0" + " ORDER BY category_name");
+//@formatter:off
+			rs = s.executeQuery(
+					"SELECT allrg.id, allrg.e_name allergen_name, cat.e_name category_name "
+					+   " FROM category cat "
+					+   " JOIN allergen allrg ON allrg.id_category = cat.id "
+					+   " WHERE allrg.deleted = 0  ORDER BY category_name, allergen_name");
+//@formatter:on
 			ArrayList<Allergen> allergens = new ArrayList<>();
 			while (rs.next()) {
 				String id = rs.getString(1);
