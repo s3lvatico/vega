@@ -163,6 +163,7 @@ class UsersDaoImpl extends BasicDaoImpl implements UsersDao {
 
 
 
+	@SuppressWarnings("resource")
 	public void updateUser(User user, String password) throws DaoException {
 		PreparedStatement s = null;
 		try {
@@ -202,6 +203,7 @@ class UsersDaoImpl extends BasicDaoImpl implements UsersDao {
 
 
 
+	@SuppressWarnings("resource")
 	@Override
 	public void createUser(String userId, String fullName, String password, Collection<String> roles) throws DaoException {
 		PreparedStatement s = null;
