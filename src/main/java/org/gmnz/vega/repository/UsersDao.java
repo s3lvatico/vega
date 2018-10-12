@@ -24,4 +24,6 @@ public interface UsersDao extends ConnectionOrientedDao {
 
 	void deleteUser(String userId) throws DaoException;
 
+	int countRegisteredUsers() throws DaoException;
+
 }

@@ -19,12 +19,12 @@
 %>
 
 <p>Log off complete.</p>
-<p>You may go back to the <a href="<%= ctxRoot %>/home.jsp">initial page</a>.</p>
+<p>You may go back to the <a href="<%= ctxRoot %>/home">initial page</a>.</p>
 
 <%
     }
     else {
-        response.sendRedirect(ctxRoot + "/home.jsp");
+        response.sendRedirect(ctxRoot + "/home");
     }
 %>
 

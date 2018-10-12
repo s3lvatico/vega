@@ -104,4 +104,23 @@ public class ReportServiceImpl extends BasicServiceBean implements ReportService
 		}
 	}
 
+
+
+	@Override
+	public int countReports() throws VegaException {
+		ReportDao reportDao = null;
+
+		try {
+			reportDao = DaoFactory.getInstance().createReportDao();
+			return reportDao.countReports();
+		}
+		catch (DaoException e) {
+			e.printStackTrace();
+			throw new VegaException("countReports service error", e);
+		}
+		finally {
+			finalizeDao(reportDao);
+		}
+	}
+
 }

@@ -26,4 +26,7 @@ public interface ReportService {
 
 	void removeReport(String id) throws VegaException;
 
+
+	int countReports() throws VegaException;
+
 }

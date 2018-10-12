@@ -156,7 +156,25 @@ public class UserServiceImpl extends BasicServiceBean implements UserService {
 			finalizeDao(usersDao);
 			finalizeDao(reportDao);
 		}
+	}
 
+
+
+	@Override
+	public int countUsers() throws VegaException {
+		UsersDao usersDao = null;
+
+		try {
+			usersDao = DaoFactory.getInstance().createUsersDao();
+			return usersDao.countRegisteredUsers();
+		}
+		catch (DaoException e) {
+			e.printStackTrace();
+			throw new VegaException("countUsers service error", e);
+		}
+		finally {
+			finalizeDao(usersDao);
+		}
 	}
 
 }

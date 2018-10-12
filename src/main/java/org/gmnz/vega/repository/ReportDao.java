@@ -20,4 +20,6 @@ public interface ReportDao extends ConnectionOrientedDao {
 
 	void removeByOwnerId(String ownerId) throws DaoException;
 
+	int countReports() throws DaoException;
+
 }

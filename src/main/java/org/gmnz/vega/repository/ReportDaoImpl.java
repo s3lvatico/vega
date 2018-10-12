@@ -213,4 +213,30 @@ class ReportDaoImpl extends BasicDaoImpl implements ReportDao {
 		}
 	}
 
+
+
+
+	public int countReports() throws DaoException {
+		Statement s = null;
+		ResultSet rs = null;
+		try {
+			s = connection.createStatement();
+			rs = s.executeQuery("select count(*) from REPORT");
+
+			if (rs.next()) {
+				return rs.getInt(1);
+			}
+			else {
+				throw new DaoException("unable to determine the query result");
+			}
+		}
+		catch (SQLException e) {
+			e.printStackTrace();
+			throw new DaoException("ReportDaoImpl.countReports error", e);
+		}
+		finally {
+			releaseResources(s, rs);
+		}
+	}
+
 }

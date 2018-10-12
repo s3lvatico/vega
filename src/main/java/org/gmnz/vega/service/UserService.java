@@ -27,4 +27,6 @@ public interface UserService {
 
 	void removeUser(String userId) throws VegaException;
 
+	int countUsers() throws VegaException;
+
 }

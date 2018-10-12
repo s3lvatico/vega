@@ -136,6 +136,32 @@ class UsersDaoImpl extends BasicDaoImpl implements UsersDao {
 
 
 	@Override
+	public int countRegisteredUsers() throws DaoException {
+		Statement s = null;
+		ResultSet rs = null;
+		try {
+			s = connection.createStatement();
+			rs = s.executeQuery("select count(*) from VEGA_USER");
+
+			if (rs.next()) {
+				return rs.getInt(1);
+			}
+			else {
+				throw new DaoException("unable to determine the query result");
+			}
+		}
+		catch (SQLException e) {
+			e.printStackTrace();
+			throw new DaoException("UsersDaoImpl.countRegisteredUsers error", e);
+		}
+		finally {
+			releaseResources(s, rs);
+		}
+	}
+
+
+
+	@Override
 	public User findById(String userId) throws DaoException {
 		PreparedStatement s = null;
 		ResultSet rs = null;
