@@ -96,7 +96,7 @@ class UsersDaoImpl extends BasicDaoImpl implements UsersDao {
 			s.setString(1, userName);
 			rs = s.executeQuery();
 			HashSet<String> otherRoles = new HashSet<>();
-			if (rs.next()) {
+			while (rs.next()) {
 				otherRoles.add(rs.getString(1));
 			}
 			return otherRoles;

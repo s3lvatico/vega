@@ -1,10 +1,9 @@
 package org.gmnz.vega.web.command;
 
 
-import org.gmnz.vega.Vega;
 import org.gmnz.vega.VegaImpl;
-import org.gmnz.vega.domain.Report;
-import org.gmnz.vega.ui.web.report.ReportManagementBean;
+import org.gmnz.vega.domain.User;
+import org.gmnz.vega.service.UserService;
 import org.gmnz.vega.web.context.RequestContext;
 
 
@@ -13,8 +12,8 @@ import org.gmnz.vega.web.context.RequestContext;
  */
 class CmdUsersDelete extends AbstractVegaCommand {
 
-	Vega vega;
-	String reportId;
+	private String userId;
+	private UserService userService;
 
 
 
@@ -33,30 +32,21 @@ class CmdUsersDelete extends AbstractVegaCommand {
 
 	@Override
 	protected void initialize(RequestContext requestContext) {
-		vega = new VegaImpl();
-		reportId = requestContext.getParameter("reportId");
+		userService = new VegaImpl().getUserService();
+		userId = requestContext.getParameter("userId");
 	}
 
 
 
 	@Override
 	protected void process() throws Exception {
-		ReportManagementBean rmb = new ReportManagementBean();
-		rmb.setOperationLabel("Confirm Report Deletion");
-		rmb.setViewName("reportDeletion");
-		rmb.setAction(setCommandName());
-
-		model.setAttribute("reportBean", rmb);
-
-		Report r = vega.getReportService().getReportSummaryById(reportId);
-		if (r != null) {
-			model.setAttribute("subjectName", r.getSubjectName());
-			model.setAttribute("creationDate", r.getCreationDate());
-			model.setAttribute("reportId", reportId);
-		} else {
-			throw new Exception(String.format("No report found with id [%s]", reportId));
+		User targetUser = userService.getUserById(userId);
+		if (targetUser == null) {
+			String errorMessage = String.format("no user found with id [%s]", userId);
+			throw new Exception(errorMessage);
 		}
-
+		model.setAttribute("targetUser", targetUser);
+		model.setAttribute("action", setCommandName());
 	}
 
 }
