@@ -1,55 +1,20 @@
-@startuml domain
+@startuml
 
-class User {
-  - userId : String
-  - fullName : String
-  - roles : Set<String>
-  __ [ accs+muts ] __
-}
+class Category
 
-class Allergen {
-  - id : String
-  - name : String
-  __ [ accs+muts ] __
-}
+class Allergen
 
-class Category {
-  - id : String
-  - name : String
-  __
-  + getAllergens() : List<Allergen>
-  + addAllergen(Allergen)
-  .. [ accs+muts ] ..
-}
+class User
 
-class Report {
- - id : String
- - subjectName : String
- - owner : String
- - ownerFullName : String
- - createdOn : Date
- __
- + getCategories() : Set<String>
- + getRatings() : List<ToxicityRating>
- .. [ accs ] ..
-}
+class Report
 
-class ToxicityRating {
-  + getToxicity() : double
-}
+class ToxicityRating
 
-class ReportBuilder <<builder>> {
-    __
-    + {static} getBuilder() : ReportBuilder
-    + subjectName(String) : ReportBuilder
-    + createdOn(Date) : ReportBuilder
-    + owner(String) : ReportBuilder
-    + build() : Report
-}
+Category "1" -- "*" Allergen
+User .. Report : > owns
+Report "1" *-> "*" ToxicityRating
+ToxicityRating -> "1" Allergen
 
-ToxicityRating --> "1" Allergen : allergen >
-Report "1" o-- "*"ToxicityRating
-Category "1" o-- "*" Allergen : < category
-Report .. User
-ReportBuilder ..left.. Report : builds
+
+
 @enduml

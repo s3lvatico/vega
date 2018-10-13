@@ -1,0 +1,55 @@
+@startuml object_basic
+
+class User {
+  - userId : String
+  - fullName : String
+  - roles : Set<String>
+  __ [ accs+muts ] __
+}
+
+class Allergen {
+  - id : String
+  - name : String
+  __ [ accs+muts ] __
+}
+
+class Category {
+  - id : String
+  - name : String
+  __
+  + getAllergens() : List<Allergen>
+  + addAllergen(Allergen)
+  .. [ accs+muts ] ..
+}
+
+class Report {
+ - id : String
+ - subjectName : String
+ - owner : String
+ - ownerFullName : String
+ - createdOn : Date
+ __
+ + getCategories() : Set<String>
+ + getRatings() : List<ToxicityRating>
+ .. [ accs ] ..
+}
+
+class ToxicityRating {
+  + getToxicity() : double
+}
+
+class ReportBuilder <<builder>> {
+    __
+    + {static} getBuilder() : ReportBuilder
+    + subjectName(String) : ReportBuilder
+    + createdOn(Date) : ReportBuilder
+    + owner(String) : ReportBuilder
+    + build() : Report
+}
+
+ToxicityRating --> "1" Allergen : allergen >
+Report "1" o-- "*"ToxicityRating
+Category "1" o-- "*" Allergen : < category
+Report .. User
+ReportBuilder ..left.. Report : builds
+@enduml

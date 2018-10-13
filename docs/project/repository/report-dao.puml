@@ -1,0 +1,22 @@
+@startuml ReportDao
+
+interface ConnectionOrientedDao
+interface ReportDao
+
+ReportDao --|> ConnectionOrientedDao
+
+class ConnectionOrientedDaoImpl {
+ # connection : java.sql.Connection
+}
+
+ConnectionOrientedDaoImpl ..|> ConnectionOrientedDao
+
+class BasicDaoImpl
+
+BasicDaoImpl --|> ConnectionOrientedDaoImpl
+
+class ReportDaoImpl
+ReportDaoImpl ..|> ReportDao
+ReportDaoImpl --|> BasicDaoImpl
+
+@enduml

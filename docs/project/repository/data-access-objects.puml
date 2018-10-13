@@ -1,0 +1,39 @@
+@startuml
+
+interface ConnectionOrientedDao
+interface CategoryDao
+interface AllergenDao
+interface ReportDao
+interface UsersDao
+
+class ConnectionOrientedDaoImpl {
+ # connection : java.sql.Connection
+}
+
+class BasicDaoImpl
+
+CategoryDao --|> ConnectionOrientedDao
+AllergenDao --|> ConnectionOrientedDao
+ReportDao --|> ConnectionOrientedDao
+UsersDao --|> ConnectionOrientedDao
+
+ConnectionOrientedDaoImpl ..|> ConnectionOrientedDao
+BasicDaoImpl --|> ConnectionOrientedDaoImpl
+
+class AllergenDaoImpl
+AllergenDaoImpl ..|> AllergenDao
+AllergenDaoImpl --|> BasicDaoImpl
+
+class CategoryDaoImpl
+CategoryDaoImpl ..|> CategoryDao
+CategoryDaoImpl --|> BasicDaoImpl
+
+class ReportDaoImpl
+ReportDaoImpl ..|> ReportDao
+ReportDaoImpl --|> BasicDaoImpl
+
+class UsersDaoImpl
+UsersDaoImpl ..|> UsersDao
+UsersDaoImpl --|> BasicDaoImpl
+
+@enduml

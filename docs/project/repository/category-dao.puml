@@ -1,0 +1,21 @@
+@startuml CategoryDao
+
+interface ConnectionOrientedDao
+interface CategoryDao
+
+class ConnectionOrientedDaoImpl {
+ # connection : java.sql.Connection
+}
+
+class BasicDaoImpl
+
+CategoryDao --|> ConnectionOrientedDao
+
+ConnectionOrientedDaoImpl ..|> ConnectionOrientedDao
+BasicDaoImpl --|> ConnectionOrientedDaoImpl
+
+class CategoryDaoImpl
+CategoryDaoImpl ..|> CategoryDao
+CategoryDaoImpl --|> BasicDaoImpl
+
+@enduml

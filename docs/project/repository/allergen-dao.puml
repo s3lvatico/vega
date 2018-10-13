@@ -1,0 +1,22 @@
+@startuml AllergenDao
+
+interface ConnectionOrientedDao
+interface AllergenDao
+
+AllergenDao --|> ConnectionOrientedDao
+
+class ConnectionOrientedDaoImpl {
+ # connection : java.sql.Connection
+}
+
+ConnectionOrientedDaoImpl ..|> ConnectionOrientedDao
+
+class BasicDaoImpl
+
+BasicDaoImpl --|> ConnectionOrientedDaoImpl
+
+class AllergenDaoImpl
+AllergenDaoImpl ..|> AllergenDao
+AllergenDaoImpl --|> BasicDaoImpl
+
+@enduml

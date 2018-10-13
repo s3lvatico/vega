@@ -1,0 +1,17 @@
+@startuml
+
+abstract class DaoFactory <<factory>>
+interface DataSource
+interface CategoryDao
+interface AllergenDao
+interface ReportDao
+interface UsersDao
+
+DaoFactory "uses" -right-> DataSource
+DaoFactory "creates" --> CategoryDao
+DaoFactory "creates" --> AllergenDao
+DaoFactory "creates" --> ReportDao
+DaoFactory "creates" --> UsersDao
+
+
+@enduml
