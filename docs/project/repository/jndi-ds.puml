@@ -1,0 +1,23 @@
+@startuml
+
+control ServletContextListener as L
+control ServletContext as ctx
+control DaoFactory
+
+[-> L : contextInitialized()
+activate L
+L -> ctx : getInitParameter()
+ctx -> L : jndi datasource name
+
+create  javax.naming.Context as jctx
+L -> jctx : create
+
+L -> jctx : lookup()
+activate jctx
+jctx -> L : DataSource
+deactivate jctx
+
+L -> DaoFactory : setDataSource()
+
+deactivate L
+@enduml

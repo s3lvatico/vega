@@ -29,7 +29,7 @@
    </filter-mapping>
 
    <resource-ref>
-      <description>DB Connection</description>
+      <description>main application data source</description>
       <res-ref-name>jdbc/vegaDS</res-ref-name>
       <res-type>javax.sql.DataSource</res-type>
       <res-auth>Container</res-auth>
