@@ -74,7 +74,7 @@ public class CategoryServiceImpl extends BasicServiceBean implements CategorySer
 
 
 	@Override
-	public void createCategory(String name) throws VegaException {
+	public String createCategory(String name) throws VegaException {
 		if (VegaUtil.stringNullOrEmpty(name)) {
 			throw new VegaException("The new category must have a non empty name");
 		}
@@ -84,12 +84,12 @@ public class CategoryServiceImpl extends BasicServiceBean implements CategorySer
 		catch (VegaException e) {
 			// it just tells me the category is in the system
 			// no need to create anything
-			return;
+			return null; // TODO da modificare
 		}
 		CategoryDao dao = null;
 		try {
 			dao = DaoFactory.getInstance().createCategoryDao();
-			dao.create(name);
+			return dao.create(name);
 		}
 		catch (DaoException e) {
 			e.printStackTrace();
@@ -99,28 +99,6 @@ public class CategoryServiceImpl extends BasicServiceBean implements CategorySer
 			finalizeDao(dao);
 		}
 	}
-
-//	@Override
-//	@Deprecated
-//	public void renameCategory(String oldName, String newCategoryName) throws VegaException {
-//		checkEntityRegistration(Category.class, oldName, true);
-//		checkEntityRegistration(Category.class, newCategoryName, false);
-//
-//		Iterator<Category> iterator = DummyRepository.getRegisteredCategories().iterator();
-//		while (iterator.hasNext()) {
-//			Category c = iterator.next();
-//			if (c.getName().equals(oldName)) {
-//				if (c.getAllergens().size() == 0) {
-//					DummyRepository.removeCategory(new Category(oldName));
-//					DummyRepository.addCategory(new Category(newCategoryName));
-//					break;
-//				} else {
-//					throw new VegaException(
-//							"renameCategory service error: a category must have no allergens associated in order to be renamed.");
-//				}
-//			}
-//		}
-//	}
 
 
 

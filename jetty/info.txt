@@ -1,0 +1,4 @@
+Riferimento per scripting in windows:
+https://docs.microsoft.com/en-us/windows-server/administration/windows-commands/call
+
+(finalmente è autorevole)

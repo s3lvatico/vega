@@ -108,14 +108,16 @@ class AllergenDaoImpl extends BasicDaoImpl implements AllergenDao {
 
 
 	@Override
-	public void create(Allergen allergen) throws DaoException {
+	public String create(Allergen allergen) throws DaoException {
 		PreparedStatement s = null;
 		try {
+			String newId = UUID.randomUUID().toString();
 			s = connection.prepareStatement("INSERT  INTO  allergen VALUES (?, ?, 0, ?)");
-			s.setString(1, UUID.randomUUID().toString());
+			s.setString(1, newId);
 			s.setString(2, allergen.getName());
 			s.setString(3, allergen.getCategory().getId());
 			s.executeUpdate();
+			return newId;
 		}
 		catch (SQLException e) {
 			e.printStackTrace();

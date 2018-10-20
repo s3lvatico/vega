@@ -17,7 +17,7 @@ public interface AllergenDao extends ConnectionOrientedDao {
 	boolean isAllergenRegisteredByName(String name) throws DaoException;
 
 
-	void create(Allergen allergen) throws DaoException;
+	String create(Allergen allergen) throws DaoException;
 
 
 	void update(Allergen allergen) throws DaoException;

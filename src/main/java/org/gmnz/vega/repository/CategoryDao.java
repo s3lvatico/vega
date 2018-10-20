@@ -17,7 +17,7 @@ public interface CategoryDao extends ConnectionOrientedDao {
 	Category findById(String id) throws DaoException;
 
 
-	void create(String name) throws DaoException;
+	String create(String name) throws DaoException;
 
 
 	void update(Category category) throws DaoException;

@@ -175,13 +175,15 @@ class CategoryDaoImpl extends BasicDaoImpl implements CategoryDao {
 
 
 	@Override
-	public void create(String name) throws DaoException {
+	public String create(String name) throws DaoException {
 		PreparedStatement s = null;
 		try {
+			String id = UUID.randomUUID().toString();
 			s = connection.prepareStatement("INSERT INTO category VALUES(?, ?, '0')");
-			s.setString(1, UUID.randomUUID().toString());
+			s.setString(1, id);
 			s.setString(2, name);
 			s.executeUpdate();
+			return id;
 		}
 		catch (SQLException e) {
 			e.printStackTrace();

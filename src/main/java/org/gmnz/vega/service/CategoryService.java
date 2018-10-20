@@ -21,7 +21,7 @@ public interface CategoryService {
 	Category getCategoryById(String id) throws VegaException;
 
 
-	void createCategory(String name) throws VegaException;
+	String createCategory(String name) throws VegaException;
 
 
 	void changeCategoryName(String categoryId, String newCategoryName) throws VegaException;

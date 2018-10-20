@@ -40,7 +40,7 @@ public class AllergenServiceImpl extends BasicServiceBean implements AllergenSer
 
 
 	@Override
-	public void createAllergen(String newAllergenName, String categoryId) throws VegaException {
+	public String createAllergen(String newAllergenName, String categoryId) throws VegaException {
 		if (VegaUtil.stringNullOrEmpty(newAllergenName)) {
 			throw new VegaException("allergen name must be non empty");
 		}
@@ -63,7 +63,7 @@ public class AllergenServiceImpl extends BasicServiceBean implements AllergenSer
 			a.setCategory(targetCategory);
 
 			allergenDao = DaoFactory.getInstance().createAllergenDao();
-			allergenDao.create(a);
+			return allergenDao.create(a);
 		}
 		catch (DaoException e) {
 			e.printStackTrace();
