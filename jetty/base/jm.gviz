@@ -1,0 +1,898 @@
+/*
+ * GraphViz Graph of Jetty Modules
+ * 
+ * Jetty: http://eclipse.org/jetty/
+ * GraphViz: http://graphviz.org/
+ * 
+ * To Generate Graph image using graphviz:
+ *   $ dot -Tpng -Goverlap=false -o jm.png jm.gviz
+ */
+
+digraph modules {
+  node [color=gray, style=filled, shape=rectangle];
+  node [fontname="Verdana", size="20,20"];
+  graph [
+    concentrate=false,
+    fontname="Verdana",
+    fontsize = 20,
+    rankdir = LR,
+    ranksep = 1.5,
+    nodesep = .5,
+    style = bold,
+    labeljust = l,
+    label = "Jetty Modules",
+    ssize = "20,40"
+  ];
+
+  /* Modules */
+
+  node [ labeljust = l ];
+  "acceptratelimit" [ color="#B8FFB8" label=<<TABLE BORDER="0" CELLBORDER="0" CELLSPACING="0" CELLPADDING="2">
+  <TR><TD ALIGN="LEFT"><B>acceptratelimit</B></TD></TR>
+  <TR><TD BGCOLOR="#00000020" ALIGN="LEFT"><I>XML</I></TD></TR>
+  <TR><TD BGCOLOR="#FFFFFF80" ALIGN="LEFT">etc/jetty-acceptratelimit.xml</TD></TR>
+  <TR><TD BGCOLOR="#00000020" ALIGN="LEFT"><I>INI Templates</I></TD></TR>
+</TABLE>>];
+  "alpn" [ color="#B8FFB8" label=<<TABLE BORDER="0" CELLBORDER="0" CELLSPACING="0" CELLPADDING="2">
+  <TR><TD ALIGN="LEFT"><B>alpn</B></TD></TR>
+  <TR><TD BGCOLOR="#00000020" ALIGN="LEFT"><I>XML</I></TD></TR>
+  <TR><TD BGCOLOR="#FFFFFF80" ALIGN="LEFT">etc/jetty-alpn.xml</TD></TR>
+  <TR><TD BGCOLOR="#00000020" ALIGN="LEFT"><I>LIBs</I></TD></TR>
+  <TR><TD BGCOLOR="#FFFFFF80" ALIGN="LEFT">lib/jetty-alpn-client-${jetty.version}.jar</TD></TR>
+  <TR><TD BGCOLOR="#FFFFFF80" ALIGN="LEFT">lib/jetty-alpn-server-${jetty.version}.jar</TD></TR>
+  <TR><TD BGCOLOR="#00000020" ALIGN="LEFT"><I>INI Templates</I></TD></TR>
+</TABLE>>];
+  "alpn-impl" [ color="#B8FFB8" label=<<TABLE BORDER="0" CELLBORDER="0" CELLSPACING="0" CELLPADDING="2">
+  <TR><TD ALIGN="LEFT"><B>alpn-impl</B></TD></TR>
+</TABLE>>];
+  "annotations" [ color="#66FFCC" label=<<TABLE BORDER="0" CELLBORDER="0" CELLSPACING="0" CELLPADDING="2">
+  <TR><TD ALIGN="LEFT"><B>annotations</B></TD></TR>
+  <TR><TD BGCOLOR="#00000020" ALIGN="LEFT"><I>ENABLED</I></TD></TR>
+  <TR><TD BGCOLOR="#FFFFFF80" ALIGN="LEFT">via: transitive provider of annotations for jsp</TD></TR>
+  <TR><TD BGCOLOR="#00000020" ALIGN="LEFT"><I>XML</I></TD></TR>
+  <TR><TD BGCOLOR="#FFFFFF80" ALIGN="LEFT">etc/jetty-annotations.xml</TD></TR>
+  <TR><TD BGCOLOR="#00000020" ALIGN="LEFT"><I>LIBs</I></TD></TR>
+  <TR><TD BGCOLOR="#FFFFFF80" ALIGN="LEFT">lib/jetty-annotations-${jetty.version}.jar</TD></TR>
+  <TR><TD BGCOLOR="#FFFFFF80" ALIGN="LEFT">lib/annotations/*.jar</TD></TR>
+</TABLE>>];
+  "apache-jsp" [ color="#66FFCC" label=<<TABLE BORDER="0" CELLBORDER="0" CELLSPACING="0" CELLPADDING="2">
+  <TR><TD ALIGN="LEFT"><B>apache-jsp</B></TD></TR>
+  <TR><TD BGCOLOR="#00000020" ALIGN="LEFT"><I>ENABLED</I></TD></TR>
+  <TR><TD BGCOLOR="#FFFFFF80" ALIGN="LEFT">via: transitive provider of apache-jsp for jsp</TD></TR>
+  <TR><TD BGCOLOR="#00000020" ALIGN="LEFT"><I>LIB</I></TD></TR>
+  <TR><TD BGCOLOR="#FFFFFF80" ALIGN="LEFT">lib/apache-jsp/*.jar</TD></TR>
+</TABLE>>];
+  "apache-jstl" [ color="#66FFCC" label=<<TABLE BORDER="0" CELLBORDER="0" CELLSPACING="0" CELLPADDING="2">
+  <TR><TD ALIGN="LEFT"><B>apache-jstl</B></TD></TR>
+  <TR><TD BGCOLOR="#00000020" ALIGN="LEFT"><I>ENABLED</I></TD></TR>
+  <TR><TD BGCOLOR="#FFFFFF80" ALIGN="LEFT">via: transitive provider of apache-jstl for jstl</TD></TR>
+  <TR><TD BGCOLOR="#00000020" ALIGN="LEFT"><I>LIB</I></TD></TR>
+  <TR><TD BGCOLOR="#FFFFFF80" ALIGN="LEFT">lib/apache-jstl/*.jar</TD></TR>
+</TABLE>>];
+  "cdi" [ color="#B8FFB8" label=<<TABLE BORDER="0" CELLBORDER="0" CELLSPACING="0" CELLPADDING="2">
+  <TR><TD ALIGN="LEFT"><B>cdi</B></TD></TR>
+</TABLE>>];
+  "cdi1" [ color="#B8FFB8" label=<<TABLE BORDER="0" CELLBORDER="0" CELLSPACING="0" CELLPADDING="2">
+  <TR><TD ALIGN="LEFT"><B>cdi1</B></TD></TR>
+  <TR><TD BGCOLOR="#00000020" ALIGN="LEFT"><I>XML</I></TD></TR>
+  <TR><TD BGCOLOR="#FFFFFF80" ALIGN="LEFT">etc/jetty-cdi.xml</TD></TR>
+  <TR><TD BGCOLOR="#00000020" ALIGN="LEFT"><I>LIBs</I></TD></TR>
+  <TR><TD BGCOLOR="#FFFFFF80" ALIGN="LEFT">lib/cdi/*.jar</TD></TR>
+  <TR><TD BGCOLOR="#FFFFFF80" ALIGN="LEFT">lib/cdi-core-${jetty.version}.jar</TD></TR>
+  <TR><TD BGCOLOR="#FFFFFF80" ALIGN="LEFT">lib/cdi-servlet-${jetty.version}.jar</TD></TR>
+</TABLE>>];
+  "cdi2" [ color="#B8FFB8" label=<<TABLE BORDER="0" CELLBORDER="0" CELLSPACING="0" CELLPADDING="2">
+  <TR><TD ALIGN="LEFT"><B>cdi2</B></TD></TR>
+  <TR><TD BGCOLOR="#00000020" ALIGN="LEFT"><I>XML</I></TD></TR>
+  <TR><TD BGCOLOR="#FFFFFF80" ALIGN="LEFT">etc/cdi2/jetty-cdi2.xml</TD></TR>
+</TABLE>>];
+  "client" [ color="#B8FFB8" label=<<TABLE BORDER="0" CELLBORDER="0" CELLSPACING="0" CELLPADDING="2">
+  <TR><TD ALIGN="LEFT"><B>client</B></TD></TR>
+  <TR><TD BGCOLOR="#00000020" ALIGN="LEFT"><I>LIB</I></TD></TR>
+  <TR><TD BGCOLOR="#FFFFFF80" ALIGN="LEFT">lib/jetty-client-${jetty.version}.jar</TD></TR>
+</TABLE>>];
+  "connectionlimit" [ color="#B8FFB8" label=<<TABLE BORDER="0" CELLBORDER="0" CELLSPACING="0" CELLPADDING="2">
+  <TR><TD ALIGN="LEFT"><B>connectionlimit</B></TD></TR>
+  <TR><TD BGCOLOR="#00000020" ALIGN="LEFT"><I>XML</I></TD></TR>
+  <TR><TD BGCOLOR="#FFFFFF80" ALIGN="LEFT">etc/jetty-connectionlimit.xml</TD></TR>
+  <TR><TD BGCOLOR="#00000020" ALIGN="LEFT"><I>INI Templates</I></TD></TR>
+</TABLE>>];
+  "conscrypt" [ color="#B8FFB8" label=<<TABLE BORDER="0" CELLBORDER="0" CELLSPACING="0" CELLPADDING="2">
+  <TR><TD ALIGN="LEFT"><B>conscrypt</B></TD></TR>
+  <TR><TD BGCOLOR="#00000020" ALIGN="LEFT"><I>XML</I></TD></TR>
+  <TR><TD BGCOLOR="#FFFFFF80" ALIGN="LEFT">etc/conscrypt.xml</TD></TR>
+  <TR><TD BGCOLOR="#00000020" ALIGN="LEFT"><I>LIBs</I></TD></TR>
+  <TR><TD BGCOLOR="#FFFFFF80" ALIGN="LEFT">lib/conscrypt/**.jar</TD></TR>
+  <TR><TD BGCOLOR="#FFFFFF80" ALIGN="LEFT">lib/jetty-alpn-conscrypt-server-${jetty.version}.jar</TD></TR>
+</TABLE>>];
+  "console-capture" [ color="#B8FFB8" label=<<TABLE BORDER="0" CELLBORDER="0" CELLSPACING="0" CELLPADDING="2">
+  <TR><TD ALIGN="LEFT"><B>console-capture</B></TD></TR>
+  <TR><TD BGCOLOR="#00000020" ALIGN="LEFT"><I>XML</I></TD></TR>
+  <TR><TD BGCOLOR="#FFFFFF80" ALIGN="LEFT">etc/console-capture.xml</TD></TR>
+  <TR><TD BGCOLOR="#00000020" ALIGN="LEFT"><I>LIB</I></TD></TR>
+  <TR><TD BGCOLOR="#FFFFFF80" ALIGN="LEFT">resources/</TD></TR>
+  <TR><TD BGCOLOR="#00000020" ALIGN="LEFT"><I>INI Templates</I></TD></TR>
+</TABLE>>];
+  "continuation" [ color="#B8FFB8" label=<<TABLE BORDER="0" CELLBORDER="0" CELLSPACING="0" CELLPADDING="2">
+  <TR><TD ALIGN="LEFT"><B>continuation</B></TD></TR>
+  <TR><TD BGCOLOR="#00000020" ALIGN="LEFT"><I>LIB</I></TD></TR>
+  <TR><TD BGCOLOR="#FFFFFF80" ALIGN="LEFT">lib/jetty-continuation-${jetty.version}.jar</TD></TR>
+</TABLE>>];
+  "debug" [ color="#B8FFB8" label=<<TABLE BORDER="0" CELLBORDER="0" CELLSPACING="0" CELLPADDING="2">
+  <TR><TD ALIGN="LEFT"><B>debug</B></TD></TR>
+  <TR><TD BGCOLOR="#00000020" ALIGN="LEFT"><I>XML</I></TD></TR>
+  <TR><TD BGCOLOR="#FFFFFF80" ALIGN="LEFT">etc/jetty-debug.xml</TD></TR>
+  <TR><TD BGCOLOR="#00000020" ALIGN="LEFT"><I>INI Templates</I></TD></TR>
+</TABLE>>];
+  "debuglog" [ color="#B8FFB8" label=<<TABLE BORDER="0" CELLBORDER="0" CELLSPACING="0" CELLPADDING="2">
+  <TR><TD ALIGN="LEFT"><B>debuglog</B></TD></TR>
+  <TR><TD BGCOLOR="#00000020" ALIGN="LEFT"><I>XML</I></TD></TR>
+  <TR><TD BGCOLOR="#FFFFFF80" ALIGN="LEFT">etc/jetty-debuglog.xml</TD></TR>
+  <TR><TD BGCOLOR="#00000020" ALIGN="LEFT"><I>INI Templates</I></TD></TR>
+</TABLE>>];
+  "deploy" [ color="#66FFCC" label=<<TABLE BORDER="0" CELLBORDER="0" CELLSPACING="0" CELLPADDING="2">
+  <TR><TD ALIGN="LEFT"><B>deploy</B></TD></TR>
+  <TR><TD BGCOLOR="#00000020" ALIGN="LEFT"><I>ENABLED</I></TD></TR>
+  <TR><TD BGCOLOR="#FFFFFF80" ALIGN="LEFT">via: ${jetty.base}\start.d\deploy.ini</TD></TR>
+  <TR><TD BGCOLOR="#00000020" ALIGN="LEFT"><I>XML</I></TD></TR>
+  <TR><TD BGCOLOR="#FFFFFF80" ALIGN="LEFT">etc/jetty-deploy.xml</TD></TR>
+  <TR><TD BGCOLOR="#00000020" ALIGN="LEFT"><I>LIB</I></TD></TR>
+  <TR><TD BGCOLOR="#FFFFFF80" ALIGN="LEFT">lib/jetty-deploy-${jetty.version}.jar</TD></TR>
+  <TR><TD BGCOLOR="#00000020" ALIGN="LEFT"><I>INI Templates</I></TD></TR>
+</TABLE>>];
+  "ext" [ color="#B8FFB8" label=<<TABLE BORDER="0" CELLBORDER="0" CELLSPACING="0" CELLPADDING="2">
+  <TR><TD ALIGN="LEFT"><B>ext</B></TD></TR>
+  <TR><TD BGCOLOR="#00000020" ALIGN="LEFT"><I>LIB</I></TD></TR>
+  <TR><TD BGCOLOR="#FFFFFF80" ALIGN="LEFT">lib/ext/**.jar</TD></TR>
+</TABLE>>];
+  "fcgi" [ color="#B8FFB8" label=<<TABLE BORDER="0" CELLBORDER="0" CELLSPACING="0" CELLPADDING="2">
+  <TR><TD ALIGN="LEFT"><B>fcgi</B></TD></TR>
+  <TR><TD BGCOLOR="#00000020" ALIGN="LEFT"><I>LIBs</I></TD></TR>
+  <TR><TD BGCOLOR="#FFFFFF80" ALIGN="LEFT">lib/jetty-proxy-${jetty.version}.jar</TD></TR>
+  <TR><TD BGCOLOR="#FFFFFF80" ALIGN="LEFT">lib/fcgi/*.jar</TD></TR>
+  <TR><TD BGCOLOR="#00000020" ALIGN="LEFT"><I>INI Templates</I></TD></TR>
+</TABLE>>];
+  "flight-recorder" [ color="#B8FFB8" label=<<TABLE BORDER="0" CELLBORDER="0" CELLSPACING="0" CELLPADDING="2">
+  <TR><TD ALIGN="LEFT"><B>flight-recorder</B></TD></TR>
+</TABLE>>];
+  "gcloud" [ color="#B8FFB8" label=<<TABLE BORDER="0" CELLBORDER="0" CELLSPACING="0" CELLPADDING="2">
+  <TR><TD ALIGN="LEFT"><B>gcloud</B></TD></TR>
+  <TR><TD BGCOLOR="#00000020" ALIGN="LEFT"><I>LIB</I></TD></TR>
+  <TR><TD BGCOLOR="#FFFFFF80" ALIGN="LEFT">lib/gcloud/*.jar</TD></TR>
+</TABLE>>];
+  "gcloud-datastore" [ color="#B8FFB8" label=<<TABLE BORDER="0" CELLBORDER="0" CELLSPACING="0" CELLPADDING="2">
+  <TR><TD ALIGN="LEFT"><B>gcloud-datastore</B></TD></TR>
+</TABLE>>];
+  "global-webapp-common" [ color="#B8FFB8" label=<<TABLE BORDER="0" CELLBORDER="0" CELLSPACING="0" CELLPADDING="2">
+  <TR><TD ALIGN="LEFT"><B>global-webapp-common</B></TD></TR>
+  <TR><TD BGCOLOR="#00000020" ALIGN="LEFT"><I>XML</I></TD></TR>
+  <TR><TD BGCOLOR="#FFFFFF80" ALIGN="LEFT">etc/global-webapp-common.xml</TD></TR>
+  <TR><TD BGCOLOR="#00000020" ALIGN="LEFT"><I>INI Templates</I></TD></TR>
+</TABLE>>];
+  "gzip" [ color="#B8FFB8" label=<<TABLE BORDER="0" CELLBORDER="0" CELLSPACING="0" CELLPADDING="2">
+  <TR><TD ALIGN="LEFT"><B>gzip</B></TD></TR>
+  <TR><TD BGCOLOR="#00000020" ALIGN="LEFT"><I>XML</I></TD></TR>
+  <TR><TD BGCOLOR="#FFFFFF80" ALIGN="LEFT">etc/jetty-gzip.xml</TD></TR>
+  <TR><TD BGCOLOR="#00000020" ALIGN="LEFT"><I>INI Templates</I></TD></TR>
+</TABLE>>];
+  "hawtio" [ color="#B8FFB8" label=<<TABLE BORDER="0" CELLBORDER="0" CELLSPACING="0" CELLPADDING="2">
+  <TR><TD ALIGN="LEFT"><B>hawtio</B></TD></TR>
+  <TR><TD BGCOLOR="#00000020" ALIGN="LEFT"><I>XML</I></TD></TR>
+  <TR><TD BGCOLOR="#FFFFFF80" ALIGN="LEFT">etc/hawtio.xml</TD></TR>
+  <TR><TD BGCOLOR="#00000020" ALIGN="LEFT"><I>INI Templates</I></TD></TR>
+</TABLE>>];
+  "hazelcast-embedded-sessions" [ color="#B8FFB8" label=<<TABLE BORDER="0" CELLBORDER="0" CELLSPACING="0" CELLPADDING="2">
+  <TR><TD ALIGN="LEFT"><B>hazelcast-embedded-sessions</B></TD></TR>
+  <TR><TD BGCOLOR="#00000020" ALIGN="LEFT"><I>XML</I></TD></TR>
+  <TR><TD BGCOLOR="#FFFFFF80" ALIGN="LEFT">etc/sessions/hazelcast/default.xml</TD></TR>
+  <TR><TD BGCOLOR="#00000020" ALIGN="LEFT"><I>LIB</I></TD></TR>
+  <TR><TD BGCOLOR="#FFFFFF80" ALIGN="LEFT">lib/hazelcast/*.jar</TD></TR>
+  <TR><TD BGCOLOR="#00000020" ALIGN="LEFT"><I>INI Template</I></TD></TR>
+</TABLE>>];
+  "hazelcast-remote-sessions" [ color="#B8FFB8" label=<<TABLE BORDER="0" CELLBORDER="0" CELLSPACING="0" CELLPADDING="2">
+  <TR><TD ALIGN="LEFT"><B>hazelcast-remote-sessions</B></TD></TR>
+  <TR><TD BGCOLOR="#00000020" ALIGN="LEFT"><I>XML</I></TD></TR>
+  <TR><TD BGCOLOR="#FFFFFF80" ALIGN="LEFT">etc/sessions/hazelcast/remote.xml</TD></TR>
+  <TR><TD BGCOLOR="#00000020" ALIGN="LEFT"><I>LIB</I></TD></TR>
+  <TR><TD BGCOLOR="#FFFFFF80" ALIGN="LEFT">lib/hazelcast/*.jar</TD></TR>
+  <TR><TD BGCOLOR="#00000020" ALIGN="LEFT"><I>INI Template</I></TD></TR>
+</TABLE>>];
+  "home-base-warning" [ color="#B8FFB8" label=<<TABLE BORDER="0" CELLBORDER="0" CELLSPACING="0" CELLPADDING="2">
+  <TR><TD ALIGN="LEFT"><B>home-base-warning</B></TD></TR>
+  <TR><TD BGCOLOR="#00000020" ALIGN="LEFT"><I>XML</I></TD></TR>
+  <TR><TD BGCOLOR="#FFFFFF80" ALIGN="LEFT">etc/home-base-warning.xml</TD></TR>
+</TABLE>>];
+  "http" [ color="#66FFCC" label=<<TABLE BORDER="0" CELLBORDER="0" CELLSPACING="0" CELLPADDING="2">
+  <TR><TD ALIGN="LEFT"><B>http</B></TD></TR>
+  <TR><TD BGCOLOR="#00000020" ALIGN="LEFT"><I>ENABLED</I></TD></TR>
+  <TR><TD BGCOLOR="#FFFFFF80" ALIGN="LEFT">via: ${jetty.base}\start.d\http.ini</TD></TR>
+  <TR><TD BGCOLOR="#00000020" ALIGN="LEFT"><I>XML</I></TD></TR>
+  <TR><TD BGCOLOR="#FFFFFF80" ALIGN="LEFT">etc/jetty-http.xml</TD></TR>
+  <TR><TD BGCOLOR="#00000020" ALIGN="LEFT"><I>INI Templates</I></TD></TR>
+</TABLE>>];
+  "http2" [ color="#B8FFB8" label=<<TABLE BORDER="0" CELLBORDER="0" CELLSPACING="0" CELLPADDING="2">
+  <TR><TD ALIGN="LEFT"><B>http2</B></TD></TR>
+  <TR><TD BGCOLOR="#00000020" ALIGN="LEFT"><I>XML</I></TD></TR>
+  <TR><TD BGCOLOR="#FFFFFF80" ALIGN="LEFT">etc/jetty-http2.xml</TD></TR>
+  <TR><TD BGCOLOR="#00000020" ALIGN="LEFT"><I>LIB</I></TD></TR>
+  <TR><TD BGCOLOR="#FFFFFF80" ALIGN="LEFT">lib/http2/*.jar</TD></TR>
+  <TR><TD BGCOLOR="#00000020" ALIGN="LEFT"><I>INI Templates</I></TD></TR>
+</TABLE>>];
+  "http2c" [ color="#B8FFB8" label=<<TABLE BORDER="0" CELLBORDER="0" CELLSPACING="0" CELLPADDING="2">
+  <TR><TD ALIGN="LEFT"><B>http2c</B></TD></TR>
+  <TR><TD BGCOLOR="#00000020" ALIGN="LEFT"><I>XML</I></TD></TR>
+  <TR><TD BGCOLOR="#FFFFFF80" ALIGN="LEFT">etc/jetty-http2c.xml</TD></TR>
+  <TR><TD BGCOLOR="#00000020" ALIGN="LEFT"><I>LIB</I></TD></TR>
+  <TR><TD BGCOLOR="#FFFFFF80" ALIGN="LEFT">lib/http2/*.jar</TD></TR>
+  <TR><TD BGCOLOR="#00000020" ALIGN="LEFT"><I>INI Templates</I></TD></TR>
+</TABLE>>];
+  "http-forwarded" [ color="#B8FFB8" label=<<TABLE BORDER="0" CELLBORDER="0" CELLSPACING="0" CELLPADDING="2">
+  <TR><TD ALIGN="LEFT"><B>http-forwarded</B></TD></TR>
+  <TR><TD BGCOLOR="#00000020" ALIGN="LEFT"><I>XML</I></TD></TR>
+  <TR><TD BGCOLOR="#FFFFFF80" ALIGN="LEFT">etc/jetty-http-forwarded.xml</TD></TR>
+  <TR><TD BGCOLOR="#00000020" ALIGN="LEFT"><I>INI Templates</I></TD></TR>
+</TABLE>>];
+  "https" [ color="#B8FFB8" label=<<TABLE BORDER="0" CELLBORDER="0" CELLSPACING="0" CELLPADDING="2">
+  <TR><TD ALIGN="LEFT"><B>https</B></TD></TR>
+  <TR><TD BGCOLOR="#00000020" ALIGN="LEFT"><I>XML</I></TD></TR>
+  <TR><TD BGCOLOR="#FFFFFF80" ALIGN="LEFT">etc/jetty-https.xml</TD></TR>
+</TABLE>>];
+  "ipaccess" [ color="#B8FFB8" label=<<TABLE BORDER="0" CELLBORDER="0" CELLSPACING="0" CELLPADDING="2">
+  <TR><TD ALIGN="LEFT"><B>ipaccess</B></TD></TR>
+  <TR><TD BGCOLOR="#00000020" ALIGN="LEFT"><I>XML</I></TD></TR>
+  <TR><TD BGCOLOR="#FFFFFF80" ALIGN="LEFT">etc/jetty-ipaccess.xml</TD></TR>
+</TABLE>>];
+  "jaas" [ color="#B8FFB8" label=<<TABLE BORDER="0" CELLBORDER="0" CELLSPACING="0" CELLPADDING="2">
+  <TR><TD ALIGN="LEFT"><B>jaas</B></TD></TR>
+  <TR><TD BGCOLOR="#00000020" ALIGN="LEFT"><I>XML</I></TD></TR>
+  <TR><TD BGCOLOR="#FFFFFF80" ALIGN="LEFT">etc/jetty-jaas.xml</TD></TR>
+  <TR><TD BGCOLOR="#00000020" ALIGN="LEFT"><I>LIB</I></TD></TR>
+  <TR><TD BGCOLOR="#FFFFFF80" ALIGN="LEFT">lib/jetty-jaas-${jetty.version}.jar</TD></TR>
+  <TR><TD BGCOLOR="#00000020" ALIGN="LEFT"><I>INI Templates</I></TD></TR>
+</TABLE>>];
+  "jamon" [ color="#B8FFB8" label=<<TABLE BORDER="0" CELLBORDER="0" CELLSPACING="0" CELLPADDING="2">
+  <TR><TD ALIGN="LEFT"><B>jamon</B></TD></TR>
+  <TR><TD BGCOLOR="#00000020" ALIGN="LEFT"><I>XML</I></TD></TR>
+  <TR><TD BGCOLOR="#FFFFFF80" ALIGN="LEFT">etc/jamon.xml</TD></TR>
+  <TR><TD BGCOLOR="#00000020" ALIGN="LEFT"><I>LIB</I></TD></TR>
+  <TR><TD BGCOLOR="#FFFFFF80" ALIGN="LEFT">lib/jamon/**.jar</TD></TR>
+  <TR><TD BGCOLOR="#00000020" ALIGN="LEFT"><I>INI Templates</I></TD></TR>
+</TABLE>>];
+  "jaspi" [ color="#B8FFB8" label=<<TABLE BORDER="0" CELLBORDER="0" CELLSPACING="0" CELLPADDING="2">
+  <TR><TD ALIGN="LEFT"><B>jaspi</B></TD></TR>
+  <TR><TD BGCOLOR="#00000020" ALIGN="LEFT"><I>LIBs</I></TD></TR>
+  <TR><TD BGCOLOR="#FFFFFF80" ALIGN="LEFT">lib/jetty-jaspi-${jetty.version}.jar</TD></TR>
+  <TR><TD BGCOLOR="#FFFFFF80" ALIGN="LEFT">lib/jaspi/*.jar</TD></TR>
+</TABLE>>];
+  "jcl-slf4j" [ color="#B8FFB8" label=<<TABLE BORDER="0" CELLBORDER="0" CELLSPACING="0" CELLPADDING="2">
+  <TR><TD ALIGN="LEFT"><B>jcl-slf4j</B></TD></TR>
+  <TR><TD BGCOLOR="#00000020" ALIGN="LEFT"><I>LIB</I></TD></TR>
+  <TR><TD BGCOLOR="#FFFFFF80" ALIGN="LEFT">lib/slf4j/jcl-over-slf4j-${slf4j.version}.jar</TD></TR>
+</TABLE>>];
+  "jminix" [ color="#B8FFB8" label=<<TABLE BORDER="0" CELLBORDER="0" CELLSPACING="0" CELLPADDING="2">
+  <TR><TD ALIGN="LEFT"><B>jminix</B></TD></TR>
+  <TR><TD BGCOLOR="#00000020" ALIGN="LEFT"><I>XML</I></TD></TR>
+  <TR><TD BGCOLOR="#FFFFFF80" ALIGN="LEFT">etc/jminix.xml</TD></TR>
+  <TR><TD BGCOLOR="#00000020" ALIGN="LEFT"><I>LIB</I></TD></TR>
+  <TR><TD BGCOLOR="#FFFFFF80" ALIGN="LEFT">lib/jminix/**.jar</TD></TR>
+  <TR><TD BGCOLOR="#00000020" ALIGN="LEFT"><I>INI Templates</I></TD></TR>
+</TABLE>>];
+  "jmx" [ color="#B8FFB8" label=<<TABLE BORDER="0" CELLBORDER="0" CELLSPACING="0" CELLPADDING="2">
+  <TR><TD ALIGN="LEFT"><B>jmx</B></TD></TR>
+  <TR><TD BGCOLOR="#00000020" ALIGN="LEFT"><I>XML</I></TD></TR>
+  <TR><TD BGCOLOR="#FFFFFF80" ALIGN="LEFT">etc/jetty-jmx.xml</TD></TR>
+  <TR><TD BGCOLOR="#00000020" ALIGN="LEFT"><I>LIB</I></TD></TR>
+  <TR><TD BGCOLOR="#FFFFFF80" ALIGN="LEFT">lib/jetty-jmx-${jetty.version}.jar</TD></TR>
+</TABLE>>];
+  "jmx-remote" [ color="#B8FFB8" label=<<TABLE BORDER="0" CELLBORDER="0" CELLSPACING="0" CELLPADDING="2">
+  <TR><TD ALIGN="LEFT"><B>jmx-remote</B></TD></TR>
+  <TR><TD BGCOLOR="#00000020" ALIGN="LEFT"><I>XML</I></TD></TR>
+  <TR><TD BGCOLOR="#FFFFFF80" ALIGN="LEFT">etc/jetty-jmx-remote.xml</TD></TR>
+  <TR><TD BGCOLOR="#00000020" ALIGN="LEFT"><I>INI Templates</I></TD></TR>
+</TABLE>>];
+  "jndi" [ color="#66FFCC" label=<<TABLE BORDER="0" CELLBORDER="0" CELLSPACING="0" CELLPADDING="2">
+  <TR><TD ALIGN="LEFT"><B>jndi</B></TD></TR>
+  <TR><TD BGCOLOR="#00000020" ALIGN="LEFT"><I>ENABLED</I></TD></TR>
+  <TR><TD BGCOLOR="#FFFFFF80" ALIGN="LEFT">via: transitive provider of jndi for plus</TD></TR>
+  <TR><TD BGCOLOR="#00000020" ALIGN="LEFT"><I>LIBs</I></TD></TR>
+  <TR><TD BGCOLOR="#FFFFFF80" ALIGN="LEFT">lib/jetty-jndi-${jetty.version}.jar</TD></TR>
+  <TR><TD BGCOLOR="#FFFFFF80" ALIGN="LEFT">lib/jndi/*.jar</TD></TR>
+</TABLE>>];
+  "jolokia" [ color="#B8FFB8" label=<<TABLE BORDER="0" CELLBORDER="0" CELLSPACING="0" CELLPADDING="2">
+  <TR><TD ALIGN="LEFT"><B>jolokia</B></TD></TR>
+  <TR><TD BGCOLOR="#00000020" ALIGN="LEFT"><I>XML</I></TD></TR>
+  <TR><TD BGCOLOR="#FFFFFF80" ALIGN="LEFT">etc/jolokia.xml</TD></TR>
+</TABLE>>];
+  "jsp" [ color="#66FFCC" label=<<TABLE BORDER="0" CELLBORDER="0" CELLSPACING="0" CELLPADDING="2">
+  <TR><TD ALIGN="LEFT"><B>jsp</B></TD></TR>
+  <TR><TD BGCOLOR="#00000020" ALIGN="LEFT"><I>ENABLED</I></TD></TR>
+  <TR><TD BGCOLOR="#FFFFFF80" ALIGN="LEFT">via: transitive provider of jsp for jstl</TD></TR>
+</TABLE>>];
+  "jstl" [ color="#66FFCC" label=<<TABLE BORDER="0" CELLBORDER="0" CELLSPACING="0" CELLPADDING="2">
+  <TR><TD ALIGN="LEFT"><B>jstl</B></TD></TR>
+  <TR><TD BGCOLOR="#00000020" ALIGN="LEFT"><I>ENABLED</I></TD></TR>
+  <TR><TD BGCOLOR="#FFFFFF80" ALIGN="LEFT">via: ${jetty.base}\start.d\jstl.ini</TD></TR>
+</TABLE>>];
+  "jul-impl" [ color="#B8FFB8" label=<<TABLE BORDER="0" CELLBORDER="0" CELLSPACING="0" CELLPADDING="2">
+  <TR><TD ALIGN="LEFT"><B>jul-impl</B></TD></TR>
+</TABLE>>];
+  "jul-slf4j" [ color="#B8FFB8" label=<<TABLE BORDER="0" CELLBORDER="0" CELLSPACING="0" CELLPADDING="2">
+  <TR><TD ALIGN="LEFT"><B>jul-slf4j</B></TD></TR>
+  <TR><TD BGCOLOR="#00000020" ALIGN="LEFT"><I>LIB</I></TD></TR>
+  <TR><TD BGCOLOR="#FFFFFF80" ALIGN="LEFT">lib/slf4j/jul-to-slf4j-${slf4j.version}.jar</TD></TR>
+</TABLE>>];
+  "jvm" [ color="#B8FFB8" label=<<TABLE BORDER="0" CELLBORDER="0" CELLSPACING="0" CELLPADDING="2">
+  <TR><TD ALIGN="LEFT"><B>jvm</B></TD></TR>
+  <TR><TD BGCOLOR="#00000020" ALIGN="LEFT"><I>INI Templates</I></TD></TR>
+</TABLE>>];
+  "log4j2-api" [ color="#B8FFB8" label=<<TABLE BORDER="0" CELLBORDER="0" CELLSPACING="0" CELLPADDING="2">
+  <TR><TD ALIGN="LEFT"><B>log4j2-api</B></TD></TR>
+  <TR><TD BGCOLOR="#00000020" ALIGN="LEFT"><I>LIB</I></TD></TR>
+  <TR><TD BGCOLOR="#FFFFFF80" ALIGN="LEFT">lib/log4j2/log4j-api-${log4j2.version}.jar</TD></TR>
+</TABLE>>];
+  "log4j2-impl" [ color="#B8FFB8" label=<<TABLE BORDER="0" CELLBORDER="0" CELLSPACING="0" CELLPADDING="2">
+  <TR><TD ALIGN="LEFT"><B>log4j2-impl</B></TD></TR>
+  <TR><TD BGCOLOR="#00000020" ALIGN="LEFT"><I>LIB</I></TD></TR>
+  <TR><TD BGCOLOR="#FFFFFF80" ALIGN="LEFT">lib/log4j2/*.jar</TD></TR>
+</TABLE>>];
+  "log4j2-slf4j" [ color="#B8FFB8" label=<<TABLE BORDER="0" CELLBORDER="0" CELLSPACING="0" CELLPADDING="2">
+  <TR><TD ALIGN="LEFT"><B>log4j2-slf4j</B></TD></TR>
+  <TR><TD BGCOLOR="#00000020" ALIGN="LEFT"><I>LIB</I></TD></TR>
+  <TR><TD BGCOLOR="#FFFFFF80" ALIGN="LEFT">lib/log4j2/log4j-slf4j-to-${log4j2.version}.jar</TD></TR>
+</TABLE>>];
+  "log4j-impl" [ color="#B8FFB8" label=<<TABLE BORDER="0" CELLBORDER="0" CELLSPACING="0" CELLPADDING="2">
+  <TR><TD ALIGN="LEFT"><B>log4j-impl</B></TD></TR>
+  <TR><TD BGCOLOR="#00000020" ALIGN="LEFT"><I>LIB</I></TD></TR>
+  <TR><TD BGCOLOR="#FFFFFF80" ALIGN="LEFT">lib/log4j/log4j-${log4j.version}.jar</TD></TR>
+</TABLE>>];
+  "logback-access" [ color="#B8FFB8" label=<<TABLE BORDER="0" CELLBORDER="0" CELLSPACING="0" CELLPADDING="2">
+  <TR><TD ALIGN="LEFT"><B>logback-access</B></TD></TR>
+  <TR><TD BGCOLOR="#00000020" ALIGN="LEFT"><I>XML</I></TD></TR>
+  <TR><TD BGCOLOR="#FFFFFF80" ALIGN="LEFT">etc/jetty-logback-access.xml</TD></TR>
+  <TR><TD BGCOLOR="#00000020" ALIGN="LEFT"><I>LIB</I></TD></TR>
+  <TR><TD BGCOLOR="#FFFFFF80" ALIGN="LEFT">lib/logback/logback-access-${logback.version}.jar</TD></TR>
+</TABLE>>];
+  "logback-impl" [ color="#B8FFB8" label=<<TABLE BORDER="0" CELLBORDER="0" CELLSPACING="0" CELLPADDING="2">
+  <TR><TD ALIGN="LEFT"><B>logback-impl</B></TD></TR>
+  <TR><TD BGCOLOR="#00000020" ALIGN="LEFT"><I>LIB</I></TD></TR>
+  <TR><TD BGCOLOR="#FFFFFF80" ALIGN="LEFT">lib/logback/logback-core-${logback.version}.jar</TD></TR>
+</TABLE>>];
+  "logging-jetty" [ color="#B8FFB8" label=<<TABLE BORDER="0" CELLBORDER="0" CELLSPACING="0" CELLPADDING="2">
+  <TR><TD ALIGN="LEFT"><B>logging-jetty</B></TD></TR>
+</TABLE>>];
+  "logging-jul" [ color="#B8FFB8" label=<<TABLE BORDER="0" CELLBORDER="0" CELLSPACING="0" CELLPADDING="2">
+  <TR><TD ALIGN="LEFT"><B>logging-jul</B></TD></TR>
+</TABLE>>];
+  "logging-log4j" [ color="#B8FFB8" label=<<TABLE BORDER="0" CELLBORDER="0" CELLSPACING="0" CELLPADDING="2">
+  <TR><TD ALIGN="LEFT"><B>logging-log4j</B></TD></TR>
+</TABLE>>];
+  "logging-log4j2" [ color="#B8FFB8" label=<<TABLE BORDER="0" CELLBORDER="0" CELLSPACING="0" CELLPADDING="2">
+  <TR><TD ALIGN="LEFT"><B>logging-log4j2</B></TD></TR>
+</TABLE>>];
+  "logging-logback" [ color="#B8FFB8" label=<<TABLE BORDER="0" CELLBORDER="0" CELLSPACING="0" CELLPADDING="2">
+  <TR><TD ALIGN="LEFT"><B>logging-logback</B></TD></TR>
+</TABLE>>];
+  "logging-slf4j" [ color="#B8FFB8" label=<<TABLE BORDER="0" CELLBORDER="0" CELLSPACING="0" CELLPADDING="2">
+  <TR><TD ALIGN="LEFT"><B>logging-slf4j</B></TD></TR>
+</TABLE>>];
+  "lowresources" [ color="#B8FFB8" label=<<TABLE BORDER="0" CELLBORDER="0" CELLSPACING="0" CELLPADDING="2">
+  <TR><TD ALIGN="LEFT"><B>lowresources</B></TD></TR>
+  <TR><TD BGCOLOR="#00000020" ALIGN="LEFT"><I>XML</I></TD></TR>
+  <TR><TD BGCOLOR="#FFFFFF80" ALIGN="LEFT">etc/jetty-lowresources.xml</TD></TR>
+  <TR><TD BGCOLOR="#00000020" ALIGN="LEFT"><I>INI Templates</I></TD></TR>
+</TABLE>>];
+  "mail" [ color="#66FFCC" label=<<TABLE BORDER="0" CELLBORDER="0" CELLSPACING="0" CELLPADDING="2">
+  <TR><TD ALIGN="LEFT"><B>mail</B></TD></TR>
+  <TR><TD BGCOLOR="#00000020" ALIGN="LEFT"><I>ENABLED</I></TD></TR>
+  <TR><TD BGCOLOR="#FFFFFF80" ALIGN="LEFT">via: transitive provider of mail for jndi</TD></TR>
+  <TR><TD BGCOLOR="#00000020" ALIGN="LEFT"><I>LIB</I></TD></TR>
+  <TR><TD BGCOLOR="#FFFFFF80" ALIGN="LEFT">lib/mail/*.jar</TD></TR>
+</TABLE>>];
+  "plus" [ color="#66FFCC" label=<<TABLE BORDER="0" CELLBORDER="0" CELLSPACING="0" CELLPADDING="2">
+  <TR><TD ALIGN="LEFT"><B>plus</B></TD></TR>
+  <TR><TD BGCOLOR="#00000020" ALIGN="LEFT"><I>ENABLED</I></TD></TR>
+  <TR><TD BGCOLOR="#FFFFFF80" ALIGN="LEFT">via: transitive provider of plus for annotations</TD></TR>
+  <TR><TD BGCOLOR="#00000020" ALIGN="LEFT"><I>XML</I></TD></TR>
+  <TR><TD BGCOLOR="#FFFFFF80" ALIGN="LEFT">etc/jetty-plus.xml</TD></TR>
+  <TR><TD BGCOLOR="#00000020" ALIGN="LEFT"><I>LIB</I></TD></TR>
+  <TR><TD BGCOLOR="#FFFFFF80" ALIGN="LEFT">lib/jetty-plus-${jetty.version}.jar</TD></TR>
+</TABLE>>];
+  "proxy" [ color="#B8FFB8" label=<<TABLE BORDER="0" CELLBORDER="0" CELLSPACING="0" CELLPADDING="2">
+  <TR><TD ALIGN="LEFT"><B>proxy</B></TD></TR>
+  <TR><TD BGCOLOR="#00000020" ALIGN="LEFT"><I>XML</I></TD></TR>
+  <TR><TD BGCOLOR="#FFFFFF80" ALIGN="LEFT">etc/jetty-proxy.xml</TD></TR>
+  <TR><TD BGCOLOR="#00000020" ALIGN="LEFT"><I>LIB</I></TD></TR>
+  <TR><TD BGCOLOR="#FFFFFF80" ALIGN="LEFT">lib/jetty-proxy-${jetty.version}.jar</TD></TR>
+  <TR><TD BGCOLOR="#00000020" ALIGN="LEFT"><I>INI Templates</I></TD></TR>
+</TABLE>>];
+  "proxy-protocol" [ color="#B8FFB8" label=<<TABLE BORDER="0" CELLBORDER="0" CELLSPACING="0" CELLPADDING="2">
+  <TR><TD ALIGN="LEFT"><B>proxy-protocol</B></TD></TR>
+  <TR><TD BGCOLOR="#00000020" ALIGN="LEFT"><I>XML</I></TD></TR>
+  <TR><TD BGCOLOR="#FFFFFF80" ALIGN="LEFT">etc/jetty-proxy-protocol.xml</TD></TR>
+</TABLE>>];
+  "proxy-protocol-ssl" [ color="#B8FFB8" label=<<TABLE BORDER="0" CELLBORDER="0" CELLSPACING="0" CELLPADDING="2">
+  <TR><TD ALIGN="LEFT"><B>proxy-protocol-ssl</B></TD></TR>
+  <TR><TD BGCOLOR="#00000020" ALIGN="LEFT"><I>XML</I></TD></TR>
+  <TR><TD BGCOLOR="#FFFFFF80" ALIGN="LEFT">etc/jetty-proxy-protocol-ssl.xml</TD></TR>
+</TABLE>>];
+  "quickstart" [ color="#B8FFB8" label=<<TABLE BORDER="0" CELLBORDER="0" CELLSPACING="0" CELLPADDING="2">
+  <TR><TD ALIGN="LEFT"><B>quickstart</B></TD></TR>
+  <TR><TD BGCOLOR="#00000020" ALIGN="LEFT"><I>LIB</I></TD></TR>
+  <TR><TD BGCOLOR="#FFFFFF80" ALIGN="LEFT">lib/jetty-quickstart-${jetty.version}.jar</TD></TR>
+</TABLE>>];
+  "requestlog" [ color="#B8FFB8" label=<<TABLE BORDER="0" CELLBORDER="0" CELLSPACING="0" CELLPADDING="2">
+  <TR><TD ALIGN="LEFT"><B>requestlog</B></TD></TR>
+  <TR><TD BGCOLOR="#00000020" ALIGN="LEFT"><I>XML</I></TD></TR>
+  <TR><TD BGCOLOR="#FFFFFF80" ALIGN="LEFT">etc/jetty-requestlog.xml</TD></TR>
+  <TR><TD BGCOLOR="#00000020" ALIGN="LEFT"><I>INI Templates</I></TD></TR>
+</TABLE>>];
+  "resources" [ color="#B8FFB8" label=<<TABLE BORDER="0" CELLBORDER="0" CELLSPACING="0" CELLPADDING="2">
+  <TR><TD ALIGN="LEFT"><B>resources</B></TD></TR>
+  <TR><TD BGCOLOR="#00000020" ALIGN="LEFT"><I>LIB</I></TD></TR>
+  <TR><TD BGCOLOR="#FFFFFF80" ALIGN="LEFT">resources/</TD></TR>
+</TABLE>>];
+  "rewrite" [ color="#B8FFB8" label=<<TABLE BORDER="0" CELLBORDER="0" CELLSPACING="0" CELLPADDING="2">
+  <TR><TD ALIGN="LEFT"><B>rewrite</B></TD></TR>
+  <TR><TD BGCOLOR="#00000020" ALIGN="LEFT"><I>XML</I></TD></TR>
+  <TR><TD BGCOLOR="#FFFFFF80" ALIGN="LEFT">etc/jetty-rewrite.xml</TD></TR>
+  <TR><TD BGCOLOR="#00000020" ALIGN="LEFT"><I>LIB</I></TD></TR>
+  <TR><TD BGCOLOR="#FFFFFF80" ALIGN="LEFT">lib/jetty-rewrite-${jetty.version}.jar</TD></TR>
+  <TR><TD BGCOLOR="#00000020" ALIGN="LEFT"><I>INI Templates</I></TD></TR>
+</TABLE>>];
+  "rewrite-compactpath" [ color="#B8FFB8" label=<<TABLE BORDER="0" CELLBORDER="0" CELLSPACING="0" CELLPADDING="2">
+  <TR><TD ALIGN="LEFT"><B>rewrite-compactpath</B></TD></TR>
+  <TR><TD BGCOLOR="#00000020" ALIGN="LEFT"><I>XML</I></TD></TR>
+  <TR><TD BGCOLOR="#FFFFFF80" ALIGN="LEFT">etc/rewrite-compactpath.xml</TD></TR>
+  <TR><TD BGCOLOR="#00000020" ALIGN="LEFT"><I>INI Templates</I></TD></TR>
+</TABLE>>];
+  "rewrite-customizer" [ color="#B8FFB8" label=<<TABLE BORDER="0" CELLBORDER="0" CELLSPACING="0" CELLPADDING="2">
+  <TR><TD ALIGN="LEFT"><B>rewrite-customizer</B></TD></TR>
+  <TR><TD BGCOLOR="#00000020" ALIGN="LEFT"><I>XML</I></TD></TR>
+  <TR><TD BGCOLOR="#FFFFFF80" ALIGN="LEFT">etc/jetty-rewrite-customizer.xml</TD></TR>
+  <TR><TD BGCOLOR="#00000020" ALIGN="LEFT"><I>LIB</I></TD></TR>
+  <TR><TD BGCOLOR="#FFFFFF80" ALIGN="LEFT">lib/jetty-rewrite-${jetty.version}.jar</TD></TR>
+  <TR><TD BGCOLOR="#00000020" ALIGN="LEFT"><I>INI Templates</I></TD></TR>
+</TABLE>>];
+  "security" [ color="#66FFCC" label=<<TABLE BORDER="0" CELLBORDER="0" CELLSPACING="0" CELLPADDING="2">
+  <TR><TD ALIGN="LEFT"><B>security</B></TD></TR>
+  <TR><TD BGCOLOR="#00000020" ALIGN="LEFT"><I>ENABLED</I></TD></TR>
+  <TR><TD BGCOLOR="#FFFFFF80" ALIGN="LEFT">via: transitive provider of security for webapp</TD></TR>
+  <TR><TD BGCOLOR="#FFFFFF80" ALIGN="LEFT">via: transitive provider of security for plus</TD></TR>
+  <TR><TD BGCOLOR="#00000020" ALIGN="LEFT"><I>LIB</I></TD></TR>
+  <TR><TD BGCOLOR="#FFFFFF80" ALIGN="LEFT">lib/jetty-security-${jetty.version}.jar</TD></TR>
+</TABLE>>];
+  "server" [ color="#66FFCC" label=<<TABLE BORDER="0" CELLBORDER="0" CELLSPACING="0" CELLPADDING="2">
+  <TR><TD ALIGN="LEFT"><B>server</B></TD></TR>
+  <TR><TD BGCOLOR="#00000020" ALIGN="LEFT"><I>ENABLED</I></TD></TR>
+  <TR><TD BGCOLOR="#FFFFFF80" ALIGN="LEFT">via: transitive provider of server for http</TD></TR>
+  <TR><TD BGCOLOR="#FFFFFF80" ALIGN="LEFT">via: transitive provider of server for plus</TD></TR>
+  <TR><TD BGCOLOR="#FFFFFF80" ALIGN="LEFT">via: transitive provider of server for security</TD></TR>
+  <TR><TD BGCOLOR="#FFFFFF80" ALIGN="LEFT">via: transitive provider of server for servlet</TD></TR>
+  <TR><TD BGCOLOR="#FFFFFF80" ALIGN="LEFT">via: transitive provider of server for jndi</TD></TR>
+  <TR><TD BGCOLOR="#00000020" ALIGN="LEFT"><I>XML</I></TD></TR>
+  <TR><TD BGCOLOR="#FFFFFF80" ALIGN="LEFT">etc/jetty.xml</TD></TR>
+  <TR><TD BGCOLOR="#00000020" ALIGN="LEFT"><I>LIBs</I></TD></TR>
+  <TR><TD BGCOLOR="#FFFFFF80" ALIGN="LEFT">lib/servlet-api-3.1.jar</TD></TR>
+  <TR><TD BGCOLOR="#FFFFFF80" ALIGN="LEFT">lib/jetty-schemas-3.1.jar</TD></TR>
+  <TR><TD BGCOLOR="#FFFFFF80" ALIGN="LEFT">lib/jetty-http-${jetty.version}.jar</TD></TR>
+  <TR><TD BGCOLOR="#FFFFFF80" ALIGN="LEFT">lib/jetty-server-${jetty.version}.jar</TD></TR>
+  <TR><TD BGCOLOR="#FFFFFF80" ALIGN="LEFT">lib/jetty-xml-${jetty.version}.jar</TD></TR>
+  <TR><TD BGCOLOR="#FFFFFF80" ALIGN="LEFT">lib/jetty-util-${jetty.version}.jar</TD></TR>
+  <TR><TD BGCOLOR="#FFFFFF80" ALIGN="LEFT">lib/jetty-io-${jetty.version}.jar</TD></TR>
+  <TR><TD BGCOLOR="#00000020" ALIGN="LEFT"><I>INI Templates</I></TD></TR>
+</TABLE>>];
+  "servlet" [ color="#66FFCC" label=<<TABLE BORDER="0" CELLBORDER="0" CELLSPACING="0" CELLPADDING="2">
+  <TR><TD ALIGN="LEFT"><B>servlet</B></TD></TR>
+  <TR><TD BGCOLOR="#00000020" ALIGN="LEFT"><I>ENABLED</I></TD></TR>
+  <TR><TD BGCOLOR="#FFFFFF80" ALIGN="LEFT">via: transitive provider of servlet for webapp</TD></TR>
+  <TR><TD BGCOLOR="#FFFFFF80" ALIGN="LEFT">via: transitive provider of servlet for jsp</TD></TR>
+  <TR><TD BGCOLOR="#00000020" ALIGN="LEFT"><I>LIB</I></TD></TR>
+  <TR><TD BGCOLOR="#FFFFFF80" ALIGN="LEFT">lib/jetty-servlet-${jetty.version}.jar</TD></TR>
+</TABLE>>];
+  "servlets" [ color="#B8FFB8" label=<<TABLE BORDER="0" CELLBORDER="0" CELLSPACING="0" CELLPADDING="2">
+  <TR><TD ALIGN="LEFT"><B>servlets</B></TD></TR>
+  <TR><TD BGCOLOR="#00000020" ALIGN="LEFT"><I>LIB</I></TD></TR>
+  <TR><TD BGCOLOR="#FFFFFF80" ALIGN="LEFT">lib/jetty-servlets-${jetty.version}.jar</TD></TR>
+</TABLE>>];
+  "session-cache-hash" [ color="#B8FFB8" label=<<TABLE BORDER="0" CELLBORDER="0" CELLSPACING="0" CELLPADDING="2">
+  <TR><TD ALIGN="LEFT"><B>session-cache-hash</B></TD></TR>
+  <TR><TD BGCOLOR="#00000020" ALIGN="LEFT"><I>XML</I></TD></TR>
+  <TR><TD BGCOLOR="#FFFFFF80" ALIGN="LEFT">etc/sessions/session-cache-hash.xml</TD></TR>
+  <TR><TD BGCOLOR="#00000020" ALIGN="LEFT"><I>INI Templates</I></TD></TR>
+</TABLE>>];
+  "session-cache-null" [ color="#B8FFB8" label=<<TABLE BORDER="0" CELLBORDER="0" CELLSPACING="0" CELLPADDING="2">
+  <TR><TD ALIGN="LEFT"><B>session-cache-null</B></TD></TR>
+  <TR><TD BGCOLOR="#00000020" ALIGN="LEFT"><I>XML</I></TD></TR>
+  <TR><TD BGCOLOR="#FFFFFF80" ALIGN="LEFT">etc/sessions/session-cache-null.xml</TD></TR>
+  <TR><TD BGCOLOR="#00000020" ALIGN="LEFT"><I>INI Templates</I></TD></TR>
+</TABLE>>];
+  "sessions" [ color="#B8FFB8" label=<<TABLE BORDER="0" CELLBORDER="0" CELLSPACING="0" CELLPADDING="2">
+  <TR><TD ALIGN="LEFT"><B>sessions</B></TD></TR>
+  <TR><TD BGCOLOR="#00000020" ALIGN="LEFT"><I>XML</I></TD></TR>
+  <TR><TD BGCOLOR="#FFFFFF80" ALIGN="LEFT">etc/sessions/id-manager.xml</TD></TR>
+  <TR><TD BGCOLOR="#00000020" ALIGN="LEFT"><I>INI Templates</I></TD></TR>
+</TABLE>>];
+  "session-store-cache" [ color="#B8FFB8" label=<<TABLE BORDER="0" CELLBORDER="0" CELLSPACING="0" CELLPADDING="2">
+  <TR><TD ALIGN="LEFT"><B>session-store-cache</B></TD></TR>
+  <TR><TD BGCOLOR="#00000020" ALIGN="LEFT"><I>XML</I></TD></TR>
+  <TR><TD BGCOLOR="#FFFFFF80" ALIGN="LEFT">etc/sessions/session-data-cache/session-caching-store.xml</TD></TR>
+  <TR><TD BGCOLOR="#00000020" ALIGN="LEFT"><I>INI Templates</I></TD></TR>
+</TABLE>>];
+  "session-store-file" [ color="#B8FFB8" label=<<TABLE BORDER="0" CELLBORDER="0" CELLSPACING="0" CELLPADDING="2">
+  <TR><TD ALIGN="LEFT"><B>session-store-file</B></TD></TR>
+  <TR><TD BGCOLOR="#00000020" ALIGN="LEFT"><I>XML</I></TD></TR>
+  <TR><TD BGCOLOR="#FFFFFF80" ALIGN="LEFT">etc/sessions/file/session-store.xml</TD></TR>
+  <TR><TD BGCOLOR="#00000020" ALIGN="LEFT"><I>INI Templates</I></TD></TR>
+</TABLE>>];
+  "session-store-gcloud" [ color="#B8FFB8" label=<<TABLE BORDER="0" CELLBORDER="0" CELLSPACING="0" CELLPADDING="2">
+  <TR><TD ALIGN="LEFT"><B>session-store-gcloud</B></TD></TR>
+  <TR><TD BGCOLOR="#00000020" ALIGN="LEFT"><I>XML</I></TD></TR>
+  <TR><TD BGCOLOR="#FFFFFF80" ALIGN="LEFT">etc/sessions/gcloud/session-store.xml</TD></TR>
+  <TR><TD BGCOLOR="#00000020" ALIGN="LEFT"><I>LIB</I></TD></TR>
+  <TR><TD BGCOLOR="#FFFFFF80" ALIGN="LEFT">lib/jetty-gcloud-session-manager-${jetty.version}.jar</TD></TR>
+  <TR><TD BGCOLOR="#00000020" ALIGN="LEFT"><I>INI Templates</I></TD></TR>
+</TABLE>>];
+  "session-store-hazelcast-embedded" [ color="#B8FFB8" label=<<TABLE BORDER="0" CELLBORDER="0" CELLSPACING="0" CELLPADDING="2">
+  <TR><TD ALIGN="LEFT"><B>session-store-hazelcast-embedded</B></TD></TR>
+  <TR><TD BGCOLOR="#00000020" ALIGN="LEFT"><I>XML</I></TD></TR>
+  <TR><TD BGCOLOR="#FFFFFF80" ALIGN="LEFT">etc/sessions/hazelcast/default.xml</TD></TR>
+  <TR><TD BGCOLOR="#00000020" ALIGN="LEFT"><I>LIBs</I></TD></TR>
+  <TR><TD BGCOLOR="#FFFFFF80" ALIGN="LEFT">lib/jetty-hazelcast-${jetty.version}.jar</TD></TR>
+  <TR><TD BGCOLOR="#FFFFFF80" ALIGN="LEFT">lib/hazelcast/*.jar</TD></TR>
+  <TR><TD BGCOLOR="#00000020" ALIGN="LEFT"><I>INI Templates</I></TD></TR>
+</TABLE>>];
+  "session-store-hazelcast-remote" [ color="#B8FFB8" label=<<TABLE BORDER="0" CELLBORDER="0" CELLSPACING="0" CELLPADDING="2">
+  <TR><TD ALIGN="LEFT"><B>session-store-hazelcast-remote</B></TD></TR>
+  <TR><TD BGCOLOR="#00000020" ALIGN="LEFT"><I>XML</I></TD></TR>
+  <TR><TD BGCOLOR="#FFFFFF80" ALIGN="LEFT">etc/sessions/hazelcast/remote.xml</TD></TR>
+  <TR><TD BGCOLOR="#00000020" ALIGN="LEFT"><I>LIBs</I></TD></TR>
+  <TR><TD BGCOLOR="#FFFFFF80" ALIGN="LEFT">lib/jetty-hazelcast-${jetty.version}.jar</TD></TR>
+  <TR><TD BGCOLOR="#FFFFFF80" ALIGN="LEFT">lib/hazelcast/*.jar</TD></TR>
+  <TR><TD BGCOLOR="#00000020" ALIGN="LEFT"><I>INI Templates</I></TD></TR>
+</TABLE>>];
+  "session-store-infinispan-embedded" [ color="#B8FFB8" label=<<TABLE BORDER="0" CELLBORDER="0" CELLSPACING="0" CELLPADDING="2">
+  <TR><TD ALIGN="LEFT"><B>session-store-infinispan-embedded</B></TD></TR>
+  <TR><TD BGCOLOR="#00000020" ALIGN="LEFT"><I>XML</I></TD></TR>
+  <TR><TD BGCOLOR="#FFFFFF80" ALIGN="LEFT">etc/sessions/infinispan/default.xml</TD></TR>
+  <TR><TD BGCOLOR="#00000020" ALIGN="LEFT"><I>LIBs</I></TD></TR>
+  <TR><TD BGCOLOR="#FFFFFF80" ALIGN="LEFT">lib/jetty-infinispan-${jetty.version}.jar</TD></TR>
+  <TR><TD BGCOLOR="#FFFFFF80" ALIGN="LEFT">lib/infinispan/*.jar</TD></TR>
+  <TR><TD BGCOLOR="#00000020" ALIGN="LEFT"><I>INI Templates</I></TD></TR>
+</TABLE>>];
+  "session-store-infinispan-embedded-910" [ color="#B8FFB8" label=<<TABLE BORDER="0" CELLBORDER="0" CELLSPACING="0" CELLPADDING="2">
+  <TR><TD ALIGN="LEFT"><B>session-store-infinispan-embedded-910</B></TD></TR>
+  <TR><TD BGCOLOR="#00000020" ALIGN="LEFT"><I>XML</I></TD></TR>
+  <TR><TD BGCOLOR="#FFFFFF80" ALIGN="LEFT">etc/sessions/infinispan/default.xml</TD></TR>
+  <TR><TD BGCOLOR="#00000020" ALIGN="LEFT"><I>LIBs</I></TD></TR>
+  <TR><TD BGCOLOR="#FFFFFF80" ALIGN="LEFT">lib/jetty-infinispan-${jetty.version}.jar</TD></TR>
+  <TR><TD BGCOLOR="#FFFFFF80" ALIGN="LEFT">lib/infinispan/*.jar</TD></TR>
+  <TR><TD BGCOLOR="#00000020" ALIGN="LEFT"><I>INI Templates</I></TD></TR>
+</TABLE>>];
+  "session-store-infinispan-remote" [ color="#B8FFB8" label=<<TABLE BORDER="0" CELLBORDER="0" CELLSPACING="0" CELLPADDING="2">
+  <TR><TD ALIGN="LEFT"><B>session-store-infinispan-remote</B></TD></TR>
+  <TR><TD BGCOLOR="#00000020" ALIGN="LEFT"><I>XML</I></TD></TR>
+  <TR><TD BGCOLOR="#FFFFFF80" ALIGN="LEFT">etc/sessions/infinispan/remote.xml</TD></TR>
+  <TR><TD BGCOLOR="#00000020" ALIGN="LEFT"><I>LIBs</I></TD></TR>
+  <TR><TD BGCOLOR="#FFFFFF80" ALIGN="LEFT">lib/jetty-infinispan-${jetty.version}.jar</TD></TR>
+  <TR><TD BGCOLOR="#FFFFFF80" ALIGN="LEFT">lib/infinispan/*.jar</TD></TR>
+  <TR><TD BGCOLOR="#00000020" ALIGN="LEFT"><I>INI Templates</I></TD></TR>
+</TABLE>>];
+  "session-store-infinispan-remote-910" [ color="#B8FFB8" label=<<TABLE BORDER="0" CELLBORDER="0" CELLSPACING="0" CELLPADDING="2">
+  <TR><TD ALIGN="LEFT"><B>session-store-infinispan-remote-910</B></TD></TR>
+  <TR><TD BGCOLOR="#00000020" ALIGN="LEFT"><I>XML</I></TD></TR>
+  <TR><TD BGCOLOR="#FFFFFF80" ALIGN="LEFT">etc/sessions/infinispan/remote.xml</TD></TR>
+  <TR><TD BGCOLOR="#00000020" ALIGN="LEFT"><I>LIBs</I></TD></TR>
+  <TR><TD BGCOLOR="#FFFFFF80" ALIGN="LEFT">lib/jetty-infinispan-${jetty.version}.jar</TD></TR>
+  <TR><TD BGCOLOR="#FFFFFF80" ALIGN="LEFT">lib/infinispan/*.jar</TD></TR>
+  <TR><TD BGCOLOR="#00000020" ALIGN="LEFT"><I>INI Templates</I></TD></TR>
+</TABLE>>];
+  "session-store-jdbc" [ color="#B8FFB8" label=<<TABLE BORDER="0" CELLBORDER="0" CELLSPACING="0" CELLPADDING="2">
+  <TR><TD ALIGN="LEFT"><B>session-store-jdbc</B></TD></TR>
+  <TR><TD BGCOLOR="#00000020" ALIGN="LEFT"><I>XML</I></TD></TR>
+  <TR><TD BGCOLOR="#FFFFFF80" ALIGN="LEFT">etc/sessions/jdbc/session-store.xml</TD></TR>
+  <TR><TD BGCOLOR="#00000020" ALIGN="LEFT"><I>INI Templates</I></TD></TR>
+</TABLE>>];
+  "session-store-mongo" [ color="#B8FFB8" label=<<TABLE BORDER="0" CELLBORDER="0" CELLSPACING="0" CELLPADDING="2">
+  <TR><TD ALIGN="LEFT"><B>session-store-mongo</B></TD></TR>
+  <TR><TD BGCOLOR="#00000020" ALIGN="LEFT"><I>LIBs</I></TD></TR>
+  <TR><TD BGCOLOR="#FFFFFF80" ALIGN="LEFT">lib/jetty-nosql-${jetty.version}.jar</TD></TR>
+  <TR><TD BGCOLOR="#FFFFFF80" ALIGN="LEFT">lib/nosql/*.jar</TD></TR>
+  <TR><TD BGCOLOR="#00000020" ALIGN="LEFT"><I>INI Templates</I></TD></TR>
+</TABLE>>];
+  "setuid" [ color="#B8FFB8" label=<<TABLE BORDER="0" CELLBORDER="0" CELLSPACING="0" CELLPADDING="2">
+  <TR><TD ALIGN="LEFT"><B>setuid</B></TD></TR>
+  <TR><TD BGCOLOR="#00000020" ALIGN="LEFT"><I>XML</I></TD></TR>
+  <TR><TD BGCOLOR="#FFFFFF80" ALIGN="LEFT">etc/jetty-setuid.xml</TD></TR>
+  <TR><TD BGCOLOR="#00000020" ALIGN="LEFT"><I>LIB</I></TD></TR>
+  <TR><TD BGCOLOR="#FFFFFF80" ALIGN="LEFT">lib/setuid/jetty-setuid-java-1.0.3.jar</TD></TR>
+  <TR><TD BGCOLOR="#00000020" ALIGN="LEFT"><I>INI Templates</I></TD></TR>
+</TABLE>>];
+  "slf4j-api" [ color="#B8FFB8" label=<<TABLE BORDER="0" CELLBORDER="0" CELLSPACING="0" CELLPADDING="2">
+  <TR><TD ALIGN="LEFT"><B>slf4j-api</B></TD></TR>
+  <TR><TD BGCOLOR="#00000020" ALIGN="LEFT"><I>LIB</I></TD></TR>
+  <TR><TD BGCOLOR="#FFFFFF80" ALIGN="LEFT">lib/slf4j/slf4j-api-${slf4j.version}.jar</TD></TR>
+</TABLE>>];
+  "slf4j-jul" [ color="#B8FFB8" label=<<TABLE BORDER="0" CELLBORDER="0" CELLSPACING="0" CELLPADDING="2">
+  <TR><TD ALIGN="LEFT"><B>slf4j-jul</B></TD></TR>
+  <TR><TD BGCOLOR="#00000020" ALIGN="LEFT"><I>LIB</I></TD></TR>
+  <TR><TD BGCOLOR="#FFFFFF80" ALIGN="LEFT">lib/slf4j/slf4j-jdk14-${slf4j.version}.jar</TD></TR>
+</TABLE>>];
+  "slf4j-log4j" [ color="#B8FFB8" label=<<TABLE BORDER="0" CELLBORDER="0" CELLSPACING="0" CELLPADDING="2">
+  <TR><TD ALIGN="LEFT"><B>slf4j-log4j</B></TD></TR>
+  <TR><TD BGCOLOR="#00000020" ALIGN="LEFT"><I>LIB</I></TD></TR>
+  <TR><TD BGCOLOR="#FFFFFF80" ALIGN="LEFT">lib/slf4j/slf4j-log4j12-${slf4j.version}.jar</TD></TR>
+</TABLE>>];
+  "slf4j-log4j2" [ color="#B8FFB8" label=<<TABLE BORDER="0" CELLBORDER="0" CELLSPACING="0" CELLPADDING="2">
+  <TR><TD ALIGN="LEFT"><B>slf4j-log4j2</B></TD></TR>
+  <TR><TD BGCOLOR="#00000020" ALIGN="LEFT"><I>LIB</I></TD></TR>
+  <TR><TD BGCOLOR="#FFFFFF80" ALIGN="LEFT">lib/log4j2/log4j-slf4j-impl-${log4j2.version}.jar</TD></TR>
+</TABLE>>];
+  "slf4j-logback" [ color="#B8FFB8" label=<<TABLE BORDER="0" CELLBORDER="0" CELLSPACING="0" CELLPADDING="2">
+  <TR><TD ALIGN="LEFT"><B>slf4j-logback</B></TD></TR>
+  <TR><TD BGCOLOR="#00000020" ALIGN="LEFT"><I>LIB</I></TD></TR>
+  <TR><TD BGCOLOR="#FFFFFF80" ALIGN="LEFT">lib/logback/logback-classic-${logback.version}.jar</TD></TR>
+</TABLE>>];
+  "slf4j-simple-impl" [ color="#B8FFB8" label=<<TABLE BORDER="0" CELLBORDER="0" CELLSPACING="0" CELLPADDING="2">
+  <TR><TD ALIGN="LEFT"><B>slf4j-simple-impl</B></TD></TR>
+  <TR><TD BGCOLOR="#00000020" ALIGN="LEFT"><I>LIB</I></TD></TR>
+  <TR><TD BGCOLOR="#FFFFFF80" ALIGN="LEFT">lib/slf4j/slf4j-simple-${slf4j.version}.jar</TD></TR>
+</TABLE>>];
+  "spring" [ color="#B8FFB8" label=<<TABLE BORDER="0" CELLBORDER="0" CELLSPACING="0" CELLPADDING="2">
+  <TR><TD ALIGN="LEFT"><B>spring</B></TD></TR>
+  <TR><TD BGCOLOR="#00000020" ALIGN="LEFT"><I>LIB</I></TD></TR>
+  <TR><TD BGCOLOR="#FFFFFF80" ALIGN="LEFT">lib/spring/*.jar</TD></TR>
+  <TR><TD BGCOLOR="#00000020" ALIGN="LEFT"><I>INI Templates</I></TD></TR>
+</TABLE>>];
+  "ssl" [ color="#B8FFB8" label=<<TABLE BORDER="0" CELLBORDER="0" CELLSPACING="0" CELLPADDING="2">
+  <TR><TD ALIGN="LEFT"><B>ssl</B></TD></TR>
+  <TR><TD BGCOLOR="#00000020" ALIGN="LEFT"><I>XMLs</I></TD></TR>
+  <TR><TD BGCOLOR="#FFFFFF80" ALIGN="LEFT">etc/jetty-ssl.xml</TD></TR>
+  <TR><TD BGCOLOR="#FFFFFF80" ALIGN="LEFT">etc/jetty-ssl-context.xml</TD></TR>
+  <TR><TD BGCOLOR="#00000020" ALIGN="LEFT"><I>INI Templates</I></TD></TR>
+</TABLE>>];
+  "stats" [ color="#B8FFB8" label=<<TABLE BORDER="0" CELLBORDER="0" CELLSPACING="0" CELLPADDING="2">
+  <TR><TD ALIGN="LEFT"><B>stats</B></TD></TR>
+  <TR><TD BGCOLOR="#00000020" ALIGN="LEFT"><I>XML</I></TD></TR>
+  <TR><TD BGCOLOR="#FFFFFF80" ALIGN="LEFT">etc/jetty-stats.xml</TD></TR>
+</TABLE>>];
+  "stop" [ color="#B8FFB8" label=<<TABLE BORDER="0" CELLBORDER="0" CELLSPACING="0" CELLPADDING="2">
+  <TR><TD ALIGN="LEFT"><B>stop</B></TD></TR>
+  <TR><TD BGCOLOR="#00000020" ALIGN="LEFT"><I>XML</I></TD></TR>
+  <TR><TD BGCOLOR="#FFFFFF80" ALIGN="LEFT">etc/jetty-stop.xml</TD></TR>
+</TABLE>>];
+  "threadlimit" [ color="#B8FFB8" label=<<TABLE BORDER="0" CELLBORDER="0" CELLSPACING="0" CELLPADDING="2">
+  <TR><TD ALIGN="LEFT"><B>threadlimit</B></TD></TR>
+  <TR><TD BGCOLOR="#00000020" ALIGN="LEFT"><I>XML</I></TD></TR>
+  <TR><TD BGCOLOR="#FFFFFF80" ALIGN="LEFT">etc/jetty-threadlimit.xml</TD></TR>
+  <TR><TD BGCOLOR="#00000020" ALIGN="LEFT"><I>INI Templates</I></TD></TR>
+</TABLE>>];
+  "threadpool" [ color="#66FFCC" label=<<TABLE BORDER="0" CELLBORDER="0" CELLSPACING="0" CELLPADDING="2">
+  <TR><TD ALIGN="LEFT"><B>threadpool</B></TD></TR>
+  <TR><TD BGCOLOR="#00000020" ALIGN="LEFT"><I>ENABLED</I></TD></TR>
+  <TR><TD BGCOLOR="#FFFFFF80" ALIGN="LEFT">via: transitive provider of threadpool for server</TD></TR>
+  <TR><TD BGCOLOR="#00000020" ALIGN="LEFT"><I>XML</I></TD></TR>
+  <TR><TD BGCOLOR="#FFFFFF80" ALIGN="LEFT">etc/jetty-threadpool.xml</TD></TR>
+  <TR><TD BGCOLOR="#00000020" ALIGN="LEFT"><I>INI Templates</I></TD></TR>
+</TABLE>>];
+  "transactions" [ color="#66FFCC" label=<<TABLE BORDER="0" CELLBORDER="0" CELLSPACING="0" CELLPADDING="2">
+  <TR><TD ALIGN="LEFT"><B>transactions</B></TD></TR>
+  <TR><TD BGCOLOR="#00000020" ALIGN="LEFT"><I>ENABLED</I></TD></TR>
+  <TR><TD BGCOLOR="#FFFFFF80" ALIGN="LEFT">via: transitive provider of transactions for plus</TD></TR>
+  <TR><TD BGCOLOR="#00000020" ALIGN="LEFT"><I>LIB</I></TD></TR>
+  <TR><TD BGCOLOR="#FFFFFF80" ALIGN="LEFT">lib/transactions/*.jar</TD></TR>
+</TABLE>>];
+  "unixsocket" [ color="#B8FFB8" label=<<TABLE BORDER="0" CELLBORDER="0" CELLSPACING="0" CELLPADDING="2">
+  <TR><TD ALIGN="LEFT"><B>unixsocket</B></TD></TR>
+  <TR><TD BGCOLOR="#00000020" ALIGN="LEFT"><I>XML</I></TD></TR>
+  <TR><TD BGCOLOR="#FFFFFF80" ALIGN="LEFT">etc/jetty-unixsocket.xml</TD></TR>
+  <TR><TD BGCOLOR="#00000020" ALIGN="LEFT"><I>LIBs</I></TD></TR>
+  <TR><TD BGCOLOR="#FFFFFF80" ALIGN="LEFT">lib/jetty-unixsocket-${jetty.version}.jar</TD></TR>
+  <TR><TD BGCOLOR="#FFFFFF80" ALIGN="LEFT">lib/jnr/*.jar</TD></TR>
+  <TR><TD BGCOLOR="#00000020" ALIGN="LEFT"><I>INI Templates</I></TD></TR>
+</TABLE>>];
+  "unixsocket-forwarded" [ color="#B8FFB8" label=<<TABLE BORDER="0" CELLBORDER="0" CELLSPACING="0" CELLPADDING="2">
+  <TR><TD ALIGN="LEFT"><B>unixsocket-forwarded</B></TD></TR>
+  <TR><TD BGCOLOR="#00000020" ALIGN="LEFT"><I>XML</I></TD></TR>
+  <TR><TD BGCOLOR="#FFFFFF80" ALIGN="LEFT">etc/jetty-unixsocket-forwarded.xml</TD></TR>
+  <TR><TD BGCOLOR="#00000020" ALIGN="LEFT"><I>INI Templates</I></TD></TR>
+</TABLE>>];
+  "unixsocket-http" [ color="#B8FFB8" label=<<TABLE BORDER="0" CELLBORDER="0" CELLSPACING="0" CELLPADDING="2">
+  <TR><TD ALIGN="LEFT"><B>unixsocket-http</B></TD></TR>
+  <TR><TD BGCOLOR="#00000020" ALIGN="LEFT"><I>XML</I></TD></TR>
+  <TR><TD BGCOLOR="#FFFFFF80" ALIGN="LEFT">etc/jetty-unixsocket-http.xml</TD></TR>
+</TABLE>>];
+  "unixsocket-http2c" [ color="#B8FFB8" label=<<TABLE BORDER="0" CELLBORDER="0" CELLSPACING="0" CELLPADDING="2">
+  <TR><TD ALIGN="LEFT"><B>unixsocket-http2c</B></TD></TR>
+  <TR><TD BGCOLOR="#00000020" ALIGN="LEFT"><I>XML</I></TD></TR>
+  <TR><TD BGCOLOR="#FFFFFF80" ALIGN="LEFT">etc/jetty-unixsocket-http2c.xml</TD></TR>
+  <TR><TD BGCOLOR="#00000020" ALIGN="LEFT"><I>LIB</I></TD></TR>
+  <TR><TD BGCOLOR="#FFFFFF80" ALIGN="LEFT">lib/http2/*.jar</TD></TR>
+  <TR><TD BGCOLOR="#00000020" ALIGN="LEFT"><I>INI Templates</I></TD></TR>
+</TABLE>>];
+  "unixsocket-proxy-protocol" [ color="#B8FFB8" label=<<TABLE BORDER="0" CELLBORDER="0" CELLSPACING="0" CELLPADDING="2">
+  <TR><TD ALIGN="LEFT"><B>unixsocket-proxy-protocol</B></TD></TR>
+  <TR><TD BGCOLOR="#00000020" ALIGN="LEFT"><I>XML</I></TD></TR>
+  <TR><TD BGCOLOR="#FFFFFF80" ALIGN="LEFT">etc/jetty-unixsocket-proxy-protocol.xml</TD></TR>
+</TABLE>>];
+  "unixsocket-secure" [ color="#B8FFB8" label=<<TABLE BORDER="0" CELLBORDER="0" CELLSPACING="0" CELLPADDING="2">
+  <TR><TD ALIGN="LEFT"><B>unixsocket-secure</B></TD></TR>
+  <TR><TD BGCOLOR="#00000020" ALIGN="LEFT"><I>XML</I></TD></TR>
+  <TR><TD BGCOLOR="#FFFFFF80" ALIGN="LEFT">etc/jetty-unixsocket-secure.xml</TD></TR>
+  <TR><TD BGCOLOR="#00000020" ALIGN="LEFT"><I>INI Templates</I></TD></TR>
+</TABLE>>];
+  "webapp" [ color="#66FFCC" label=<<TABLE BORDER="0" CELLBORDER="0" CELLSPACING="0" CELLPADDING="2">
+  <TR><TD ALIGN="LEFT"><B>webapp</B></TD></TR>
+  <TR><TD BGCOLOR="#00000020" ALIGN="LEFT"><I>ENABLED</I></TD></TR>
+  <TR><TD BGCOLOR="#FFFFFF80" ALIGN="LEFT">via: transitive provider of webapp for plus</TD></TR>
+  <TR><TD BGCOLOR="#FFFFFF80" ALIGN="LEFT">via: transitive provider of webapp for deploy</TD></TR>
+  <TR><TD BGCOLOR="#00000020" ALIGN="LEFT"><I>XML</I></TD></TR>
+  <TR><TD BGCOLOR="#FFFFFF80" ALIGN="LEFT">etc/jetty-webapp.xml</TD></TR>
+  <TR><TD BGCOLOR="#00000020" ALIGN="LEFT"><I>LIB</I></TD></TR>
+  <TR><TD BGCOLOR="#FFFFFF80" ALIGN="LEFT">lib/jetty-webapp-${jetty.version}.jar</TD></TR>
+  <TR><TD BGCOLOR="#00000020" ALIGN="LEFT"><I>INI Templates</I></TD></TR>
+</TABLE>>];
+  "websocket" [ color="#B8FFB8" label=<<TABLE BORDER="0" CELLBORDER="0" CELLSPACING="0" CELLPADDING="2">
+  <TR><TD ALIGN="LEFT"><B>websocket</B></TD></TR>
+  <TR><TD BGCOLOR="#00000020" ALIGN="LEFT"><I>LIB</I></TD></TR>
+  <TR><TD BGCOLOR="#FFFFFF80" ALIGN="LEFT">lib/websocket/*.jar</TD></TR>
+</TABLE>>];
+    "acceptratelimit" -> "server";
+    "alpn" -> "ssl";
+    "alpn" -> "alpn-impl";
+    "alpn-impl" -> "alpn-impl/alpn-${java.version.platform}";
+    "annotations" -> "plus";
+    "cdi" -> "cdi1";
+    "cdi1" -> "deploy";
+    "cdi1" -> "annotations";
+    "cdi1" -> "plus";
+    "cdi1" -> "jsp";
+    "cdi2" -> "deploy";
+    "connectionlimit" -> "server";
+    "conscrypt" -> "ssl";
+    "debug" -> "deploy";
+    "debuglog" -> "server";
+    "deploy" -> "webapp";
+    "fcgi" -> "servlet";
+    "fcgi" -> "client";
+    "flight-recorder" -> "server";
+    "gcloud-datastore" -> "gcloud";
+    "gcloud-datastore" -> "jcl-slf4j";
+    "gcloud-datastore" -> "jul-impl";
+    "global-webapp-common" -> "deploy";
+    "gzip" -> "server";
+    "hawtio" -> "stats";
+    "hawtio" -> "deploy";
+    "hawtio" -> "jmx";
+    "hazelcast-embedded-sessions" -> "annotations";
+    "hazelcast-embedded-sessions" -> "webapp";
+    "hazelcast-remote-sessions" -> "annotations";
+    "hazelcast-remote-sessions" -> "webapp";
+    "http" -> "server";
+    "http2" -> "ssl";
+    "http2" -> "alpn";
+    "http2c" -> "http";
+    "http-forwarded" -> "http";
+    "https" -> "ssl";
+    "https" -> "http-forwarded";
+    "https" -> "http2";
+    "ipaccess" -> "server";
+    "jaas" -> "server";
+    "jamon" -> "stats";
+    "jamon" -> "deploy";
+    "jamon" -> "jmx";
+    "jamon" -> "jsp";
+    "jaspi" -> "security";
+    "jcl-slf4j" -> "slf4j-api";
+    "jcl-slf4j" -> "slf4j-impl";
+    "jminix" -> "stats";
+    "jminix" -> "jmx";
+    "jminix" -> "jcl-api";
+    "jminix" -> "jcl-impl";
+    "jmx" -> "server";
+    "jmx-remote" -> "jmx";
+    "jndi" -> "server";
+    "jndi" -> "mail";
+    "jolokia" -> "stats";
+    "jolokia" -> "deploy";
+    "jolokia" -> "jmx";
+    "jsp" -> "servlet";
+    "jsp" -> "annotations";
+    "jsp" -> "apache-jsp";
+    "jstl" -> "jsp";
+    "jstl" -> "apache-jstl";
+    "jul-slf4j" -> "slf4j-api";
+    "jul-slf4j" -> "slf4j-impl";
+    "log4j2-impl" -> "log4j2-api";
+    "log4j2-impl" -> "resources";
+    "log4j2-slf4j" -> "log4j2-api";
+    "log4j2-slf4j" -> "slf4j-api";
+    "log4j-impl" -> "resources";
+    "logback-access" -> "server";
+    "logback-access" -> "logback-impl";
+    "logback-access" -> "resources";
+    "logback-impl" -> "resources";
+    "logging-jetty" -> "resources";
+    "logging-jul" -> "slf4j-jul";
+    "logging-jul" -> "jul-impl";
+    "logging-log4j" -> "slf4j-log4j";
+    "logging-log4j" -> "log4j-impl";
+    "logging-log4j2" -> "slf4j-log4j2";
+    "logging-log4j2" -> "log4j2-impl";
+    "logging-logback" -> "slf4j-logback";
+    "logging-logback" -> "logback-impl";
+    "logging-slf4j" -> "slf4j-api";
+    "logging-slf4j" -> "slf4j-impl";
+    "lowresources" -> "server";
+    "plus" -> "server";
+    "plus" -> "security";
+    "plus" -> "jndi";
+    "plus" -> "webapp";
+    "plus" -> "transactions";
+    "proxy" -> "servlet";
+    "proxy" -> "client";
+    "proxy-protocol" -> "http";
+    "proxy-protocol-ssl" -> "ssl";
+    "quickstart" -> "server";
+    "quickstart" -> "plus";
+    "quickstart" -> "annotations";
+    "requestlog" -> "server";
+    "rewrite" -> "server";
+    "rewrite-compactpath" -> "rewrite";
+    "rewrite-customizer" -> "server";
+    "security" -> "server";
+    "server" -> "threadpool";
+    "server" -> "jvm";
+    "server" -> "ext";
+    "server" -> "resources";
+    "server" -> "logging";
+    "servlet" -> "server";
+    "servlets" -> "servlet";
+    "session-cache-hash" -> "sessions";
+    "session-cache-null" -> "sessions";
+    "sessions" -> "server";
+    "session-store-cache" -> "session-store";
+    "session-store-cache" -> "sessions/session-data-cache/${session-data-cache}";
+    "session-store-file" -> "sessions";
+    "session-store-gcloud" -> "gcloud-datastore";
+    "session-store-gcloud" -> "annotations";
+    "session-store-gcloud" -> "webapp";
+    "session-store-gcloud" -> "sessions";
+    "session-store-hazelcast-embedded" -> "sessions";
+    "session-store-hazelcast-remote" -> "sessions";
+    "session-store-infinispan-embedded" -> "sessions";
+    "session-store-infinispan-embedded-910" -> "sessions";
+    "session-store-infinispan-remote" -> "sessions";
+    "session-store-infinispan-remote-910" -> "sessions";
+    "session-store-jdbc" -> "sessions";
+    "session-store-jdbc" -> "sessions/jdbc/${db-connection-type}";
+    "session-store-mongo" -> "sessions";
+    "session-store-mongo" -> "sessions/mongo/${connection-type}";
+    "setuid" -> "server";
+    "slf4j-jul" -> "slf4j-api";
+    "slf4j-log4j" -> "slf4j-api";
+    "slf4j-log4j" -> "log4j-api";
+    "slf4j-log4j" -> "log4j-impl";
+    "slf4j-log4j2" -> "slf4j-api";
+    "slf4j-log4j2" -> "log4j2-api";
+    "slf4j-log4j2" -> "log4j2-impl";
+    "slf4j-logback" -> "slf4j-api";
+    "slf4j-logback" -> "logback-impl";
+    "slf4j-logback" -> "resources";
+    "slf4j-simple-impl" -> "slf4j-api";
+    "slf4j-simple-impl" -> "resources";
+    "spring" -> "server";
+    "ssl" -> "server";
+    "stats" -> "server";
+    "threadlimit" -> "server";
+    "unixsocket" -> "server";
+    "unixsocket-forwarded" -> "unixsocket-http";
+    "unixsocket-http" -> "unixsocket";
+    "unixsocket-http2c" -> "unixsocket-http";
+    "unixsocket-proxy-protocol" -> "unixsocket";
+    "unixsocket-secure" -> "unixsocket-http";
+    "webapp" -> "servlet";
+    "webapp" -> "security";
+    "websocket" -> "client";
+    "websocket" -> "annotations";
+}
+

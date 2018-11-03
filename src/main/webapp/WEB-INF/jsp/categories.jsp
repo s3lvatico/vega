@@ -1,5 +1,9 @@
-<%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8" %>
+<%@ page contentType="text/html; charset=utf-8" pageEncoding="utf-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
+<%--@elvariable id="categories" type="java.util.List"--%>
+<%--@elvariable id="contextRoot" type="String"--%>
+
 
 <!doctype html>
 <html lang="en">
@@ -17,6 +21,7 @@
 <table class="table">
 	<thead>
 	<tr>
+		<%--@elvariable id="managementEnabled" type="java.lang.Boolean"--%>
 		<c:if test="${managementEnabled}">
 			<th colspan="2">Commands</th>
 		</c:if>
@@ -30,7 +35,7 @@
 				<td>
 					<form method="GET" action="${contextRoot}/app/category/edit">
 						<!--  edit -->
-						<input type="hidden" name="categoryId" value="${category.id}"> <input type="submit" value="Edit" >
+						<input type="hidden" name="categoryId" value="${category.id}"> <input type="submit" value="Edit">
 					</form>
 				</td>
 				<td>
@@ -50,9 +55,6 @@
 	<c:when test="${managementEnabled}">
 		<h3>Operations</h3>
 		<p>Create new category:</p>
-
-		<!-- create -->
-
 		<form method="POST" action="${contextRoot}/app/category/create">
 			<input type="submit" value="create new category">
 		</form>
