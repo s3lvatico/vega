@@ -1,6 +1,6 @@
 # vega
 
-## branch "jamian"
+## branch "misty"
 
 Riprende da Misty e modifica il front-end usando bootstrap 4
 
