@@ -2,7 +2,7 @@
 
 ## branch "misty"
 
-Riprende da Misty e modifica il front-end usando bootstrap 4
+Utilizza una versione grezza dei pattern tipici per la web application (front controller, context objects, view resolvers...).
 
 ### Feature matrix
 
