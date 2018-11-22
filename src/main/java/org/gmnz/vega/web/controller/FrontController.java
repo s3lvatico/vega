@@ -1,16 +1,15 @@
 package org.gmnz.vega.web.controller;
 
 
-import java.io.IOException;
+import org.gmnz.vega.web.context.RequestContext;
+import org.gmnz.vega.web.context.RequestContextFactory;
+import org.gmnz.vega.web.context.ResponseContext;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
-import org.gmnz.vega.web.context.RequestContext;
-import org.gmnz.vega.web.context.RequestContextFactory;
-import org.gmnz.vega.web.context.ResponseContext;
+import java.io.IOException;
 
 
 /**
@@ -20,7 +19,16 @@ public class FrontController extends HttpServlet {
 
 	private static final long serialVersionUID = -3718912040641304794L;
 
-	// private static final String APP_NAME = "vega";
+	private ApplicationControllerFactory applicationControllerFactory;
+	private RequestContextFactory requestContextFactory;
+
+
+
+	@Override
+	public void init() throws ServletException {
+		applicationControllerFactory = ApplicationControllerFactory.getFactory();
+		requestContextFactory = RequestContextFactory.getFactory();
+	}
 
 
 
@@ -41,14 +49,12 @@ public class FrontController extends HttpServlet {
 	protected void processRequest(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
 
+		ApplicationController appController = applicationControllerFactory.createApplicationController(req);
 
-		ApplicationControllerFactory acFactory = ApplicationControllerFactory.getFactory();
-		ApplicationController appController = acFactory.createApplicationController(req);
-
-		RequestContextFactory requestContextFactory = RequestContextFactory.getFactory();
 		RequestContext requestContext = requestContextFactory.createContext(req);
 
 		ResponseContext responseContext = appController.handleRequest(requestContext);
+
 		responseContext.setResponse(resp);
 
 		appController.handleResponse(requestContext, responseContext);
