@@ -1,4 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
+
+<!--suppress WebProperties -->
+<!-- il commento precedente sopprime un inspector che riportava un errore nel tag dei ruoli -->
+<!-- i ruoli non sono visibili all'inspector perché sono definiti nel db applicativo -->
+
 <web-app xmlns="http://java.sun.com/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd" version="3.0"
 >
@@ -49,12 +54,6 @@
       <url-pattern>/</url-pattern>
    </servlet-mapping>
 
-   <!--
-   <welcome-file-list>
-      <welcome-file>home.jsp</welcome-file>
-   </welcome-file-list>
-   -->
-
    <error-page>
       <location>/WEB-INF/jsp/showError.jsp</location>
    </error-page>
@@ -81,7 +80,7 @@
    </servlet-mapping>
 
 
-   <!-- sicurezza -->
+   <!-- == sicurezza -->
    <login-config>
       <auth-method>FORM</auth-method>
       <form-login-config>
@@ -100,6 +99,6 @@
          <role-name>v-admin</role-name>
       </auth-constraint>
    </security-constraint>
+   <!-- sicurezza == -->
 
-   <!-- == sicurezza -->
 </web-app>

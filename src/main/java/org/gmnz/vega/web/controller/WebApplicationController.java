@@ -14,11 +14,19 @@ import java.io.IOException;
 
 class WebApplicationController implements ApplicationController {
 
+	private CommandFactory commandFactory;
+
+
+
+	WebApplicationController() {
+		commandFactory = CommandFactory.getFactory();
+	}
+
+
+
 	@Override
 	public ResponseContext handleRequest(RequestContext requestContext) {
-		CommandFactory commandFactory = CommandFactory.getFactory();
 		Command command = commandFactory.createCommand(requestContext);
-
 		return command.execute();
 	}
 

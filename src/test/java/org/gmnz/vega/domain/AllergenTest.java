@@ -3,6 +3,10 @@ package org.gmnz.vega.domain;
 
 import org.junit.Assert;
 import org.junit.Test;
+import org.mockito.Mockito;
+
+import java.util.UUID;
+
 
 public class AllergenTest {
 
@@ -54,4 +58,16 @@ public class AllergenTest {
 		System.out.printf("%s - %d%n", patate, patate.hashCode());
 	}
 
+	@Test public void properties() {
+		String id = UUID.randomUUID().toString();
+		Allergen mock = Mockito.mock(Allergen.class);
+		Mockito.when(mock.getId()).thenReturn(id);
+		Allergen target = new Allergen("");
+		target.setId(id);
+		Assert.assertEquals(target.getId(), mock.getId());
+
+		String randomName = UUID.randomUUID().toString();
+		target.setName(randomName);
+		Assert.assertEquals(randomName, target.getName());
+	}
 }

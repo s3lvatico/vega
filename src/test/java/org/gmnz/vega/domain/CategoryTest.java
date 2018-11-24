@@ -1,6 +1,11 @@
 package org.gmnz.vega.domain;
 
+import org.junit.Assert;
 import org.junit.Test;
+import org.mockito.Mockito;
+
+import java.util.UUID;
+
 
 public class CategoryTest {
 
@@ -41,6 +46,37 @@ public class CategoryTest {
 //		condimenti.remove(glucosio);
 //		Assert.assertEquals(3, condimenti.getAllergens().size());
 //		System.out.println(condimenti);
+
+	}
+
+	@Test public void constructor() {
+		String categoryName = "Sample Category name";
+		Category target = new Category(categoryName);
+		Assert.assertEquals("", target.getId());
+		Assert.assertEquals(categoryName, target.getName());
+		Assert.assertNotNull(target.getAllergens());
+		Assert.assertEquals(0, target.getAllergens().size());
+	}
+
+	@Test public void properties() {
+		Category target = new Category("");
+		String id = UUID.randomUUID().toString();
+		target.setId(id);
+		Assert.assertEquals(id, target.getId());
+
+		String name = UUID.randomUUID().toString();
+		target.setName(name);
+		Assert.assertEquals(name, target.getName());
+	}
+
+	@Test public void equals() {
+		Category target = new Category("Target");
+		Assert.assertEquals(target, target);
+		Assert.assertNotEquals(target, null);
+		Assert.assertNotEquals(target, new Object());
+
+		Category theCopy = new Category("Target");
+		Assert.assertEquals(target, theCopy);
 
 
 	}
